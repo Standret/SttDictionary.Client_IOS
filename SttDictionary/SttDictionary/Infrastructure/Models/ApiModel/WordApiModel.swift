@@ -7,3 +7,13 @@
 //
 
 import Foundation
+
+struct WordApiModel: Decodable {
+    let id: String
+    let dateCreated: Date
+    let originalWorld: String
+    let translations: [String]
+    let additionalTranslations: [String]?
+    let tags: [ShortTagApiModel]?
+    let imageUrls: [String]?
+}

@@ -8,7 +8,7 @@
 
 import Foundation
 
-struct Tag: Decodable, RealmCodable {
+struct TagApiModel: Decodable, RealmCodable {
     func serialize() {
         
     }
@@ -17,4 +17,9 @@ struct Tag: Decodable, RealmCodable {
     let name: String
     let wordsId: [String]
     let dateCreated: Date
+}
+
+struct ShortTagApiModel: Decodable {
+    let id: String
+    let name: String
 }

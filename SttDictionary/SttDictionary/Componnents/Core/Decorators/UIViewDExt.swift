@@ -8,6 +8,7 @@
 
 
 import Foundation
+import UIKit
 
 extension UIView {
     func createCircle(dominateWidth: Bool = true, clipToBounds: Bool = true) {

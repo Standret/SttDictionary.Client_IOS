@@ -12,7 +12,8 @@ import RxSwift
 import KeychainSwift
 
 protocol IApiService {
-    func inserToken(token: String)
+    func getTags() -> Observable<[TagApiModel]>
+    func getWord() -> Observable<[WordApiModel]>
 }
 
 class ApiService: IApiService {
@@ -20,14 +21,30 @@ class ApiService: IApiService {
     var _httpService: IHttpService!
     
     init() {
-        //  ServiceInjectorAssembly.instance().inject(into: self)
+         ServiceInjectorAssembly.instance().inject(into: self)
         _httpService.url = Constants.apiUrl
-        _httpService.token = KeychainSwift().get(Constants.tokenKey)
+        _httpService.token = KeychainSwift().get(Constants.tokenKey) ?? ""
     }
     
-    func inserToken(token: String) {
-        _httpService.token = token
+    func getTags() -> Observable<[TagApiModel]> {
+        return _httpService.get(controller: .tag("get")).getResult(ofType: [TagApiModel].self)//.saveInDB()
     }
     
-    
+    func getWord() -> Observable<[WordApiModel]> {
+        return _httpService.get(controller: .word("get")).getResult(ofType: [WordApiModel].self)
+    }
+}
+
+extension ObservableType {
+//    func saveInDB<T>() -> Observable<T>
+//        where T: RealmCodable
+//    {
+//
+//    }
+//
+//    func saveInDB<T>() -> Observable<[T]>
+//        where T: RealmCodable
+//    {
+//
+//    }
 }

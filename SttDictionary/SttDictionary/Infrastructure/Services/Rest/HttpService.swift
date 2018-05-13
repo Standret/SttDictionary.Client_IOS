@@ -13,24 +13,34 @@ import RxSwift
 
 protocol IHttpService {
     var url: String! { get set }
-    var token: String! { get set }
-    var tokenType: String! { get set }
+    var token: String { get set }
+    var tokenType: String { get set }
     
     func get(controller: ApiConroller, data: [String:String], insertToken: Bool) -> Observable<(HTTPURLResponse, Data)>
     func post(controller: ApiConroller, data: [String:String], insertToken: Bool) -> Observable<(HTTPURLResponse, Data)>
 }
 
+extension IHttpService {
+    func get(controller: ApiConroller, data: [String:String] = [:], insertToken: Bool = false) -> Observable<(HTTPURLResponse, Data)> {
+        return self.get(controller: controller, data: data, insertToken: insertToken)
+    }
+    func post(controller: ApiConroller, data: [String:String] = [:], insertToken: Bool = false) -> Observable<(HTTPURLResponse, Data)> {
+        return self.post(controller: controller, data: data, insertToken: insertToken)
+    }
+}
+
 class HttpService: IHttpService {
     
     var url: String!
-    var token: String!
-    var tokenType: String!
+    var token: String = ""
+    var tokenType: String = ""
     var connectivity = Conectivity()
     
     init() { tokenType = "bearer" }
     
     func  get(controller: ApiConroller, data: [String:String], insertToken: Bool) -> Observable<(HTTPURLResponse, Data)> {
         let url = "\(self.url!)\(controller.get())"
+        var _insertToken = insertToken
         
         return Observable<(HTTPURLResponse, Data)>.create { (observer) -> Disposable in
             print("--> \(url)")
@@ -41,9 +51,11 @@ class HttpService: IHttpService {
                 return Disposables.create()
             }
             
-            let tok = "\(self.tokenType!) \(self.token!)"
+            if self.token == "" {
+                _insertToken = false
+            }
             return requestData(.get, url, parameters: data, encoding: URLEncoding.default,
-                               headers: insertToken ? ["Authorization" : tok] : nil)
+                               headers: _insertToken ? ["Authorization" : "\(self.tokenType) \(self.token)"] : nil)
                 .subscribe(onNext: { (res, data) in
                     observer.onNext((res, data))
                     observer.onCompleted()
@@ -58,6 +70,7 @@ class HttpService: IHttpService {
     
     func post(controller: ApiConroller, data: [String:String], insertToken: Bool) -> Observable<(HTTPURLResponse, Data)> {
         let url = "\(self.url!)\(controller.get())"
+        var _insertToken = insertToken
         
         return Observable<(HTTPURLResponse, Data)>.create { (observer) -> Disposable in
             print("--> \(url)")
@@ -68,8 +81,11 @@ class HttpService: IHttpService {
                 return Disposables.create()
             }
             
+            if self.token == "" {
+                _insertToken = false
+            }
             return requestData(.post, url, parameters: data, encoding: URLEncoding.default,
-                               headers: insertToken ? ["Authorization" : "\(self.tokenType) \(self.token)"] : nil)
+                               headers: _insertToken ? ["Authorization" : "\(self.tokenType) \(self.token)"] : nil)
                 .subscribe(onNext: { (res, data) in
                     observer.onNext((res, data))
                     observer.onCompleted()

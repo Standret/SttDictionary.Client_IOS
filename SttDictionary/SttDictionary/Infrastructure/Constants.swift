@@ -9,24 +9,25 @@
 import Foundation
 
 enum ApiConroller {
-    case token
-    case users(String)
+    case word(String), tag(String)
     
     func get() -> String {
+        var data: (String, String)!
         switch self {
-        case .token:
-            return "/api/token"
-        case .users(let method):
-            return "\(Constants.versionApi)users/\(method)"
+        case .word(let method):
+            data = ("word", method)
+        case .tag(let method):
+            data = ("tag", method)
         }
+        
+        return "\(Constants.versionApi)\(data.0)/\(data.1)"
     }
 }
 
 class Constants {
     // url
-    static var apiUrl = "https://qa-startupsoft-imx.azurewebsites.net/"
-    static var blobUrl = "https://prodssanalyticsstorage.blob.core.windows.net"
-    static var versionApi = "/api/"
+    static var apiUrl = "http://192.168.0.66"
+    static var versionApi = "/api/v1/"
     
     // keychain id
     static var tokenKey = "securityAccessToken"
@@ -39,9 +40,6 @@ class Constants {
     static var timeWaitNextRequest = UInt32(2)
     static var maxCountRepeatRequest = 3
     
-    // error string
-    static var incorrectLogin = "Email or Password is incorrect."
-    
-    // image key
-    static var avatarPlaceholder = "avatarPlaceholder"
+    // realm
+    static var keySingle = "--single--"
 }

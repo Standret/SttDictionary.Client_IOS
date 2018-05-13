@@ -7,3 +7,7 @@
 //
 
 import Foundation
+
+class RealmShortTag: BaseRealm {
+    @objc dynamic var name: String = ""
+}

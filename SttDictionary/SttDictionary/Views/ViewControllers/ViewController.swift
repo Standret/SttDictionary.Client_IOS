@@ -2,7 +2,7 @@
 //  ViewController.swift
 //  SttDictionary
 //
-//  Created by Admin on 5/13/18.
+//  Created by Standret on 5/13/18.
 //  Copyright © 2018 Standret. All rights reserved.
 //
 
@@ -16,11 +16,11 @@ class Message : Object {
     @objc dynamic var message: String = "some message"
 }
 
-class ViewController: UIViewController {
+class ViewController: SttViewController<ViewPresenter>, ViewDelegate {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        print(Realm.Configuration.defaultConfiguration.fileURL)
         let object = (try! Realm()).objects(Message.self)
         let notToken = object.observe { [weak self] (changes: RealmCollectionChange) in
             print(changes)
@@ -57,7 +57,7 @@ class ViewController: UIViewController {
     }
     
     @IBAction func get(_ sender: Any) {
-        
+        presenter.getTags()
     }
     
     @IBAction func forceGet(_ sender: Any) {
