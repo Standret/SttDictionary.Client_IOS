@@ -8,6 +8,9 @@
 
 import Foundation
 
-class RealmShortTag: BaseRealm {
+class RealmShortTag: BaseRealm, RealmDecodable {
+    
+    typealias TTarget =  ShortTagApiModel
+    
     @objc dynamic var name: String = ""
 }

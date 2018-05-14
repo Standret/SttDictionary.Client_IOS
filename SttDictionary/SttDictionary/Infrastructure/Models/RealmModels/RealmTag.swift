@@ -9,7 +9,17 @@
 import Foundation
 import RealmSwift
 
-class RealmTag: BaseRealm {
+class RealmTag: BaseRealm, RealmDecodable {
+    func deserialize() -> TagApiModel {
+        var ids = [String]()
+        for item in word {
+            ids.append(item.id)
+        }
+        return TagApiModel(id: id, name: name, wordsId: ids, dateCreated: dateCreated)
+    }
+    
+    typealias TTarget = TagApiModel
+    
     @objc dynamic var name: String = ""
     let word = List<RealmWord>()
 }

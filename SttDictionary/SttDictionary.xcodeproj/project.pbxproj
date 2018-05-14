@@ -20,6 +20,7 @@
 		8433D0D020A8B2120031D690 /* RealmShortTag.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8433D0CF20A8B2120031D690 /* RealmShortTag.swift */; };
 		8433D0D220A8BCDA0031D690 /* WordApiModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8433D0D120A8BCDA0031D690 /* WordApiModel.swift */; };
 		8437504420A9B1FB007BFF5F /* ErrorModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8437504320A9B1FB007BFF5F /* ErrorModel.swift */; };
+		8437504620A9DD91007BFF5F /* UnitOfWork.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8437504520A9DD91007BFF5F /* UnitOfWork.swift */; };
 		84D2422120A85177007D8F1A /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84D2422020A85177007D8F1A /* AppDelegate.swift */; };
 		84D2422320A85177007D8F1A /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84D2422220A85177007D8F1A /* ViewController.swift */; };
 		84D2422620A85177007D8F1A /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 84D2422420A85177007D8F1A /* Main.storyboard */; };
@@ -54,6 +55,7 @@
 		8433D0CF20A8B2120031D690 /* RealmShortTag.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RealmShortTag.swift; sourceTree = "<group>"; };
 		8433D0D120A8BCDA0031D690 /* WordApiModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WordApiModel.swift; sourceTree = "<group>"; };
 		8437504320A9B1FB007BFF5F /* ErrorModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorModel.swift; sourceTree = "<group>"; };
+		8437504520A9DD91007BFF5F /* UnitOfWork.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UnitOfWork.swift; sourceTree = "<group>"; };
 		84D2421D20A85177007D8F1A /* SttDictionary.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SttDictionary.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		84D2422020A85177007D8F1A /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		84D2422220A85177007D8F1A /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -247,6 +249,7 @@
 			isa = PBXGroup;
 			children = (
 				84D4388B20A8788500B171ED /* Repository.swift */,
+				8437504520A9DD91007BFF5F /* UnitOfWork.swift */,
 			);
 			path = DAL;
 			sourceTree = "<group>";
@@ -458,6 +461,7 @@
 				84D4387D20A8774700B171ED /* UIViewDExt.swift in Sources */,
 				8433D0C820A899690031D690 /* SttPresenter.swift in Sources */,
 				8433D0BC20A895EA0031D690 /* TagApiModel.swift in Sources */,
+				8437504620A9DD91007BFF5F /* UnitOfWork.swift in Sources */,
 				8433D0C620A8993B0031D690 /* SttViewController.swift in Sources */,
 				8433D0CC20A8AE510031D690 /* RealmTag.swift in Sources */,
 				8433D0CE20A8AE8D0031D690 /* RealmWord.swift in Sources */,

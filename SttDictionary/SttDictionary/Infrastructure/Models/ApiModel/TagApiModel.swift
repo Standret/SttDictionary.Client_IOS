@@ -8,7 +8,10 @@
 
 import Foundation
 
-struct TagApiModel: Decodable {
+struct TagApiModel: Decodable, RealmCodable {
+   
+    typealias TTarget = RealmTag
+    
 
     
     let id: String
@@ -17,7 +20,9 @@ struct TagApiModel: Decodable {
     let dateCreated: Date
 }
 
-struct ShortTagApiModel: Decodable {
+struct ShortTagApiModel: Decodable, RealmCodable {
+    typealias TTarget = RealmShortTag
+    
     let id: String
     let name: String
 }

@@ -8,7 +8,13 @@
 
 import Foundation
 
-struct WordApiModel: Decodable {
+struct WordApiModel: Decodable, RealmCodable {
+    typealias TTarget = RealmWord
+
+    func serialize() -> TTarget {
+        return RealmWord()
+    }
+
     let id: String
     let dateCreated: Date
     let originalWorld: String
@@ -17,3 +23,4 @@ struct WordApiModel: Decodable {
     let tags: [ShortTagApiModel]?
     let imageUrls: [String]?
 }
+
