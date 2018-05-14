@@ -13,4 +13,8 @@ class RealmShortTag: BaseRealm, RealmDecodable {
     typealias TTarget =  ShortTagApiModel
     
     @objc dynamic var name: String = ""
+    
+    func deserialize() -> ShortTagApiModel {
+        return ShortTagApiModel(id: id, name: name)
+    }
 }

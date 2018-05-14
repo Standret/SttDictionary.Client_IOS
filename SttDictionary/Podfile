@@ -12,4 +12,5 @@ target 'SttDictionary' do
   pod 'AppCenter'
   pod "RxRealm" 
   pod 'RealmSwift'
+  pod 'SINQ'
 end

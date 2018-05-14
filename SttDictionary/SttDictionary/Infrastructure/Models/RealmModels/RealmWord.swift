@@ -8,6 +8,7 @@
 
 import Foundation
 import RealmSwift
+import SINQ
 
 class RealmWord: BaseRealm, RealmDecodable {
     
@@ -20,6 +21,6 @@ class RealmWord: BaseRealm, RealmDecodable {
     let tags = List<RealmShortTag>()
     
     func deserialize() -> WordApiModel {
-        return WordApiModel(id: id, dateCreated: dateCreated, originalWorld: originalWorld, translations: <#T##[String]#>, additionalTranslations: <#T##[String]?#>, tags: <#T##[ShortTagApiModel]?#>, imageUrls: <#T##[String]?#>)
+        return WordApiModel(id: id, dateCreated: dateCreated, originalWorld: originalWorld, translations: sinq(translations).select { $0.value }.toArray(), additionalTranslations: sinq(additionalTranslate).select { $0.value }.toArray(), tags: sinq(tags).select { ShortTagApiModel(id: $0.id, name: $0.name) }.toArray(), imageUrls: sinq(imageUrls).select { $0.value }.toArray())
     }
 }

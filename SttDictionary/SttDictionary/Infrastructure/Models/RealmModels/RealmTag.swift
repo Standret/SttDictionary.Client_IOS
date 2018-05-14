@@ -8,14 +8,11 @@
 
 import Foundation
 import RealmSwift
+import SINQ
 
 class RealmTag: BaseRealm, RealmDecodable {
     func deserialize() -> TagApiModel {
-        var ids = [String]()
-        for item in word {
-            ids.append(item.id)
-        }
-        return TagApiModel(id: id, name: name, wordsId: ids, dateCreated: dateCreated)
+        return TagApiModel(id: id, name: name, wordsId: sinq(word).select { $0.id }.toArray(), dateCreated: dateCreated)
     }
     
     typealias TTarget = TagApiModel

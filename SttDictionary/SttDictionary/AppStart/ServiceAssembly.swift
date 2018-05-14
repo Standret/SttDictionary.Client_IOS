@@ -16,4 +16,7 @@ class ServiceAssembly: Assembly {
     var httpService: IHttpService {
         return define(scope: .lazySingleton, init: HttpService())
     }
+    var unitOfWork: IUnitOfWork {
+        return define(scope: .lazySingleton, init: UnitOfWork())
+    }
 }

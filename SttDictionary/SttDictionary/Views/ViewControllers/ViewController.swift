@@ -22,39 +22,7 @@ class ViewController: SttViewController<ViewPresenter>, ViewDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         print(Realm.Configuration.defaultConfiguration.fileURL!)
-        let realm = try! Realm()
-//        try! realm.write {
-//            let message = Message()
-//            realm.add(Message(value: ["test", "some"]))
-//            realm.add(Message(value: ["test1", "some"]))
-//            realm.add(Message(value: ["test2", "some"]))
-//            realm.add(Message(value: ["test3", "some"]))
-//        }
-        let object = (try! Realm()).objects(Message.self).filter("message BEGINSWITH 'test'")
-        print(object.count)
-        let notToken = (try! Realm()).observe { notification, realm in
-            print("\(notification) -- \n \n \(realm)")
-        }
-        Observable.from(object: object[0], properties: ["secondMessage"]).subscribe(onNext: { (message) in
-            print("-- some ipdate --\n\(message)\n\n\(object[0])")
-        }, onError: { (error) in
-            print(error)
-        }, onCompleted: nil, onDisposed: nil)
-        
-        
-        Observable.arrayWithChangeset(from: object)
-            .subscribe(onNext: { array, changes in
-                if let changes = changes {
-                    // it's an update
-//                    print(array[changes.inserted.first!])
-                    print("deleted: \(changes.deleted)")
-                    print("inserted: \(changes.inserted)")
-                    print("updated: \(changes.updated)")
-                } else {
-                    // it's the initial data
-                    print(array)
-                }
-            })
+       
     }
 
     @IBOutlet weak var tfMain: UITextField!

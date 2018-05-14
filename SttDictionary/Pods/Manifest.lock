@@ -27,6 +27,7 @@ PODS:
   - SDWebImage (4.3.3):
     - SDWebImage/Core (= 4.3.3)
   - SDWebImage/Core (4.3.3)
+  - SINQ (0.7.0)
 
 DEPENDENCIES:
   - Alamofire (~> 4.7)
@@ -38,6 +39,7 @@ DEPENDENCIES:
   - RxRealm
   - RxSwift (~> 4.0)
   - SDWebImage (~> 4.0)
+  - SINQ
 
 SPEC REPOS:
   https://github.com/CocoaPods/Specs.git:
@@ -51,6 +53,7 @@ SPEC REPOS:
     - RxRealm
     - RxSwift
     - SDWebImage
+    - SINQ
 
 SPEC CHECKSUMS:
   Alamofire: e4fa87002c137ba2d8d634d2c51fabcda0d5c223
@@ -63,7 +66,8 @@ SPEC CHECKSUMS:
   RxRealm: a6c6c0a07cb61f34209969ca6657734edfdfff30
   RxSwift: e49536837d9901277638493ea537394d4b55f570
   SDWebImage: de4d90b5bff3571eae7bd16202b1f43135409fa5
+  SINQ: 64cab7b7c73486da8f4442c25ccdd6ada7e67b95
 
-PODFILE CHECKSUM: f3c4769c61feb04ed247d01206c29dfd437f4be6
+PODFILE CHECKSUM: aa6498c220aaac9c2f08f1cc3a76067fce609f6c
 
 COCOAPODS: 1.5.0

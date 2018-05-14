@@ -12,7 +12,19 @@ struct WordApiModel: Decodable, RealmCodable {
     typealias TTarget = RealmWord
 
     func serialize() -> TTarget {
-        return RealmWord()
+        let model = RealmWord(value: ["id": id, "dateCreated": dateCreated, "originalWorld": originalWorld])
+        model.translations.append(objectsIn: translations.map( { RealmString(value: [$0]) }))
+        if let additionalTrans = additionalTranslations {
+            model.additionalTranslate.append(objectsIn: additionalTrans.map( { RealmString(value: [$0]) }))
+        }
+        if let _tags = tags {
+            model.tags.append(objectsIn: _tags.map( { RealmShortTag(value: ["id": $0.id, "name": $0.name ]) }))
+        }
+        if let imgs = imageUrls {
+            model.imageUrls.append(objectsIn: imgs.map( { RealmString(value: [$0]) }))
+        }
+        
+        return model
     }
 
     let id: String

@@ -17,6 +17,7 @@ class ServiceInjectorAssembly: Assembly {
     func inject(into service: ViewPresenter) {
         let _:ViewPresenter = define(init: service) {
             $0._apiService = self.serviceAssembly.apiService
+            $0._unitOfWorkd = self.serviceAssembly.unitOfWork
             return $0
         }
     }

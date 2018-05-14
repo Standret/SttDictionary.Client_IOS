@@ -13,9 +13,13 @@ protocol IUnitOfWork {
     var tag: Repository<TagApiModel, RealmTag> { get }
 }
 
+
+
 class UnitOfWork: IUnitOfWork {
     
     private lazy var _word = Repository<WordApiModel, RealmWord> (singleton: false)
+    private lazy var _tag = Repository<TagApiModel, RealmTag> (singleton: false)
     
     var word: Repository<WordApiModel, RealmWord> { return _word }
+    var tag: Repository<TagApiModel, RealmTag> { return _tag }
 }
