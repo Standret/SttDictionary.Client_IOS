@@ -11,7 +11,7 @@ import EasyDi
 
 class ServiceAssembly: Assembly {    
     var apiService: IApiService {
-        return define(scope: .lazySingleton, init: ApiService())
+        return define(scope: .lazySingleton, init: FakeApiService())
     }
     var httpService: IHttpService {
         return define(scope: .lazySingleton, init: HttpService())

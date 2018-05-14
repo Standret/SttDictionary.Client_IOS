@@ -27,32 +27,3 @@ class ApiResultModel<TResult> {
         self.error = error
     }
 }
-
-enum ApiError: Error {
-    case badRequest(String)
-    case internalServerError(String)
-    case unkownApiError(Int)
-    case jsonConvertError
-    case noInternetConnectionError
-    case requestTimeoutError
-    
-    func getMessage() -> String {
-        var result: String!
-        switch self {
-        case .badRequest(let message):
-            result = message
-        case .internalServerError(let message):
-            result = message
-        case .jsonConvertError:
-            result = "jsonConvertError"
-        case .noInternetConnectionError:
-            result = "no internet connection"
-        case .requestTimeoutError:
-            result = "request timeout"
-        default:
-            result = "unkown error"
-        }
-        
-        return result
-    }
-}

@@ -21,10 +21,17 @@ class ServiceInjectorAssembly: Assembly {
         }
     }
     
-    // Inject Service into service
+   //  Inject Service into service
     
     func inject(into service: ApiService) {
         let _:ApiService = define(init: service) {
+            $0._httpService = self.serviceAssembly.httpService
+            return $0
+        }
+    }
+    
+    func inject(into service: FakeApiService) {
+        let _:FakeApiService = define(init: service) {
             $0._httpService = self.serviceAssembly.httpService
             return $0
         }

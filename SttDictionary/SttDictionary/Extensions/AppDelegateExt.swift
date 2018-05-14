@@ -46,7 +46,7 @@ extension AppDelegate {
     }
     
     func useAppCenter() {
-        MSAppCenter.start("b6ce0bef-0492-4e11-bb57-438af40b5b06", withServices:[
+        MSAppCenter.start("31daaa5b-c6d6-480b-9aae-a91dce6555b8", withServices:[
             MSAnalytics.self,
             MSCrashes.self
             ])

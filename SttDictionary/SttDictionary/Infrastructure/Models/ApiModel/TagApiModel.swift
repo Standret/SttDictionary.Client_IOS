@@ -8,10 +8,8 @@
 
 import Foundation
 
-struct TagApiModel: Decodable, RealmCodable {
-    func serialize() {
-        
-    }
+struct TagApiModel: Decodable {
+
     
     let id: String
     let name: String

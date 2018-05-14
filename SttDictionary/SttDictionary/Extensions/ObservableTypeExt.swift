@@ -44,3 +44,22 @@ extension ObservableType where E == (HTTPURLResponse, Data) {
         })
     }
 }
+
+extension String {
+    func getResult<TResult: Decodable>(ofType _: TResult.Type) -> Observable<TResult> {
+        return Observable<TResult>.create({ (observer) -> Disposable in
+                do {
+                    let decoder = JSONDecoder()
+                    decoder.dateDecodingStrategy = .customISO8601
+                    let jsonObject = try decoder.decode(TResult.self, from: self.data(using: String.Encoding.utf8)!)
+                    observer.onNext(jsonObject)
+                }
+                catch {
+                    print(error)
+                    observer.onError(ApiError.jsonConvertError)
+                }
+                return Disposables.create()
+            })
+            
+    }
+}
