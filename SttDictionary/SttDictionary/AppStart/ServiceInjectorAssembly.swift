@@ -27,6 +27,7 @@ class ServiceInjectorAssembly: Assembly {
     func inject(into service: ApiService) {
         let _:ApiService = define(init: service) {
             $0._httpService = self.serviceAssembly.httpService
+            $0._unitOfWork = self.serviceAssembly.unitOfWork
             return $0
         }
     }
@@ -34,6 +35,7 @@ class ServiceInjectorAssembly: Assembly {
     func inject(into service: FakeApiService) {
         let _:FakeApiService = define(init: service) {
             $0._httpService = self.serviceAssembly.httpService
+            $0._unitOfWork = self.serviceAssembly.unitOfWork
             return $0
         }
     }

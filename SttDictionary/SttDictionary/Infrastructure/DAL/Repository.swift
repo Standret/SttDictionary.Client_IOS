@@ -28,8 +28,8 @@ protocol IRepository {
 
     init(singleton: Bool)
 
-    func save(model: TEntity) -> Observable<Bool>
-    func save(models: [TEntity]) -> Observable<Bool>
+    func saveOne(model: TEntity) -> Observable<Bool>
+    func saveMany(models: [TEntity]) -> Observable<Bool>
 
     func getOne(filter: String?) -> Observable<TEntity>
     func getMany(filter: String?) -> Observable<[TEntity]>
@@ -81,7 +81,7 @@ class Repository<T, R>: IRepository
         self.singleton = singleton
     }
 
-    func save(model: T) -> Observable<Bool> {
+    func saveOne(model: T) -> Observable<Bool> {
         return Observable<Bool>.create { (observer) -> Disposable in
             do {
                 let realm = try Realm()
@@ -104,7 +104,7 @@ class Repository<T, R>: IRepository
             .observeOn(MainScheduler.instance)
     }
 
-    func save(models: [T]) -> Observable<Bool> {
+    func saveMany(models: [T]) -> Observable<Bool> {
         return Observable<Bool>.create { (observer) -> Disposable in
                 if (self.singleton) {
                     observer.onError(ReaalmError.objectIsSignleton)
