@@ -8,6 +8,7 @@
 
 import Foundation
 import RealmSwift
+import SINQ
 
 struct TagApiModel: Decodable, RealmCodable {
    
@@ -20,7 +21,7 @@ struct TagApiModel: Decodable, RealmCodable {
     
     func serialize() -> RealmTag {
         let realm = try! Realm()
-        let words = wordsId.map { realm.object(ofType: RealmWord.self, forPrimaryKey: $0) }
+        let words =  sinq(wordsId.map { realm.object(ofType: RealmWord.self, forPrimaryKey: $0) }).whereTrue( { $0 != nil } ).toArray()
         return RealmTag(value: ["id": id, "dateCreated": dateCreated, "name": name, "word": words])
     }
 }

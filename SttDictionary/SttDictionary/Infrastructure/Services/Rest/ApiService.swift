@@ -28,7 +28,7 @@ class FakeApiService: IApiService {
     
     func getTags() -> Observable<[TagApiModel]> {
         let json = """
-[{"name":"fruit","wordsId":["5af883bb9533913a308f66af"],"statisticsWord":null,"id":"5af883a29533913a308f66ae","dateCreated":"2018-05-13T09:27:45Z","isDeleted":false},{"name":"unit1","wordsId":[],"statisticsWord":null,"id":"5af8840f9533913a308f66b1","dateCreated":"2018-05-13T09:29:34Z","isDeleted":false}]
+[{"name":"fruit","wordsId":["5af883bb9533913a308f66af", "5af883cb9533913a308f66b0"],"statisticsWord":null,"id":"5af883a29533913a308f66ae","dateCreated":"2018-05-13T09:27:45Z","isDeleted":false},{"name":"unit1","wordsId":["5af883cb9533913a308f66b0"],"statisticsWord":null,"id":"5af8840f9533913a308f66b1","dateCreated":"2018-05-13T09:29:34Z","isDeleted":false}]
 """
         return json.getResult(ofType: [TagApiModel].self)//.saveInDB()
     }

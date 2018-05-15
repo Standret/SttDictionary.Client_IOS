@@ -34,7 +34,7 @@ protocol IRepository {
     func getOne(filter: String?) -> Observable<TEntity>
     func getMany(filter: String?) -> Observable<[TEntity]>
 
-    func update(update: @escaping (_ dbObject: TEntity) -> Void, filter: String?) -> Observable<Bool>
+    func update(update: @escaping (_ dbObject: TRealm) -> Void, filter: String?) -> Observable<Bool>
 
     func delete(model: TEntity) -> Observable<Bool>
     func delete(filter: String?) -> Observable<Bool>
@@ -89,7 +89,7 @@ class Repository<T, R>: IRepository
                     observer.onError(ReaalmError.objectIsSignleton)
                 }
                 realm.beginWrite()
-                realm.add(model.serialize())
+                realm.add(model.serialize(), update: true)
                 try realm.commitWrite()
                 observer.onNext(true)
                 observer.onCompleted()
@@ -113,7 +113,7 @@ class Repository<T, R>: IRepository
                     let realm = try Realm()
                     realm.beginWrite()
                     for item in models {
-                        realm.add(item.serialize())
+                        realm.add(item.serialize(), update: true)
                     }
                     try realm.commitWrite()
                     observer.onNext(true)
@@ -172,7 +172,7 @@ class Repository<T, R>: IRepository
         }
     }
 
-    func update(update: @escaping (T) -> Void, filter: String?) -> Observable<Bool> {
+    func update(update: @escaping (R) -> Void, filter: String?) -> Observable<Bool> {
         return Observable<Bool>.create { (observer) -> Disposable in
                     do {
                         let realm = try Realm()
@@ -182,7 +182,7 @@ class Repository<T, R>: IRepository
                         }
                         else {
                             try realm.write {
-                                //objects[0].deserialize()update(objects[0])
+                                update(objects[0])
                             }
                     }
                     observer.onNext(true)
