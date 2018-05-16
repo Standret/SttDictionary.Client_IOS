@@ -11,7 +11,7 @@ import RealmSwift
 import RxSwift
 
 protocol RealmCodable {
-    associatedtype TTarget: Object, RealmDecodable
+    associatedtype TTarget: BaseRealm, RealmDecodable
 
     func serialize() -> TTarget
 }
@@ -53,7 +53,7 @@ class Repository<T, R>: IRepository
     typealias TEntity = T
     typealias TRealm = R
     
-    private func getObjects<TArg>(filter: String?, observer: AnyObserver<TArg>) throws -> Results<R> {
+    private func getObjects<TArg>(filter: String?, observer: AnyObserver<TArg>, tryGetAll: Bool) throws -> Results<R> {
         let realm = try Realm()
         var objects: Results<R>!
         if let query = filter {
@@ -65,7 +65,7 @@ class Repository<T, R>: IRepository
             }
         }
         else {
-            if (!self.singleton) {
+            if (!self.singleton && !tryGetAll) {
                 observer.onError(ReaalmError.queryIsNull)
             }
             else {
@@ -132,7 +132,7 @@ class Repository<T, R>: IRepository
     func getOne(filter: String?) -> Observable<T> {
         return Observable<T>.create { (observer) -> Disposable in
             do {
-                let objects = try self.getObjects(filter: filter, observer: observer)
+                let objects = try self.getObjects(filter: filter, observer: observer, tryGetAll: false)
                 if (objects.count != 1) {
                     observer.onError(ReaalmError.doenotExactlyQuery)
                 }
@@ -152,7 +152,7 @@ class Repository<T, R>: IRepository
     func getMany(filter: String?) -> Observable<[T]> {
         return Observable<[T]>.create { (observer) -> Disposable in
             do {
-                let objects = try self.getObjects(filter: filter, observer: observer)
+                let objects = try self.getObjects(filter: filter, observer: observer, tryGetAll: true)
                 if (objects.count == 1) {
                     observer.onError(ReaalmError.notFoundObjects)
                 }
@@ -161,8 +161,9 @@ class Repository<T, R>: IRepository
                     for item in objects {
                         results.append(item.deserialize() as! T)
                     }
+                    observer.onNext(results)
+                    observer.onCompleted()
                 }
-                observer.onCompleted()
             }
             catch {
                 observer.onError(error)
@@ -176,13 +177,13 @@ class Repository<T, R>: IRepository
         return Observable<Bool>.create { (observer) -> Disposable in
                     do {
                         let realm = try Realm()
-                        let objects = try self.getObjects(filter: filter, observer: observer)
+                        let objects = try self.getObjects(filter: filter, observer: observer, tryGetAll: false)
                         if (objects.count != 1) {
                             observer.onError(ReaalmError.doenotExactlyQuery)
                         }
                         else {
                             try realm.write {
-                                update(objects[0])
+                                update(objects[0]) // check this method
                             }
                     }
                     observer.onNext(true)
@@ -223,7 +224,7 @@ class Repository<T, R>: IRepository
         return Observable<Bool>.create { (observer) -> Disposable in
                 do {
                     let realm = try Realm()
-                    let objects = try self.getObjects(filter: filter, observer: observer)
+                    let objects = try self.getObjects(filter: filter, observer: observer, tryGetAll: true)
 
                     if objects.count == 0 {
                         observer.onError(ReaalmError.notFoundObjects)
@@ -251,7 +252,7 @@ class Repository<T, R>: IRepository
     func exists(filter: String?) -> Observable<Bool> {
         return Observable<Bool>.create { (observer) -> Disposable in
                 do {
-                    let objects = try self.getObjects(filter: filter, observer: observer)
+                    let objects = try self.getObjects(filter: filter, observer: observer, tryGetAll: true)
                     observer.onNext(objects.count > 0)
                     observer.onCompleted()
                 }

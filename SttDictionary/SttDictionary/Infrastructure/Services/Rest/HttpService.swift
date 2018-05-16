@@ -43,7 +43,7 @@ class HttpService: IHttpService {
         var _insertToken = insertToken
         
         return Observable<(HTTPURLResponse, Data)>.create { (observer) -> Disposable in
-            print("--> \(url)")
+            Log.trace(message: url, key: Constants.httpKeyLog)
             
             if !self.connectivity.isConnected {
                 sleep(Constants.timeWaitNextRequest)
@@ -73,8 +73,8 @@ class HttpService: IHttpService {
         var _insertToken = insertToken
         
         return Observable<(HTTPURLResponse, Data)>.create { (observer) -> Disposable in
-            print("--> \(url)")
-            
+            Log.trace(message: url, key: Constants.httpKeyLog)
+
             if !self.connectivity.isConnected {
                 sleep(Constants.timeWaitNextRequest)
                 observer.onError(ApiError.noInternetConnectionError)

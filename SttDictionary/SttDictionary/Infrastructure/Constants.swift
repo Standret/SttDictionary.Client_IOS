@@ -42,4 +42,10 @@ class Constants {
     
     // realm
     static var keySingle = "--single--"
+    
+    // log - key
+    static var httpKeyLog = "HTTP"
+    static var apiDataKeyLog = "APIDP"
+    static var repositoryLog = "RealmRep"
+    static var repositoryExtensionsLog = "RealmEXTRep"
 }
