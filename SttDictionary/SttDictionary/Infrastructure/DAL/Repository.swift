@@ -58,7 +58,7 @@ class Repository<T, R>: IRepository
         var objects: Results<R>!
         if let query = filter {
             if (self.singleton) {
-                observer.onError(ReaalmError.objectIsSignleton)
+                observer.onError(RealmError.objectIsSignleton)
             }
             else {
                 objects = realm.objects(R.self).filter(query)
@@ -66,7 +66,7 @@ class Repository<T, R>: IRepository
         }
         else {
             if (!self.singleton && !tryGetAll) {
-                observer.onError(ReaalmError.queryIsNull)
+                observer.onError(RealmError.queryIsNull)
             }
             else {
                 objects = realm.objects(R.self)
@@ -86,7 +86,7 @@ class Repository<T, R>: IRepository
             do {
                 let realm = try Realm()
                 if (self.singleton && realm.objects(R.self).count > 0) {
-                    observer.onError(ReaalmError.objectIsSignleton)
+                    observer.onError(RealmError.objectIsSignleton)
                 }
                 realm.beginWrite()
                 realm.add(model.serialize(), update: true)
@@ -107,7 +107,7 @@ class Repository<T, R>: IRepository
     func saveMany(models: [T]) -> Observable<Bool> {
         return Observable<Bool>.create { (observer) -> Disposable in
                 if (self.singleton) {
-                    observer.onError(ReaalmError.objectIsSignleton)
+                    observer.onError(RealmError.objectIsSignleton)
                 }
                 do {
                     let realm = try Realm()
@@ -134,7 +134,7 @@ class Repository<T, R>: IRepository
             do {
                 let objects = try self.getObjects(filter: filter, observer: observer, tryGetAll: false)
                 if (objects.count != 1) {
-                    observer.onError(ReaalmError.doenotExactlyQuery)
+                    observer.onError(RealmError.doenotExactlyQuery)
                 }
                 else {
                     observer.onNext(objects[0].deserialize() as! T)
@@ -154,7 +154,7 @@ class Repository<T, R>: IRepository
             do {
                 let objects = try self.getObjects(filter: filter, observer: observer, tryGetAll: true)
                 if (objects.count == 1) {
-                    observer.onError(ReaalmError.notFoundObjects)
+                    observer.onError(RealmError.notFoundObjects)
                 }
                 else {
                    var results = [T]()
@@ -179,7 +179,7 @@ class Repository<T, R>: IRepository
                         let realm = try Realm()
                         let objects = try self.getObjects(filter: filter, observer: observer, tryGetAll: false)
                         if (objects.count != 1) {
-                            observer.onError(ReaalmError.doenotExactlyQuery)
+                            observer.onError(RealmError.doenotExactlyQuery)
                         }
                         else {
                             try realm.write {
@@ -227,7 +227,7 @@ class Repository<T, R>: IRepository
                     let objects = try self.getObjects(filter: filter, observer: observer, tryGetAll: true)
 
                     if objects.count == 0 {
-                        observer.onError(ReaalmError.notFoundObjects)
+                        observer.onError(RealmError.notFoundObjects)
                     }
                     else {
                         try realm.write {
@@ -269,7 +269,7 @@ class Repository<T, R>: IRepository
     func count(filter: String?) -> Observable<Int> {
         return Observable<Int>.create { (observer) -> Disposable in
                 if (self.singleton) {
-                    observer.onError(ReaalmError.objectIsSignleton)
+                    observer.onError(RealmError.objectIsSignleton)
                     return Disposables.create()
                 }
                 do {

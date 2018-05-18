@@ -85,26 +85,3 @@ class ApiService: IApiService {
     }
     
 }
-
-//extension Observable where Element: RealmCodable {
-//    func saveInDB(saveCallback: @escaping (_ obj: Element) -> Observable<Bool>) throws -> Observable<Element>
-//    {
-//        return self.do(onNext: { element in
-//           _ = saveCallback(element)
-//        }, onError: nil, onCompleted: nil, onSubscribe: nil, onSubscribed: nil, onDispose: nil)
-//    }
-//}
-
-extension Observable {
-    func saveInDB(saveCallback: @escaping (_ saveCallback: Element) -> Observable<Bool>) -> Observable<Element>
-    {
-        return self.map({ (element) -> Element in
-            _ = saveCallback(element).subscribe(onNext: { (element) in
-                Log.trace(message: "\(type(of: Element.self)) has been saved succefully in realm", key: Constants.repositoryExtensionsLog)
-            }, onError: { (error) in
-                Log.error(message: "\(type(of: Element.self)) could not save in db", key: Constants.repositoryExtensionsLog)
-            })
-            return element
-        })
-    }
-}

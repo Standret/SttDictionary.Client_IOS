@@ -9,6 +9,19 @@
 import Foundation
 import RxSwift
 
+extension Observable {
+    func saveInDB(saveCallback: @escaping (_ saveCallback: Element) -> Observable<Bool>) -> Observable<Element>
+    {
+        return self.map({ (element) -> Element in
+            _ = saveCallback(element).subscribe(onNext: { (element) in
+                Log.trace(message: "\(type(of: Element.self)) has been saved succefully in realm", key: Constants.repositoryExtensionsLog)
+            }, onError: { (error) in
+                Log.error(message: "\(type(of: Element.self)) could not save in db", key: Constants.repositoryExtensionsLog)
+            })
+            return element
+        })
+    }
+}
 
 extension ObservableType where E == (HTTPURLResponse, Data) {
     func getResult<TResult: Decodable>(ofType _: TResult.Type) -> Observable<TResult> {

@@ -8,7 +8,7 @@
 
 import Foundation
 
-enum ReaalmError: Error {
+enum RealmError: Error {
     case objectIsSignleton
     case notFoundObjects
     case queryIsNull
