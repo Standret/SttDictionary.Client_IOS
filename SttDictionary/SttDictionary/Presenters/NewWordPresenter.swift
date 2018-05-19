@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import RxSwift
 
 protocol NewWordDelegate: Viewable {
     func reloadMainCollectionCell()
@@ -15,10 +16,36 @@ protocol NewWordDelegate: Viewable {
 class NewWordPresenter: SttPresenter<NewWordDelegate>, WordItemDelegate {
     
     var mainTranslation = [WorldCollectionCellPresenter]()
+    var save: RxComand!
+    
+    override func presenterCreating() {
+        save = RxComand(handler: onSave)
+    }
     
     func addNewMainTranslation(value: String) {
         mainTranslation.append(WorldCollectionCellPresenter(value: value, delegate: self))
         delegate.reloadMainCollectionCell()
+    }
+    
+    func onSave() {
+        let obs = Observable<Bool>.create({ (observer) -> Disposable in
+            
+            sleep(3)
+            observer.onNext(true)
+            observer.onNext(true)
+            observer.onNext(true)
+            observer.onNext(true)
+            observer.onCompleted()
+            
+            return Disposables.create()
+        })
+        _ = save.useWork(observable: obs)
+            .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .background))
+            .observeOn(MainScheduler.instance)
+            .subscribe(onNext: { (res) in
+            
+            }, onCompleted: { })
+        
     }
     
     func deleteItem(word: String?) {

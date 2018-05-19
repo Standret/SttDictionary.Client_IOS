@@ -26,8 +26,12 @@ class NewWordViewController: SttViewController<NewWordPresenter>, NewWordDelegat
     @IBOutlet weak var collectionView: UICollectionView!
     @IBOutlet weak var cnstrMainTranslationHeight: NSLayoutConstraint!
     
+    
     @IBAction func closeClick(_ sender: Any) {
         self.dismiss(animated: true, completion: nil)
+    }
+    @IBAction func saveClick(_ sender: Any) {
+        presenter.save.execute()
     }
     @IBAction func addMainTranslateClick(_ sender: Any) {
         if !(tfMainTranslation.text ?? "").isEmpty {
@@ -73,6 +77,16 @@ class NewWordViewController: SttViewController<NewWordPresenter>, NewWordDelegat
         alignedFlowLayout?.horizontalAlignment = .left
         alignedFlowLayout?.minimumLineSpacing = 4
         alignedFlowLayout?.minimumInteritemSpacing = 4
+        
+        presenter.save.addHandler(start: {
+            let indicator = UIActivityIndicatorView(frame: CGRect(x: 0, y: 0, width: 20, height: 20))
+            indicator.startAnimating()
+            let indicatorButton = UIBarButtonItem(customView: indicator)
+            indicatorButton.isEnabled = false
+            self.navigationItem.setRightBarButton(indicatorButton, animated: true)
+        }, end: {
+            self.dismiss(animated: true, completion: nil)
+        })
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {

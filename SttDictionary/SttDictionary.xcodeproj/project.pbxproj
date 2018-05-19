@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		50126B39145C42DD5110937E /* Pods_SttDictionary.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8CF89F27CDB3C3218C6CB2EB /* Pods_SttDictionary.framework */; };
+		8430243D20B0B5C500981590 /* RxComand.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8430243C20B0B5C500981590 /* RxComand.swift */; };
 		8433D0B720A895A30031D690 /* ServiceAssembly.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8433D0B620A895A30031D690 /* ServiceAssembly.swift */; };
 		8433D0B920A895EA0031D690 /* ServiceInjectorAssembly.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8433D0B820A895EA0031D690 /* ServiceInjectorAssembly.swift */; };
 		8433D0BC20A895EA0031D690 /* TagApiModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8433D0BB20A895EA0031D690 /* TagApiModel.swift */; };
@@ -63,6 +64,7 @@
 
 /* Begin PBXFileReference section */
 		5E7EB997EC23AAFE1E703F5B /* Pods-SttDictionary.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SttDictionary.debug.xcconfig"; path = "Pods/Target Support Files/Pods-SttDictionary/Pods-SttDictionary.debug.xcconfig"; sourceTree = "<group>"; };
+		8430243C20B0B5C500981590 /* RxComand.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RxComand.swift; sourceTree = "<group>"; };
 		8433D0B620A895A30031D690 /* ServiceAssembly.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServiceAssembly.swift; sourceTree = "<group>"; };
 		8433D0B820A895EA0031D690 /* ServiceInjectorAssembly.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServiceInjectorAssembly.swift; sourceTree = "<group>"; };
 		8433D0BB20A895EA0031D690 /* TagApiModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TagApiModel.swift; sourceTree = "<group>"; };
@@ -370,6 +372,7 @@
 			isa = PBXGroup;
 			children = (
 				84F39E6820B032D600548681 /* Connectivity.swift */,
+				8430243C20B0B5C500981590 /* RxComand.swift */,
 			);
 			path = Core;
 			sourceTree = "<group>";
@@ -590,6 +593,7 @@
 				84AD6A5620B04EFE000D560E /* SttCollectionViewCell.swift in Sources */,
 				84F39E7920B0334500548681 /* SettingViewController.swift in Sources */,
 				84D4388C20A8788500B171ED /* Repository.swift in Sources */,
+				8430243D20B0B5C500981590 /* RxComand.swift in Sources */,
 				84D4389820A8792F00B171ED /* ApiService.swift in Sources */,
 				84D4388420A877EF00B171ED /* AppDelegateExt.swift in Sources */,
 				84F39E7220B032ED00548681 /* UIViewDExt.swift in Sources */,
