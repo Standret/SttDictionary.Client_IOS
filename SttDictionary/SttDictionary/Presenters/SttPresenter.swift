@@ -9,9 +9,11 @@
 import Foundation
 
 class SttPresenter<TDelegate> : Defaultable {
+
     var delegate: TDelegate!
     
-    required init(delegate: Viewable) {
+    required init() { }
+    func injectView(delegate: Viewable) {
         self.delegate = delegate as! TDelegate
         
         presenterCreating()

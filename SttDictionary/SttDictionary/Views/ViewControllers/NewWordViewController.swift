@@ -10,7 +10,7 @@ import Foundation
 import UIKit
 import AlignedCollectionViewFlowLayout
 
-class NewWordViewController: SttViewController<NewWordPresenter>, NewWordDelegate, UICollectionViewDelegateFlowLayout {
+class NewWordViewController: SttViewController<NewWordPresenter>, NewWordDelegate, UICollectionViewDelegateFlowLayout, UICollectionViewDelegate {
   
     // property
     
@@ -64,6 +64,10 @@ class NewWordViewController: SttViewController<NewWordPresenter>, NewWordDelegat
         let flowLayout = collectionViewLayout as! UICollectionViewFlowLayout
         print(flowLayout.sectionInset)
         return CGSize(width: ((presenter.mainTranslation[indexPath.row].word ?? "") as NSString).size(withAttributes: [NSAttributedStringKey.font: UIFont(name: "Helvetica", size: 18)!]).width + 13, height: 35)
+    }
+    
+    func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: IndexPath) {
+        print("Got clicked! \(indexPath)")
     }
     
     // protocols presenter implement

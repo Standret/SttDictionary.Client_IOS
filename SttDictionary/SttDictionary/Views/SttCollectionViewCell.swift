@@ -9,17 +9,11 @@
 import Foundation
 import UIKit
 
-class SttCollectionViewCell<T>: UICollectionViewCell {
+class SttCollectionViewCell<T: Defaultable>: UICollectionViewCell, Viewable {
     var dataContext: T!
     
     private var firstStart = true
     func prepareBind() {
-        if firstStart {
-            firstStart = false
-            return;
-        }
-        bind()
+        dataContext.injectView(delegate: self)
     }
-    
-    func bind() { }
 }

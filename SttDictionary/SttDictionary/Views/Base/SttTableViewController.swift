@@ -46,7 +46,8 @@ class SttTableViewController<T: Defaultable>: UITableViewController, Viewable, K
         keyboardNotification.callIfKeyboardIsShow = true
         keyboardNotification.delegate = self
         
-        presenter = T.init(delegate: self)
+        presenter = T()
+        presenter.injectView(delegate: self)
         view.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(handleClick(_:))))
     }
     

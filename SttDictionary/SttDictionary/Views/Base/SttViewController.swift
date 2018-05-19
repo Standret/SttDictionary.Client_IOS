@@ -13,38 +13,14 @@ enum TypeNavigation {
     case modality
 }
 
-protocol Viewable {
-    func navigate(storyboardName: String, type: TypeNavigation, animated: Bool)
-    func navigate(storyboardName: String, id: String, type: TypeNavigation, animated: Bool)
-}
+protocol Viewable { }
 
 protocol Defaultable {
-    init(delegate: Viewable)
+    func injectView(delegate: Viewable)
+    init()
 }
 
 class SttViewController<T: Defaultable>: UIViewController, Viewable, KeyboardNotificationDelegate {
-    
-    func navigate(storyboardName: String, type: TypeNavigation = .modality, animated: Bool = true) {
-        let stroyboard = UIStoryboard(name: storyboardName, bundle: nil)
-        let viewContrl = stroyboard.instantiateViewController(withIdentifier: "start")
-        switch type {
-        case .modality:
-            present(viewContrl, animated: animated, completion: nil)
-        case .push:
-            navigationController?.pushViewController(viewContrl, animated: animated)
-        }
-    }
-    
-    func navigate(storyboardName: String, id: String, type: TypeNavigation, animated: Bool = true)  {
-        let stroyboard = UIStoryboard(name: storyboardName, bundle: nil)
-        let viewContrl = stroyboard.instantiateViewController(withIdentifier: id)
-        switch type {
-        case .modality:
-            present(viewContrl, animated: animated, completion: nil)
-        case .push:
-            navigationController?.pushViewController(viewContrl, animated: animated)
-        }
-    }
         
     var presenter: T!
     var keyboardNotification: KeyboardNotification!
@@ -59,7 +35,8 @@ class SttViewController<T: Defaultable>: UIViewController, Viewable, KeyboardNot
         keyboardNotification.callIfKeyboardIsShow = true
         keyboardNotification.delegate = self
         
-        presenter = T.init(delegate: self)
+        presenter = T()//.init(delegate: self)
+        presenter.injectView(delegate: self)
         view.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(handleClick(_:))))
     }
     

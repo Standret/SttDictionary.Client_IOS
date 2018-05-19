@@ -9,7 +9,7 @@
 import Foundation
 import UIKit
 
-class SttCollectionViewSource<T>: NSObject, UICollectionViewDataSource {
+class SttCollectionViewSource<T: Defaultable>: NSObject, UICollectionViewDataSource {
     
     var _collectionView: UICollectionView
     var _cellIdentifier: String
@@ -36,4 +36,5 @@ class SttCollectionViewSource<T>: NSObject, UICollectionViewDataSource {
         cell.prepareBind()
         return cell
     }
+
 }

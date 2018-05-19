@@ -8,10 +8,21 @@
 
 import Foundation
 
-class WorldCollectionCellPresenter {
+protocol WordCollectionCellDelegate: Viewable {
+    
+}
+
+class WorldCollectionCellPresenter: SttPresenter<WordCollectionCellDelegate> {
     var word: String?
     
-    init(value: String) {
+    convenience init(value: String) {
+        self.init()
         word = value
     }
+    
+    func deleteClick() {
+        
+    }
+    
+    required init() { }
 }
