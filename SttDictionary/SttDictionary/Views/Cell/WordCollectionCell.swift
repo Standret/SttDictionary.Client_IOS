@@ -16,5 +16,10 @@ class WordCollectionCell: SttCollectionViewCell<WorldCollectionCellPresenter>, W
         
         isUserInteractionEnabled = true
         lblWord.text = dataContext.word
+        addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(onClick)))
+    }
+    
+    @objc func onClick() {
+        dataContext.deleteClick()
     }
 }

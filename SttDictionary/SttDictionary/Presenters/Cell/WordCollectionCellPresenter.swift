@@ -8,6 +8,10 @@
 
 import Foundation
 
+protocol WordItemDelegate {
+    func deleteItem(word: String?)
+}
+
 protocol WordCollectionCellDelegate: Viewable {
     
 }
@@ -15,13 +19,15 @@ protocol WordCollectionCellDelegate: Viewable {
 class WorldCollectionCellPresenter: SttPresenter<WordCollectionCellDelegate> {
     var word: String?
     
-    convenience init(value: String) {
+    var collectionDelegate: WordItemDelegate!
+    convenience init(value: String, delegate: WordItemDelegate) {
         self.init()
         word = value
+        collectionDelegate = delegate
     }
     
     func deleteClick() {
-        
+        collectionDelegate.deleteItem(word: word)
     }
     
     required init() { }

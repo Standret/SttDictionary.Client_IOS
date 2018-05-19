@@ -10,11 +10,13 @@ import Foundation
 import UIKit
 import AlignedCollectionViewFlowLayout
 
-class NewWordViewController: SttViewController<NewWordPresenter>, NewWordDelegate, UICollectionViewDelegateFlowLayout, UICollectionViewDelegate {
+class NewWordViewController: SttViewController<NewWordPresenter>, NewWordDelegate, UICollectionViewDelegateFlowLayout {
   
     // property
     
     var mainTranslateSource: SttCollectionViewSource<WorldCollectionCellPresenter>!
+    let handlerMain = HandlerTextField()
+    let handlerOriginalWord = HandlerTextField()
     
     // outlet
     
@@ -22,6 +24,7 @@ class NewWordViewController: SttViewController<NewWordPresenter>, NewWordDelegat
     @IBOutlet weak var tfWord: SttTextField!
     @IBOutlet weak var tfMainTranslation: SttTextField!
     @IBOutlet weak var collectionView: UICollectionView!
+    @IBOutlet weak var cnstrMainTranslationHeight: NSLayoutConstraint!
     
     @IBAction func closeClick(_ sender: Any) {
         self.dismiss(animated: true, completion: nil)
@@ -45,12 +48,24 @@ class NewWordViewController: SttViewController<NewWordPresenter>, NewWordDelegat
         tfWord.layer.cornerRadius = UIConstants.cornerRadius
         tfMainTranslation.layer.cornerRadius = UIConstants.cornerRadius
         
+        handlerOriginalWord.addTargetReturnKey { (tf) in
+            self.tfMainTranslation.becomeFirstResponder()
+        }
+        handlerMain.addTargetReturnKey { (tf) in
+            self.addMainTranslateClick(tf)
+        }
+        
+        tfMainTranslation.delegate = handlerMain
+        tfWord.delegate = handlerOriginalWord
+        
         btnAddTranslation.layer.cornerRadius = UIConstants.cornerRadius
         btnAddTranslation.clipsToBounds = true
         btnAddTranslation.tintColor = UIColor.white
         
         mainTranslateSource = SttCollectionViewSource<WorldCollectionCellPresenter>(collectionView: collectionView, cellIdentifier: "WordCollectionCell", collection: presenter.mainTranslation)
         
+        collectionView.sizeToFit()
+        cnstrMainTranslationHeight.constant = collectionView.contentSize.height
         collectionView.dataSource = mainTranslateSource
         collectionView.delegate = self
         
@@ -61,19 +76,20 @@ class NewWordViewController: SttViewController<NewWordPresenter>, NewWordDelegat
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        let flowLayout = collectionViewLayout as! UICollectionViewFlowLayout
-        print(flowLayout.sectionInset)
         return CGSize(width: ((presenter.mainTranslation[indexPath.row].word ?? "") as NSString).size(withAttributes: [NSAttributedStringKey.font: UIFont(name: "Helvetica", size: 18)!]).width + 13, height: 35)
-    }
-    
-    func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: IndexPath) {
-        print("Got clicked! \(indexPath)")
     }
     
     // protocols presenter implement
     
     func reloadMainCollectionCell() {
         mainTranslateSource._collection = presenter.mainTranslation
+        collectionView.sizeToFit()
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+            self.cnstrMainTranslationHeight.constant = self.collectionView.contentSize.height
+            UIView.animate(withDuration: 0.3, animations: {
+                self.view.layoutIfNeeded()
+            })
+        }
     }
     
 }
