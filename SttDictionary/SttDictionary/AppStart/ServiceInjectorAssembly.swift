@@ -14,13 +14,6 @@ class ServiceInjectorAssembly: Assembly {
     
     // Inject service into presenter
     
-    func inject(into service: ViewPresenter) {
-        let _:ViewPresenter = define(init: service) {
-            $0._apiService = self.serviceAssembly.apiService
-            $0._unitOfWorkd = self.serviceAssembly.unitOfWork
-            return $0
-        }
-    }
     
    //  Inject Service into service
     

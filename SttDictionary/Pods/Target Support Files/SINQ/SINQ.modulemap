@@ -1,6 +1,0 @@
-framework module SINQ {
-  umbrella header "SINQ-umbrella.h"
-
-  export *
-  module * { export * }
-}

@@ -17,7 +17,7 @@ class ViewPresenter: SttPresenter<ViewDelegate> {
     var _unitOfWorkd: IUnitOfWork!
     
     override func presenterCreating() {
-        ServiceInjectorAssembly.instance().inject(into: self)
+        //ServiceInjectorAssembly.instance().inject(into: self)
     }
     
     func getTags() {
