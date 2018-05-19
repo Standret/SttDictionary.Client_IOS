@@ -9,9 +9,15 @@
 import Foundation
 
 protocol NewWordDelegate: Viewable {
-    
+    func reloadMainCollectionCell()
 }
 
 class NewWordPresenter: SttPresenter<NewWordDelegate> {
     
+    var mainTranslation = [WorldCollectionCellPresenter]()
+    
+    func addNewMainTranslation(value: String) {
+        mainTranslation.append(WorldCollectionCellPresenter(value: value))
+        delegate.reloadMainCollectionCell()
+    }
 }

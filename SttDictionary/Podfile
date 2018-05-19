@@ -13,4 +13,5 @@ target 'SttDictionary' do
   pod "RxRealm" 
   pod 'RealmSwift'
   pod 'SINQ'
+  pod 'AlignedCollectionViewFlowLayout', '~> 1.1'
 end

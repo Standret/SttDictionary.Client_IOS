@@ -4,6 +4,7 @@
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
+        <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14088"/>
         <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
@@ -188,34 +189,91 @@
             <objects>
                 <viewController id="xvk-72-WV1" customClass="NewWordViewController" customModule="SttDictionary" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="I96-Aa-lrg">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="603"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <textField opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Word" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="kh2-Gf-JXW" customClass="SttTextField" customModule="SttDictionary" customModuleProvider="target">
-                                <rect key="frame" x="16" y="105" width="343" height="40"/>
-                                <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
+                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Word" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="kh2-Gf-JXW" customClass="SttTextField" customModule="SttDictionary" customModuleProvider="target">
+                                <rect key="frame" x="16" y="30" width="343" height="40"/>
+                                <color key="tintColor" name="main"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="40" id="5rj-sX-dmK"/>
+                                </constraints>
                                 <nil key="textColor"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="16"/>
                                 <textInputTraits key="textInputTraits"/>
                             </textField>
-                            <textField opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Main Translation" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="BEh-ba-72Q" customClass="SttTextField" customModule="SttDictionary" customModuleProvider="target">
-                                <rect key="frame" x="16" y="160" width="295" height="40"/>
-                                <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
+                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Main Translation" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="BEh-ba-72Q" customClass="SttTextField" customModule="SttDictionary" customModuleProvider="target">
+                                <rect key="frame" x="16" y="85" width="295" height="40"/>
+                                <color key="tintColor" name="main"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="40" id="nNs-Wc-gdK"/>
+                                </constraints>
                                 <nil key="textColor"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="16"/>
                                 <textInputTraits key="textInputTraits"/>
                             </textField>
-                            <button opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="L2K-tV-RF7">
-                                <rect key="frame" x="319" y="160" width="40" height="40"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxY="YES"/>
+                            <button opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="L2K-tV-RF7">
+                                <rect key="frame" x="319" y="85" width="40" height="40"/>
                                 <color key="backgroundColor" name="main"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="40" id="QNT-Iy-RoT"/>
+                                    <constraint firstAttribute="width" constant="40" id="cLQ-ef-Fqn"/>
+                                </constraints>
                                 <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <state key="normal" image="add">
                                     <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 </state>
+                                <connections>
+                                    <action selector="addMainTranslateClick:" destination="xvk-72-WV1" eventType="touchUpInside" id="XGd-4p-l1b"/>
+                                </connections>
                             </button>
+                            <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" bounces="NO" bouncesZoom="NO" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="iQx-yo-G25">
+                                <rect key="frame" x="16" y="145" width="343" height="128"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <color key="tintColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <collectionViewLayout key="collectionViewLayout" id="itb-LS-p0T" customClass="AlignedCollectionViewFlowLayout" customModule="AlignedCollectionViewFlowLayout"/>
+                                <cells>
+                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="WordCollectionCell" id="QEP-F0-8rQ" customClass="WordCollectionCell" customModule="SttDictionary" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO">
+                                            <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ynp-Iv-T8Z">
+                                                    <rect key="frame" x="6" y="4" width="38" height="42"/>
+                                                    <fontDescription key="fontDescription" name="Helvetica" family="Helvetica" pointSize="18"/>
+                                                    <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
+                                        </view>
+                                        <color key="backgroundColor" red="1" green="0.0" blue="0.016666666666666607" alpha="1" colorSpace="calibratedRGB"/>
+                                        <constraints>
+                                            <constraint firstAttribute="trailing" secondItem="ynp-Iv-T8Z" secondAttribute="trailing" constant="6" id="4jN-3S-8Pn"/>
+                                            <constraint firstItem="ynp-Iv-T8Z" firstAttribute="leading" secondItem="QEP-F0-8rQ" secondAttribute="leading" constant="6" id="BFe-ro-Tbs"/>
+                                            <constraint firstAttribute="bottom" secondItem="ynp-Iv-T8Z" secondAttribute="bottom" constant="4" id="Etb-XE-ioQ"/>
+                                            <constraint firstItem="ynp-Iv-T8Z" firstAttribute="top" secondItem="QEP-F0-8rQ" secondAttribute="top" constant="4" id="TRe-Hp-7yW"/>
+                                        </constraints>
+                                        <connections>
+                                            <outlet property="lblWord" destination="ynp-Iv-T8Z" id="SlX-O8-yGl"/>
+                                        </connections>
+                                    </collectionViewCell>
+                                </cells>
+                            </collectionView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="kh2-Gf-JXW" firstAttribute="leading" secondItem="8HO-Qv-J9d" secondAttribute="leading" constant="16" id="BbV-VM-8xn"/>
+                            <constraint firstItem="BEh-ba-72Q" firstAttribute="top" secondItem="kh2-Gf-JXW" secondAttribute="bottom" constant="15" id="FcY-D8-Ex2"/>
+                            <constraint firstItem="L2K-tV-RF7" firstAttribute="leading" secondItem="BEh-ba-72Q" secondAttribute="trailing" constant="8" id="G32-BF-zAK"/>
+                            <constraint firstItem="BEh-ba-72Q" firstAttribute="leading" secondItem="8HO-Qv-J9d" secondAttribute="leading" constant="16" id="LGh-ZS-BBa"/>
+                            <constraint firstItem="kh2-Gf-JXW" firstAttribute="top" secondItem="8HO-Qv-J9d" secondAttribute="top" constant="30" id="RGS-ue-Lvw"/>
+                            <constraint firstItem="8HO-Qv-J9d" firstAttribute="trailing" secondItem="kh2-Gf-JXW" secondAttribute="trailing" constant="16" id="RP5-pQ-OR8"/>
+                            <constraint firstItem="8HO-Qv-J9d" firstAttribute="trailing" secondItem="L2K-tV-RF7" secondAttribute="trailing" constant="16" id="khJ-pg-4lB"/>
+                            <constraint firstItem="L2K-tV-RF7" firstAttribute="top" secondItem="kh2-Gf-JXW" secondAttribute="bottom" constant="15" id="mnL-Sg-QB0"/>
+                        </constraints>
                         <viewLayoutGuide key="safeArea" id="8HO-Qv-J9d"/>
                     </view>
                     <navigationItem key="navigationItem" title="New word" id="tHK-jD-fgq">
@@ -225,9 +283,13 @@
                                 <action selector="closeClick:" destination="xvk-72-WV1" id="6FA-6T-kdS"/>
                             </connections>
                         </barButtonItem>
+                        <barButtonItem key="rightBarButtonItem" image="tick" id="Bn9-YA-vBq">
+                            <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        </barButtonItem>
                     </navigationItem>
                     <connections>
                         <outlet property="btnAddTranslation" destination="L2K-tV-RF7" id="9FB-Sl-ZAM"/>
+                        <outlet property="collectionView" destination="iQx-yo-G25" id="JWw-cA-dX6"/>
                         <outlet property="tfMainTranslation" destination="BEh-ba-72Q" id="9za-DT-jRP"/>
                         <outlet property="tfWord" destination="kh2-Gf-JXW" id="tVm-or-lvO"/>
                     </connections>
@@ -282,7 +344,7 @@
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="lvu-F0-AB7" sceneMemberID="viewController">
                     <toolbarItems/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="cdP-ht-d5V">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" translucent="NO" id="cdP-ht-d5V">
                         <rect key="frame" x="0.0" y="20" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <color key="barTintColor" name="main"/>
@@ -309,6 +371,7 @@
         <image name="list" width="29" height="29"/>
         <image name="setting" width="29" height="29"/>
         <image name="sync" width="29" height="29"/>
+        <image name="tick" width="29" height="29"/>
         <image name="timer" width="29" height="29"/>
         <namedColor name="background">
             <color red="0.96862745098039216" green="0.96862745098039216" blue="0.97254901960784312" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>

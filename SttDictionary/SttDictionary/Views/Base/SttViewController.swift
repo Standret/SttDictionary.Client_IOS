@@ -45,7 +45,7 @@ class SttViewController<T: Defaultable>: UIViewController, Viewable, KeyboardNot
             navigationController?.pushViewController(viewContrl, animated: animated)
         }
     }
-    
+        
     var presenter: T!
     var keyboardNotification: KeyboardNotification!
     var scrollAmount: CGFloat = 0
