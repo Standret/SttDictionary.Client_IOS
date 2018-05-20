@@ -9,17 +9,15 @@
 import Foundation
 import UIKit
 
-class SttTableViewCell<T>: UITableViewCell {
+class SttTableViewCell<T: ViewInjector>: UITableViewCell, Viewable {
     var dataContext: T!
     
     private var firstStart = true
     func prepareBind() {
-        if firstStart {
-            firstStart = false
-            return;
-        }
-        bind()
+        dataContext.injectView(delegate: self)
     }
     
-    func bind() { }
+    func sendError(error: String) {
+        fatalError(Constants.noImplementException)
+    }
 }

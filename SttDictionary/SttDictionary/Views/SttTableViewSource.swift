@@ -9,7 +9,7 @@
 import Foundation
 import UIKit
 
-class SttTableViewSource<T>: NSObject, UITableViewDataSource {
+class SttTableViewSource<T: ViewInjector>: NSObject, UITableViewDataSource {
     
     var _tableView: UITableView
     var _cellIdentifier: String
@@ -20,9 +20,13 @@ class SttTableViewSource<T>: NSObject, UITableViewDataSource {
         }
     }
     
-    init(tableView: UITableView, cellIdentifier: String) {
+    init(tableView: UITableView, cellIdentifier: String, collection: [T]) {
+        
+        tableView.register(UINib(nibName: "WordEntityTableViewCell", bundle: nil), forCellReuseIdentifier: cellIdentifier)
+
         _tableView = tableView
         _cellIdentifier = cellIdentifier
+        _collection = collection
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {

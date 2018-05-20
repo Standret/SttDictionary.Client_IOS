@@ -23,6 +23,11 @@
 		8437504620A9DD91007BFF5F /* UnitOfWork.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8437504520A9DD91007BFF5F /* UnitOfWork.swift */; };
 		8437504820AC257D007BFF5F /* Log.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8437504720AC257D007BFF5F /* Log.swift */; };
 		8437504A20AD6D21007BFF5F /* Login.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8437504920AD6D21007BFF5F /* Login.storyboard */; };
+		8462666C20B1DECF004169A1 /* WordEntityTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8462666A20B1DECF004169A1 /* WordEntityTableViewCell.swift */; };
+		8462666D20B1DECF004169A1 /* WordEntityTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8462666B20B1DECF004169A1 /* WordEntityTableViewCell.xib */; };
+		8462666F20B1DEED004169A1 /* WordEntityCellPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8462666E20B1DEED004169A1 /* WordEntityCellPresenter.swift */; };
+		8462667120B1E0DF004169A1 /* WordEntityCellSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8462667020B1E0DF004169A1 /* WordEntityCellSource.swift */; };
+		8462667320B1E5A7004169A1 /* WordService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8462667220B1E5A7004169A1 /* WordService.swift */; };
 		84716E4E20B1842100A1F5F6 /* SyncViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84716E4D20B1842100A1F5F6 /* SyncViewController.swift */; };
 		84716E5120B1844000A1F5F6 /* SyncPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84716E5020B1844000A1F5F6 /* SyncPresenter.swift */; };
 		84716E5420B186BB00A1F5F6 /* SyncData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84716E5320B186BB00A1F5F6 /* SyncData.swift */; };
@@ -38,6 +43,7 @@
 		84AD6A5420B04E51000D560E /* SttCollectionViewSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84AD6A5320B04E51000D560E /* SttCollectionViewSource.swift */; };
 		84AD6A5620B04EFE000D560E /* SttCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84AD6A5520B04EFE000D560E /* SttCollectionViewCell.swift */; };
 		84AD6A5920B05010000D560E /* WordCollectionCellPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84AD6A5820B05010000D560E /* WordCollectionCellPresenter.swift */; };
+		84B3CDA220B20915002546C0 /* AddWordApiModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84B3CDA120B20915002546C0 /* AddWordApiModel.swift */; };
 		84D2422120A85177007D8F1A /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84D2422020A85177007D8F1A /* AppDelegate.swift */; };
 		84D2422320A85177007D8F1A /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84D2422220A85177007D8F1A /* ViewController.swift */; };
 		84D2422620A85177007D8F1A /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 84D2422420A85177007D8F1A /* Main.storyboard */; };
@@ -88,6 +94,11 @@
 		8437504520A9DD91007BFF5F /* UnitOfWork.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UnitOfWork.swift; sourceTree = "<group>"; };
 		8437504720AC257D007BFF5F /* Log.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Log.swift; sourceTree = "<group>"; };
 		8437504920AD6D21007BFF5F /* Login.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Login.storyboard; sourceTree = "<group>"; };
+		8462666A20B1DECF004169A1 /* WordEntityTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WordEntityTableViewCell.swift; sourceTree = "<group>"; };
+		8462666B20B1DECF004169A1 /* WordEntityTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = WordEntityTableViewCell.xib; sourceTree = "<group>"; };
+		8462666E20B1DEED004169A1 /* WordEntityCellPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WordEntityCellPresenter.swift; sourceTree = "<group>"; };
+		8462667020B1E0DF004169A1 /* WordEntityCellSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WordEntityCellSource.swift; sourceTree = "<group>"; };
+		8462667220B1E5A7004169A1 /* WordService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WordService.swift; sourceTree = "<group>"; };
 		84716E4D20B1842100A1F5F6 /* SyncViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SyncViewController.swift; sourceTree = "<group>"; };
 		84716E5020B1844000A1F5F6 /* SyncPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SyncPresenter.swift; sourceTree = "<group>"; };
 		84716E5320B186BB00A1F5F6 /* SyncData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SyncData.swift; sourceTree = "<group>"; };
@@ -103,6 +114,7 @@
 		84AD6A5320B04E51000D560E /* SttCollectionViewSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SttCollectionViewSource.swift; sourceTree = "<group>"; };
 		84AD6A5520B04EFE000D560E /* SttCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SttCollectionViewCell.swift; sourceTree = "<group>"; };
 		84AD6A5820B05010000D560E /* WordCollectionCellPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WordCollectionCellPresenter.swift; sourceTree = "<group>"; };
+		84B3CDA120B20915002546C0 /* AddWordApiModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddWordApiModel.swift; sourceTree = "<group>"; };
 		84D2421D20A85177007D8F1A /* SttDictionary.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SttDictionary.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		84D2422020A85177007D8F1A /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		84D2422220A85177007D8F1A /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -166,6 +178,7 @@
 			children = (
 				8433D0BB20A895EA0031D690 /* TagApiModel.swift */,
 				8433D0D120A8BCDA0031D690 /* WordApiModel.swift */,
+				84B3CDA120B20915002546C0 /* AddWordApiModel.swift */,
 			);
 			path = ApiModel;
 			sourceTree = "<group>";
@@ -214,6 +227,16 @@
 			path = Presenters;
 			sourceTree = "<group>";
 		};
+		8462666720B1DE51004169A1 /* WordEntity */ = {
+			isa = PBXGroup;
+			children = (
+				8462666A20B1DECF004169A1 /* WordEntityTableViewCell.swift */,
+				8462666B20B1DECF004169A1 /* WordEntityTableViewCell.xib */,
+				8462667020B1E0DF004169A1 /* WordEntityCellSource.swift */,
+			);
+			path = WordEntity;
+			sourceTree = "<group>";
+		};
 		84716E4C20B183FF00A1F5F6 /* Settings */ = {
 			isa = PBXGroup;
 			children = (
@@ -260,6 +283,7 @@
 			isa = PBXGroup;
 			children = (
 				84AD6A5820B05010000D560E /* WordCollectionCellPresenter.swift */,
+				8462666E20B1DEED004169A1 /* WordEntityCellPresenter.swift */,
 			);
 			path = Cell;
 			sourceTree = "<group>";
@@ -376,6 +400,7 @@
 				8437504720AC257D007BFF5F /* Log.swift */,
 				84716E5A20B18E5C00A1F5F6 /* SyncService.swift */,
 				84716E5F20B1A58400A1F5F6 /* NotificationError.swift */,
+				8462667220B1E5A7004169A1 /* WordService.swift */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -467,6 +492,7 @@
 		84F39E8320B03EDF00548681 /* Cell */ = {
 			isa = PBXGroup;
 			children = (
+				8462666720B1DE51004169A1 /* WordEntity */,
 				84F39E8420B03F0A00548681 /* WordCollectionCell.swift */,
 			);
 			path = Cell;
@@ -543,6 +569,7 @@
 				84F39E6420B0308C00548681 /* Colors.xcassets in Resources */,
 				8437504A20AD6D21007BFF5F /* Login.storyboard in Resources */,
 				84D2422B20A85179007D8F1A /* LaunchScreen.storyboard in Resources */,
+				8462666D20B1DECF004169A1 /* WordEntityTableViewCell.xib in Resources */,
 				84D2422820A85179007D8F1A /* Assets.xcassets in Resources */,
 				84F39E6620B0309A00548681 /* Icons.xcassets in Resources */,
 				84D2422620A85177007D8F1A /* Main.storyboard in Resources */,
@@ -645,6 +672,7 @@
 				8433D0C820A899690031D690 /* SttPresenter.swift in Sources */,
 				8433D0BC20A895EA0031D690 /* TagApiModel.swift in Sources */,
 				8437504620A9DD91007BFF5F /* UnitOfWork.swift in Sources */,
+				8462667320B1E5A7004169A1 /* WordService.swift in Sources */,
 				8433D0CC20A8AE510031D690 /* RealmTag.swift in Sources */,
 				8433D0CE20A8AE8D0031D690 /* RealmWord.swift in Sources */,
 				8433D0CA20A8AD9D0031D690 /* BaseRealm.swift in Sources */,
@@ -654,7 +682,10 @@
 				84716E5920B18CFA00A1F5F6 /* Defaultable.swift in Sources */,
 				84F39E8020B0335100548681 /* NewWordPresenter.swift in Sources */,
 				84716E5420B186BB00A1F5F6 /* SyncData.swift in Sources */,
+				84B3CDA220B20915002546C0 /* AddWordApiModel.swift in Sources */,
+				8462667120B1E0DF004169A1 /* WordEntityCellSource.swift in Sources */,
 				8487700B20B09D7300C164C1 /* HandlerTextField.swift in Sources */,
+				8462666F20B1DEED004169A1 /* WordEntityCellPresenter.swift in Sources */,
 				84AD6A5620B04EFE000D560E /* SttCollectionViewCell.swift in Sources */,
 				84716E5120B1844000A1F5F6 /* SyncPresenter.swift in Sources */,
 				84716E4E20B1842100A1F5F6 /* SyncViewController.swift in Sources */,
@@ -667,6 +698,7 @@
 				84F39E7220B032ED00548681 /* UIViewDExt.swift in Sources */,
 				84F39E7620B0333A00548681 /* NewWordViewController.swift in Sources */,
 				8433D0D220A8BCDA0031D690 /* WordApiModel.swift in Sources */,
+				8462666C20B1DECF004169A1 /* WordEntityTableViewCell.swift in Sources */,
 				84F39E7320B032ED00548681 /* KeyboardNotification.swift in Sources */,
 				8433D0C420A898FA0031D690 /* ViewPresenter.swift in Sources */,
 				8437504820AC257D007BFF5F /* Log.swift in Sources */,

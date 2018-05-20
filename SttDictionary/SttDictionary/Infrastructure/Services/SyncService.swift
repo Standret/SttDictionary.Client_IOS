@@ -27,7 +27,7 @@ class SyncService: ISyncService {
     var _notificationError: INotificationError!
     
     var observe: Observable<SyncDataViewModel> {
-        return _notificationError.useError(observable: (_unitOfWork.syncData.observe()).map({ (transform) -> SyncDataViewModel in
+        return _notificationError.useError(observable: (_unitOfWork.syncData.observe(on: [RealmStatus.Updated])).map({ (transform) -> SyncDataViewModel in
             return transform.0
         }))
     }
@@ -43,6 +43,20 @@ class SyncService: ISyncService {
     
     func sync() -> Observable<(Bool, SyncStep)> {
         return _notificationError.useError(observable: Observable<(Bool, SyncStep)>.create { (observer) -> Disposable in
+            _ = self._unitOfWork.word.getMany(filter: "isSynced == false")
+                .subscribe(onNext: { (words) in
+                print(words.count)
+                for item in words {
+                    _ = self._apiServicce.sendWord(model: AddWordApiModel(word: item.originalWorld, translations: item.translations))
+                            .subscribe(onNext: { (result) in
+                                 _ = self._unitOfWork.word.update(update: { (realmWord) in
+                                    realmWord.originalWorld = result.id!
+                                }, filter: "originalWorld = '\(item.originalWorld)'")
+                                .subscribe(onNext: { print("wordl saved \($0)") })
+                        })
+                }
+                })
+            
             return self._apiServicce.getWord().subscribe(onNext: { (words) in
                 if words.isSuccess && !words.isLocal {
                     observer.onNext((true, SyncStep.DonwloadWord))

@@ -14,6 +14,8 @@ import KeychainSwift
 protocol IApiService {
     func getTags() -> Observable<ResultModel<[TagApiModel]>>
     func getWord() -> Observable<ResultModel<[WordApiModel]>>
+    
+    func sendWord(model: AddWordApiModel) -> Observable<WordApiModel>
 }
 
 class ApiService: IApiService {
@@ -35,6 +37,9 @@ class ApiService: IApiService {
         
         let dbData = _unitOfWork.tag.getMany(filter: nil)
             .map( { ResultModel(result: $0, isLocal: true) } )
+            .catchError( { error in
+                Observable<ResultModel<[TagApiModel]>>.empty()
+            })
         
         return Observable.of(dbData, apiData).merge()
     }
@@ -47,8 +52,20 @@ class ApiService: IApiService {
         
         let dbData = _unitOfWork.word.getMany(filter: nil)
             .map( { ResultModel(result: $0, isLocal: true) } )
+            .catchError( { error in
+                Observable<ResultModel<[WordApiModel]>>.empty()
+            })
+        
         
         return Observable.of(dbData, apiData).merge()
+    }
+    
+    func sendWord(model: AddWordApiModel) -> Observable<WordApiModel> {
+        return _httpService.post(controller: .word("add"), data: model.getDictionary())
+            .getResult(ofType: WordApiModel.self)
+//            .catchError({ (error) in
+//                Observable<Bool>.empty()
+//            })
     }
     
 }

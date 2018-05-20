@@ -13,6 +13,7 @@ class BaseRealm: Object {
     @objc dynamic var id: String = Constants.keySingle
     @objc dynamic var dateCreated: Date = Date()
     @objc dynamic var dateUpdated: Date = Date()
+    @objc dynamic var isSynced: Bool = true
     
     override class func primaryKey() -> String? {
         return "id"

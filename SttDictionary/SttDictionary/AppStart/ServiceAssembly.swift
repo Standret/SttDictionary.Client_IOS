@@ -22,6 +22,9 @@ class ServiceAssembly: Assembly {
     var syncService: ISyncService {
         return define(scope: .lazySingleton, init: SyncService())
     }
+    var wordService: IWordService {
+        return define(scope: .lazySingleton, init: WordServie())
+    }
     var notificationError: INotificationError {
         return define(scope: .lazySingleton, init: NotificationError())
     }

@@ -49,7 +49,7 @@ protocol IRepository {
     func exists(filter: String?) -> Observable<Bool>
     func count(filter: String?) -> Observable<Int>
     //func save(model: TEntity)
-    func observe() -> Observable<(TEntity, RealmStatus)>
+    func observe(on: [RealmStatus]) -> Observable<(TEntity, RealmStatus)>
 }
 
 class Repository<T, R>: IRepository
@@ -161,7 +161,7 @@ class Repository<T, R>: IRepository
         return Observable<[T]>.create { (observer) -> Disposable in
             do {
                 let objects = try self.getObjects(filter: filter, observer: observer, tryGetAll: true)
-                if (objects.count == 1) {
+                if (objects.count == 0) {
                     observer.onError(RealmError.notFoundObjects)
                 }
                 else {
@@ -300,20 +300,26 @@ class Repository<T, R>: IRepository
             .observeOn(MainScheduler.instance)
     }
     
-    func observe() -> Observable<(T, RealmStatus)> {
+    func observe(on: [RealmStatus]) -> Observable<(T, RealmStatus)> {
         return Observable<(T, RealmStatus)>.create { (observer) -> Disposable in
             do {
                 let objects = try self.getObjects(filter: nil, observer: observer, tryGetAll: true)
                 return Observable.arrayWithChangeset(from: objects).subscribe(onNext: { (array, changes) in
                     if let changes = changes {
-                        for itemInserted in changes.inserted {
+                        if on.contains(RealmStatus.Inserted) {
+                            for itemInserted in changes.inserted {
                             observer.onNext((array[itemInserted].deserialize() as! T, RealmStatus.Inserted))
+                            }
                         }
-                        for itemDeleted in changes.deleted {
+                        if on.contains(RealmStatus.Deleted) {
+                            for itemDeleted in changes.deleted {
                             observer.onNext((array[itemDeleted].deserialize() as! T, RealmStatus.Deleted))
+                            }
                         }
-                        for itemUpdated in changes.updated {
+                        if on.contains(RealmStatus.Updated) {
+                            for itemUpdated in changes.updated {
                             observer.onNext((array[itemUpdated].deserialize() as! T, RealmStatus.Updated))
+                            }
                         }
                     }
                     }, onError: observer.onError(_:))

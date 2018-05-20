@@ -15,10 +15,15 @@ protocol NewWordDelegate: Viewable {
 
 class NewWordPresenter: SttPresenter<NewWordDelegate>, WordItemDelegate {
     
+    var word: String?
     var mainTranslation = [WorldCollectionCellPresenter]()
     var save: RxComand!
     
+    var _wordService: IWordService!
+    
     override func presenterCreating() {
+        ServiceInjectorAssembly.instance().inject(into: self)
+        
         save = RxComand(handler: onSave)
     }
     
@@ -28,24 +33,10 @@ class NewWordPresenter: SttPresenter<NewWordDelegate>, WordItemDelegate {
     }
     
     func onSave() {
-        let obs = Observable<Bool>.create({ (observer) -> Disposable in
-            
-            sleep(3)
-            observer.onNext(true)
-            observer.onNext(true)
-            observer.onNext(true)
-            observer.onNext(true)
-            observer.onCompleted()
-            
-            return Disposables.create()
-        })
-        _ = save.useWork(observable: obs)
-            .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .background))
-            .observeOn(MainScheduler.instance)
-            .subscribe(onNext: { (res) in
-            
-            }, onCompleted: { })
-        
+        _ = save.useWork(observable: _wordService.createWord(word: word ?? "", translations: mainTranslation.map( { $0.word! } )))
+            .subscribe(onNext: { (result) in
+                print("successfule saved")
+            })
     }
     
     func deleteItem(word: String?) {

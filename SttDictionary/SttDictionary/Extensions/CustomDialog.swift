@@ -21,7 +21,6 @@ extension UIViewController {
             popover.permittedArrowDirections = .up
         }
         
-        
         self.present(alertController, animated: true, completion: nil)
     }
 }

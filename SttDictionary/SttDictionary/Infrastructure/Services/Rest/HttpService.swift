@@ -16,15 +16,15 @@ protocol IHttpService {
     var token: String { get set }
     var tokenType: String { get set }
     
-    func get(controller: ApiConroller, data: [String:String], insertToken: Bool) -> Observable<(HTTPURLResponse, Data)>
-    func post(controller: ApiConroller, data: [String:String], insertToken: Bool) -> Observable<(HTTPURLResponse, Data)>
+    func get(controller: ApiConroller, data: [String:Any], insertToken: Bool) -> Observable<(HTTPURLResponse, Data)>
+    func post(controller: ApiConroller, data: [String:Any], insertToken: Bool) -> Observable<(HTTPURLResponse, Data)>
 }
 
 extension IHttpService {
-    func get(controller: ApiConroller, data: [String:String] = [:], insertToken: Bool = false) -> Observable<(HTTPURLResponse, Data)> {
+    func get(controller: ApiConroller, data: [String:Any] = [:], insertToken: Bool = false) -> Observable<(HTTPURLResponse, Data)> {
         return self.get(controller: controller, data: data, insertToken: insertToken)
     }
-    func post(controller: ApiConroller, data: [String:String] = [:], insertToken: Bool = false) -> Observable<(HTTPURLResponse, Data)> {
+    func post(controller: ApiConroller, data: [String:Any] = [:], insertToken: Bool = false) -> Observable<(HTTPURLResponse, Data)> {
         return self.post(controller: controller, data: data, insertToken: insertToken)
     }
 }
@@ -38,7 +38,7 @@ class HttpService: IHttpService {
     
     init() { tokenType = "bearer" }
     
-    func  get(controller: ApiConroller, data: [String:String], insertToken: Bool) -> Observable<(HTTPURLResponse, Data)> {
+    func  get(controller: ApiConroller, data: [String:Any], insertToken: Bool) -> Observable<(HTTPURLResponse, Data)> {
         let url = "\(self.url!)\(controller.get())"
         var _insertToken = insertToken
         
@@ -68,7 +68,7 @@ class HttpService: IHttpService {
     }
     
     
-    func post(controller: ApiConroller, data: [String:String], insertToken: Bool) -> Observable<(HTTPURLResponse, Data)> {
+    func post(controller: ApiConroller, data: [String:Any], insertToken: Bool) -> Observable<(HTTPURLResponse, Data)> {
         let url = "\(self.url!)\(controller.get())"
         var _insertToken = insertToken
         
@@ -84,7 +84,7 @@ class HttpService: IHttpService {
             if self.token == "" {
                 _insertToken = false
             }
-            return requestData(.post, url, parameters: data, encoding: URLEncoding.default,
+            return requestData(.post, url, parameters: data, encoding: JSONEncoding.default,
                                headers: _insertToken ? ["Authorization" : "\(self.tokenType) \(self.token)"] : nil)
                 .subscribe(onNext: { (res, data) in
                     observer.onNext((res, data))

@@ -25,10 +25,9 @@ class WorldCollectionCellPresenter: SttPresenter<WordCollectionCellDelegate> {
         word = value
         collectionDelegate = delegate
     }
+    required init() { }
     
     func deleteClick() {
         collectionDelegate.deleteItem(word: word)
     }
-    
-    required init() { }
 }

@@ -12,7 +12,7 @@ struct WordApiModel: Decodable, RealmCodable {
     typealias TTarget = RealmWord
 
     func serialize() -> TTarget {
-        let model = RealmWord(value: ["id": id, "dateCreated": dateCreated, "originalWorld": originalWorld])
+        let model = RealmWord(value: ["isSynced": id == nil ? false : true,  "id": id == nil ? UUID().uuidString : id, "dateCreated": dateCreated, "originalWorld": originalWorld])
         model.translations.append(objectsIn: translations.map( { RealmString(value: [$0]) }))
         if let additionalTrans = additionalTranslations {
             model.additionalTranslate.append(objectsIn: additionalTrans.map( { RealmString(value: [$0]) }))
@@ -27,7 +27,7 @@ struct WordApiModel: Decodable, RealmCodable {
         return model
     }
 
-    let id: String
+    let id: String?
     let dateCreated: Date
     let originalWorld: String
     let translations: [String]
