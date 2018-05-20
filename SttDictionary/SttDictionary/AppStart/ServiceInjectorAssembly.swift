@@ -14,6 +14,19 @@ class ServiceInjectorAssembly: Assembly {
     
     // Inject service into presenter
     
+    func inject(into service: SyncPresenter) {
+        let _:SyncPresenter = define(init: service) {
+            $0._syncService = self.serviceAssembly.syncService
+            return $0
+        }
+    }
+    
+    func inject<T>(into service: SttPresenter<T>) {
+        let _:SttPresenter<T> = define(init: service) {
+            $0._notificationError = self.serviceAssembly.notificationError
+            return $0
+        }
+    }
     
    //  Inject Service into service
     
@@ -25,10 +38,11 @@ class ServiceInjectorAssembly: Assembly {
         }
     }
     
-    func inject(into service: FakeApiService) {
-        let _:FakeApiService = define(init: service) {
-            $0._httpService = self.serviceAssembly.httpService
+    func inject(into service: SyncService) {
+        let _:SyncService = define(init: service) {
             $0._unitOfWork = self.serviceAssembly.unitOfWork
+            $0._apiServicce = self.serviceAssembly.apiService
+            $0._notificationError = self.serviceAssembly.notificationError
             return $0
         }
     }

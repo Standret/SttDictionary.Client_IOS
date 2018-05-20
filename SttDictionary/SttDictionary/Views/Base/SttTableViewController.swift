@@ -9,7 +9,12 @@
 import Foundation
 import UIKit
 
-class SttTableViewController<T: Defaultable>: UITableViewController, Viewable, KeyboardNotificationDelegate {
+class SttTableViewController<T: ViewInjector>: UITableViewController, Viewable, KeyboardNotificationDelegate {
+    
+    func sendError(error: String) {
+        fatalError(Constants.noImplementException)
+    }
+    
     
     func navigate(storyboardName: String, type: TypeNavigation = .modality, animated: Bool = true) {
         let stroyboard = UIStoryboard(name: storyboardName, bundle: nil)

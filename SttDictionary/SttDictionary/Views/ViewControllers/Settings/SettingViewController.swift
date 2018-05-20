@@ -11,9 +11,9 @@ import UIKit
 
 class SettingViewController: SttTableViewController<SettingPresenter>, SettingDelegate {
     
-    @IBOutlet weak var syncCell: UITableViewCell!
-    
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        
     }
 }

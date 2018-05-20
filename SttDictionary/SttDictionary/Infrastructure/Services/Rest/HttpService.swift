@@ -59,7 +59,7 @@ class HttpService: IHttpService {
                 .subscribe(onNext: { (res, data) in
                     observer.onNext((res, data))
                     observer.onCompleted()
-                }, onError: observer.onError(_:), onCompleted: observer.onCompleted)
+                }, onError: observer.onError(_:))
             }
             .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .background))
             .observeOn(MainScheduler.instance)
@@ -89,7 +89,7 @@ class HttpService: IHttpService {
                 .subscribe(onNext: { (res, data) in
                     observer.onNext((res, data))
                     observer.onCompleted()
-                }, onError: observer.onError(_:), onCompleted: observer.onCompleted)
+                }, onError: observer.onError(_:))
             }
             .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .background))
             .observeOn(MainScheduler.instance)

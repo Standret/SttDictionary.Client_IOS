@@ -10,6 +10,10 @@ import Foundation
 import RealmSwift
 import RxSwift
 
+enum RealmStatus {
+    case Updated, Deleted, Inserted
+}
+
 protocol RealmCodable {
     associatedtype TTarget: BaseRealm, RealmDecodable
 
@@ -19,12 +23,15 @@ protocol RealmCodable {
 protocol RealmDecodable {
     associatedtype TTarget
 
+    init()
     func deserialize() -> TTarget
 }
 
 protocol IRepository {
     associatedtype TEntity: RealmCodable
     associatedtype TRealm: RealmDecodable
+    
+    var isSingletoon: Bool { get }
 
     init(singleton: Bool)
 
@@ -42,7 +49,7 @@ protocol IRepository {
     func exists(filter: String?) -> Observable<Bool>
     func count(filter: String?) -> Observable<Int>
     //func save(model: TEntity)
-
+    func observe() -> Observable<(TEntity, RealmStatus)>
 }
 
 class Repository<T, R>: IRepository
@@ -76,6 +83,7 @@ class Repository<T, R>: IRepository
     }
 
     private var singleton: Bool!
+    var isSingletoon: Bool { return singleton }
 
     required init(singleton: Bool) {
         self.singleton = singleton
@@ -85,7 +93,7 @@ class Repository<T, R>: IRepository
         return Observable<Bool>.create { (observer) -> Disposable in
             do {
                 let realm = try Realm()
-                if (self.singleton && realm.objects(R.self).count > 0) {
+                if (self.singleton && realm.objects(R.self).count > 1) {
                     observer.onError(RealmError.objectIsSignleton)
                 }
                 realm.beginWrite()
@@ -290,5 +298,57 @@ class Repository<T, R>: IRepository
             }
             .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .background))
             .observeOn(MainScheduler.instance)
+    }
+    
+    func observe() -> Observable<(T, RealmStatus)> {
+        return Observable<(T, RealmStatus)>.create { (observer) -> Disposable in
+            do {
+                let objects = try self.getObjects(filter: nil, observer: observer, tryGetAll: true)
+                return Observable.arrayWithChangeset(from: objects).subscribe(onNext: { (array, changes) in
+                    if let changes = changes {
+                        for itemInserted in changes.inserted {
+                            observer.onNext((array[itemInserted].deserialize() as! T, RealmStatus.Inserted))
+                        }
+                        for itemDeleted in changes.deleted {
+                            observer.onNext((array[itemDeleted].deserialize() as! T, RealmStatus.Deleted))
+                        }
+                        for itemUpdated in changes.updated {
+                            observer.onNext((array[itemUpdated].deserialize() as! T, RealmStatus.Updated))
+                        }
+                    }
+                    }, onError: observer.onError(_:))
+                } catch {
+                    observer.onError(error)
+                }
+            
+            return Disposables.create()
+        }
+    }
+}
+
+extension IRepository
+where TEntity: Defaultable {
+    func getOrCreateSingletoon() -> Observable<TEntity> {
+        return Observable<TEntity>.create { (observer) -> Disposable in
+            if self.isSingletoon {
+                _ = self.exists(filter: nil).subscribe(onNext: { (result) in
+                    if (result) {
+                        _ = self.getOne(filter: nil).subscribe(onNext: observer.onNext(_:), onError: observer.onError(_:), onCompleted: observer.onCompleted)
+                    }
+                    else {
+                        _ = self.saveOne(model: FactoryDefaultsObject.create(ofType: TEntity.self)).subscribe(onNext: { (result) in
+                            if result {
+                                _ = self.getOne(filter: nil).subscribe(onNext: observer.onNext(_:), onError: observer.onError(_:), onCompleted: observer.onCompleted)
+                            }
+                            else {
+                                Log.error(message: "Singletton can not created", key: Constants.repositoryLog)
+                            }
+                        }, onError: observer.onError(_:))
+                    }
+                }, onError: observer.onError(_:))
+            }
+            
+            return Disposables.create()
+        }
     }
 }

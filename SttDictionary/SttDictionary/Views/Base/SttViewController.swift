@@ -13,14 +13,16 @@ enum TypeNavigation {
     case modality
 }
 
-protocol Viewable { }
+protocol Viewable {
+    func sendError(error: String)
+}
 
-protocol Defaultable {
+protocol ViewInjector {
     func injectView(delegate: Viewable)
     init()
 }
 
-class SttViewController<T: Defaultable>: UIViewController, Viewable, KeyboardNotificationDelegate {
+class SttViewController<T: ViewInjector>: UIViewController, Viewable, KeyboardNotificationDelegate {
         
     var presenter: T!
     var keyboardNotification: KeyboardNotification!
@@ -76,6 +78,9 @@ class SttViewController<T: Defaultable>: UIViewController, Viewable, KeyboardNot
         UIView.animate(withDuration: 0.25) {
             self.view.layoutIfNeeded()
         }
-        
+    }
+    
+    func sendError(error: String) {
+        self.createAlerDialog(title: "Error", message: error)
     }
 }

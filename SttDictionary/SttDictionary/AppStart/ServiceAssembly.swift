@@ -11,12 +11,18 @@ import EasyDi
 
 class ServiceAssembly: Assembly {    
     var apiService: IApiService {
-        return define(scope: .lazySingleton, init: FakeApiService())
+        return define(scope: .lazySingleton, init: ApiService())
     }
     var httpService: IHttpService {
         return define(scope: .lazySingleton, init: HttpService())
     }
     var unitOfWork: IUnitOfWork {
         return define(scope: .lazySingleton, init: UnitOfWork())
+    }
+    var syncService: ISyncService {
+        return define(scope: .lazySingleton, init: SyncService())
+    }
+    var notificationError: INotificationError {
+        return define(scope: .lazySingleton, init: NotificationError())
     }
 }

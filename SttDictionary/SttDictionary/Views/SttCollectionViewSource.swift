@@ -9,7 +9,7 @@
 import Foundation
 import UIKit
 
-class SttCollectionViewSource<T: Defaultable>: NSObject, UICollectionViewDataSource {
+class SttCollectionViewSource<T: ViewInjector>: NSObject, UICollectionViewDataSource {
     
     var _collectionView: UICollectionView
     var _cellIdentifier: String

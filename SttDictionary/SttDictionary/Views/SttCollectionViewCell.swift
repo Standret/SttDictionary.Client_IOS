@@ -9,8 +9,12 @@
 import Foundation
 import UIKit
 
-class SttCollectionViewCell<T: Defaultable>: UICollectionViewCell, Viewable {
+class SttCollectionViewCell<T: ViewInjector>: UICollectionViewCell, Viewable {
     var dataContext: T!
+    
+    func sendError(error: String) {
+        fatalError(Constants.noImplementException)
+    }
     
     private var firstStart = true
     func prepareBind() {

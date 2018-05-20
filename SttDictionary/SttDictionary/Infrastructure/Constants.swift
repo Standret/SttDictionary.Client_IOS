@@ -48,4 +48,5 @@ class Constants {
     static var apiDataKeyLog = "APIDP"
     static var repositoryLog = "RealmRep"
     static var repositoryExtensionsLog = "RealmEXTRep"
+    static var noImplementException = "No implement exception"
 }

@@ -23,6 +23,15 @@
 		8437504620A9DD91007BFF5F /* UnitOfWork.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8437504520A9DD91007BFF5F /* UnitOfWork.swift */; };
 		8437504820AC257D007BFF5F /* Log.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8437504720AC257D007BFF5F /* Log.swift */; };
 		8437504A20AD6D21007BFF5F /* Login.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8437504920AD6D21007BFF5F /* Login.storyboard */; };
+		84716E4E20B1842100A1F5F6 /* SyncViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84716E4D20B1842100A1F5F6 /* SyncViewController.swift */; };
+		84716E5120B1844000A1F5F6 /* SyncPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84716E5020B1844000A1F5F6 /* SyncPresenter.swift */; };
+		84716E5420B186BB00A1F5F6 /* SyncData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84716E5320B186BB00A1F5F6 /* SyncData.swift */; };
+		84716E5720B1876300A1F5F6 /* RealmSyncData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84716E5620B1876300A1F5F6 /* RealmSyncData.swift */; };
+		84716E5920B18CFA00A1F5F6 /* Defaultable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84716E5820B18CFA00A1F5F6 /* Defaultable.swift */; };
+		84716E5B20B18E5C00A1F5F6 /* SyncService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84716E5A20B18E5C00A1F5F6 /* SyncService.swift */; };
+		84716E5E20B1923600A1F5F6 /* DateConverter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84716E5D20B1923600A1F5F6 /* DateConverter.swift */; };
+		84716E6020B1A58400A1F5F6 /* NotificationError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84716E5F20B1A58400A1F5F6 /* NotificationError.swift */; };
+		84716E6220B1B0A900A1F5F6 /* CustomDialog.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84716E6120B1B0A900A1F5F6 /* CustomDialog.swift */; };
 		8487700B20B09D7300C164C1 /* HandlerTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8487700A20B09D7300C164C1 /* HandlerTextField.swift */; };
 		84AD6A5020B04DDA000D560E /* SttTableViewSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84AD6A4F20B04DDA000D560E /* SttTableViewSource.swift */; };
 		84AD6A5220B04E0E000D560E /* SttTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84AD6A5120B04E0E000D560E /* SttTableViewCell.swift */; };
@@ -79,6 +88,15 @@
 		8437504520A9DD91007BFF5F /* UnitOfWork.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UnitOfWork.swift; sourceTree = "<group>"; };
 		8437504720AC257D007BFF5F /* Log.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Log.swift; sourceTree = "<group>"; };
 		8437504920AD6D21007BFF5F /* Login.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Login.storyboard; sourceTree = "<group>"; };
+		84716E4D20B1842100A1F5F6 /* SyncViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SyncViewController.swift; sourceTree = "<group>"; };
+		84716E5020B1844000A1F5F6 /* SyncPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SyncPresenter.swift; sourceTree = "<group>"; };
+		84716E5320B186BB00A1F5F6 /* SyncData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SyncData.swift; sourceTree = "<group>"; };
+		84716E5620B1876300A1F5F6 /* RealmSyncData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RealmSyncData.swift; sourceTree = "<group>"; };
+		84716E5820B18CFA00A1F5F6 /* Defaultable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Defaultable.swift; sourceTree = "<group>"; };
+		84716E5A20B18E5C00A1F5F6 /* SyncService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SyncService.swift; sourceTree = "<group>"; };
+		84716E5D20B1923600A1F5F6 /* DateConverter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateConverter.swift; sourceTree = "<group>"; };
+		84716E5F20B1A58400A1F5F6 /* NotificationError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationError.swift; sourceTree = "<group>"; };
+		84716E6120B1B0A900A1F5F6 /* CustomDialog.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomDialog.swift; sourceTree = "<group>"; };
 		8487700A20B09D7300C164C1 /* HandlerTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HandlerTextField.swift; sourceTree = "<group>"; };
 		84AD6A4F20B04DDA000D560E /* SttTableViewSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SttTableViewSource.swift; sourceTree = "<group>"; };
 		84AD6A5120B04E0E000D560E /* SttTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SttTableViewCell.swift; sourceTree = "<group>"; };
@@ -175,7 +193,7 @@
 		8433D0C120A898960031D690 /* ViewControllers */ = {
 			isa = PBXGroup;
 			children = (
-				84F39E7720B0334500548681 /* SettingViewController.swift */,
+				84716E4C20B183FF00A1F5F6 /* Settings */,
 				84F39E7820B0334500548681 /* WordsViewController.swift */,
 				84F39E7520B0333900548681 /* NewWordViewController.swift */,
 				84D2422220A85177007D8F1A /* ViewController.swift */,
@@ -186,14 +204,48 @@
 		8433D0C220A898CB0031D690 /* Presenters */ = {
 			isa = PBXGroup;
 			children = (
+				84716E4F20B1842900A1F5F6 /* Settings */,
 				84AD6A5720B04FF9000D560E /* Cell */,
 				84F39E7D20B0335100548681 /* NewWordPresenter.swift */,
-				84F39E7B20B0335100548681 /* SettingPresenter.swift */,
 				84F39E7C20B0335100548681 /* WordPresenter.swift */,
 				8433D0C320A898FA0031D690 /* ViewPresenter.swift */,
 				8433D0C720A899690031D690 /* SttPresenter.swift */,
 			);
 			path = Presenters;
+			sourceTree = "<group>";
+		};
+		84716E4C20B183FF00A1F5F6 /* Settings */ = {
+			isa = PBXGroup;
+			children = (
+				84F39E7720B0334500548681 /* SettingViewController.swift */,
+				84716E4D20B1842100A1F5F6 /* SyncViewController.swift */,
+			);
+			path = Settings;
+			sourceTree = "<group>";
+		};
+		84716E4F20B1842900A1F5F6 /* Settings */ = {
+			isa = PBXGroup;
+			children = (
+				84F39E7B20B0335100548681 /* SettingPresenter.swift */,
+				84716E5020B1844000A1F5F6 /* SyncPresenter.swift */,
+			);
+			path = Settings;
+			sourceTree = "<group>";
+		};
+		84716E5220B186AB00A1F5F6 /* ViewModels */ = {
+			isa = PBXGroup;
+			children = (
+				84716E5320B186BB00A1F5F6 /* SyncData.swift */,
+			);
+			path = ViewModels;
+			sourceTree = "<group>";
+		};
+		84716E5C20B1922800A1F5F6 /* Converter */ = {
+			isa = PBXGroup;
+			children = (
+				84716E5D20B1923600A1F5F6 /* DateConverter.swift */,
+			);
+			path = Converter;
 			sourceTree = "<group>";
 		};
 		8487700920B09D3800C164C1 /* Delegate */ = {
@@ -271,6 +323,7 @@
 				84D4388320A877EF00B171ED /* AppDelegateExt.swift */,
 				84D4388520A8782600B171ED /* DateDecodeStrategy.swift */,
 				84D4388720A8784400B171ED /* ObservableTypeExt.swift */,
+				84716E6120B1B0A900A1F5F6 /* CustomDialog.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -298,6 +351,7 @@
 		84D4388D20A8789400B171ED /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				84716E5220B186AB00A1F5F6 /* ViewModels */,
 				8433D0BA20A895EA0031D690 /* ApiModel */,
 				84D4389C20A87D4100B171ED /* RealmModels */,
 				84D4388E20A878A100B171ED /* SpecialModels */,
@@ -320,6 +374,8 @@
 			children = (
 				84D4389420A8790400B171ED /* Rest */,
 				8437504720AC257D007BFF5F /* Log.swift */,
+				84716E5A20B18E5C00A1F5F6 /* SyncService.swift */,
+				84716E5F20B1A58400A1F5F6 /* NotificationError.swift */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -350,6 +406,7 @@
 				8433D0CB20A8AE510031D690 /* RealmTag.swift */,
 				8433D0CD20A8AE8D0031D690 /* RealmWord.swift */,
 				8433D0CF20A8B2120031D690 /* RealmShortTag.swift */,
+				84716E5620B1876300A1F5F6 /* RealmSyncData.swift */,
 			);
 			path = RealmModels;
 			sourceTree = "<group>";
@@ -371,8 +428,10 @@
 		84F39E6720B032D600548681 /* Core */ = {
 			isa = PBXGroup;
 			children = (
+				84716E5C20B1922800A1F5F6 /* Converter */,
 				84F39E6820B032D600548681 /* Connectivity.swift */,
 				8430243C20B0B5C500981590 /* RxComand.swift */,
+				84716E5820B18CFA00A1F5F6 /* Defaultable.swift */,
 			);
 			path = Core;
 			sourceTree = "<group>";
@@ -557,19 +616,23 @@
 			buildActionMask = 2147483647;
 			files = (
 				84F39E7E20B0335100548681 /* SettingPresenter.swift in Sources */,
+				84716E5E20B1923600A1F5F6 /* DateConverter.swift in Sources */,
 				84AD6A5220B04E0E000D560E /* SttTableViewCell.swift in Sources */,
 				84F39E6920B032D600548681 /* Connectivity.swift in Sources */,
 				84D4388620A8782600B171ED /* DateDecodeStrategy.swift in Sources */,
 				8433D0B720A895A30031D690 /* ServiceAssembly.swift in Sources */,
 				84F39E7120B032ED00548681 /* UIViewControllerDExt.swift in Sources */,
 				84F39E7A20B0334500548681 /* WordsViewController.swift in Sources */,
+				84716E5B20B18E5C00A1F5F6 /* SyncService.swift in Sources */,
 				84D4389620A8791600B171ED /* HttpService.swift in Sources */,
 				8433D0B920A895EA0031D690 /* ServiceInjectorAssembly.swift in Sources */,
 				84D4389220A878DD00B171ED /* ConstructModel.swift in Sources */,
 				84F39E6120B0306D00548681 /* SttTableViewController.swift in Sources */,
 				84AD6A5020B04DDA000D560E /* SttTableViewSource.swift in Sources */,
+				84716E6220B1B0A900A1F5F6 /* CustomDialog.swift in Sources */,
 				84D4388820A8784400B171ED /* ObservableTypeExt.swift in Sources */,
 				84F39E7420B032ED00548681 /* SttTextField.swift in Sources */,
+				84716E5720B1876300A1F5F6 /* RealmSyncData.swift in Sources */,
 				8437504420A9B1FB007BFF5F /* ErrorModel.swift in Sources */,
 				84F39E8220B0352D00548681 /* UIConstants.swift in Sources */,
 				84D4389A20A8795500B171ED /* Constants.swift in Sources */,
@@ -588,12 +651,17 @@
 				84D2422120A85177007D8F1A /* AppDelegate.swift in Sources */,
 				84F39E8520B03F0A00548681 /* WordCollectionCell.swift in Sources */,
 				84F39E6220B0306D00548681 /* SttViewController.swift in Sources */,
+				84716E5920B18CFA00A1F5F6 /* Defaultable.swift in Sources */,
 				84F39E8020B0335100548681 /* NewWordPresenter.swift in Sources */,
+				84716E5420B186BB00A1F5F6 /* SyncData.swift in Sources */,
 				8487700B20B09D7300C164C1 /* HandlerTextField.swift in Sources */,
 				84AD6A5620B04EFE000D560E /* SttCollectionViewCell.swift in Sources */,
+				84716E5120B1844000A1F5F6 /* SyncPresenter.swift in Sources */,
+				84716E4E20B1842100A1F5F6 /* SyncViewController.swift in Sources */,
 				84F39E7920B0334500548681 /* SettingViewController.swift in Sources */,
 				84D4388C20A8788500B171ED /* Repository.swift in Sources */,
 				8430243D20B0B5C500981590 /* RxComand.swift in Sources */,
+				84716E6020B1A58400A1F5F6 /* NotificationError.swift in Sources */,
 				84D4389820A8792F00B171ED /* ApiService.swift in Sources */,
 				84D4388420A877EF00B171ED /* AppDelegateExt.swift in Sources */,
 				84F39E7220B032ED00548681 /* UIViewDExt.swift in Sources */,

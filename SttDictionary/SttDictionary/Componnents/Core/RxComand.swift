@@ -15,10 +15,12 @@ class RxComand {
     private var handlerEnd: (() -> Void)?
     private var executeHandler: (() -> Void)
     
-    var endIfReceiveFirstNext = true
+    var singleCallEndCallback = true
+    private var isCall = false
     
     init (handler: @escaping () -> Void) {
         executeHandler = handler
+        isCall = false
     }
     
     func addHandler(start: (() -> Void)?, end: (() -> Void)?) {
@@ -39,19 +41,19 @@ class RxComand {
 extension RxComand {
     func useWork<T>(observable: Observable<T>) -> Observable<T> {
         return observable.do(onNext: { (element) in
-            if self.handlerEnd != nil && self.endIfReceiveFirstNext {
+            if self.handlerEnd != nil && self.singleCallEndCallback && !self.isCall {
                 self.handlerEnd!()
-                self.handlerEnd = nil
+                self.isCall = false
             }
         }, onError: { (error) in
-            if let handler = self.handlerEnd {
-                handler()
-                self.handlerEnd = nil
+            if self.handlerEnd != nil && !self.isCall {
+                self.handlerEnd!()
+                self.isCall = false
             }
         }, onCompleted: {
-            if let handler = self.handlerEnd {
-                handler()
-                self.handlerEnd = nil
+            if self.handlerEnd != nil && !self.isCall {
+                self.handlerEnd!()
+                self.isCall = false
             }
         })
     }
