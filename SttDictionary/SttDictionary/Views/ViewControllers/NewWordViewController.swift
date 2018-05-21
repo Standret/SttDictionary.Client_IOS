@@ -15,8 +15,8 @@ class NewWordViewController: SttViewController<NewWordPresenter>, NewWordDelegat
     // property
     
     var mainTranslateSource: SttCollectionViewSource<WorldCollectionCellPresenter>!
-    let handlerMain = HandlerTextField()
-    let handlerOriginalWord = HandlerTextField()
+    let handlerMain = SttHandlerTextField()
+    let handlerOriginalWord = SttHandlerTextField()
     
     // outlet
     

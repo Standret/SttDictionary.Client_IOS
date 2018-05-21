@@ -15,6 +15,7 @@ enum TypeNavigation {
 
 protocol Viewable {
     func sendError(error: String)
+    func close()
 }
 
 protocol ViewInjector {
@@ -23,12 +24,16 @@ protocol ViewInjector {
 }
 
 class SttViewController<T: ViewInjector>: UIViewController, Viewable, KeyboardNotificationDelegate {
-        
+    
     var presenter: T!
     var keyboardNotification: KeyboardNotification!
     var scrollAmount: CGFloat = 0
     var scrollAmountGeneral: CGFloat = 0
     var moveViewUp: Bool = false
+    
+    var heightScreen: CGFloat { return UIScreen.main.bounds.height }
+    var widthScreen: CGFloat { return UIScreen.main.bounds.width }
+    var hideNavigationBar = false
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -80,7 +85,17 @@ class SttViewController<T: ViewInjector>: UIViewController, Viewable, KeyboardNo
         }
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        navigationController?.setNavigationBarHidden(hideNavigationBar, animated: true)
+    }
+    
     func sendError(error: String) {
         self.createAlerDialog(title: "Error", message: error)
+    }
+    
+    func close() {
+        navigationController?.popViewController(animated: true)
     }
 }

@@ -16,7 +16,7 @@ class SyncPresenter: SttPresenter<SyncDelegate> {
     
     var _syncService: ISyncService!
     
-    var sync: RxComand!
+    var sync: SttComand!
     
     override func presenterCreating() {
         ServiceInjectorAssembly.instance().inject(into: self)

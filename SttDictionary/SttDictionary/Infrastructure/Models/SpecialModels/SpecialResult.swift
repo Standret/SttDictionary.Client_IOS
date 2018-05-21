@@ -12,23 +12,17 @@ class ResultModel<TResult> {
     let isSuccess: Bool
     let isLocal: Bool
     let result: TResult?
-    let error: ApiError?
-    var descriptionError: String?
+    let error: BaseError?
     
     convenience init(result: TResult, isLocal: Bool) {
         self.init(isSuccess: true, isLocal: isLocal, result: result, error: nil)
     }
     
-    convenience init(error: ApiError) {
+    convenience init(error: BaseError) {
         self.init(isSuccess: false, isLocal: true, result: nil, error: error)
     }
     
-    convenience init(error: String) {
-        self.init(isSuccess: false, isLocal: true, result: nil, error: nil)
-        descriptionError = error
-    }
-    
-    private init(isSuccess: Bool, isLocal: Bool, result: TResult?, error: ApiError?) {
+    private init(isSuccess: Bool, isLocal: Bool, result: TResult?, error: BaseError?) {
         self.isSuccess = isSuccess
         self.isLocal = isLocal
         self.result = result

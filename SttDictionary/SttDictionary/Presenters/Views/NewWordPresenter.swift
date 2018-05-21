@@ -17,7 +17,7 @@ class NewWordPresenter: SttPresenter<NewWordDelegate>, WordItemDelegate {
     
     var word: String?
     var mainTranslation = [WorldCollectionCellPresenter]()
-    var save: RxComand!
+    var save: SttComand!
     
     var _wordService: IWordService!
     

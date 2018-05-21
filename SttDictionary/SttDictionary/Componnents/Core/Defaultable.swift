@@ -2,7 +2,7 @@
 //  Defaultable.swift
 //  SttDictionary
 //
-//  Created by Admin on 5/20/18.
+//  Created by Standret on 5/20/18.
 //  Copyright © 2018 Standret. All rights reserved.
 //
 

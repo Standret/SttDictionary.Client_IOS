@@ -1,15 +1,15 @@
 //
-//  RxComand.swift
+//  SttComand.swift
 //  SttDictionary
 //
-//  Created by Admin on 5/19/18.
+//  Created by Standret on 5/19/18.
 //  Copyright © 2018 Standret. All rights reserved.
 //
 
 import Foundation
 import RxSwift
 
-class RxComand {
+class SttComand {
     
     private var handlerStart: (() -> Void)?
     private var handlerEnd: (() -> Void)?
@@ -38,7 +38,7 @@ class RxComand {
     
 }
 
-extension RxComand {
+extension SttComand {
     func useWork<T>(observable: Observable<T>) -> Observable<T> {
         return observable.do(onNext: { (element) in
             if self.handlerEnd != nil && self.singleCallEndCallback && !self.isCall {

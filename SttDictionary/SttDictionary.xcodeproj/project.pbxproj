@@ -8,7 +8,9 @@
 
 /* Begin PBXBuildFile section */
 		50126B39145C42DD5110937E /* Pods_SttDictionary.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8CF89F27CDB3C3218C6CB2EB /* Pods_SttDictionary.framework */; };
-		8430243D20B0B5C500981590 /* RxComand.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8430243C20B0B5C500981590 /* RxComand.swift */; };
+		840427E920B2E78500C94765 /* BaseConverter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 840427E820B2E78500C94765 /* BaseConverter.swift */; };
+		840427F520B2E92700C94765 /* ApiModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 840427F420B2E92700C94765 /* ApiModel.swift */; };
+		8430243D20B0B5C500981590 /* SttComand.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8430243C20B0B5C500981590 /* SttComand.swift */; };
 		8433D0B720A895A30031D690 /* ServiceAssembly.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8433D0B620A895A30031D690 /* ServiceAssembly.swift */; };
 		8433D0B920A895EA0031D690 /* ServiceInjectorAssembly.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8433D0B820A895EA0031D690 /* ServiceInjectorAssembly.swift */; };
 		8433D0BC20A895EA0031D690 /* TagApiModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8433D0BB20A895EA0031D690 /* TagApiModel.swift */; };
@@ -37,7 +39,7 @@
 		84716E5E20B1923600A1F5F6 /* DateConverter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84716E5D20B1923600A1F5F6 /* DateConverter.swift */; };
 		84716E6020B1A58400A1F5F6 /* NotificationError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84716E5F20B1A58400A1F5F6 /* NotificationError.swift */; };
 		84716E6220B1B0A900A1F5F6 /* CustomDialog.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84716E6120B1B0A900A1F5F6 /* CustomDialog.swift */; };
-		8487700B20B09D7300C164C1 /* HandlerTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8487700A20B09D7300C164C1 /* HandlerTextField.swift */; };
+		8487700B20B09D7300C164C1 /* SttHandlerTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8487700A20B09D7300C164C1 /* SttHandlerTextField.swift */; };
 		84AD6A5020B04DDA000D560E /* SttTableViewSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84AD6A4F20B04DDA000D560E /* SttTableViewSource.swift */; };
 		84AD6A5220B04E0E000D560E /* SttTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84AD6A5120B04E0E000D560E /* SttTableViewCell.swift */; };
 		84AD6A5420B04E51000D560E /* SttCollectionViewSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84AD6A5320B04E51000D560E /* SttCollectionViewSource.swift */; };
@@ -79,7 +81,9 @@
 
 /* Begin PBXFileReference section */
 		5E7EB997EC23AAFE1E703F5B /* Pods-SttDictionary.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SttDictionary.debug.xcconfig"; path = "Pods/Target Support Files/Pods-SttDictionary/Pods-SttDictionary.debug.xcconfig"; sourceTree = "<group>"; };
-		8430243C20B0B5C500981590 /* RxComand.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RxComand.swift; sourceTree = "<group>"; };
+		840427E820B2E78500C94765 /* BaseConverter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseConverter.swift; sourceTree = "<group>"; };
+		840427F420B2E92700C94765 /* ApiModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApiModel.swift; sourceTree = "<group>"; };
+		8430243C20B0B5C500981590 /* SttComand.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SttComand.swift; sourceTree = "<group>"; };
 		8433D0B620A895A30031D690 /* ServiceAssembly.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServiceAssembly.swift; sourceTree = "<group>"; };
 		8433D0B820A895EA0031D690 /* ServiceInjectorAssembly.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServiceInjectorAssembly.swift; sourceTree = "<group>"; };
 		8433D0BB20A895EA0031D690 /* TagApiModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TagApiModel.swift; sourceTree = "<group>"; };
@@ -108,7 +112,7 @@
 		84716E5D20B1923600A1F5F6 /* DateConverter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateConverter.swift; sourceTree = "<group>"; };
 		84716E5F20B1A58400A1F5F6 /* NotificationError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationError.swift; sourceTree = "<group>"; };
 		84716E6120B1B0A900A1F5F6 /* CustomDialog.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomDialog.swift; sourceTree = "<group>"; };
-		8487700A20B09D7300C164C1 /* HandlerTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HandlerTextField.swift; sourceTree = "<group>"; };
+		8487700A20B09D7300C164C1 /* SttHandlerTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SttHandlerTextField.swift; sourceTree = "<group>"; };
 		84AD6A4F20B04DDA000D560E /* SttTableViewSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SttTableViewSource.swift; sourceTree = "<group>"; };
 		84AD6A5120B04E0E000D560E /* SttTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SttTableViewCell.swift; sourceTree = "<group>"; };
 		84AD6A5320B04E51000D560E /* SttCollectionViewSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SttCollectionViewSource.swift; sourceTree = "<group>"; };
@@ -173,6 +177,17 @@
 			name = Pods;
 			sourceTree = "<group>";
 		};
+		840427F820B2E9A000C94765 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				84F39E7D20B0335100548681 /* NewWordPresenter.swift */,
+				84F39E7C20B0335100548681 /* WordPresenter.swift */,
+				8433D0C320A898FA0031D690 /* ViewPresenter.swift */,
+				84716E4F20B1842900A1F5F6 /* Settings */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
 		8433D0BA20A895EA0031D690 /* ApiModel */ = {
 			isa = PBXGroup;
 			children = (
@@ -217,11 +232,8 @@
 		8433D0C220A898CB0031D690 /* Presenters */ = {
 			isa = PBXGroup;
 			children = (
-				84716E4F20B1842900A1F5F6 /* Settings */,
-				84AD6A5720B04FF9000D560E /* Cell */,
-				84F39E7D20B0335100548681 /* NewWordPresenter.swift */,
-				84F39E7C20B0335100548681 /* WordPresenter.swift */,
-				8433D0C320A898FA0031D690 /* ViewPresenter.swift */,
+				84AD6A5720B04FF9000D560E /* Cells */,
+				840427F820B2E9A000C94765 /* Views */,
 				8433D0C720A899690031D690 /* SttPresenter.swift */,
 			);
 			path = Presenters;
@@ -267,6 +279,7 @@
 			isa = PBXGroup;
 			children = (
 				84716E5D20B1923600A1F5F6 /* DateConverter.swift */,
+				840427E820B2E78500C94765 /* BaseConverter.swift */,
 			);
 			path = Converter;
 			sourceTree = "<group>";
@@ -274,18 +287,18 @@
 		8487700920B09D3800C164C1 /* Delegate */ = {
 			isa = PBXGroup;
 			children = (
-				8487700A20B09D7300C164C1 /* HandlerTextField.swift */,
+				8487700A20B09D7300C164C1 /* SttHandlerTextField.swift */,
 			);
 			name = Delegate;
 			sourceTree = "<group>";
 		};
-		84AD6A5720B04FF9000D560E /* Cell */ = {
+		84AD6A5720B04FF9000D560E /* Cells */ = {
 			isa = PBXGroup;
 			children = (
 				84AD6A5820B05010000D560E /* WordCollectionCellPresenter.swift */,
 				8462666E20B1DEED004169A1 /* WordEntityCellPresenter.swift */,
 			);
-			path = Cell;
+			path = Cells;
 			sourceTree = "<group>";
 		};
 		84D2421420A85177007D8F1A = {
@@ -389,6 +402,7 @@
 			children = (
 				84D4388F20A878BC00B171ED /* SpecialResult.swift */,
 				8437504320A9B1FB007BFF5F /* ErrorModel.swift */,
+				840427F420B2E92700C94765 /* ApiModel.swift */,
 			);
 			path = SpecialModels;
 			sourceTree = "<group>";
@@ -455,7 +469,7 @@
 			children = (
 				84716E5C20B1922800A1F5F6 /* Converter */,
 				84F39E6820B032D600548681 /* Connectivity.swift */,
-				8430243C20B0B5C500981590 /* RxComand.swift */,
+				8430243C20B0B5C500981590 /* SttComand.swift */,
 				84716E5820B18CFA00A1F5F6 /* Defaultable.swift */,
 			);
 			path = Core;
@@ -655,6 +669,7 @@
 				8433D0B920A895EA0031D690 /* ServiceInjectorAssembly.swift in Sources */,
 				84D4389220A878DD00B171ED /* ConstructModel.swift in Sources */,
 				84F39E6120B0306D00548681 /* SttTableViewController.swift in Sources */,
+				840427E920B2E78500C94765 /* BaseConverter.swift in Sources */,
 				84AD6A5020B04DDA000D560E /* SttTableViewSource.swift in Sources */,
 				84716E6220B1B0A900A1F5F6 /* CustomDialog.swift in Sources */,
 				84D4388820A8784400B171ED /* ObservableTypeExt.swift in Sources */,
@@ -684,14 +699,14 @@
 				84716E5420B186BB00A1F5F6 /* SyncData.swift in Sources */,
 				84B3CDA220B20915002546C0 /* AddWordApiModel.swift in Sources */,
 				8462667120B1E0DF004169A1 /* WordEntityCellSource.swift in Sources */,
-				8487700B20B09D7300C164C1 /* HandlerTextField.swift in Sources */,
+				8487700B20B09D7300C164C1 /* SttHandlerTextField.swift in Sources */,
 				8462666F20B1DEED004169A1 /* WordEntityCellPresenter.swift in Sources */,
 				84AD6A5620B04EFE000D560E /* SttCollectionViewCell.swift in Sources */,
 				84716E5120B1844000A1F5F6 /* SyncPresenter.swift in Sources */,
 				84716E4E20B1842100A1F5F6 /* SyncViewController.swift in Sources */,
 				84F39E7920B0334500548681 /* SettingViewController.swift in Sources */,
 				84D4388C20A8788500B171ED /* Repository.swift in Sources */,
-				8430243D20B0B5C500981590 /* RxComand.swift in Sources */,
+				8430243D20B0B5C500981590 /* SttComand.swift in Sources */,
 				84716E6020B1A58400A1F5F6 /* NotificationError.swift in Sources */,
 				84D4389820A8792F00B171ED /* ApiService.swift in Sources */,
 				84D4388420A877EF00B171ED /* AppDelegateExt.swift in Sources */,
@@ -701,6 +716,7 @@
 				8462666C20B1DECF004169A1 /* WordEntityTableViewCell.swift in Sources */,
 				84F39E7320B032ED00548681 /* KeyboardNotification.swift in Sources */,
 				8433D0C420A898FA0031D690 /* ViewPresenter.swift in Sources */,
+				840427F520B2E92700C94765 /* ApiModel.swift in Sources */,
 				8437504820AC257D007BFF5F /* Log.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

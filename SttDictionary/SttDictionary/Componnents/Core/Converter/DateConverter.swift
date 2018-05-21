@@ -8,13 +8,6 @@
 
 import Foundation
 
-protocol IConverter {
-    associatedtype TIn
-    associatedtype TOut
-    
-    func convert(value: TIn, parametr: Any?) -> TOut
-}
-
 class DateConverter: IConverter {
     
     typealias TIn = Date
@@ -25,11 +18,5 @@ class DateConverter: IConverter {
         formatter.dateFormat = "yy-MMM-dd HH:mm:ss"
         
         return formatter.string(from: value)
-    }
-}
-
-extension IConverter {
-    func convert(value: TIn) -> TOut {
-        return self.convert(value: value, parametr: nil)
     }
 }
