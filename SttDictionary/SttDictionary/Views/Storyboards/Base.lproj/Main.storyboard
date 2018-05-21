@@ -342,7 +342,7 @@
                                                 <textInputTraits key="textInputTraits" returnKeyType="continue" enablesReturnKeyAutomatically="YES"/>
                                             </textField>
                                             <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Main Translation" textAlignment="natural" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="BEh-ba-72Q" customClass="SttTextField" customModule="SttDictionary" customModuleProvider="target">
-                                                <rect key="frame" x="16" y="85" width="240" height="40"/>
+                                                <rect key="frame" x="16" y="81" width="240" height="40"/>
                                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <color key="tintColor" name="main"/>
                                                 <constraints>
@@ -353,7 +353,7 @@
                                                 <textInputTraits key="textInputTraits" returnKeyType="join" enablesReturnKeyAutomatically="YES"/>
                                             </textField>
                                             <button opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="L2K-tV-RF7">
-                                                <rect key="frame" x="272" y="85" width="40" height="40"/>
+                                                <rect key="frame" x="272" y="81" width="40" height="40"/>
                                                 <color key="backgroundColor" name="main"/>
                                                 <constraints>
                                                     <constraint firstAttribute="width" constant="40" id="LNU-ae-UGj"/>
@@ -368,7 +368,7 @@
                                                 </connections>
                                             </button>
                                             <collectionView clipsSubviews="YES" contentMode="scaleToFill" bounces="NO" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" delaysContentTouches="NO" canCancelContentTouches="NO" bouncesZoom="NO" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="iQx-yo-G25">
-                                                <rect key="frame" x="16" y="145" width="288" height="128"/>
+                                                <rect key="frame" x="16" y="141" width="288" height="128"/>
                                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <color key="tintColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <constraints>
@@ -404,18 +404,30 @@
                                                     </collectionViewCell>
                                                 </cells>
                                             </collectionView>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="This word is already in your dictionary" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="IRI-09-h4c">
+                                                <rect key="frame" x="16" y="75" width="201" height="0.0"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="width" constant="201" id="1v3-U7-6Ds"/>
+                                                    <constraint firstAttribute="height" id="Iwh-LH-Rln"/>
+                                                </constraints>
+                                                <fontDescription key="fontDescription" name="Helvetica" family="Helvetica" pointSize="12"/>
+                                                <color key="textColor" name="error"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
                                         </subviews>
                                         <color key="backgroundColor" name="background"/>
                                         <constraints>
                                             <constraint firstItem="iQx-yo-G25" firstAttribute="leading" secondItem="3Ar-DJ-qqT" secondAttribute="leading" constant="16" id="5eu-I2-zHi"/>
                                             <constraint firstItem="BEh-ba-72Q" firstAttribute="leading" secondItem="3Ar-DJ-qqT" secondAttribute="leading" constant="16" id="8v8-nL-ffZ"/>
-                                            <constraint firstItem="L2K-tV-RF7" firstAttribute="top" secondItem="kh2-Gf-JXW" secondAttribute="bottom" constant="15" id="AeW-Jh-v0w"/>
                                             <constraint firstItem="L2K-tV-RF7" firstAttribute="leading" secondItem="BEh-ba-72Q" secondAttribute="trailing" constant="16" id="B4p-pj-Z2y"/>
+                                            <constraint firstItem="BEh-ba-72Q" firstAttribute="top" secondItem="IRI-09-h4c" secondAttribute="bottom" constant="6" id="E9v-rp-man"/>
+                                            <constraint firstItem="IRI-09-h4c" firstAttribute="leading" secondItem="3Ar-DJ-qqT" secondAttribute="leading" constant="16" id="I7h-hh-5bn"/>
+                                            <constraint firstItem="L2K-tV-RF7" firstAttribute="top" secondItem="IRI-09-h4c" secondAttribute="bottom" constant="6" id="O4J-B2-khr"/>
                                             <constraint firstItem="kh2-Gf-JXW" firstAttribute="top" secondItem="3Ar-DJ-qqT" secondAttribute="top" constant="30" id="U43-Eg-naH"/>
                                             <constraint firstAttribute="trailing" secondItem="kh2-Gf-JXW" secondAttribute="trailing" constant="16" id="Ucc-z0-gQH"/>
-                                            <constraint firstItem="BEh-ba-72Q" firstAttribute="top" secondItem="kh2-Gf-JXW" secondAttribute="bottom" constant="15" id="bOR-DH-EAU"/>
                                             <constraint firstAttribute="trailing" secondItem="L2K-tV-RF7" secondAttribute="trailing" constant="8" id="ci6-cU-nc6"/>
                                             <constraint firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="iQx-yo-G25" secondAttribute="bottom" constant="20" symbolic="YES" id="eAp-Qj-6al"/>
+                                            <constraint firstItem="IRI-09-h4c" firstAttribute="top" secondItem="kh2-Gf-JXW" secondAttribute="bottom" constant="5" id="kra-uU-0fh"/>
                                             <constraint firstItem="iQx-yo-G25" firstAttribute="top" secondItem="BEh-ba-72Q" secondAttribute="bottom" constant="20" id="sFt-xd-5Pw"/>
                                             <constraint firstItem="kh2-Gf-JXW" firstAttribute="leading" secondItem="3Ar-DJ-qqT" secondAttribute="leading" constant="16" id="tb7-Lg-LbU"/>
                                             <constraint firstAttribute="trailing" secondItem="iQx-yo-G25" secondAttribute="trailing" constant="16" id="wwx-iP-MRE"/>
@@ -458,10 +470,12 @@
                     </navigationItem>
                     <connections>
                         <outlet property="btnAddTranslation" destination="L2K-tV-RF7" id="9FB-Sl-ZAM"/>
+                        <outlet property="cnstrHeightExists" destination="Iwh-LH-Rln" id="KxS-0i-PEU"/>
                         <outlet property="cnstrMainTranslationHeight" destination="YTY-PX-EUu" id="vyG-2o-bkA"/>
                         <outlet property="collectionView" destination="iQx-yo-G25" id="JWw-cA-dX6"/>
                         <outlet property="tfMainTranslation" destination="BEh-ba-72Q" id="9za-DT-jRP"/>
                         <outlet property="tfWord" destination="kh2-Gf-JXW" id="tVm-or-lvO"/>
+                        <outlet property="wordExistsLabel" destination="IRI-09-h4c" id="Y80-NX-c7s"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="hEg-GT-WTQ" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -546,14 +560,11 @@
         <namedColor name="background">
             <color red="0.96862745098039216" green="0.96862745098039216" blue="0.97254901960784312" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
-        <namedColor name="background">
-            <color red="0.96862745098039216" green="0.96862745098039216" blue="0.97254901960784312" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-        </namedColor>
         <namedColor name="border">
             <color red="0.73725490196078436" green="0.73725490196078436" blue="0.73725490196078436" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
-        <namedColor name="main">
-            <color red="0.062745098039215685" green="0.56862745098039214" blue="0.45098039215686275" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        <namedColor name="error">
+            <color red="0.9137254901960784" green="0.31764705882352939" blue="0.19607843137254902" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
         <namedColor name="main">
             <color red="0.062745098039215685" green="0.56862745098039214" blue="0.45098039215686275" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>

@@ -31,7 +31,7 @@ class SyncPresenter: SttPresenter<SyncDelegate> {
             self.delegate.updateData(date: DateConverter().convert(value: model.dateOfLastSync), countLocal: model.countLocal, countServer: model.countServer)
         })
         
-        sync = RxComand(handler: onSync)
+        sync = SttComand(handler: onSync)
     }
     
     func onSync() {

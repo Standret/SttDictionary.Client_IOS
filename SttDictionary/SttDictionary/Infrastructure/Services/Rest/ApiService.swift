@@ -61,11 +61,8 @@ class ApiService: IApiService {
     }
     
     func sendWord(model: AddWordApiModel) -> Observable<WordApiModel> {
-        return _httpService.post(controller: .word("add"), data: model.getDictionary())
+        return _httpService.post(controller: .word("add"), dataAny: model.getDictionary())
             .getResult(ofType: WordApiModel.self)
-//            .catchError({ (error) in
-//                Observable<Bool>.empty()
-//            })
     }
     
 }

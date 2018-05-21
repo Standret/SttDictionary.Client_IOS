@@ -14,7 +14,7 @@ enum TypeNavigation {
 }
 
 protocol Viewable {
-    func sendError(error: String)
+    func sendError(title: String?, message: String)
     func close()
 }
 
@@ -91,8 +91,8 @@ class SttViewController<T: ViewInjector>: UIViewController, Viewable, KeyboardNo
         navigationController?.setNavigationBarHidden(hideNavigationBar, animated: true)
     }
     
-    func sendError(error: String) {
-        self.createAlerDialog(title: "Error", message: error)
+    func sendError(title: String?, message: String) {
+        self.createAlerDialog(title: title, message: message)
     }
     
     func close() {

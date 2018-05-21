@@ -20,7 +20,7 @@ class WordViewController: SttViewController<WordPresenter>, WordDelegate {
         super.viewDidLoad()
         //print(Realm.Configuration.defaultConfiguration.fileURL!)
         
-        wordsSource = WordEntityCellSource(tableView: mainTable, cellIdentifier: "WordEntityCell", collection: presenter.words)
+        wordsSource = WordEntityCellSource(tableView: mainTable, cellName: "WordEntityTableViewCell", cellIdentifier: "WordEntityCell", collection: presenter.words)
      //   mainTable.tableFooterView = UIView(frame: CGRect(x: 0, y: 0, width: 320, height: 1))
         mainTable.dataSource = wordsSource
         

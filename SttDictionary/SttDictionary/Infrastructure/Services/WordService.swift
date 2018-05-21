@@ -12,6 +12,7 @@ import RxSwift
 protocol IWordService {
     func getAllWord() -> Observable<[WordEntityCellPresenter]>
     func createWord(word: String, translations: [String]) -> Observable<Bool>
+    func exists(word: String) -> Observable<Bool>
     
     var observe: Observable<WordEntityCellPresenter> { get }
 }
@@ -36,5 +37,9 @@ class WordServie: IWordService {
     
     func createWord(word: String, translations: [String]) -> Observable<Bool> {
         return _notificationError.useError(observable: _unitOfWork.word.saveOne(model: WordApiModel(id: nil, dateCreated: Date(), originalWorld: word, translations: translations, additionalTranslations: nil, tags: nil, imageUrls: nil)))
+    }
+    
+    func exists(word: String) -> Observable<Bool> {
+        return _notificationError.useError(observable: _unitOfWork.word.exists(filter: "originalWorld = '\(word)'"))
     }
 }

@@ -25,6 +25,8 @@ class NewWordViewController: SttViewController<NewWordPresenter>, NewWordDelegat
     @IBOutlet weak var tfMainTranslation: SttTextField!
     @IBOutlet weak var collectionView: UICollectionView!
     @IBOutlet weak var cnstrMainTranslationHeight: NSLayoutConstraint!
+    @IBOutlet weak var wordExistsLabel: UILabel!
+    @IBOutlet weak var cnstrHeightExists: NSLayoutConstraint!
     
     
     @IBAction func closeClick(_ sender: Any) {
@@ -55,12 +57,13 @@ class NewWordViewController: SttViewController<NewWordPresenter>, NewWordDelegat
         tfWord.layer.cornerRadius = UIConstants.cornerRadius
         tfMainTranslation.layer.cornerRadius = UIConstants.cornerRadius
         
-        handlerOriginalWord.addTargetReturnKey { (tf) in
+        handlerOriginalWord.addTargetReturnKey(type: .shouldReturn) { (tf) in
             self.tfMainTranslation.becomeFirstResponder()
         }
-        handlerMain.addTargetReturnKey { (tf) in
+        handlerMain.addTargetReturnKey(type: .shouldReturn) { (tf) in
             self.addMainTranslateClick(tf)
         }
+        tfWord.addTarget(self, action: #selector(textFieldDidChange(_:)), for: .editingChanged)
         
         tfMainTranslation.delegate = handlerMain
         tfWord.delegate = handlerOriginalWord
@@ -96,6 +99,10 @@ class NewWordViewController: SttViewController<NewWordPresenter>, NewWordDelegat
         return CGSize(width: ((presenter.mainTranslation[indexPath.row].word ?? "") as NSString).size(withAttributes: [NSAttributedStringKey.font: UIFont(name: "Helvetica", size: 18)!]).width + 13, height: 35)
     }
     
+    @objc func textFieldDidChange(_ textField: UITextField) {
+        presenter.word = textField.text
+    }
+    
     // protocols presenter implement
     
     func reloadMainCollectionCell() {
@@ -106,6 +113,14 @@ class NewWordViewController: SttViewController<NewWordPresenter>, NewWordDelegat
             UIView.animate(withDuration: 0.3, animations: {
                 self.view.layoutIfNeeded()
             })
+        }
+    }
+    
+    func error(isHidden: Bool) {
+        wordExistsLabel.isHidden = isHidden
+        cnstrHeightExists.constant = isHidden ? 0 : 14
+        UIView.animate(withDuration: 0.3) {
+            self.view.layoutIfNeeded()
         }
     }
     

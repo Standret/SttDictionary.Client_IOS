@@ -21,7 +21,7 @@ class SttPresenter<TDelegate> : ViewInjector {
         
         _ = _notificationError.errorObservable.subscribe(onNext: { (error) in
             if self.delegate is Viewable {
-                (self.delegate as! Viewable).sendError(error: error)
+                (self.delegate as! Viewable).sendError(title: error.0, message: error.1)
             }
             else {
                 print(error)

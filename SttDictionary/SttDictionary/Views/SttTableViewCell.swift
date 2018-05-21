@@ -10,6 +10,7 @@ import Foundation
 import UIKit
 
 class SttTableViewCell<T: ViewInjector>: UITableViewCell, Viewable {
+    
     var dataContext: T!
     
     private var firstStart = true
@@ -17,7 +18,11 @@ class SttTableViewCell<T: ViewInjector>: UITableViewCell, Viewable {
         dataContext.injectView(delegate: self)
     }
     
-    func sendError(error: String) {
+    func sendError(title: String?, message: String) {
+        fatalError(Constants.noImplementException)
+    }
+    
+    func close() {
         fatalError(Constants.noImplementException)
     }
 }

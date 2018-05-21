@@ -11,10 +11,12 @@ import UIKit
 
 class SttTableViewController<T: ViewInjector>: UITableViewController, Viewable, KeyboardNotificationDelegate {
     
-    func sendError(error: String) {
+    func sendError(title: String?, message: String) {
         fatalError(Constants.noImplementException)
     }
-    
+    func close() {
+        fatalError(Constants.noImplementException)
+    }
     
     func navigate(storyboardName: String, type: TypeNavigation = .modality, animated: Bool = true) {
         let stroyboard = UIStoryboard(name: storyboardName, bundle: nil)

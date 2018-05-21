@@ -11,11 +11,18 @@ import RxSwift
 
 protocol NewWordDelegate: Viewable {
     func reloadMainCollectionCell()
+    func error(isHidden: Bool)
 }
 
 class NewWordPresenter: SttPresenter<NewWordDelegate>, WordItemDelegate {
     
-    var word: String?
+    var word: String? {
+        didSet {
+            if !(word ?? "").trimmingCharacters(in: .whitespaces).isEmpty {
+                _ = _wordService.exists(word: word!).subscribe(onNext: { self.delegate.error(isHidden: !$0) })
+            }
+        }
+    }
     var mainTranslation = [WorldCollectionCellPresenter]()
     var save: SttComand!
     
@@ -24,7 +31,7 @@ class NewWordPresenter: SttPresenter<NewWordDelegate>, WordItemDelegate {
     override func presenterCreating() {
         ServiceInjectorAssembly.instance().inject(into: self)
         
-        save = RxComand(handler: onSave)
+        save = SttComand(handler: onSave)
     }
     
     func addNewMainTranslation(value: String) {
@@ -33,10 +40,12 @@ class NewWordPresenter: SttPresenter<NewWordDelegate>, WordItemDelegate {
     }
     
     func onSave() {
+        if !(word ?? "").trimmingCharacters(in: .whitespaces).isEmpty && mainTranslation.count > 0 {
         _ = save.useWork(observable: _wordService.createWord(word: word ?? "", translations: mainTranslation.map( { $0.word! } )))
             .subscribe(onNext: { (result) in
                 print("successfule saved")
             })
+        }
     }
     
     func deleteItem(word: String?) {

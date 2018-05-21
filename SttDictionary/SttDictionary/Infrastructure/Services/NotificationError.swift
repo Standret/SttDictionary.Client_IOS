@@ -10,20 +10,25 @@ import Foundation
 import RxSwift
 
 protocol INotificationError {
-    var errorObservable: Observable<String> { get }
+    var errorObservable: Observable<(String, String)> { get }
     
     func useError<T>(observable: Observable<T>) -> Observable<T>
 }
 
 class NotificationError: INotificationError {
     
-    let subject = PublishSubject<String>()
+    let subject = PublishSubject<(String, String)>()
     
-    var errorObservable: Observable<String> { return subject }
+    var errorObservable: Observable<(String, String)> { return subject }
     
     func useError<T>(observable: Observable<T>) -> Observable<T> {
         return observable.do(onError: { (error) in
-            self.subject.onNext("\(error)")
+            if let er = error as? BaseError {
+                self.subject.onNext(er.getMessage())
+            }
+            else {
+                self.subject.onNext(("Unkown", "\(error)"))
+            }
         })
     }
 }
