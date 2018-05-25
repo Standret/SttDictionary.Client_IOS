@@ -8,6 +8,7 @@
 
 import Foundation
 import RxSwift
+import SINQ
 
 enum SyncStep {
     case DonwloadWord, DonwloadTag
@@ -43,49 +44,18 @@ class SyncService: ISyncService {
     
     func sync() -> Observable<(Bool, SyncStep)> {
         return _notificationError.useError(observable: Observable<(Bool, SyncStep)>.create { (observer) -> Disposable in
-            _ = self._unitOfWork.word.getMany(filter: "isSynced == false")
-                .subscribe(onNext: { (words) in
-                print(words.count)
-                for item in words {
-                    _ = self._apiServicce.sendWord(model: AddWordApiModel(word: item.originalWorld, translations: item.translations))
-                            .subscribe(onNext: { (result) in
-                                 _ = self._unitOfWork.word.update(update: { (realmWord) in
-                                    realmWord.originalWorld = result.id!
-                                }, filter: "originalWorld = '\(item.originalWorld)'")
-                                .subscribe(onNext: { print("wordl saved \($0)") })
-                        })
-                }
+            self._unitOfWork.word.getMany(filter: "isSynced == false")
+                .flatMap({ Observable.from($0) })
+                .flatMap({ self._apiServicce.sendWord(model: AddWordApiModel(word: $0.originalWorld, translations: $0.translations)) })
+                .flatMap({ (word) -> Observable<Bool> in
+                    self._unitOfWork.word.update(update: { (realmWord) in
+                        realmWord.id = word.id!
+                        realmWord.isSynced = true
+                    }, filter: "originalWorld = '\(word.originalWorld)'")
                 })
             
-            return self._apiServicce.getWord().subscribe(onNext: { (words) in
-                if words.isSuccess && !words.isLocal {
-                    observer.onNext((true, SyncStep.DonwloadWord))
-                    
-                    _ = self._apiServicce.getTags().subscribe(onNext: { (tags) in
-                        if tags.isSuccess && !tags.isLocal {
-                            observer.onNext((true, SyncStep.DonwloadTag))
-                            
-                            // update
-                            _ = self._unitOfWork.syncData.update(update: { (obj) in
-                                obj.dateOfLastSync = Date()
-                            }, filter: nil).subscribe(onNext: { (result) in
-                                print("\(result): updated")
-                            }, onError: { (error) in
-                                print(error)
-                            })
-                            
-                            observer.onCompleted()
-                        }
-                    }, onError: { (error) in
-                        observer.onNext((false, SyncStep.DonwloadTag))
-                        observer.onError(error)
-                    })
-                }
-                
-            }, onError: { (error) in
-                observer.onNext((false, SyncStep.DonwloadWord))
-                observer.onError(error)
-            })
+            return  Disposables.create()
         })
+
     }
 }

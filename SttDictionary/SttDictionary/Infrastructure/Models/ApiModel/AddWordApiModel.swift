@@ -8,19 +8,16 @@
 
 import Foundation
 
-class AddWordApiModel {
+protocol DictionaryCodable: Codable {
+    
+}
+
+class AddWordApiModel: DictionaryCodable {
     let originalWorld: String
     let translations: [String]
     
     init (word: String, translations: [String]) {
         self.originalWorld = word
         self.translations = translations
-    }
-    
-    func getDictionary() -> [String: Any] {
-        return [
-            "originalWorld": originalWorld,
-            "translations": translations
-        ]
     }
 }

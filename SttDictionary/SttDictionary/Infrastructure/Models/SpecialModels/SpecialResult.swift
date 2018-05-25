@@ -9,23 +9,15 @@
 import Foundation
 
 class ResultModel<TResult> {
-    let isSuccess: Bool
     let isLocal: Bool
-    let result: TResult?
-    let error: BaseError?
+    let result: TResult
     
     convenience init(result: TResult, isLocal: Bool) {
-        self.init(isSuccess: true, isLocal: isLocal, result: result, error: nil)
+        self.init(isLocal: isLocal, result: result)
     }
     
-    convenience init(error: BaseError) {
-        self.init(isSuccess: false, isLocal: true, result: nil, error: error)
-    }
-    
-    private init(isSuccess: Bool, isLocal: Bool, result: TResult?, error: BaseError?) {
-        self.isSuccess = isSuccess
+    private init(isLocal: Bool, result: TResult) {
         self.isLocal = isLocal
         self.result = result
-        self.error = error
     }
 }

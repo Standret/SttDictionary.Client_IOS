@@ -12,8 +12,8 @@ import RxSwift
 import KeychainSwift
 
 protocol IApiService {
-    func getTags() -> Observable<ResultModel<[TagApiModel]>>
-    func getWord() -> Observable<ResultModel<[WordApiModel]>>
+    func updateTags() -> Observable<ResultModel<[TagApiModel]>>
+    func updateWords() -> Observable<ResultModel<[WordApiModel]>>
     
     func sendWord(model: AddWordApiModel) -> Observable<WordApiModel>
 }
@@ -29,35 +29,22 @@ class ApiService: IApiService {
         _httpService.token = KeychainSwift().get(Constants.tokenKey) ?? ""
     }
     
-    func getTags() -> Observable<ResultModel<[TagApiModel]>> {
+    func updateTags() -> Observable<ResultModel<[TagApiModel]>> {
         let apiData = _httpService.get(controller: .tag("get"))
             .getResult(ofType: [TagApiModel].self)
             .saveInDB(saveCallback: _unitOfWork.tag.saveMany(models:))
             .map({ ResultModel(result: $0, isLocal: false )})
         
-        let dbData = _unitOfWork.tag.getMany(filter: nil)
-            .map( { ResultModel(result: $0, isLocal: true) } )
-            .catchError( { error in
-                Observable<ResultModel<[TagApiModel]>>.empty()
-            })
-        
-        return Observable.of(dbData, apiData).merge()
+        return apiData
     }
     
-    func getWord() -> Observable<ResultModel<[WordApiModel]>> {
+    func updateWords() -> Observable<ResultModel<[WordApiModel]>> {
         let apiData = _httpService.get(controller: .word("get"))
             .getResult(ofType: [WordApiModel].self)
             .saveInDB(saveCallback: _unitOfWork.word.saveMany(models:))
             .map({ ResultModel(result: $0, isLocal: false) })
         
-        let dbData = _unitOfWork.word.getMany(filter: nil)
-            .map( { ResultModel(result: $0, isLocal: true) } )
-            .catchError( { error in
-                Observable<ResultModel<[WordApiModel]>>.empty()
-            })
-        
-        
-        return Observable.of(dbData, apiData).merge()
+        return apiData
     }
     
     func sendWord(model: AddWordApiModel) -> Observable<WordApiModel> {

@@ -10,6 +10,7 @@
 		50126B39145C42DD5110937E /* Pods_SttDictionary.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8CF89F27CDB3C3218C6CB2EB /* Pods_SttDictionary.framework */; };
 		840427E920B2E78500C94765 /* BaseConverter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 840427E820B2E78500C94765 /* BaseConverter.swift */; };
 		840427F520B2E92700C94765 /* ApiModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 840427F420B2E92700C94765 /* ApiModel.swift */; };
+		8424424D20B8328800A385FA /* CodableExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8424424C20B8328800A385FA /* CodableExtensions.swift */; };
 		8430243D20B0B5C500981590 /* SttComand.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8430243C20B0B5C500981590 /* SttComand.swift */; };
 		8433D0B720A895A30031D690 /* ServiceAssembly.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8433D0B620A895A30031D690 /* ServiceAssembly.swift */; };
 		8433D0B920A895EA0031D690 /* ServiceInjectorAssembly.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8433D0B820A895EA0031D690 /* ServiceInjectorAssembly.swift */; };
@@ -83,6 +84,7 @@
 		5E7EB997EC23AAFE1E703F5B /* Pods-SttDictionary.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SttDictionary.debug.xcconfig"; path = "Pods/Target Support Files/Pods-SttDictionary/Pods-SttDictionary.debug.xcconfig"; sourceTree = "<group>"; };
 		840427E820B2E78500C94765 /* BaseConverter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseConverter.swift; sourceTree = "<group>"; };
 		840427F420B2E92700C94765 /* ApiModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApiModel.swift; sourceTree = "<group>"; };
+		8424424C20B8328800A385FA /* CodableExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CodableExtensions.swift; sourceTree = "<group>"; };
 		8430243C20B0B5C500981590 /* SttComand.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SttComand.swift; sourceTree = "<group>"; };
 		8433D0B620A895A30031D690 /* ServiceAssembly.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServiceAssembly.swift; sourceTree = "<group>"; };
 		8433D0B820A895EA0031D690 /* ServiceInjectorAssembly.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServiceInjectorAssembly.swift; sourceTree = "<group>"; };
@@ -361,6 +363,7 @@
 				84D4388520A8782600B171ED /* DateDecodeStrategy.swift */,
 				84D4388720A8784400B171ED /* ObservableTypeExt.swift */,
 				84716E6120B1B0A900A1F5F6 /* CustomDialog.swift */,
+				8424424C20B8328800A385FA /* CodableExtensions.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -726,6 +729,7 @@
 				8433D0C420A898FA0031D690 /* ViewPresenter.swift in Sources */,
 				840427F520B2E92700C94765 /* ApiModel.swift in Sources */,
 				8437504820AC257D007BFF5F /* Log.swift in Sources */,
+				8424424D20B8328800A385FA /* CodableExtensions.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

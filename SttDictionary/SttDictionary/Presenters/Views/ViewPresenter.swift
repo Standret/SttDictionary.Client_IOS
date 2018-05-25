@@ -22,9 +22,9 @@ class ViewPresenter: SttPresenter<ViewDelegate> {
     
     func getTags() {
 
-        _ = _apiService.getWord().subscribe(onNext: { (tags) in
-            print("Recieve isLocal: \(tags.isLocal) isSuccess: \(tags.isSuccess)")
-            print("\n\n\n")
+        _ = _apiService.updateTags().subscribe(onNext: { (tags) in
+            //print("Recieve isLocal: \(tags.isLocal) isSuccess: \(tags.isSuccess)")
+           // print("\n\n\n")
                // return self._apiService.getTags().subscribe(onNext: { (_tags) in
          //   })
         })

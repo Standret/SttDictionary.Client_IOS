@@ -12,6 +12,22 @@ import RealmSwift
 import RxRealm
 import RxSwift
 
+extension Observable {
+    func useBackgroundThread() -> Observable<Element> {
+        return self
+            .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .background))
+            .observeOn(MainScheduler.instance)
+    }
+}
+
+extension Completable {
+    func useBackgroundThread() -> Completable {
+        return self
+            .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .background))
+            .observeOn(MainScheduler.instance)
+    }
+}
+
 enum RealmStatus {
     case Updated, Deleted, Inserted
 }
@@ -37,16 +53,16 @@ protocol IRepository {
     
     init(singleton: Bool)
     
-    func saveOne(model: TEntity) -> Observable<Bool>
-    func saveMany(models: [TEntity]) -> Observable<Bool>
+    func saveOne(model: TEntity) -> Completable
+    func saveMany(models: [TEntity]) -> Completable
     
     func getOne(filter: String?) -> Observable<TEntity>
     func getMany(filter: String?) -> Observable<[TEntity]>
     
     func update(update: @escaping (_ dbObject: TRealm) -> Void, filter: String?) -> Observable<Bool>
     
-    func delete(model: TEntity) -> Observable<Bool>
-    func delete(filter: String?) -> Observable<Bool>
+    func delete(model: TEntity) -> Completable
+    func delete(filter: String?) -> Completable
     
     func exists(filter: String?) -> Observable<Bool>
     func count(filter: String?) -> Observable<Int>
@@ -91,8 +107,7 @@ R: BaseRealm {
         self.singleton = singleton
     }
     
-    func saveOne(model: T) -> Observable<Bool> {
-        return Observable<Bool>.create { (observer) -> Disposable in
+    func saveOne(model: T) -> Completable {
             do {
                 let realm = try Realm()
                 if (self.singleton && realm.objects(R.self).count > 0) {
@@ -101,17 +116,11 @@ R: BaseRealm {
                 realm.beginWrite()
                 realm.add(model.serialize(), update: true)
                 try realm.commitWrite()
-                observer.onNext(true)
-                observer.onCompleted()
+                return Completable.empty().use
             }
             catch {
                 observer.onError(error)
             }
-            
-            return Disposables.create()
-            }
-            .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .background))
-            .observeOn(MainScheduler.instance)
     }
     
     func saveMany(models: [T]) -> Observable<Bool> {
@@ -135,8 +144,7 @@ R: BaseRealm {
             
             return Disposables.create()
             }
-            .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .background))
-            .observeOn(MainScheduler.instance)
+            .useBackgroundThread()
     }
     
     func getOne(filter: String?) -> Observable<T> {
@@ -196,6 +204,7 @@ R: BaseRealm {
                         update(objects[0]) // check this method
                     }
                 }
+               // Comple
                 observer.onNext(true)
                 observer.onCompleted()
             }
