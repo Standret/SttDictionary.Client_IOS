@@ -130,8 +130,7 @@ class HttpService: IHttpService {
 
 extension Observable {
     func configurateParamet() -> Observable<Element> {
-        return self.subscribeOn(ConcurrentDispatchQueueScheduler(qos: .background))
-            .observeOn(MainScheduler.instance)
+        return self
             .timeout(Constants.timeout, scheduler: MainScheduler.instance)
             .retry(Constants.maxCountRepeatRequest)
     }

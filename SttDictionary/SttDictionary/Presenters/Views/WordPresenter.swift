@@ -13,6 +13,24 @@ protocol WordDelegate: Viewable {
     func reloadWords()
 }
 
+final class CompletableResult {
+    class func empty(inBackground: Bool = true) -> Completable {
+        return Completable.empty()
+            .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .background))
+            .observeOn(MainScheduler.instance)
+    }
+    class func error(error: Error, inBackground: Bool = true) -> Completable {
+        return Completable.error(error)
+            .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .background))
+            .observeOn(MainScheduler.instance)
+    }
+    class func never(inBackground: Bool = true) -> Completable {
+        return Completable.never()
+            .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .background))
+            .observeOn(MainScheduler.instance)
+    }
+}
+
 class WordPresenter: SttPresenter<WordDelegate> {
     var words = [WordEntityCellPresenter]()
     
@@ -21,12 +39,13 @@ class WordPresenter: SttPresenter<WordDelegate> {
     override func presenterCreating() {
         ServiceInjectorAssembly.instance().inject(into: self)
         
-        exampleFunc(res: false)
-            .subscribe(onCompleted: {
-                print("completed")
-            }) { (error) in
-                print("error")
-        }
+        print ("start in \(Thread.current)")
+        exampleFunc(res: true).asObservable().flatMap({ _ in Observable<Bool>.empty() })
+            .subscribe(onNext: { (res) in
+                print("onnext \(res)")
+            }, onCompleted: {
+                print("onCompleted")
+            })
         
         _ = _wordService.observe.subscribe(onNext: { element in
             self.words.insert(element, at: 0)
@@ -41,20 +60,28 @@ class WordPresenter: SttPresenter<WordDelegate> {
     }
     
     func exampleFunc(res: Bool) -> Completable {
-        if res {
-            return Completable.error(BaseError.unkown("some rr"))
-            return Completable.empty()
-            return Completable.empty()
-            Completable.never()
-            return Completable.empty()
-        }
-        else {
-            Completable.never()
-            Completable.never()
-            return Completable.empty()
-            Completable.never()
-            Completable.never()
-            Completable.never()
-        }
+        return Completable.create { (observer) -> Disposable in
+            if res {
+                print ("do in \(Thread.current)")
+                sleep(5)
+                observer(CompletableEvent.completed)
+                observer(CompletableEvent.completed)
+                observer(CompletableEvent.completed)
+                observer(CompletableEvent.completed)
+                //.observeOn(MainScheduler.instance)
+            }
+            else {
+                Completable.never()
+                Completable.never()
+                //return Completable.empty()
+                Completable.never()
+                Completable.never()
+                Completable.never()
+            }
+            
+            return Disposables.create()
+        }.inBackground().observeInUI()
+        //.observeInCurrent()
+        
     }
 }

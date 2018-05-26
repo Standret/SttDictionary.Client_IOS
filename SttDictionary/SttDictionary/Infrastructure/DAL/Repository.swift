@@ -12,22 +12,6 @@ import RealmSwift
 import RxRealm
 import RxSwift
 
-extension Observable {
-    func useBackgroundThread() -> Observable<Element> {
-        return self
-            .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .background))
-            .observeOn(MainScheduler.instance)
-    }
-}
-
-extension Completable {
-    func useBackgroundThread() -> Completable {
-        return self
-            .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .background))
-            .observeOn(MainScheduler.instance)
-    }
-}
-
 enum RealmStatus {
     case Updated, Deleted, Inserted
 }
@@ -108,25 +92,31 @@ R: BaseRealm {
     }
     
     func saveOne(model: T) -> Completable {
+        return Completable.create { (observer) -> Disposable in
             do {
                 let realm = try Realm()
                 if (self.singleton && realm.objects(R.self).count > 0) {
-                    observer.onError(BaseError.realmError(RealmError.objectIsSignleton("method: saveOne type: \(type(of: R.self))")))
+                    observer(CompletableEvent.error(BaseError.realmError(RealmError.objectIsSignleton("method: saveOne type: \(type(of: R.self))"))))
                 }
                 realm.beginWrite()
                 realm.add(model.serialize(), update: true)
                 try realm.commitWrite()
-                return Completable.empty().use
+                observer(CompletableEvent.completed)
             }
             catch {
-                observer.onError(error)
+                observer(CompletableEvent.error(error))
             }
+            
+            return Disposables.create()
+            }
+            .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .background))
+            .observeOn(MainScheduler.instance)
     }
     
-    func saveMany(models: [T]) -> Observable<Bool> {
-        return Observable<Bool>.create { (observer) -> Disposable in
+    func saveMany(models: [T]) -> Completable {
+        return Completable.create { (observer) -> Disposable in
             if (self.singleton) {
-                observer.onError(BaseError.realmError(RealmError.objectIsSignleton("method: saveMany type: \(type(of: R.self))")))
+                observer(CompletableEvent.error(BaseError.realmError(RealmError.objectIsSignleton("method: saveMany type: \(type(of: R.self))"))))
             }
             do {
                 let realm = try Realm()
@@ -135,16 +125,16 @@ R: BaseRealm {
                     realm.add(item.serialize(), update: true)
                 }
                 try realm.commitWrite()
-                observer.onNext(true)
-                observer.onCompleted()
+                observer(CompletableEvent.completed)
             }
             catch {
-                observer.onError(error)
+                observer(CompletableEvent.error(error))
             }
             
             return Disposables.create()
             }
-            .useBackgroundThread()
+            .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .background))
+            .observeOn(MainScheduler.instance)
     }
     
     func getOne(filter: String?) -> Observable<T> {
@@ -219,18 +209,17 @@ R: BaseRealm {
     }
     
     // check this method
-    func delete(model: T) -> Observable<Bool> {
-        return Observable<Bool>.create { (observer) -> Disposable in
+    func delete(model: T) -> Completable {
+        return Completable.create { (observer) -> Disposable in
             do {
                 let realm = try Realm()
                 try realm.write {
                     realm.delete(model.serialize())
                 }
-                observer.onNext(true)
-                observer.onCompleted()
+                observer(CompletableEvent.completed)
             }
             catch {
-                observer.onError(error)
+                observer(CompletableEvent.error(error))
             }
             
             return Disposables.create()
@@ -239,14 +228,26 @@ R: BaseRealm {
             .observeOn(MainScheduler.instance)
     }
     
-    func delete(filter: String?) -> Observable<Bool> {
-        return Observable<Bool>.create { (observer) -> Disposable in
+    func delete(filter: String?) -> Completable {
+        return Completable.create { (observer) -> Disposable in
             do {
                 let realm = try Realm()
-                let objects = try self.getObjects(filter: filter, observer: observer, tryGetAll: true)
+                
+                var objects: Results<R>!
+                if let query = filter {
+                    if (self.singleton) {
+                        observer(CompletableEvent.error(BaseError.realmError(RealmError.objectIsSignleton("type: \(type(of: R.self))"))))
+                    }
+                    else {
+                        objects = realm.objects(R.self).filter(query)
+                    }
+                }
+                else {
+                    objects = realm.objects(R.self)
+                }
                 
                 if objects.count == 0 {
-                    observer.onError(BaseError.realmError(RealmError.notFoundObjects("method: delete type: \(type(of: R.self)) with filter \(filter ?? "nil"))")))
+                    observer(CompletableEvent.error(BaseError.realmError(RealmError.notFoundObjects("method: delete type: \(type(of: R.self)) with filter \(filter ?? "nil"))"))))
                 }
                 else {
                     try realm.write {
@@ -254,12 +255,11 @@ R: BaseRealm {
                             realm.delete(item)
                         }
                     }
-                    observer.onNext(true)
-                    observer.onCompleted()
+                    observer(CompletableEvent.completed)
                 }
             }
             catch {
-                observer.onError(error)
+                observer(CompletableEvent.error(error))
             }
             
             return Disposables.create()
@@ -346,26 +346,14 @@ R: BaseRealm {
 extension IRepository
 where TEntity: Defaultable {
     func getOrCreateSingletoon() -> Observable<TEntity> {
-        return Observable<TEntity>.create { (observer) -> Disposable in
-            if self.isSingletoon {
-                _ = self.exists(filter: nil).subscribe(onNext: { (result) in
-                    if (result) {
-                        _ = self.getOne(filter: nil).subscribe(onNext: observer.onNext(_:), onError: observer.onError(_:), onCompleted: observer.onCompleted)
-                    }
-                    else {
-                        _ = self.saveOne(model: FactoryDefaultsObject.create(ofType: TEntity.self)).subscribe(onNext: { (result) in
-                            if result {
-                                _ = self.getOne(filter: nil).subscribe(onNext: observer.onNext(_:), onError: observer.onError(_:), onCompleted: observer.onCompleted)
-                            }
-                            else {
-                                Log.error(message: "Singletton can not created", key: Constants.repositoryLog)
-                            }
-                        }, onError: observer.onError(_:))
-                    }
-                }, onError: observer.onError(_:))
-            }
-            
-            return Disposables.create()
+        return self.exists(filter: nil)
+            .flatMap({ (result) -> Observable<TEntity> in
+                if (result) {
+                    return self.getOne(filter: nil)
+                }
+                return self.saveOne(model: FactoryDefaultsObject.create(ofType: TEntity.self))
+                    .asObservable()
+                    .flatMap({ _ in self.getOne(filter: nil) })
+            })
         }
-    }
 }

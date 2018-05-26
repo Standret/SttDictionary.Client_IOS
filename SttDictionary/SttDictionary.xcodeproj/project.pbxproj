@@ -54,7 +54,7 @@
 		84D2422B20A85179007D8F1A /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 84D2422920A85179007D8F1A /* LaunchScreen.storyboard */; };
 		84D4388420A877EF00B171ED /* AppDelegateExt.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84D4388320A877EF00B171ED /* AppDelegateExt.swift */; };
 		84D4388620A8782600B171ED /* DateDecodeStrategy.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84D4388520A8782600B171ED /* DateDecodeStrategy.swift */; };
-		84D4388820A8784400B171ED /* ObservableTypeExt.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84D4388720A8784400B171ED /* ObservableTypeExt.swift */; };
+		84D4388820A8784400B171ED /* ObservableExt.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84D4388720A8784400B171ED /* ObservableExt.swift */; };
 		84D4388C20A8788500B171ED /* Repository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84D4388B20A8788500B171ED /* Repository.swift */; };
 		84D4389020A878BC00B171ED /* SpecialResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84D4388F20A878BC00B171ED /* SpecialResult.swift */; };
 		84D4389220A878DD00B171ED /* ConstructModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84D4389120A878DD00B171ED /* ConstructModel.swift */; };
@@ -130,7 +130,7 @@
 		84D2422C20A85179007D8F1A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		84D4388320A877EF00B171ED /* AppDelegateExt.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegateExt.swift; sourceTree = "<group>"; };
 		84D4388520A8782600B171ED /* DateDecodeStrategy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateDecodeStrategy.swift; sourceTree = "<group>"; };
-		84D4388720A8784400B171ED /* ObservableTypeExt.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ObservableTypeExt.swift; sourceTree = "<group>"; };
+		84D4388720A8784400B171ED /* ObservableExt.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ObservableExt.swift; sourceTree = "<group>"; };
 		84D4388B20A8788500B171ED /* Repository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Repository.swift; sourceTree = "<group>"; };
 		84D4388F20A878BC00B171ED /* SpecialResult.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpecialResult.swift; sourceTree = "<group>"; };
 		84D4389120A878DD00B171ED /* ConstructModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConstructModel.swift; sourceTree = "<group>"; };
@@ -361,7 +361,7 @@
 			children = (
 				84D4388320A877EF00B171ED /* AppDelegateExt.swift */,
 				84D4388520A8782600B171ED /* DateDecodeStrategy.swift */,
-				84D4388720A8784400B171ED /* ObservableTypeExt.swift */,
+				84D4388720A8784400B171ED /* ObservableExt.swift */,
 				84716E6120B1B0A900A1F5F6 /* CustomDialog.swift */,
 				8424424C20B8328800A385FA /* CodableExtensions.swift */,
 			);
@@ -683,7 +683,7 @@
 				840427E920B2E78500C94765 /* BaseConverter.swift in Sources */,
 				84AD6A5020B04DDA000D560E /* SttTableViewSource.swift in Sources */,
 				84716E6220B1B0A900A1F5F6 /* CustomDialog.swift in Sources */,
-				84D4388820A8784400B171ED /* ObservableTypeExt.swift in Sources */,
+				84D4388820A8784400B171ED /* ObservableExt.swift in Sources */,
 				84F39E7420B032ED00548681 /* SttTextField.swift in Sources */,
 				84716E5720B1876300A1F5F6 /* RealmSyncData.swift in Sources */,
 				8437504420A9B1FB007BFF5F /* ErrorModel.swift in Sources */,
