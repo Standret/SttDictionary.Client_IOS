@@ -11,6 +11,7 @@ import RxSwift
 import SINQ
 
 enum SyncStep {
+    case UploadWord
     case DonwloadWord, DonwloadTag
 }
 
@@ -44,18 +45,23 @@ class SyncService: ISyncService {
     
     func sync() -> Observable<(Bool, SyncStep)> {
         return _notificationError.useError(observable: Observable<(Bool, SyncStep)>.create { (observer) -> Disposable in
-            self._unitOfWork.word.getMany(filter: "isSynced == false")
+            _ = self._unitOfWork.word.getMany(filter: "isSynced == false")
                 .flatMap({ Observable.from($0) })
                 .flatMap({ self._apiServicce.sendWord(model: AddWordApiModel(word: $0.originalWorld, translations: $0.translations)) })
                 .flatMap({ (word) -> Observable<Bool> in
-                    self._unitOfWork.word.update(update: { (realmWord) in
-                        realmWord.id = word.id!
-                        realmWord.isSynced = true
-                    }, filter: "originalWorld = '\(word.originalWorld)'")
+                    return Observable<Bool>.create({ (wordObserver) -> Disposable in
+                        self._unitOfWork.word.update(update: { (realmWord) in
+                            realmWord.id = word.id!
+                            realmWord.isSynced = true
+                        }, filter: "originalWorld = '\(word.originalWorld)'")
+                            .subscribe(onCompleted: {
+                                wordObserver.onNext(true)
+                            }, onError: wordObserver.onError(_:))
+                    })
                 })
+                .subscribe(onNext: { observer.onNext(($0, .UploadWord)) }, onError: observer.onError(_:))
             
             return  Disposables.create()
         })
-
     }
 }

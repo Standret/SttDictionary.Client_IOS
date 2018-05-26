@@ -13,6 +13,7 @@ class WordEntityTableViewCell: SttTableViewCell<WordEntityCellPresenter>, WordEn
     @IBOutlet weak var lblWord: UILabel!
     @IBOutlet weak var lblTranslations: UILabel!
     @IBOutlet weak var lblTags: UILabel!
+    @IBOutlet weak var syncStatus: UIView!
     
     override func prepareBind() {
         lblWord.text = dataContext.word

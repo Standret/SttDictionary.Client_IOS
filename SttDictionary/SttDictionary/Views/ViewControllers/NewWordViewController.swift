@@ -57,12 +57,9 @@ class NewWordViewController: SttViewController<NewWordPresenter>, NewWordDelegat
         tfWord.layer.cornerRadius = UIConstants.cornerRadius
         tfMainTranslation.layer.cornerRadius = UIConstants.cornerRadius
         
-        handlerOriginalWord.addTargetReturnKey(type: .shouldReturn) { (tf) in
-            self.tfMainTranslation.becomeFirstResponder()
-        }
-        handlerMain.addTargetReturnKey(type: .shouldReturn) { (tf) in
-            self.addMainTranslateClick(tf)
-        }
+        handlerOriginalWord.addTarget(type: .shouldReturn, delegate: self, handler: { (view, _) in view.tfMainTranslation.becomeFirstResponder() }, textField: tfWord)
+        handlerMain.addTarget(type: .shouldReturn, delegate: self, handler: { $0.self.addMainTranslateClick($1)}, textField: tfMainTranslation)
+
         tfWord.addTarget(self, action: #selector(textFieldDidChange(_:)), for: .editingChanged)
         
         tfMainTranslation.delegate = handlerMain

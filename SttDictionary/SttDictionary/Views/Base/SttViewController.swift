@@ -13,8 +13,9 @@ enum TypeNavigation {
     case modality
 }
 
-protocol Viewable {
-    func sendError(title: String?, message: String)
+protocol Viewable: class {
+    func sendMessage(title: String, message: String?)
+    func sendError(error: BaseError)
     func close()
 }
 
@@ -45,6 +46,13 @@ class SttViewController<T: ViewInjector>: UIViewController, Viewable, KeyboardNo
         presenter = T()//.init(delegate: self)
         presenter.injectView(delegate: self)
         view.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(handleClick(_:))))
+        
+        _ = GlobalObserver.observableStatusApplication.subscribe(onNext: { (status) in
+            if status == ApplicationStatus.EnterBackgound {
+                self.view.endEditing(true)
+                self.navigationController?.navigationBar.endEditing(true)
+            }
+        })
     }
     
     @objc
@@ -91,11 +99,16 @@ class SttViewController<T: ViewInjector>: UIViewController, Viewable, KeyboardNo
         navigationController?.setNavigationBarHidden(hideNavigationBar, animated: true)
     }
     
-    func sendError(title: String?, message: String) {
-        self.createAlerDialog(title: title, message: message)
+    func sendError(error: BaseError) {
+        let serror = error.getMessage()
+        self.createAlerDialog(title: serror.0, message: serror.1)
+    }
+    func sendMessage(title: String, message: String?) {
+        self.createAlerDialog(title: title, message: message ?? "empty")
     }
     
     func close() {
         navigationController?.popViewController(animated: true)
     }
 }
+

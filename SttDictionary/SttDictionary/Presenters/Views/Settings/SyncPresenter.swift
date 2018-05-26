@@ -31,7 +31,7 @@ class SyncPresenter: SttPresenter<SyncDelegate> {
             self.delegate.updateData(date: DateConverter().convert(value: model.dateOfLastSync), countLocal: model.countLocal, countServer: model.countServer)
         })
         
-        sync = SttComand(handler: onSync)
+        sync = SttComand(delegate: self, handler: { $0.onSync() })
     }
     
     func onSync() {

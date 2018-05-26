@@ -29,6 +29,10 @@ protocol RealmDecodable {
     func deserialize() -> TTarget
 }
 
+protocol RealmInitable {
+    init<TTarget: BaseRealm>(fromObject: TTarget)
+}
+
 protocol IRepository {
     associatedtype TEntity: RealmCodable
     associatedtype TRealm: RealmDecodable
@@ -43,7 +47,9 @@ protocol IRepository {
     func getOne(filter: String?) -> Observable<TEntity>
     func getMany(filter: String?) -> Observable<[TEntity]>
     
-    func update(update: @escaping (_ dbObject: TRealm) -> Void, filter: String?) -> Observable<Bool>
+    func getMany<Type: RealmInitable>(filter: String?, ofType : Type.Type) -> Observable<[Type]>
+    
+    func update(update: @escaping (_ dbObject: TRealm) -> Void, filter: String?) -> Completable
     
     func delete(model: TEntity) -> Completable
     func delete(filter: String?) -> Completable
@@ -57,7 +63,7 @@ protocol IRepository {
 class Repository<T, R>: IRepository
     where T: RealmCodable,
     R: RealmDecodable,
-R: BaseRealm {
+    R: BaseRealm {
     
     typealias TEntity = T
     typealias TRealm = R
@@ -76,6 +82,27 @@ R: BaseRealm {
         else {
             if (!self.singleton && !tryGetAll) {
                 observer.onError(BaseError.realmError(RealmError.queryIsNull("type: \(type(of: R.self))")))
+            }
+            else {
+                objects = realm.objects(R.self)
+            }
+        }
+        return objects
+    }
+    private func getObjects(filter: String?, observer: PrimitiveSequenceType.CompletableObserver, tryGetAll: Bool) throws -> Results<R> {
+        let realm = try Realm()
+        var objects: Results<R>!
+        if let query = filter {
+            if (self.singleton) {
+                observer(CompletableEvent.error(BaseError.realmError(RealmError.objectIsSignleton("type: \(type(of: R.self))"))))
+            }
+            else {
+                objects = realm.objects(R.self).filter(query)
+            }
+        }
+        else {
+            if (!self.singleton && !tryGetAll) {
+                observer(CompletableEvent.error(BaseError.realmError(RealmError.queryIsNull("type: \(type(of: R.self))"))))
             }
             else {
                 objects = realm.objects(R.self)
@@ -109,8 +136,6 @@ R: BaseRealm {
             
             return Disposables.create()
             }
-            .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .background))
-            .observeOn(MainScheduler.instance)
     }
     
     func saveMany(models: [T]) -> Completable {
@@ -133,8 +158,6 @@ R: BaseRealm {
             
             return Disposables.create()
             }
-            .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .background))
-            .observeOn(MainScheduler.instance)
     }
     
     func getOne(filter: String?) -> Observable<T> {
@@ -181,13 +204,37 @@ R: BaseRealm {
         }
     }
     
-    func update(update: @escaping (R) -> Void, filter: String?) -> Observable<Bool> {
-        return Observable<Bool>.create { (observer) -> Disposable in
+    func getMany<Type: RealmInitable>(filter: String?, ofType : Type.Type) -> Observable<[Type]> {
+        return Observable<[Type]>.create { (observer) -> Disposable in
+            do {
+                let objects = try self.getObjects(filter: filter, observer: observer, tryGetAll: true)
+                if (objects.count == 0) {
+                    observer.onError(BaseError.realmError(RealmError.doesNotExactlyQuery("method: getMany<\(type(of: Type.self))> type: \(type(of: R.self)) with filter \(filter ?? "nil"))")))
+                }
+                else {
+                    var results = [Type]()
+                    for item in objects {
+                        results.append(Type.init(fromObject: item))
+                    }
+                    observer.onNext(results)
+                    observer.onCompleted()
+                }
+            }
+            catch {
+                observer.onError(error)
+            }
+            
+            return Disposables.create()
+        }
+    }
+    
+    func update(update: @escaping (R) -> Void, filter: String?) -> Completable {
+        return Completable.create { (observer) -> Disposable in
             do {
                 let realm = try Realm()
                 let objects = try self.getObjects(filter: filter, observer: observer, tryGetAll: false)
                 if (objects.count != 1) {
-                    observer.onError(BaseError.realmError(RealmError.doesNotExactlyQuery("method: update type: \(type(of: R.self)) with filter \(filter ?? "nil"))")))
+                    observer(CompletableEvent.error(BaseError.realmError(RealmError.doesNotExactlyQuery("method: update type: \(type(of: R.self)) with filter \(filter ?? "nil"))"))))
                 }
                 else {
                     try realm.write {
@@ -195,20 +242,16 @@ R: BaseRealm {
                     }
                 }
                // Comple
-                observer.onNext(true)
-                observer.onCompleted()
+                observer(CompletableEvent.completed)
             }
             catch {
-                observer.onError(error)
+                observer(CompletableEvent.error(error))
             }
             
-            return Disposables.create()
+                return Disposables.create()
             }
-            .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .background))
-            .observeOn(MainScheduler.instance)
     }
     
-    // check this method
     func delete(model: T) -> Completable {
         return Completable.create { (observer) -> Disposable in
             do {
@@ -224,8 +267,6 @@ R: BaseRealm {
             
             return Disposables.create()
             }
-            .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .background))
-            .observeOn(MainScheduler.instance)
     }
     
     func delete(filter: String?) -> Completable {
@@ -262,10 +303,8 @@ R: BaseRealm {
                 observer(CompletableEvent.error(error))
             }
             
-            return Disposables.create()
+                return Disposables.create()
             }
-            .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .background))
-            .observeOn(MainScheduler.instance)
     }
     
     func exists(filter: String?) -> Observable<Bool> {
@@ -281,8 +320,6 @@ R: BaseRealm {
             
             return Disposables.create()
             }
-            .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .background))
-            .observeOn(MainScheduler.instance)
     }
     
     func count(filter: String?) -> Observable<Int> {
@@ -307,8 +344,6 @@ R: BaseRealm {
             
             return Disposables.create()
             }
-            .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .background))
-            .observeOn(MainScheduler.instance)
     }
     
     func observe(on: [RealmStatus]) -> Observable<(T, RealmStatus)> {

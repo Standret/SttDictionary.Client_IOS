@@ -8,24 +8,22 @@
 
 import Foundation
 
-class SttPresenter<TDelegate> : ViewInjector {
+protocol SttPresenterType: class { }
 
-    var delegate: TDelegate!
+class SttPresenter<TDelegate> : ViewInjector, SttPresenterType {
     
-    var _notificationError: INotificationError!
+    private weak var _delegate: Viewable!
+    var delegate: TDelegate { return _delegate as! TDelegate }
+    
+    weak var _notificationError: INotificationError!
     
     required init() { }
     func injectView(delegate: Viewable) {
         ServiceInjectorAssembly.instance().inject(into: self)
-        self.delegate = delegate as! TDelegate
+        self._delegate = delegate
         
-        _ = _notificationError.errorObservable.subscribe(onNext: { (error) in
-            if self.delegate is Viewable {
-                (self.delegate as! Viewable).sendError(title: error.0, message: error.1)
-            }
-            else {
-                print(error)
-            }
+        _ = _notificationError.errorObservable.subscribe(onNext: { (err) in
+            self._delegate.sendError(error: err)
         })
         presenterCreating()
     }

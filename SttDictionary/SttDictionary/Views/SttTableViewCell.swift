@@ -10,6 +10,13 @@ import Foundation
 import UIKit
 
 class SttTableViewCell<T: ViewInjector>: UITableViewCell, Viewable {
+    func sendMessage(title: String, message: String?) {
+        
+    }
+    func sendError(error: BaseError) {
+        
+    }
+    
     
     var dataContext: T!
     

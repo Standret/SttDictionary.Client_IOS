@@ -10,6 +10,13 @@ import Foundation
 import UIKit
 
 class SttCollectionViewCell<T: ViewInjector>: UICollectionViewCell, Viewable {
+    func sendMessage(title: String, message: String?) {
+    
+    }
+        func sendError(error: BaseError) {
+    
+    }
+    
     
     var dataContext: T!
     

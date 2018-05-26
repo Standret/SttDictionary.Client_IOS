@@ -7,6 +7,21 @@
 //
 
 import UIKit
+import RxSwift
+
+enum ApplicationStatus {
+    case EnterBackgound
+    case EnterForeground
+}
+
+class GlobalObserver {
+    private static let publisher = PublishSubject<ApplicationStatus>()
+    static var observableStatusApplication: Observable<ApplicationStatus> { return publisher }
+    
+    class func applicationStatusChanged(status: ApplicationStatus) {
+        publisher.onNext(status)
+    }
+}
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {

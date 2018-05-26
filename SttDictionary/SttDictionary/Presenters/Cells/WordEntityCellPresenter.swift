@@ -17,6 +17,7 @@ class WordEntityCellPresenter: SttPresenter<WordEntityCellDelegate> {
     var word: String!
     var mainTranslations: String!
     var tags: String!
+    var status: Bool!
     
     convenience init (element: WordApiModel) {
         self.init()

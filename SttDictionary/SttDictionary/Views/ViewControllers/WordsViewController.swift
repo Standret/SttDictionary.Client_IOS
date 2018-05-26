@@ -21,7 +21,10 @@ class WordViewController: SttViewController<WordPresenter>, WordDelegate {
         //print(Realm.Configuration.defaultConfiguration.fileURL!)
         
         wordsSource = WordEntityCellSource(tableView: mainTable, cellName: "WordEntityTableViewCell", cellIdentifier: "WordEntityCell", collection: presenter.words)
-     //   mainTable.tableFooterView = UIView(frame: CGRect(x: 0, y: 0, width: 320, height: 1))
+        
+        let footer = UIView(frame: CGRect(x: 0, y: 0, width: widthScreen, height: 1))
+        footer.backgroundColor = UIColor(named: "background")!
+        mainTable.tableFooterView = footer
         mainTable.dataSource = wordsSource
         
         if let textfield = searchBar.value(forKey: "searchField") as? UITextField {

@@ -26,6 +26,7 @@
 		8437504620A9DD91007BFF5F /* UnitOfWork.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8437504520A9DD91007BFF5F /* UnitOfWork.swift */; };
 		8437504820AC257D007BFF5F /* Log.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8437504720AC257D007BFF5F /* Log.swift */; };
 		8437504A20AD6D21007BFF5F /* Login.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8437504920AD6D21007BFF5F /* Login.storyboard */; };
+		845C471720B99AA000441012 /* SttCommandExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 845C471620B99AA000441012 /* SttCommandExtensions.swift */; };
 		8462666C20B1DECF004169A1 /* WordEntityTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8462666A20B1DECF004169A1 /* WordEntityTableViewCell.swift */; };
 		8462666D20B1DECF004169A1 /* WordEntityTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8462666B20B1DECF004169A1 /* WordEntityTableViewCell.xib */; };
 		8462666F20B1DEED004169A1 /* WordEntityCellPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8462666E20B1DEED004169A1 /* WordEntityCellPresenter.swift */; };
@@ -100,6 +101,7 @@
 		8437504520A9DD91007BFF5F /* UnitOfWork.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UnitOfWork.swift; sourceTree = "<group>"; };
 		8437504720AC257D007BFF5F /* Log.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Log.swift; sourceTree = "<group>"; };
 		8437504920AD6D21007BFF5F /* Login.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Login.storyboard; sourceTree = "<group>"; };
+		845C471620B99AA000441012 /* SttCommandExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SttCommandExtensions.swift; sourceTree = "<group>"; };
 		8462666A20B1DECF004169A1 /* WordEntityTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WordEntityTableViewCell.swift; sourceTree = "<group>"; };
 		8462666B20B1DECF004169A1 /* WordEntityTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = WordEntityTableViewCell.xib; sourceTree = "<group>"; };
 		8462666E20B1DEED004169A1 /* WordEntityCellPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WordEntityCellPresenter.swift; sourceTree = "<group>"; };
@@ -364,6 +366,7 @@
 				84D4388720A8784400B171ED /* ObservableExt.swift */,
 				84716E6120B1B0A900A1F5F6 /* CustomDialog.swift */,
 				8424424C20B8328800A385FA /* CodableExtensions.swift */,
+				845C471620B99AA000441012 /* SttCommandExtensions.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -698,6 +701,7 @@
 				8433D0C820A899690031D690 /* SttPresenter.swift in Sources */,
 				8433D0BC20A895EA0031D690 /* TagApiModel.swift in Sources */,
 				8437504620A9DD91007BFF5F /* UnitOfWork.swift in Sources */,
+				845C471720B99AA000441012 /* SttCommandExtensions.swift in Sources */,
 				8462667320B1E5A7004169A1 /* WordService.swift in Sources */,
 				8433D0CC20A8AE510031D690 /* RealmTag.swift in Sources */,
 				8433D0CE20A8AE8D0031D690 /* RealmWord.swift in Sources */,

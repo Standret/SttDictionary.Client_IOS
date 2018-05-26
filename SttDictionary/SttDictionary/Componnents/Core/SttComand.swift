@@ -14,13 +14,30 @@ class SttComand {
     private var handlerStart: (() -> Void)?
     private var handlerEnd: (() -> Void)?
     private var executeHandler: (() -> Void)
+    private var canExecuteHandler: (() -> Bool)?
     
     var singleCallEndCallback = true
     private var isCall = false
     
-    init (handler: @escaping () -> Void) {
-        executeHandler = handler
+    init<T: SttPresenterType> (delegate: T, handler: @escaping (T) -> Void, handlerCanExecute: ((T) -> Bool)? = nil) {
+        executeHandler = { [weak delegate] in
+            if let _delegate = delegate {
+                handler(_delegate)
+            }
+        }
+        canExecuteHandler = { [weak delegate] in
+            if let _delegate = delegate {
+                if let _handlerCanExecute = handlerCanExecute {
+                    return _handlerCanExecute(_delegate)
+                }
+            }
+            return false
+        }
         isCall = false
+    }
+    
+    deinit {
+        print ("Stt Command deinit")
     }
     
     func addHandler(start: (() -> Void)?, end: (() -> Void)?) {
@@ -29,13 +46,22 @@ class SttComand {
     }
     
     func execute() {
-        if let handler = handlerStart {
-            handler()
+        if canExecute() {
+            if let handler = handlerStart {
+                handler()
+            }
+            executeHandler()
         }
-        executeHandler()
+        else {
+            Log.trace(message: "Command could not be execute", key: "SttComand")
+        }
     }
-    
-    
+    func canExecute() -> Bool {
+        if let handler = canExecuteHandler {
+            return handler()
+        }
+        return true
+    }
 }
 
 extension SttComand {
@@ -58,3 +84,4 @@ extension SttComand {
         })
     }
 }
+

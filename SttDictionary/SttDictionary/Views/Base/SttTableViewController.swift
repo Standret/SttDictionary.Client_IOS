@@ -11,8 +11,11 @@ import UIKit
 
 class SttTableViewController<T: ViewInjector>: UITableViewController, Viewable, KeyboardNotificationDelegate {
     
-    func sendError(title: String?, message: String) {
-        fatalError(Constants.noImplementException)
+    func sendMessage(title: String, message: String?) {
+        
+    }
+    func sendError(error: BaseError) {
+        
     }
     func close() {
         fatalError(Constants.noImplementException)

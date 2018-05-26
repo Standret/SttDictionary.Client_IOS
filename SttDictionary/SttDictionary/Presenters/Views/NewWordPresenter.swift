@@ -31,7 +31,7 @@ class NewWordPresenter: SttPresenter<NewWordDelegate>, WordItemDelegate {
     override func presenterCreating() {
         ServiceInjectorAssembly.instance().inject(into: self)
         
-        save = SttComand(handler: onSave)
+        save = SttComand(delegate: self, handler: { $0.onSave() })
     }
     
     func addNewMainTranslation(value: String) {
