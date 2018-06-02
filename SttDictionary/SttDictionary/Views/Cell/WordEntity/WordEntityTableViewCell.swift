@@ -14,12 +14,16 @@ class WordEntityTableViewCell: SttTableViewCell<WordEntityCellPresenter>, WordEn
     @IBOutlet weak var lblTranslations: UILabel!
     @IBOutlet weak var lblTags: UILabel!
     @IBOutlet weak var syncStatus: UIView!
+    @IBOutlet weak var lblDevInfo: UILabel!
+    @IBOutlet weak var lblNextDay: UILabel!
     
     override func prepareBind() {
         lblWord.text = dataContext.word
         lblTranslations.text = dataContext.mainTranslations
         lblTags.text = dataContext.tags
         syncStatus.backgroundColor = dataContext.status ? UIColor.green : UIColor.red
+        lblNextDay.text = dataContext.nextDate != nil ? ShortDateConverter().convert(value: dataContext.nextDate!) : "unk"
+        lblDevInfo.text = dataContext.devInfo
     }
     
     override func draw(_ rect: CGRect) {

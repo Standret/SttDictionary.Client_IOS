@@ -39,7 +39,7 @@ class WordServie: IWordService {
     }
     
     func createWord(word: String, translations: [String]) -> Observable<Bool> {
-        return _notificationError.useError(observable: _unitOfWork.word.saveOne(model: WordApiModel(id: nil, dateCreated: Date(), originalWorld: word, translations: translations, additionalTranslations: nil, tags: nil, imageUrls: nil)).asObservable().map({ _ in true }))
+        return _notificationError.useError(observable: _unitOfWork.word.saveOne(model: WordFactories.createWordModel(word: word, translations: translations)).toEmptyObservable(ofType: Bool.self))
     }
     
     func exists(word: String) -> Observable<Bool> {

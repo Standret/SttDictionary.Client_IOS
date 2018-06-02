@@ -8,6 +8,9 @@
 
 /* Begin PBXBuildFile section */
 		50126B39145C42DD5110937E /* Pods_SttDictionary.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8CF89F27CDB3C3218C6CB2EB /* Pods_SttDictionary.framework */; };
+		7D82B5AE20C2C459004D896A /* StatisticsApiModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D82B5AD20C2C459004D896A /* StatisticsApiModel.swift */; };
+		7D82B5B020C2C4B5004D896A /* RealmStatistics.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D82B5AF20C2C4B5004D896A /* RealmStatistics.swift */; };
+		7D82B5B320C2CCE7004D896A /* WordFactories.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D82B5B220C2CCE7004D896A /* WordFactories.swift */; };
 		840427E920B2E78500C94765 /* BaseConverter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 840427E820B2E78500C94765 /* BaseConverter.swift */; };
 		840427F520B2E92700C94765 /* ApiModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 840427F420B2E92700C94765 /* ApiModel.swift */; };
 		8424424D20B8328800A385FA /* CodableExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8424424C20B8328800A385FA /* CodableExtensions.swift */; };
@@ -83,6 +86,9 @@
 
 /* Begin PBXFileReference section */
 		5E7EB997EC23AAFE1E703F5B /* Pods-SttDictionary.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SttDictionary.debug.xcconfig"; path = "Pods/Target Support Files/Pods-SttDictionary/Pods-SttDictionary.debug.xcconfig"; sourceTree = "<group>"; };
+		7D82B5AD20C2C459004D896A /* StatisticsApiModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatisticsApiModel.swift; sourceTree = "<group>"; };
+		7D82B5AF20C2C4B5004D896A /* RealmStatistics.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RealmStatistics.swift; sourceTree = "<group>"; };
+		7D82B5B220C2CCE7004D896A /* WordFactories.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WordFactories.swift; sourceTree = "<group>"; };
 		840427E820B2E78500C94765 /* BaseConverter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseConverter.swift; sourceTree = "<group>"; };
 		840427F420B2E92700C94765 /* ApiModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApiModel.swift; sourceTree = "<group>"; };
 		8424424C20B8328800A385FA /* CodableExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CodableExtensions.swift; sourceTree = "<group>"; };
@@ -181,6 +187,14 @@
 			name = Pods;
 			sourceTree = "<group>";
 		};
+		7D82B5B120C2CCD5004D896A /* Creater */ = {
+			isa = PBXGroup;
+			children = (
+				7D82B5B220C2CCE7004D896A /* WordFactories.swift */,
+			);
+			path = Creater;
+			sourceTree = "<group>";
+		};
 		840427F820B2E9A000C94765 /* Views */ = {
 			isa = PBXGroup;
 			children = (
@@ -198,6 +212,7 @@
 				8433D0BB20A895EA0031D690 /* TagApiModel.swift */,
 				8433D0D120A8BCDA0031D690 /* WordApiModel.swift */,
 				84B3CDA120B20915002546C0 /* AddWordApiModel.swift */,
+				7D82B5AD20C2C459004D896A /* StatisticsApiModel.swift */,
 			);
 			path = ApiModel;
 			sourceTree = "<group>";
@@ -374,6 +389,7 @@
 		84D4388920A8785500B171ED /* Infrastructure */ = {
 			isa = PBXGroup;
 			children = (
+				7D82B5B120C2CCD5004D896A /* Creater */,
 				84D4389320A8790000B171ED /* Services */,
 				84D4388D20A8789400B171ED /* Models */,
 				84D4388A20A8786800B171ED /* DAL */,
@@ -452,6 +468,7 @@
 				8433D0CD20A8AE8D0031D690 /* RealmWord.swift */,
 				8433D0CF20A8B2120031D690 /* RealmShortTag.swift */,
 				84716E5620B1876300A1F5F6 /* RealmSyncData.swift */,
+				7D82B5AF20C2C4B5004D896A /* RealmStatistics.swift */,
 			);
 			path = RealmModels;
 			sourceTree = "<group>";
@@ -671,6 +688,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				84F39E7E20B0335100548681 /* SettingPresenter.swift in Sources */,
+				7D82B5AE20C2C459004D896A /* StatisticsApiModel.swift in Sources */,
 				84716E5E20B1923600A1F5F6 /* DateConverter.swift in Sources */,
 				84AD6A5220B04E0E000D560E /* SttTableViewCell.swift in Sources */,
 				84F39E6920B032D600548681 /* Connectivity.swift in Sources */,
@@ -681,6 +699,8 @@
 				84716E5B20B18E5C00A1F5F6 /* SyncService.swift in Sources */,
 				84D4389620A8791600B171ED /* HttpService.swift in Sources */,
 				8433D0B920A895EA0031D690 /* ServiceInjectorAssembly.swift in Sources */,
+				7D82B5B320C2CCE7004D896A /* WordFactories.swift in Sources */,
+				7D82B5B020C2C4B5004D896A /* RealmStatistics.swift in Sources */,
 				84D4389220A878DD00B171ED /* ConstructModel.swift in Sources */,
 				84F39E6120B0306D00548681 /* SttTableViewController.swift in Sources */,
 				840427E920B2E78500C94765 /* BaseConverter.swift in Sources */,

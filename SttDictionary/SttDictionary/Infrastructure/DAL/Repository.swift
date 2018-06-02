@@ -17,7 +17,7 @@ enum RealmStatus {
 }
 
 protocol RealmCodable {
-    associatedtype TTarget: BaseRealm, RealmDecodable
+    associatedtype TTarget: Object, RealmDecodable
     
     func serialize() -> TTarget
 }

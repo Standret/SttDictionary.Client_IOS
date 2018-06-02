@@ -21,6 +21,8 @@ class WordEntityCellPresenter: SttPresenter<WordEntityCellDelegate> {
     var mainTranslations: String!
     var tags: String = ""
     var status: Bool = false
+    var nextDate: Date?
+    var devInfo: String?
     
     convenience init (element: WordApiModel) {
         self.init()
@@ -40,5 +42,14 @@ class WordEntityCellPresenter: SttPresenter<WordEntityCellDelegate> {
             tags = "#none"
         }
         status = fromObject.isSynced
+        nextDate = fromObject.statistics?.nextRepetition
+        
+        let last = fromObject.statistics?.answers.last
+        if let _last = last {
+            devInfo = "\(ShortDateConverter().convert(value: _last.date)) -||- \(_last.answer) -||- \(_last.type) -||- \(fromObject.statistics!.easiness) -||- inter: \(fromObject.statistics!.interval) -||- repet: \(fromObject.statistics!.repetition)"
+        }
+        else {
+            devInfo = "none"
+        }
     }
 }
