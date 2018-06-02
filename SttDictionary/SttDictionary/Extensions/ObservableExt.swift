@@ -13,6 +13,14 @@ extension PrimitiveSequence {
     func toEmptyObservable<T>(ofType _: T.Type) -> Observable<T> {
         return self.asObservable().flatMap({ _ in Observable<T>.empty() })
     }
+    func toObservable() -> Observable<Bool> {
+        return Observable<Bool>.create({ (observer) -> Disposable in
+            self.asObservable().subscribe(onCompleted: {
+                observer.onNext(true)
+                observer.onCompleted()
+            })
+        })
+    }
     func inBackground() -> PrimitiveSequence<Trait, Element> {
         return self.subscribeOn(ConcurrentDispatchQueueScheduler(qos: .background))
     }
@@ -72,7 +80,7 @@ extension ObservableType where E == (HTTPURLResponse, Data) {
                 else {
                     observer.onError(BaseError.unkown("\(error)"))
                 }
-            }, onCompleted: nil, onDisposed: nil)
+            }, onCompleted: observer.onCompleted)
         })
     }
 }

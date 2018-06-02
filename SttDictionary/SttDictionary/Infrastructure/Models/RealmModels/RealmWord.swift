@@ -19,7 +19,7 @@ class RealmWord: BaseRealm, RealmDecodable {
     let additionalTranslate = List<RealmString>()
     let imageUrls = List<RealmString>()
     let tags = List<RealmShortTag>()
-    
+        
     func deserialize() -> WordApiModel {
         return WordApiModel(id: id,
                             dateCreated: dateCreated,

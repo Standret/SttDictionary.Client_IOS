@@ -9,7 +9,7 @@
 import Foundation
 import UIKit
 
-class WordViewController: SttViewController<WordPresenter>, WordDelegate {
+class WordViewController: SttViewController<WordPresenter>, WordDelegate, UISearchBarDelegate {
 
     @IBOutlet weak var searchBar: UISearchBar!
     @IBOutlet weak var mainTable: UITableView!
@@ -19,6 +19,8 @@ class WordViewController: SttViewController<WordPresenter>, WordDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         //print(Realm.Configuration.defaultConfiguration.fileURL!)
+        
+        searchBar.delegate = self
         
         wordsSource = WordEntityCellSource(tableView: mainTable, cellName: "WordEntityTableViewCell", cellIdentifier: "WordEntityCell", collection: presenter.words)
         
@@ -37,6 +39,12 @@ class WordViewController: SttViewController<WordPresenter>, WordDelegate {
             }
         }
     }
+    
+    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+        presenter.search(seachString: searchBar.text)
+    }
+    
+    // MARK: implement delegate
     
     func reloadWords() {
         if let _words = presenter?.words {

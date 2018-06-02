@@ -11,6 +11,7 @@
 		7D82B5AE20C2C459004D896A /* StatisticsApiModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D82B5AD20C2C459004D896A /* StatisticsApiModel.swift */; };
 		7D82B5B020C2C4B5004D896A /* RealmStatistics.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D82B5AF20C2C4B5004D896A /* RealmStatistics.swift */; };
 		7D82B5B320C2CCE7004D896A /* WordFactories.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D82B5B220C2CCE7004D896A /* WordFactories.swift */; };
+		7D82B5B520C30491004D896A /* StudyViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D82B5B420C30491004D896A /* StudyViewController.swift */; };
 		840427E920B2E78500C94765 /* BaseConverter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 840427E820B2E78500C94765 /* BaseConverter.swift */; };
 		840427F520B2E92700C94765 /* ApiModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 840427F420B2E92700C94765 /* ApiModel.swift */; };
 		8424424D20B8328800A385FA /* CodableExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8424424C20B8328800A385FA /* CodableExtensions.swift */; };
@@ -89,6 +90,7 @@
 		7D82B5AD20C2C459004D896A /* StatisticsApiModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatisticsApiModel.swift; sourceTree = "<group>"; };
 		7D82B5AF20C2C4B5004D896A /* RealmStatistics.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RealmStatistics.swift; sourceTree = "<group>"; };
 		7D82B5B220C2CCE7004D896A /* WordFactories.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WordFactories.swift; sourceTree = "<group>"; };
+		7D82B5B420C30491004D896A /* StudyViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StudyViewController.swift; sourceTree = "<group>"; };
 		840427E820B2E78500C94765 /* BaseConverter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseConverter.swift; sourceTree = "<group>"; };
 		840427F420B2E92700C94765 /* ApiModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApiModel.swift; sourceTree = "<group>"; };
 		8424424C20B8328800A385FA /* CodableExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CodableExtensions.swift; sourceTree = "<group>"; };
@@ -244,6 +246,7 @@
 				84F39E7820B0334500548681 /* WordsViewController.swift */,
 				84F39E7520B0333900548681 /* NewWordViewController.swift */,
 				84D2422220A85177007D8F1A /* ViewController.swift */,
+				7D82B5B420C30491004D896A /* StudyViewController.swift */,
 			);
 			path = ViewControllers;
 			sourceTree = "<group>";
@@ -723,6 +726,7 @@
 				8437504620A9DD91007BFF5F /* UnitOfWork.swift in Sources */,
 				845C471720B99AA000441012 /* SttCommandExtensions.swift in Sources */,
 				8462667320B1E5A7004169A1 /* WordService.swift in Sources */,
+				7D82B5B520C30491004D896A /* StudyViewController.swift in Sources */,
 				8433D0CC20A8AE510031D690 /* RealmTag.swift in Sources */,
 				8433D0CE20A8AE8D0031D690 /* RealmWord.swift in Sources */,
 				8433D0CA20A8AD9D0031D690 /* BaseRealm.swift in Sources */,

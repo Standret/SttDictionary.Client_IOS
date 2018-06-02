@@ -9,7 +9,11 @@
 import Foundation
 import UIKit
 
-class SettingViewController: SttTableViewController<SettingPresenter>, SettingDelegate {
+class SettingViewController: UITableViewController {
+    
+    @IBAction func close(_ sender: Any) {
+        dismiss(animated: true, completion: nil)
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()

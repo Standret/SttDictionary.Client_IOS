@@ -122,7 +122,8 @@ class HttpService: IHttpService {
                 .subscribe(onNext: { (res, data) in
                     observer.onNext((res, data))
                     observer.onCompleted()
-                }, onError: observer.onError(_:), onCompleted: nil, onDisposed: nil)
+                }, onError: observer.onError(_:),
+                   onCompleted: observer.onCompleted)
             }
             .configurateParamet()
     }

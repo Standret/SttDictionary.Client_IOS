@@ -28,10 +28,7 @@ class NewWordViewController: SttViewController<NewWordPresenter>, NewWordDelegat
     @IBOutlet weak var wordExistsLabel: UILabel!
     @IBOutlet weak var cnstrHeightExists: NSLayoutConstraint!
     
-    
-    @IBAction func closeClick(_ sender: Any) {
-        self.dismiss(animated: true, completion: nil)
-    }
+
     @IBAction func saveClick(_ sender: Any) {
         if !(tfWord.text ?? "").isEmpty {
             presenter.word = tfWord.text
@@ -89,7 +86,7 @@ class NewWordViewController: SttViewController<NewWordPresenter>, NewWordDelegat
             indicatorButton.isEnabled = false
             self.navigationItem.setRightBarButton(indicatorButton, animated: true)
         }, end: {
-            self.dismiss(animated: true, completion: nil)
+            self.close()
         })
     }
     
