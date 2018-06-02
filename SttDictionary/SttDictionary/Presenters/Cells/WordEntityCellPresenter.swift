@@ -14,10 +14,13 @@ protocol WordEntityCellDelegate: Viewable {
 
 class WordEntityCellPresenter: SttPresenter<WordEntityCellDelegate> {
     
+    typealias TTarget = RealmWord
+    
+    
     var word: String!
     var mainTranslations: String!
-    var tags: String!
-    var status: Bool!
+    var tags: String = ""
+    var status: Bool = false
     
     convenience init (element: WordApiModel) {
         self.init()
@@ -28,5 +31,14 @@ class WordEntityCellPresenter: SttPresenter<WordEntityCellDelegate> {
             tags = "#none"
         }
     }
-    required init() { }
+    convenience required init(fromObject: RealmWord) {
+        self.init()
+        word = fromObject.originalWorld
+        mainTranslations = fromObject.translations.map( { $0.value } ).joined(separator: (", "))
+        tags = (fromObject.tags.map( { $0.name } ).map({ "#\($0)" }).joined(separator: ", ") )
+        if tags.isEmpty {
+            tags = "#none"
+        }
+        status = fromObject.isSynced
+    }
 }

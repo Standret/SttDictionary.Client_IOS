@@ -26,7 +26,7 @@ enum ApiConroller {
 
 class Constants {
     // url
-    static var apiUrl = "http://192.168.0.66"
+    static var apiUrl = "http://192.168.0.66:8080"
     static var versionApi = "/api/v1/"
     
     // keychain id

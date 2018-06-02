@@ -16,8 +16,8 @@ protocol INotificationError: class {
 }
 
 extension INotificationError {
-    func useError<T>(observable: Observable<T>, ignoreBadRequest: Bool = false) -> Observable<T> {
-        return self.useError(observable: observable, ignoreBadRequest: ignoreBadRequest)
+    func useError<T>(observable: Observable<T>) -> Observable<T> {
+        return self.useError(observable: observable, ignoreBadRequest: false)
     }
     
 }

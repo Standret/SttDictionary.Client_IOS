@@ -29,10 +29,6 @@ protocol RealmDecodable {
     func deserialize() -> TTarget
 }
 
-protocol RealmInitable {
-    init<TTarget: BaseRealm>(fromObject: TTarget)
-}
-
 protocol IRepository {
     associatedtype TEntity: RealmCodable
     associatedtype TRealm: RealmDecodable
@@ -47,7 +43,7 @@ protocol IRepository {
     func getOne(filter: String?) -> Observable<TEntity>
     func getMany(filter: String?) -> Observable<[TEntity]>
     
-    func getMany<Type: RealmInitable>(filter: String?, ofType : Type.Type) -> Observable<[Type]>
+    func getManyOriginal(filter: String?) -> Observable<[TRealm]>
     
     func update(update: @escaping (_ dbObject: TRealm) -> Void, filter: String?) -> Completable
     
@@ -76,7 +72,7 @@ class Repository<T, R>: IRepository
                 observer.onError(BaseError.realmError(RealmError.objectIsSignleton("type: \(type(of: R.self))")))
             }
             else {
-                objects = realm.objects(R.self).filter(query)
+                objects = realm.objects(R.self).filter(query).sorted(byKeyPath: "dateCreated", ascending: false)
             }
         }
         else {
@@ -84,7 +80,7 @@ class Repository<T, R>: IRepository
                 observer.onError(BaseError.realmError(RealmError.queryIsNull("type: \(type(of: R.self))")))
             }
             else {
-                objects = realm.objects(R.self)
+                objects = realm.objects(R.self).sorted(byKeyPath: "dateCreated", ascending: false)
             }
         }
         return objects
@@ -184,17 +180,13 @@ class Repository<T, R>: IRepository
         return Observable<[T]>.create { (observer) -> Disposable in
             do {
                 let objects = try self.getObjects(filter: filter, observer: observer, tryGetAll: true)
-                if (objects.count == 0) {
-                    observer.onError(BaseError.realmError(RealmError.doesNotExactlyQuery("method: getMany type: \(type(of: R.self)) with filter \(filter ?? "nil"))")))
+                
+                var results = [T]()
+                for item in objects {
+                    results.append(item.deserialize() as! T)
                 }
-                else {
-                    var results = [T]()
-                    for item in objects {
-                        results.append(item.deserialize() as! T)
-                    }
-                    observer.onNext(results)
-                    observer.onCompleted()
-                }
+                observer.onNext(results)
+                observer.onCompleted()
             }
             catch {
                 observer.onError(error)
@@ -204,21 +196,13 @@ class Repository<T, R>: IRepository
         }
     }
     
-    func getMany<Type: RealmInitable>(filter: String?, ofType : Type.Type) -> Observable<[Type]> {
-        return Observable<[Type]>.create { (observer) -> Disposable in
+    func getManyOriginal(filter: String?) -> Observable<[R]> {
+        return Observable<[R]>.create { (observer) -> Disposable in
             do {
                 let objects = try self.getObjects(filter: filter, observer: observer, tryGetAll: true)
-                if (objects.count == 0) {
-                    observer.onError(BaseError.realmError(RealmError.doesNotExactlyQuery("method: getMany<\(type(of: Type.self))> type: \(type(of: R.self)) with filter \(filter ?? "nil"))")))
-                }
-                else {
-                    var results = [Type]()
-                    for item in objects {
-                        results.append(Type.init(fromObject: item))
-                    }
-                    observer.onNext(results)
-                    observer.onCompleted()
-                }
+
+                observer.onNext(objects.toArray())
+                observer.onCompleted()
             }
             catch {
                 observer.onError(error)

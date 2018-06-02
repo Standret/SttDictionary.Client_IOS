@@ -35,6 +35,7 @@ class NewWordViewController: SttViewController<NewWordPresenter>, NewWordDelegat
     @IBAction func saveClick(_ sender: Any) {
         if !(tfWord.text ?? "").isEmpty {
             presenter.word = tfWord.text
+            addMainTranslateClick(sender)
             presenter.save.execute()
         }
     }

@@ -19,7 +19,15 @@ class WordEntityTableViewCell: SttTableViewCell<WordEntityCellPresenter>, WordEn
         lblWord.text = dataContext.word
         lblTranslations.text = dataContext.mainTranslations
         lblTags.text = dataContext.tags
+        syncStatus.backgroundColor = dataContext.status ? UIColor.green : UIColor.red
     }
+    
+    override func draw(_ rect: CGRect) {
+        super.draw(rect)
+        syncStatus.createCircle()
+        syncStatus.backgroundColor = dataContext.status ? UIColor.green : UIColor.red
+    }
+
 
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)

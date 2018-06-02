@@ -29,10 +29,13 @@ class WordServie: IWordService {
     }
     
     func getAllWord() -> Observable<[WordEntityCellPresenter]> {
-        return Observable<[WordEntityCellPresenter]>.create { (observer) -> Disposable in
-            return self._notificationError.useError(observable: self._unitOfWork.word.getMany(filter: nil))
-                .subscribe(onNext: { observer.onNext($0.map({ WordEntityCellPresenter(element: $0) }))})
-        }
+        return _notificationError.useError(observable: _unitOfWork.word.getManyOriginal(filter: nil))
+            .map( { $0.map( { WordEntityCellPresenter(fromObject: $0) } ) } )
+        
+//        return Observable<[WordEntityCellPresenter]>.create { (observer) -> Disposable in
+//            return self._notificationError.useError(observable: self._unitOfWork.word.getMany(filter: nil))
+//                .subscribe(onNext: { observer.onNext($0.map({ WordEntityCellPresenter(element: $0) }))})
+//        }
     }
     
     func createWord(word: String, translations: [String]) -> Observable<Bool> {

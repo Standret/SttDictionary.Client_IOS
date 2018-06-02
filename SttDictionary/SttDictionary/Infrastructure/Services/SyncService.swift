@@ -50,18 +50,25 @@ class SyncService: ISyncService {
                 .flatMap({ self._apiServicce.sendWord(model: AddWordApiModel(word: $0.originalWorld, translations: $0.translations)) })
                 .flatMap({ (word) -> Observable<Bool> in
                     return Observable<Bool>.create({ (wordObserver) -> Disposable in
-                        self._unitOfWork.word.update(update: { (realmWord) in
-                            realmWord.id = word.id!
-                            realmWord.isSynced = true
-                        }, filter: "originalWorld = '\(word.originalWorld)'")
+                        return self._unitOfWork.word.delete(filter: "originalWorld = '\(word.originalWorld)'")
                             .subscribe(onCompleted: {
-                                wordObserver.onNext(true)
-                            }, onError: wordObserver.onError(_:))
+                                _ = self._unitOfWork.word.saveOne(model: word)
+                                    .subscribe(onCompleted: { wordObserver.onNext(true) }, onError: wordObserver.onError(_:))
+                            })
                     })
                 })
-                .subscribe(onNext: { observer.onNext(($0, .UploadWord)) }, onError: observer.onError(_:))
+                .subscribe(onNext: { observer.onNext(($0, .UploadWord)) }, onError: observer.onError(_:), onCompleted: { print("onCompleted") })
             
-            return  Disposables.create()
+            return self._apiServicce.updateWords()
+                .flatMap( { _ -> Observable<ResultModel<[TagApiModel]>> in
+                    observer.onNext((true, .DonwloadWord))
+                    return self._apiServicce.updateTags()
+                } ).subscribe(onNext: { _ in
+                    observer.onNext((true, .DonwloadTag))
+                }, onError: { (error) in
+                    observer.onNext((false, .DonwloadTag))
+                    observer.onError(error)
+                })
         })
     }
 }

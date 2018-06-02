@@ -16,7 +16,7 @@ protocol WordCollectionCellDelegate: Viewable {
     
 }
 
-class WorldCollectionCellPresenter: SttPresenter<WordCollectionCellDelegate>, RealmInitable {
+class WorldCollectionCellPresenter: SttPresenter<WordCollectionCellDelegate> {
     
     var word: String?
     
@@ -25,10 +25,6 @@ class WorldCollectionCellPresenter: SttPresenter<WordCollectionCellDelegate>, Re
         self.init()
         word = value
         collectionDelegate = delegate
-    }
-    required init() { }
-    convenience required init<TTarget>(fromObject: TTarget) where TTarget : BaseRealm {
-        self.init()
     }
     
     func deleteClick() {

@@ -31,7 +31,7 @@ class SttComand {
                     return _handlerCanExecute(_delegate)
                 }
             }
-            return false
+            return true
         }
         isCall = false
     }
