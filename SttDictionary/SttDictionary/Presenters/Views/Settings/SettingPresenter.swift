@@ -8,7 +8,7 @@
 
 import Foundation
 
-protocol SettingDelegate: Viewable {
+protocol SettingDelegate {
     
 }
 

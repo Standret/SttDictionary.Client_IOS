@@ -10,7 +10,12 @@ import Foundation
 import UIKit
 
 class SttTableViewController<T: ViewInjector>: UITableViewController, Viewable, KeyboardNotificationDelegate {
-    
+    func close(parametr: Any) {
+        
+    }
+        func navigate(to: String, withParametr: Any, callback: ((Any) -> Void)?) {
+        
+    }
     func sendMessage(title: String, message: String?) {
         
     }

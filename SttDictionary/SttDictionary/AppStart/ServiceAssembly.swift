@@ -28,4 +28,7 @@ class ServiceAssembly: Assembly {
     var notificationError: INotificationError {
         return define(scope: .lazySingleton, init: NotificationError())
     }
+    var smEngine: SMEngine {
+        return define(scope: .lazySingleton, init: SM2Engine())
+    }
 }

@@ -10,6 +10,12 @@ import Foundation
 import UIKit
 
 class SttTableViewCell<T: ViewInjector>: UITableViewCell, Viewable {
+    func close(parametr: Any) {
+        
+    }
+    func navigate(to: String, withParametr: Any, callback: ((Any) -> Void)?) {
+        
+    }
     func sendMessage(title: String, message: String?) {
         
     }

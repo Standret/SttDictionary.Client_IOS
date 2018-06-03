@@ -26,27 +26,33 @@ enum ApiConroller {
 
 class Constants {
     // url
-    static var apiUrl = "http://192.168.0.66:8080"
-    static var versionApi = "/api/v1/"
+    static let apiUrl = "http://192.168.0.66:8080"
+    static let versionApi = "/api/v1/"
     
     // keychain id
-    static var tokenKey = "securityAccessToken"
-    static var idKey = "securityUserId"
+    static let tokenKey = "securityAccessToken"
+    static let idKey = "securityUserId"
     
     // api config
-    static var maxImageCacheSize = 1024 * 1024 * 200
-    static var maxCacheAge = 60 * 60 * 24 * 7 * 4
-    static var timeout = TimeInterval(15) + TimeInterval(timeWaitNextRequest)
-    static var timeWaitNextRequest = UInt32(2)
-    static var maxCountRepeatRequest = 3
+    static let maxImageCacheSize = 1024 * 1024 * 200
+    static let maxCacheAge = 60 * 60 * 24 * 7 * 4
+    static let timeout = TimeInterval(15) + TimeInterval(timeWaitNextRequest)
+    static let timeWaitNextRequest = UInt32(2)
+    static let maxCountRepeatRequest = 3
     
     // realm
-    static var keySingle = "--single--"
+    static let keySingle = "--single--"
     
     // log - key
-    static var httpKeyLog = "HTTP"
-    static var apiDataKeyLog = "APIDP"
-    static var repositoryLog = "RealmRep"
-    static var repositoryExtensionsLog = "RealmEXTRep"
-    static var noImplementException = "No implement exception"
+    static let httpKeyLog = "HTTP"
+    static let apiDataKeyLog = "APIDP"
+    static let repositoryLog = "RealmRep"
+    static let repositoryExtensionsLog = "RealmEXTRep"
+    static let noImplementException = "No implement exception"
+    
+    // SM
+    
+    static let countOfNewCard = 15
+    static let countCardsPerSession = 7
+    static let minCardsPerSession = 5
 }

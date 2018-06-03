@@ -10,10 +10,11 @@ import Foundation
 import UIKit
 
 extension UIViewController {
-    func createAlerDialog(title: String?, message: String) {
+    func createAlerDialog(title: String?, message: String, buttonTitle: String? = nil, handlerOk: (() -> Void)? = nil) {
         let alertController = UIAlertController(title: title, message: message, preferredStyle: .alert)
-        alertController.addAction(UIAlertAction(title: "Ok", style: .cancel, handler: { (action) in
+        alertController.addAction(UIAlertAction(title: buttonTitle ?? "Ok", style: .cancel, handler: { (action) in
             self.resignFirstResponder()
+            handlerOk?()
         }))
         
         if let popover = alertController.popoverPresentationController {

@@ -14,6 +14,12 @@
 		7D82B5B520C30491004D896A /* StudyViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D82B5B420C30491004D896A /* StudyViewController.swift */; };
 		7D82B5B720C332F9004D896A /* QueryFactories.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D82B5B620C332F9004D896A /* QueryFactories.swift */; };
 		7DC0C6C020C3C9B400FC7998 /* RepositoryTypeExt.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7DC0C6BF20C3C9B400FC7998 /* RepositoryTypeExt.swift */; };
+		7DC0C6C220C3F18400FC7998 /* StudyPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7DC0C6C120C3F18400FC7998 /* StudyPresenter.swift */; };
+		7DC0C6C420C3F7A000FC7998 /* CardsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7DC0C6C320C3F7A000FC7998 /* CardsViewController.swift */; };
+		7DC0C6C620C3FB8900FC7998 /* CardsPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7DC0C6C520C3FB8900FC7998 /* CardsPresenter.swift */; };
+		7DC0C6C820C4378600FC7998 /* ArrayExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7DC0C6C720C4378600FC7998 /* ArrayExtensions.swift */; };
+		7DC0C6CA20C437BB00FC7998 /* SttRandom.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7DC0C6C920C437BB00FC7998 /* SttRandom.swift */; };
+		7DC0C6CC20C455A200FC7998 /* SMEngine.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7DC0C6CB20C455A200FC7998 /* SMEngine.swift */; };
 		840427E920B2E78500C94765 /* BaseConverter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 840427E820B2E78500C94765 /* BaseConverter.swift */; };
 		840427F520B2E92700C94765 /* ApiModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 840427F420B2E92700C94765 /* ApiModel.swift */; };
 		8424424D20B8328800A385FA /* CodableExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8424424C20B8328800A385FA /* CodableExtensions.swift */; };
@@ -95,6 +101,12 @@
 		7D82B5B420C30491004D896A /* StudyViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StudyViewController.swift; sourceTree = "<group>"; };
 		7D82B5B620C332F9004D896A /* QueryFactories.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QueryFactories.swift; sourceTree = "<group>"; };
 		7DC0C6BF20C3C9B400FC7998 /* RepositoryTypeExt.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RepositoryTypeExt.swift; sourceTree = "<group>"; };
+		7DC0C6C120C3F18400FC7998 /* StudyPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StudyPresenter.swift; sourceTree = "<group>"; };
+		7DC0C6C320C3F7A000FC7998 /* CardsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardsViewController.swift; sourceTree = "<group>"; };
+		7DC0C6C520C3FB8900FC7998 /* CardsPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardsPresenter.swift; sourceTree = "<group>"; };
+		7DC0C6C720C4378600FC7998 /* ArrayExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArrayExtensions.swift; sourceTree = "<group>"; };
+		7DC0C6C920C437BB00FC7998 /* SttRandom.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SttRandom.swift; sourceTree = "<group>"; };
+		7DC0C6CB20C455A200FC7998 /* SMEngine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SMEngine.swift; sourceTree = "<group>"; };
 		840427E820B2E78500C94765 /* BaseConverter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseConverter.swift; sourceTree = "<group>"; };
 		840427F420B2E92700C94765 /* ApiModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApiModel.swift; sourceTree = "<group>"; };
 		8424424C20B8328800A385FA /* CodableExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CodableExtensions.swift; sourceTree = "<group>"; };
@@ -205,10 +217,12 @@
 		840427F820B2E9A000C94765 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				84716E4F20B1842900A1F5F6 /* Settings */,
+				7DC0C6C120C3F18400FC7998 /* StudyPresenter.swift */,
 				84F39E7D20B0335100548681 /* NewWordPresenter.swift */,
 				84F39E7C20B0335100548681 /* WordPresenter.swift */,
 				8433D0C320A898FA0031D690 /* ViewPresenter.swift */,
-				84716E4F20B1842900A1F5F6 /* Settings */,
+				7DC0C6C520C3FB8900FC7998 /* CardsPresenter.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -252,6 +266,7 @@
 				84F39E7520B0333900548681 /* NewWordViewController.swift */,
 				84D2422220A85177007D8F1A /* ViewController.swift */,
 				7D82B5B420C30491004D896A /* StudyViewController.swift */,
+				7DC0C6C320C3F7A000FC7998 /* CardsViewController.swift */,
 			);
 			path = ViewControllers;
 			sourceTree = "<group>";
@@ -391,6 +406,7 @@
 				8424424C20B8328800A385FA /* CodableExtensions.swift */,
 				845C471620B99AA000441012 /* SttCommandExtensions.swift */,
 				7DC0C6BF20C3C9B400FC7998 /* RepositoryTypeExt.swift */,
+				7DC0C6C720C4378600FC7998 /* ArrayExtensions.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -500,6 +516,8 @@
 				84F39E6820B032D600548681 /* Connectivity.swift */,
 				8430243C20B0B5C500981590 /* SttComand.swift */,
 				84716E5820B18CFA00A1F5F6 /* Defaultable.swift */,
+				7DC0C6C920C437BB00FC7998 /* SttRandom.swift */,
+				7DC0C6CB20C455A200FC7998 /* SMEngine.swift */,
 			);
 			path = Core;
 			sourceTree = "<group>";
@@ -719,6 +737,7 @@
 				84F39E7420B032ED00548681 /* SttTextField.swift in Sources */,
 				84716E5720B1876300A1F5F6 /* RealmSyncData.swift in Sources */,
 				8437504420A9B1FB007BFF5F /* ErrorModel.swift in Sources */,
+				7DC0C6C220C3F18400FC7998 /* StudyPresenter.swift in Sources */,
 				84F39E8220B0352D00548681 /* UIConstants.swift in Sources */,
 				84D4389A20A8795500B171ED /* Constants.swift in Sources */,
 				84AD6A5420B04E51000D560E /* SttCollectionViewSource.swift in Sources */,
@@ -751,6 +770,8 @@
 				84716E5120B1844000A1F5F6 /* SyncPresenter.swift in Sources */,
 				84716E4E20B1842100A1F5F6 /* SyncViewController.swift in Sources */,
 				84F39E7920B0334500548681 /* SettingViewController.swift in Sources */,
+				7DC0C6C620C3FB8900FC7998 /* CardsPresenter.swift in Sources */,
+				7DC0C6C420C3F7A000FC7998 /* CardsViewController.swift in Sources */,
 				84D4388C20A8788500B171ED /* Repository.swift in Sources */,
 				8430243D20B0B5C500981590 /* SttComand.swift in Sources */,
 				84716E6020B1A58400A1F5F6 /* NotificationError.swift in Sources */,
@@ -760,7 +781,10 @@
 				84F39E7220B032ED00548681 /* UIViewDExt.swift in Sources */,
 				84F39E7620B0333A00548681 /* NewWordViewController.swift in Sources */,
 				8433D0D220A8BCDA0031D690 /* WordApiModel.swift in Sources */,
+				7DC0C6CC20C455A200FC7998 /* SMEngine.swift in Sources */,
+				7DC0C6C820C4378600FC7998 /* ArrayExtensions.swift in Sources */,
 				8462666C20B1DECF004169A1 /* WordEntityTableViewCell.swift in Sources */,
+				7DC0C6CA20C437BB00FC7998 /* SttRandom.swift in Sources */,
 				84F39E7320B032ED00548681 /* KeyboardNotification.swift in Sources */,
 				8433D0C420A898FA0031D690 /* ViewPresenter.swift in Sources */,
 				840427F520B2E92700C94765 /* ApiModel.swift in Sources */,

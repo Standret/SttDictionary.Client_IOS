@@ -48,7 +48,7 @@ struct Statistics: Decodable, RealmCodable {
     
     func serialize() -> RealmStatistics {
         return RealmStatistics(value: [
-            "nextRepetition": nextRepetition,
+            "nextRepetition": nextRepetition?.onlyDay(),
             "easiness": easiness,
             "repetition": repetition,
             "interval": interval,

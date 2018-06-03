@@ -10,10 +10,16 @@ import Foundation
 import UIKit
 
 class SttCollectionViewCell<T: ViewInjector>: UICollectionViewCell, Viewable {
+    func close(parametr: Any) {
+        
+    }
+    func navigate(to: String, withParametr: Any, callback: ((Any) -> Void)?) {
+        
+    }
     func sendMessage(title: String, message: String?) {
     
     }
-        func sendError(error: BaseError) {
+    func sendError(error: BaseError) {
     
     }
     

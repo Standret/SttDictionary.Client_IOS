@@ -8,11 +8,19 @@
 
 import UIKit
 
-class StudyViewController: UIViewController {
+class StudyViewController: SttViewController<StudyPresenter>, StudyDelegate {
 
+    @IBOutlet weak var lblStatistics: UILabel!
     @IBOutlet weak var mainView: UIView!
+    
     @IBAction func close(_ sender: Any) {
         dismiss(animated: true, completion: nil)
+    }
+    @IBAction func clickOnOriginalCard(_ sender: Any) {
+        presenter.onCLickOriginalCard()
+    }
+    @IBAction func clicOnTranslateCard(_ sender: Any) {
+        
     }
     
     override func viewDidLoad() {
@@ -20,21 +28,10 @@ class StudyViewController: UIViewController {
 
         mainView.layer.cornerRadius = UIConstants.cornerRadius
     }
-
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
-    }
     
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
+    // MARK: -- implementation delegate
+    
+    func reloadStatus() {
+        lblStatistics.text = "Today cards: \(presenter.newWords.count) | \(presenter.repeatWords.count)"
     }
-    */
-
 }

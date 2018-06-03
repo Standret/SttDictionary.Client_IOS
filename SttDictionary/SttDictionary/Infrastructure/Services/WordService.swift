@@ -14,6 +14,11 @@ protocol IWordService {
     func createWord(word: String, translations: [String]) -> Observable<Bool>
     func exists(word: String) -> Observable<Bool>
     
+    func getNewWord() -> Observable<[RealmWord]>
+    func getRepeatWord() -> Observable<[RealmWord]>
+    
+    func updateStatistics(answer: Answer) -> Observable<Bool>
+    
     var observe: Observable<WordEntityCellPresenter> { get }
 }
 
@@ -21,6 +26,7 @@ class WordServie: IWordService {
     
     var _unitOfWork: IUnitOfWork!
     var _notificationError: INotificationError!
+    var _smEngine: SMEngine!
     
     var observe: Observable<WordEntityCellPresenter> { return _notificationError.useError(observable: _unitOfWork.word.observe(on: [RealmStatus.Inserted]).map( { WordEntityCellPresenter(element: $0.0) } )) }
     
@@ -34,11 +40,11 @@ class WordServie: IWordService {
             if QueryFactories.isRegisterSchem(scheme: _searchStr) {
                 let predicatesModel = QueryFactories.getWordQuery(text: _searchStr)
                 var observables = [Observable<[RealmWord]>]()
-                if let newCard = predicatesModel?.newCard {
-                    observables.append(_unitOfWork.word.getMany(filter: newCard, take: 15).do(onNext: { print($0.count) }))
+                if let _ = predicatesModel?.newCard {
+                    observables.append(getNewWord())
                 }
-                if let repeatCard = predicatesModel?.repeatCard {
-                    observables.append(_unitOfWork.word.getMany(filter: repeatCard, take: 15).do(onNext: { print($0.count) }))
+                if let _ = predicatesModel?.repeatCard {
+                    observables.append(getRepeatWord())
                 }
                 observable = Observable.concat(observables)
             }
@@ -59,5 +65,26 @@ class WordServie: IWordService {
     
     func exists(word: String) -> Observable<Bool> {
         return _notificationError.useError(observable: _unitOfWork.word.exists(filter: "originalWorld = '\(word)'"))
+    }
+    
+    func getNewWord() -> Observable<[RealmWord]> {
+        let predicate = QueryFactories.getWordQuery(text: ":@today")
+        return _notificationError.useError(observable: _unitOfWork.word.getMany(filter: predicate?.newCard, take: Constants.countOfNewCard))
+    }
+    
+    func getRepeatWord() -> Observable<[RealmWord]> {
+        let predicate = QueryFactories.getWordQuery(text: ":@today")
+        return _notificationError.useError(observable: _unitOfWork.word.getMany(filter: predicate?.repeatCard))
+    }
+    func updateStatistics(answer: Answer) -> Observable<Bool> {
+        return _notificationError.useError(observable: _unitOfWork.word.getOne(filter: "id = '\(answer.id)'")
+            .flatMap { (word) -> Observable<Bool> in
+                                
+                return self._unitOfWork.word.update(update: { (rword) in
+                    rword.isSynced = false
+                    rword.statistics = self._smEngine.gradeFlashcard(statistics: word.statistics ?? RealmStatistics(), answer: answer)
+                }, filter: "id = '\(answer.id)'")
+                .toObservable()
+        })
     }
 }

@@ -14,6 +14,13 @@ class ServiceInjectorAssembly: Assembly {
     
     // Inject service into presenter
     
+    func inject(into service: StudyPresenter) {
+        let _:StudyPresenter = define(init: service) {
+            $0._wordService = self.serviceAssembly.wordService
+            return $0
+        }
+    }
+    
     func inject(into service: SyncPresenter) {
         let _:SyncPresenter = define(init: service) {
             $0._syncService = self.serviceAssembly.syncService
@@ -30,6 +37,13 @@ class ServiceInjectorAssembly: Assembly {
     
     func inject(into service: NewWordPresenter) {
         let _:NewWordPresenter = define(init: service) {
+            $0._wordService = self.serviceAssembly.wordService
+            return $0
+        }
+    }
+    
+    func inject(into service: CardsPresenter) {
+        let _:CardsPresenter = define(init: service) {
             $0._wordService = self.serviceAssembly.wordService
             return $0
         }
@@ -65,6 +79,7 @@ class ServiceInjectorAssembly: Assembly {
         let _:WordServie = define(init: service) {
             $0._unitOfWork = self.serviceAssembly.unitOfWork
             $0._notificationError = self.serviceAssembly.notificationError
+            $0._smEngine = self.serviceAssembly.smEngine
             return $0
         }
     }
