@@ -29,17 +29,28 @@ class WordServie: IWordService {
     }
     
     func getWord(searchString: String?) -> Observable<[WordEntityCellPresenter]> {
-        var query: String?
+        var observable = _unitOfWork.word.getMany()
         if let _searchStr = searchString {
-            if _searchStr.starts(with: "--:") {
-                print("sys query")
+            if QueryFactories.isRegisterSchem(scheme: _searchStr) {
+                let predicatesModel = QueryFactories.getWordQuery(text: _searchStr)
+                var observables = [Observable<[RealmWord]>]()
+                if let newCard = predicatesModel?.newCard {
+                    observables.append(_unitOfWork.word.getMany(filter: newCard, take: 15).do(onNext: { print($0.count) }))
+                }
+                if let repeatCard = predicatesModel?.repeatCard {
+                    observables.append(_unitOfWork.word.getMany(filter: repeatCard, take: 15).do(onNext: { print($0.count) }))
+                }
+                observable = Observable.concat(observables)
             }
             else if !_searchStr.isEmpty {
-                query = "originalWorld contains[cd] '\(_searchStr)' or any translations.value contains[cd] '\(_searchStr)'"
+                let query = "originalWorld contains[cd] '\(_searchStr)' or any translations.value contains[cd] '\(_searchStr)'"
+                observable = _unitOfWork.word.getMany(filter: query)
+            }
+            else {
+                observable = _unitOfWork.word.getMany()
             }
         }
-        return _notificationError.useError(observable: _unitOfWork.word.getManyOriginal(filter: query))
-            .map( { $0.map( { WordEntityCellPresenter(fromObject: $0) } ) } )
+        return _notificationError.useError(observable: observable.map( { $0.map( { WordEntityCellPresenter(fromObject: $0) } )}))
     }
     
     func createWord(word: String, translations: [String]) -> Observable<Bool> {

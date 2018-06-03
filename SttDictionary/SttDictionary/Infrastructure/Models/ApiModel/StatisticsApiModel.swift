@@ -28,7 +28,7 @@ struct AnswerData: Decodable, RealmCodable {
     func serialize() -> RealmAnswerData {
         let model = RealmAnswerData(value: [
             "miliSecondsForReview": miliSecondsForReview,
-            "date": date
+            "date": date.onlyDay()
             ])
         model.answer = answer
         model.type = type

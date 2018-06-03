@@ -12,6 +12,8 @@
 		7D82B5B020C2C4B5004D896A /* RealmStatistics.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D82B5AF20C2C4B5004D896A /* RealmStatistics.swift */; };
 		7D82B5B320C2CCE7004D896A /* WordFactories.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D82B5B220C2CCE7004D896A /* WordFactories.swift */; };
 		7D82B5B520C30491004D896A /* StudyViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D82B5B420C30491004D896A /* StudyViewController.swift */; };
+		7D82B5B720C332F9004D896A /* QueryFactories.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D82B5B620C332F9004D896A /* QueryFactories.swift */; };
+		7DC0C6C020C3C9B400FC7998 /* RepositoryTypeExt.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7DC0C6BF20C3C9B400FC7998 /* RepositoryTypeExt.swift */; };
 		840427E920B2E78500C94765 /* BaseConverter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 840427E820B2E78500C94765 /* BaseConverter.swift */; };
 		840427F520B2E92700C94765 /* ApiModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 840427F420B2E92700C94765 /* ApiModel.swift */; };
 		8424424D20B8328800A385FA /* CodableExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8424424C20B8328800A385FA /* CodableExtensions.swift */; };
@@ -91,6 +93,8 @@
 		7D82B5AF20C2C4B5004D896A /* RealmStatistics.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RealmStatistics.swift; sourceTree = "<group>"; };
 		7D82B5B220C2CCE7004D896A /* WordFactories.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WordFactories.swift; sourceTree = "<group>"; };
 		7D82B5B420C30491004D896A /* StudyViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StudyViewController.swift; sourceTree = "<group>"; };
+		7D82B5B620C332F9004D896A /* QueryFactories.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QueryFactories.swift; sourceTree = "<group>"; };
+		7DC0C6BF20C3C9B400FC7998 /* RepositoryTypeExt.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RepositoryTypeExt.swift; sourceTree = "<group>"; };
 		840427E820B2E78500C94765 /* BaseConverter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseConverter.swift; sourceTree = "<group>"; };
 		840427F420B2E92700C94765 /* ApiModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApiModel.swift; sourceTree = "<group>"; };
 		8424424C20B8328800A385FA /* CodableExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CodableExtensions.swift; sourceTree = "<group>"; };
@@ -193,6 +197,7 @@
 			isa = PBXGroup;
 			children = (
 				7D82B5B220C2CCE7004D896A /* WordFactories.swift */,
+				7D82B5B620C332F9004D896A /* QueryFactories.swift */,
 			);
 			path = Creater;
 			sourceTree = "<group>";
@@ -385,6 +390,7 @@
 				84716E6120B1B0A900A1F5F6 /* CustomDialog.swift */,
 				8424424C20B8328800A385FA /* CodableExtensions.swift */,
 				845C471620B99AA000441012 /* SttCommandExtensions.swift */,
+				7DC0C6BF20C3C9B400FC7998 /* RepositoryTypeExt.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -735,6 +741,7 @@
 				84F39E6220B0306D00548681 /* SttViewController.swift in Sources */,
 				84716E5920B18CFA00A1F5F6 /* Defaultable.swift in Sources */,
 				84F39E8020B0335100548681 /* NewWordPresenter.swift in Sources */,
+				7D82B5B720C332F9004D896A /* QueryFactories.swift in Sources */,
 				84716E5420B186BB00A1F5F6 /* SyncData.swift in Sources */,
 				84B3CDA220B20915002546C0 /* AddWordApiModel.swift in Sources */,
 				8462667120B1E0DF004169A1 /* WordEntityCellSource.swift in Sources */,
@@ -748,6 +755,7 @@
 				8430243D20B0B5C500981590 /* SttComand.swift in Sources */,
 				84716E6020B1A58400A1F5F6 /* NotificationError.swift in Sources */,
 				84D4389820A8792F00B171ED /* ApiService.swift in Sources */,
+				7DC0C6C020C3C9B400FC7998 /* RepositoryTypeExt.swift in Sources */,
 				84D4388420A877EF00B171ED /* AppDelegateExt.swift in Sources */,
 				84F39E7220B032ED00548681 /* UIViewDExt.swift in Sources */,
 				84F39E7620B0333A00548681 /* NewWordViewController.swift in Sources */,

@@ -17,7 +17,7 @@ class DateConverter: IConverter {
         let formatter = DateFormatter()
         formatter.locale = Locale.current
         formatter.timeZone = TimeZone.current
-        formatter.dateFormat = "yy-MMM-dd HH:mm:ss"
+        formatter.dateFormat = "dd-MMM-yy HH:mm"
         
         return formatter.string(from: value)
     }
@@ -32,7 +32,7 @@ class ShortDateConverter: IConverter {
         let formatter = DateFormatter()
         formatter.locale = Locale.current
         formatter.timeZone = TimeZone.current
-        formatter.dateFormat = "yy-MMM-dd"
+        formatter.dateFormat = "dd-MMM-yy"
         
         return formatter.string(from: value)
     }

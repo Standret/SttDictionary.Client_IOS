@@ -46,7 +46,7 @@ class WordEntityCellPresenter: SttPresenter<WordEntityCellDelegate> {
         
         let last = fromObject.statistics?.answers.last
         if let _last = last {
-            devInfo = "\(ShortDateConverter().convert(value: _last.date)) -||- \(_last.answer) -||- \(_last.type) -||- \(fromObject.statistics!.easiness) -||- inter: \(fromObject.statistics!.interval) -||- repet: \(fromObject.statistics!.repetition)"
+            devInfo = "\(DateConverter().convert(value: _last.date)) -||- \(_last.answer) -||- \(_last.type) -||- \(fromObject.statistics!.easiness) -||- inter: \(fromObject.statistics!.interval) -||- repet: \(fromObject.statistics!.repetition)"
         }
         else {
             devInfo = "none"

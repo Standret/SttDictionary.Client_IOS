@@ -27,3 +27,27 @@ extension Formatter {
     }()
     static let iso8601noFS = ISO8601DateFormatter()
 }
+
+extension Date {
+    func onlyDay() -> Date {
+        guard let date = Calendar.current.date(from: Calendar.current.dateComponents([.year, .month, .day], from: self)) else {
+            fatalError("Failed to strip time from Date object")
+        }
+        return date
+    }
+    var yesterday: Date {
+        return Calendar.current.date(byAdding: .day, value: -1, to: noon)!
+    }
+    var tomorrow: Date {
+        return Calendar.current.date(byAdding: .day, value: 1, to: noon)!
+    }
+    var noon: Date {
+        return Calendar.current.date(bySettingHour: 12, minute: 0, second: 0, of: self)!
+    }
+    var month: Int {
+        return Calendar.current.component(.month,  from: self)
+    }
+    var isLastDayOfMonth: Bool {
+        return tomorrow.month != month
+    }
+}

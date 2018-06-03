@@ -58,9 +58,10 @@ class WordPresenter: SttPresenter<WordDelegate> {
     var previusDispose: Disposable?
     func search(seachString: String?) {
         previusDispose?.dispose()
+        self.words = []
         previusDispose = _wordService.getWord(searchString: seachString)
             .subscribe(onNext: { (elements) in
-                self.words = elements
+                self.words.append(contentsOf: elements)
                 self.delegate.reloadWords()
             })
     }

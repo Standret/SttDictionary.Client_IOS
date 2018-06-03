@@ -29,7 +29,7 @@ protocol RealmDecodable {
     func deserialize() -> TTarget
 }
 
-protocol IRepository {
+protocol RepositoryType {
     associatedtype TEntity: RealmCodable
     associatedtype TRealm: RealmDecodable
     
@@ -40,10 +40,8 @@ protocol IRepository {
     func saveOne(model: TEntity) -> Completable
     func saveMany(models: [TEntity]) -> Completable
     
-    func getOne(filter: String?) -> Observable<TEntity>
-    func getMany(filter: String?) -> Observable<[TEntity]>
-    
-    func getManyOriginal(filter: String?) -> Observable<[TRealm]>
+    func getOne(filter: String?) -> Observable<TRealm>
+    func getMany(filter: String?, sortBy: String?, isAsc: Bool, skip: Int, take: Int) -> Observable<[TRealm]>
     
     func update(update: @escaping (_ dbObject: TRealm) -> Void, filter: String?) -> Completable
     
@@ -52,11 +50,11 @@ protocol IRepository {
     
     func exists(filter: String?) -> Observable<Bool>
     func count(filter: String?) -> Observable<Int>
-    //func save(model: TEntity)
+    
     func observe(on: [RealmStatus]) -> Observable<(TEntity, RealmStatus)>
 }
 
-class Repository<T, R>: IRepository
+class Repository<T, R>: RepositoryType
     where T: RealmCodable,
     R: RealmDecodable,
     R: BaseRealm {
@@ -64,7 +62,7 @@ class Repository<T, R>: IRepository
     typealias TEntity = T
     typealias TRealm = R
     
-    private func getObjects<TArg>(filter: String?, observer: AnyObserver<TArg>, tryGetAll: Bool) throws -> Results<R> {
+    private func getObjects<TArg>(filter: String?, sortBy: String? = nil, isAsc: Bool = false, observer: AnyObserver<TArg>, tryGetAll: Bool) throws -> Results<R> {
         let realm = try Realm()
         var objects: Results<R>!
         if let query = filter {
@@ -72,7 +70,7 @@ class Repository<T, R>: IRepository
                 observer.onError(BaseError.realmError(RealmError.objectIsSignleton("type: \(type(of: R.self))")))
             }
             else {
-                objects = realm.objects(R.self).filter(query).sorted(byKeyPath: "dateCreated", ascending: false)
+                objects = realm.objects(R.self).filter(query).sorted(byKeyPath: sortBy ?? "dateCreated", ascending: isAsc)
             }
         }
         else {
@@ -80,7 +78,7 @@ class Repository<T, R>: IRepository
                 observer.onError(BaseError.realmError(RealmError.queryIsNull("type: \(type(of: R.self))")))
             }
             else {
-                objects = realm.objects(R.self).sorted(byKeyPath: "dateCreated", ascending: false)
+                objects = realm.objects(R.self).sorted(byKeyPath: sortBy ?? "dateCreated", ascending: isAsc)
             }
         }
         return objects
@@ -156,15 +154,15 @@ class Repository<T, R>: IRepository
             }
     }
     
-    func getOne(filter: String?) -> Observable<T> {
-        return Observable<T>.create { (observer) -> Disposable in
+    func getOne(filter: String?) -> Observable<R> {
+        return Observable<R>.create { (observer) -> Disposable in
             do {
                 let objects = try self.getObjects(filter: filter, observer: observer, tryGetAll: false)
                 if (objects.count != 1) {
                     observer.onError(BaseError.realmError(RealmError.doesNotExactlyQuery("method: getOne type: \(type(of: R.self)) with filter \(filter ?? "nil")")))
                 }
                 else {
-                    observer.onNext(objects[0].deserialize() as! T)
+                    observer.onNext(objects[0])
                 }
                 observer.onCompleted()
             }
@@ -176,32 +174,11 @@ class Repository<T, R>: IRepository
         }
     }
     
-    func getMany(filter: String?) -> Observable<[T]> {
-        return Observable<[T]>.create { (observer) -> Disposable in
-            do {
-                let objects = try self.getObjects(filter: filter, observer: observer, tryGetAll: true)
-                
-                var results = [T]()
-                for item in objects {
-                    results.append(item.deserialize() as! T)
-                }
-                observer.onNext(results)
-                observer.onCompleted()
-            }
-            catch {
-                observer.onError(error)
-            }
-            
-            return Disposables.create()
-        }
-    }
-    
-    func getManyOriginal(filter: String?) -> Observable<[R]> {
+    func getMany(filter: String?, sortBy: String?, isAsc: Bool, skip: Int, take: Int) -> Observable<[R]> {
         return Observable<[R]>.create { (observer) -> Disposable in
             do {
-                let objects = try self.getObjects(filter: filter, observer: observer, tryGetAll: true)
-
-                observer.onNext(objects.toArray())
+                let objects = try self.getObjects(filter: filter, sortBy: sortBy, isAsc: isAsc, observer: observer, tryGetAll: true)
+                observer.onNext(Array(objects.prefix(take)))
                 observer.onCompleted()
             }
             catch {
@@ -360,19 +337,4 @@ class Repository<T, R>: IRepository
             return Disposables.create()
         }
     }
-}
-
-extension IRepository
-where TEntity: Defaultable {
-    func getOrCreateSingletoon() -> Observable<TEntity> {
-        return self.exists(filter: nil)
-            .flatMap({ (result) -> Observable<TEntity> in
-                if (result) {
-                    return self.getOne(filter: nil)
-                }
-                return self.saveOne(model: FactoryDefaultsObject.create(ofType: TEntity.self))
-                    .asObservable()
-                    .flatMap({ _ in self.getOne(filter: nil) })
-            })
-        }
 }

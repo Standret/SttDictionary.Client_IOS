@@ -40,7 +40,8 @@ class SyncService: ISyncService {
 
     
     func getSyncData() -> Observable<SyncDataViewModel> {
-        return _notificationError.useError(observable: _unitOfWork.syncData.getOrCreateSingletoon())
+        return _notificationError.useError(observable: _unitOfWork.syncData.getOrCreateSingletoon()
+                                                                           .map( { $0.deserialize() } ))
     }
     
     func sync() -> Observable<(Bool, SyncStep)> {
@@ -52,7 +53,7 @@ class SyncService: ISyncService {
     private func sendWord() -> Observable<(Bool, SyncStep)> {
         return self._unitOfWork.word.getMany(filter: "isSynced == false")
             .flatMap({ Observable.from($0) })
-            .flatMap({ self._apiServicce.sendWord(model: AddWordApiModel(word: $0.originalWorld, translations: $0.translations)) })
+            .flatMap({ self._apiServicce.sendWord(model: AddWordApiModel(word: $0.originalWorld, translations: $0.translations.map( { $0.value } ))) })
             .flatMap({ (word) -> Observable<(Bool, SyncStep)> in
                 return self._unitOfWork.word.delete(filter: "originalWorld = '\(word.originalWorld)'")
                     .toObservable()
