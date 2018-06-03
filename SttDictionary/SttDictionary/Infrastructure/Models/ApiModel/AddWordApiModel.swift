@@ -8,16 +8,28 @@
 
 import Foundation
 
-protocol DictionaryCodable: Codable {
-    
-}
+protocol DictionaryCodable: Codable { }
 
 class AddWordApiModel: DictionaryCodable {
-    let originalWorld: String
-    let translations: [String]
+    var originalWorld: String!
+    var translations: [String]!
     
     init (word: String, translations: [String]) {
         self.originalWorld = word
         self.translations = translations
+    }
+}
+
+class UpdateWordApiModel: DictionaryCodable {
+    var id: String!
+    var statistics: Statistics!
+    var originalWorld: String!
+    var translations: [String]!
+    
+    init(word: String, translations: [String], id: String, statistics: Statistics) {
+        self.originalWorld = word
+        self.translations = translations
+        self.id = id
+        self.statistics = statistics
     }
 }

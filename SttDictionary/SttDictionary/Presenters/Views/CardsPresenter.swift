@@ -109,7 +109,7 @@ class CardsPresenter: SttPresenter<CardsDelegate> {
         }
         
         var left = 0
-        for i in 0...(cardsCount / 2) {
+        for i in 0...((cardsCount / 2) - cardsCount % 2 == 0 ? 1 : 0) {
             // start
             if vector[i] && param.1.count > 0 {
                 words.insert(param.1.getAndDelete(index: 0), at: left)

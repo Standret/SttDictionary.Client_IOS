@@ -49,6 +49,7 @@ class Constants {
     static let repositoryLog = "RealmRep"
     static let repositoryExtensionsLog = "RealmEXTRep"
     static let noImplementException = "No implement exception"
+    static let temporyPrefix = "|---**|tempory|**---|"
     
     // SM
     

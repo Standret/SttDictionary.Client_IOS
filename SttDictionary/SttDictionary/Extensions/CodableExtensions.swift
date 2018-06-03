@@ -11,7 +11,10 @@ import Foundation
 extension DictionaryCodable {
     func getDictionary() -> [String:Any] {
         do {
-            let json = (try JSONEncoder().encode(self))
+            let encoder = JSONEncoder()
+            encoder.dateEncodingStrategy = .iso8601
+            let json = (try encoder.encode(self))
+            print(String(data: json, encoding: .utf8)!)
             let jsonData = String(data: json, encoding: .utf8)?.data(using: .utf8)
             return (try JSONSerialization.jsonObject(with: jsonData!, options: .mutableLeaves) as? [String:Any])!
         }

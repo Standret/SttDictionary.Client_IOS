@@ -11,7 +11,7 @@ import RxSwift
 import SINQ
 
 enum SyncStep {
-    case UploadWord
+    case UploadWord, UpdateWord
     case DonwloadWord, DonwloadTag
 }
 
@@ -46,13 +46,15 @@ class SyncService: ISyncService {
     
     func sync() -> Observable<(Bool, SyncStep)> {
         return Observable.concat([sendWord(),
+                                  updateWord(),
                                   _apiServicce.updateWords().map({ _ in (true, SyncStep.DonwloadWord)}),
                                   _apiServicce.updateTags().map({ _ in (true, SyncStep.DonwloadTag)} )])
     }
     
     private func sendWord() -> Observable<(Bool, SyncStep)> {
-        return self._unitOfWork.word.getMany(filter: "isSynced == false")
+        return self._unitOfWork.word.getMany(filter: "isSynced == false and id beginswith '\(Constants.temporyPrefix)'")
             .flatMap({ Observable.from($0) })
+            .do(onNext: { print($0.originalWorld) })
             .flatMap({ self._apiServicce.sendWord(model: AddWordApiModel(word: $0.originalWorld, translations: $0.translations.map( { $0.value } ))) })
             .flatMap({ (word) -> Observable<(Bool, SyncStep)> in
                 return self._unitOfWork.word.delete(filter: "originalWorld = '\(word.originalWorld)'")
@@ -60,5 +62,13 @@ class SyncService: ISyncService {
                     .flatMap({ _ in self._unitOfWork.word.saveOne(model: word).toObservable() })
                     .map( { _ in (true, SyncStep.UploadWord) } )
             })
+    }
+    
+    private func updateWord() -> Observable<(Bool, SyncStep)> {
+        return self._unitOfWork.word.getMany(filter: "isSynced == false and not id beginswith '\(Constants.temporyPrefix)'")
+            .flatMap({ Observable.from($0) })
+            .do(onNext: { print("id\($0.id)") })
+            .flatMap({ self._apiServicce.updateWord(model: UpdateWordApiModel(word: $0.originalWorld, translations: $0.translations.map( { $0.value } ), id: $0.id, statistics: ($0.statistics?.deserialize())!)) })
+            .map({ ($0, SyncStep.UpdateWord) })
     }
 }

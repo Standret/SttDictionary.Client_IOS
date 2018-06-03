@@ -8,15 +8,15 @@
 
 import Foundation
 
-enum AnswersGrade: Int, Decodable {
+enum AnswersGrade: Int, Decodable, DictionaryCodable {
     case forget, bad, fail, pass, good, perfect
 }
-enum AnswersType: Int, Decodable {
+enum AnswersType: Int, Decodable, DictionaryCodable {
     case originalCard, translateCard
 }
 
 
-struct AnswerData: Decodable, RealmCodable {
+struct AnswerData: Decodable, RealmCodable, DictionaryCodable {
 
     typealias TTarget = RealmAnswerData
     
@@ -36,7 +36,7 @@ struct AnswerData: Decodable, RealmCodable {
     }
 }
 
-struct Statistics: Decodable, RealmCodable {
+struct Statistics: Decodable, RealmCodable, DictionaryCodable {
     
     typealias TTarget = RealmStatistics
     

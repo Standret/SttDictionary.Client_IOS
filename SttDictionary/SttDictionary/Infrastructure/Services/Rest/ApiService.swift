@@ -16,6 +16,7 @@ protocol IApiService {
     func updateWords() -> Observable<ResultModel<[WordApiModel]>>
     
     func sendWord(model: AddWordApiModel) -> Observable<WordApiModel>
+    func updateWord(model: UpdateWordApiModel) -> Observable<Bool>
 }
 
 class ApiService: IApiService {
@@ -52,4 +53,11 @@ class ApiService: IApiService {
             .getResult(ofType: WordApiModel.self)
     }
     
+    func updateWord(model: UpdateWordApiModel) -> Observable<Bool> {
+        return _httpService.post(controller: .word("update"), dataAny: model.getDictionary())
+            .getResult()
+            .flatMap({ _ in self._unitOfWork.word.update(update: { $0.isSynced = true }, filter: "id = '\(model.id!)'") })
+            .asCompletable()
+            .toObservable()
+    }
 }

@@ -21,11 +21,10 @@ struct WordApiModel: Decodable, RealmCodable {
     let imageUrls: [String]?
     let statistics: Statistics?
     
-    
     func serialize() -> TTarget {
         let model = RealmWord(value: [
             "isSynced": id == nil ? false : true,
-            "id": id ?? UUID().uuidString,
+            "id": id ?? "\(Constants.temporyPrefix)\(UUID().uuidString)",
             "dateCreated": dateCreated,
             "originalWorld": originalWorld,
             "statistics": statistics?.serialize()
