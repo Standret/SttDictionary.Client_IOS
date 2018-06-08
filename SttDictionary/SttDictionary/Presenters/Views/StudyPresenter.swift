@@ -20,9 +20,11 @@ class StudyPresenter: SttPresenter<StudyDelegate> {
     var _wordService: IWordService!
     
     override func presenterCreating() {
-        ServiceInjectorAssembly.instance().inject(into: self)
-        
         super.presenterCreating()
+        ServiceInjectorAssembly.instance().inject(into: self)
+    }
+    
+    func reloadData() {
         _ = _wordService.getNewWord()
             .subscribe(onNext: { [weak self] (words) in
                 self?.newWords = words
@@ -36,6 +38,19 @@ class StudyPresenter: SttPresenter<StudyDelegate> {
     }
     
     func onCLickOriginalCard() {
-        delegate.navigate(to: "showCard", withParametr: (newWords, repeatWords), callback: nil)
+        if newWords.count > 0 || repeatWords.count > 0 {
+            delegate.navigate(to: "showCard", withParametr: (newWords, repeatWords, AnswersType.originalCard), callback: nil)
+        }
+        else {
+            delegate.sendMessage(title: "Warning", message: "You have not any words to trained today")
+        }
+    }
+    func onClickTranslateCard() {
+        if newWords.count > 0 || repeatWords.count > 0 {
+            delegate.navigate(to: "showCard", withParametr: (newWords, repeatWords, AnswersType.translateCard), callback: nil)
+        }
+        else {
+            delegate.sendMessage(title: "Warning", message: "You have not any words to trained today")
+        }
     }
 }

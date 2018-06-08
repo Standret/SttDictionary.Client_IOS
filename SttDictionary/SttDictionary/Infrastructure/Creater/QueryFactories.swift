@@ -17,7 +17,7 @@ class QueryFactories {
     
     class func getWordQuery(text: String) -> CardsPredicate? {
         print (Date().onlyDay())
-        let predicateNewCard = NSPredicate(format: "statistics.answers.@count == 0", argumentArray: [Date().onlyDay()])
+        let predicateNewCard = NSPredicate(format: "statistics.answers.@count == 0", argumentArray: [])
         let predicateRepeat = NSPredicate(format: "statistics.nextRepetition <= %@ and statistics.answers.@count > 0", argumentArray: [Date().onlyDay()])
         
         if text.trimmingCharacters(in: .whitespaces) == ":@today" {

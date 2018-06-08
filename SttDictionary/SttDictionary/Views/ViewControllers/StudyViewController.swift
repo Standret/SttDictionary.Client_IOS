@@ -20,13 +20,19 @@ class StudyViewController: SttViewController<StudyPresenter>, StudyDelegate {
         presenter.onCLickOriginalCard()
     }
     @IBAction func clicOnTranslateCard(_ sender: Any) {
-        
+        presenter.onClickTranslateCard()
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
 
         mainView.layer.cornerRadius = UIConstants.cornerRadius
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        presenter.reloadData()
     }
     
     // MARK: -- implementation delegate

@@ -69,7 +69,9 @@ class WordServie: IWordService {
     
     func getNewWord() -> Observable<[RealmWord]> {
         let predicate = QueryFactories.getWordQuery(text: ":@today")
-        return _notificationError.useError(observable: _unitOfWork.word.getMany(filter: predicate?.newCard, take: Constants.countOfNewCard))
+        return _notificationError.useError(observable:
+            _unitOfWork.word.count(filter: NSPredicate(format: "any statistics.answers.date == %@", argumentArray: [Date().onlyDay()]).predicateFormat)
+                .flatMap({ self._unitOfWork.word.getMany(filter: predicate?.newCard, take: Constants.countOfNewCard - $0) }))
     }
     
     func getRepeatWord() -> Observable<[RealmWord]> {

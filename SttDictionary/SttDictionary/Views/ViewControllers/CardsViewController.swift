@@ -57,7 +57,7 @@ class CardsViewController: SttViewController<CardsPresenter>, CardsDelegate {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
-        cnstrProgress.constant = vbackgroundTimer.bounds.width
+       // cnstrProgress.constant = vbackgroundTimer.bounds.width
     }
 
     private func changeVisibility() {
@@ -73,7 +73,7 @@ class CardsViewController: SttViewController<CardsPresenter>, CardsDelegate {
         lblMain.text = word
         if isNew {
             cnstrProgress.constant = vbackgroundTimer.bounds.width - (vbackgroundTimer.bounds.width / CGFloat(presenter.words.count) * CGFloat(presenter.current))
-            UIView.animate(withDuration: 0.2) {
+            UIView.animate(withDuration: 0.4) {
                 self.view.layoutIfNeeded()
             }
             changeVisibility()

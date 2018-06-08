@@ -15,10 +15,10 @@ class DateConverter: IConverter {
     
     func convert(value: Date, parametr: Any?) -> String {
         let formatter = DateFormatter()
+        formatter.calendar = Calendar.current
         formatter.locale = Locale.current
         formatter.timeZone = TimeZone.current
         formatter.dateFormat = "dd-MMM-yy HH:mm"
-        
         return formatter.string(from: value)
     }
 }
@@ -30,10 +30,11 @@ class ShortDateConverter: IConverter {
     
     func convert(value: Date, parametr: Any?) -> String {
         let formatter = DateFormatter()
+        formatter.calendar = Calendar.current
         formatter.locale = Locale.current
         formatter.timeZone = TimeZone.current
         formatter.dateFormat = "dd-MMM-yy"
-        
-        return formatter.string(from: value)
+
+        return formatter.string(from: value.toLocalTime())
     }
 }

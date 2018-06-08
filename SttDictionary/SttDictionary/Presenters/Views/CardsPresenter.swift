@@ -37,16 +37,20 @@ class CardsPresenter: SttPresenter<CardsDelegate> {
     
     private var generalTimer: Timer!
     private var wordTimer: Timer!
+    private var answerType: AnswersType!
     
     var _wordService: IWordService!
     
     override func prepare(parametr: Any?) {
         ServiceInjectorAssembly.instance().inject(into: self)
 
-        let param = parametr as! ([RealmWord], [RealmWord])
+        let param = parametr as! ([RealmWord], [RealmWord], AnswersType)
+        answerType = param.2
         
-        initializeWords(_words: param)
-        delegate.reloadWords(word: words[0].originalWorld, isNew: true)
+        initializeWords(_words: (param.0, param.1))
+        
+        let text = answerType == .originalCard ? words[current].originalWorld : words[current].translations.map({ $0.value }).joined(separator: ", ")
+        delegate.reloadWords(word: text, isNew: true)
         
         generalTimer = Timer.scheduledTimer(withTimeInterval: 0.1, repeats: true, block: { [weak self] (timer) in
             self?.totalMiliSeconds += 100
@@ -56,7 +60,8 @@ class CardsPresenter: SttPresenter<CardsDelegate> {
     }
     
     func showAnswer() {
-        delegate.reloadWords(word: words[current].translations.map({ $0.value }).joined(separator: ", "), isNew: false)
+        let text = answerType == .originalCard ? words[current].translations.map({ $0.value }).joined(separator: ", ") : words[current].originalWorld
+        delegate.reloadWords(word: text, isNew: false)
     }
     func selectAnswer(type: TypeAnswer) {
         answers.append(Answer(id: words[_current].id, type: type, answerType: .originalCard, totalMiliseconds: wordMiliseconds))
@@ -64,7 +69,8 @@ class CardsPresenter: SttPresenter<CardsDelegate> {
             .subscribe(onNext: { print("stat has been updated successfuly \($0)") }, onError: { print("stat er \($0)") })
         _current += 1
         if current < words.count{
-            delegate.reloadWords(word: words[current].originalWorld, isNew: true)
+            let text = answerType == .originalCard ? words[current].originalWorld : words[current].translations.map({ $0.value }).joined(separator: ", ")
+            delegate.reloadWords(word: text, isNew: true)
             reloadWordTimer()
         }
         else {
@@ -113,6 +119,7 @@ class CardsPresenter: SttPresenter<CardsDelegate> {
         for i in 0...((cardsCount - (cardsCount % 2 == 0 ? 1 : 0)) / 2) {
             // start
             if vector[i] && param.1.count > 0 {
+                print("insert repeat word in \(i)")
                 words.insert(param.1.getAndDelete(index: 0), at: left)
             }
             else if param.0.count > 0 {
@@ -120,6 +127,7 @@ class CardsPresenter: SttPresenter<CardsDelegate> {
                 words.insert(param.0.getAndDelete(index: 0), at: left)
             }
             else if param.1.count > 0 {
+                print("insert repeat word in \(i)")
                 words.insert(param.1.getAndDelete(index: 0), at: left)
             }
             else {
@@ -129,6 +137,7 @@ class CardsPresenter: SttPresenter<CardsDelegate> {
             
             // end
             if vector[cardsCount - i - 1] && param.1.count > 0 {
+                print("insert repeat word in \(cardsCount - i - 1)")
                 words.insert(param.1.getAndDelete(index: 0), at: left)
             }
             else if param.0.count > 0 {
@@ -136,6 +145,7 @@ class CardsPresenter: SttPresenter<CardsDelegate> {
                 words.insert(param.0.getAndDelete(index: 0), at: left)
             }
             else if param.1.count > 0 {
+                print("insert repeat word in \(cardsCount - i - 1)")
                 words.insert(param.1.getAndDelete(index: 0), at: left)
             }
         }
