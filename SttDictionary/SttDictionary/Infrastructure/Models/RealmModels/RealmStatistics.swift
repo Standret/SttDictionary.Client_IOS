@@ -32,18 +32,13 @@ class RealmAnswerData: Object, RealmDecodable {
     @objc dynamic var date: Date = Date()
     
     @objc private dynamic var _answer = AnswersGrade.forget.rawValue
-    @objc private dynamic var _type = AnswersType.originalCard.rawValue
     
     var answer: AnswersGrade {
         get { return AnswersGrade(rawValue: _answer)! }
         set { _answer = newValue.rawValue }
     }
-    var type: AnswersType {
-        get { return AnswersType(rawValue: _type)! }
-        set { _type = newValue.rawValue }
-    }
     
     func deserialize() -> AnswerData {
-        return AnswerData(miliSecondsForReview: miliSecondsForReview, date: date, answer: answer, type: type)
+        return AnswerData(miliSecondsForReview: miliSecondsForReview, date: date, answer: answer)
     }
 }

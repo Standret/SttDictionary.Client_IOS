@@ -40,7 +40,7 @@
                         <nil key="highlightedColor"/>
                     </label>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="#firstUnit" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Q8p-ag-JlS">
-                        <rect key="frame" x="16" y="52" width="200" height="14"/>
+                        <rect key="frame" x="16" y="52" width="140" height="14"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="14" id="Ojf-0U-Pea"/>
                         </constraints>
@@ -59,19 +59,19 @@
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="12-Apr-18 16:45 -||- 5 -||- 1500 -||- 2.6 -||- inter: 3 -||- rept: 1" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="EKE-rw-97k">
                         <rect key="frame" x="15" y="69" width="289" height="13"/>
                         <constraints>
-                            <constraint firstAttribute="height" constant="13" id="0kC-PP-Df7"/>
+                            <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="13" id="0kC-PP-Df7"/>
                         </constraints>
                         <fontDescription key="fontDescription" name="Helvetica-Light" family="Helvetica" pointSize="11"/>
                         <nil key="textColor"/>
                         <nil key="highlightedColor"/>
                     </label>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="13-Apr-18" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="lC3-iG-ryB">
-                        <rect key="frame" x="224" y="52" width="80" height="14"/>
+                        <rect key="frame" x="164" y="52" width="140" height="14"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="14" id="1Ca-pn-ZDv"/>
-                            <constraint firstAttribute="width" constant="80" id="gLA-VL-wvd"/>
+                            <constraint firstAttribute="width" constant="140" id="gLA-VL-wvd"/>
                         </constraints>
-                        <fontDescription key="fontDescription" name="Helvetica-Light" family="Helvetica" pointSize="14"/>
+                        <fontDescription key="fontDescription" name="Helvetica-Light" family="Helvetica" pointSize="12"/>
                         <color key="textColor" name="main"/>
                         <nil key="highlightedColor"/>
                     </label>

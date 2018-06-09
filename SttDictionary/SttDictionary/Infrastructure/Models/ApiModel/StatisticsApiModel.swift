@@ -23,7 +23,6 @@ struct AnswerData: Decodable, RealmCodable, DictionaryCodable {
     let miliSecondsForReview: Int
     let date: Date
     let answer: AnswersGrade
-    let type: AnswersType
     
     func serialize() -> RealmAnswerData {
         let model = RealmAnswerData(value: [
@@ -31,7 +30,6 @@ struct AnswerData: Decodable, RealmCodable, DictionaryCodable {
             "date": date.onlyDay()
             ])
         model.answer = answer
-        model.type = type
         return model
     }
 }

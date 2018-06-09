@@ -68,7 +68,7 @@ class SyncService: ISyncService {
         return self._unitOfWork.word.getMany(filter: "isSynced == false and not id beginswith '\(Constants.temporyPrefix)'")
             .flatMap({ Observable.from($0) })
             .do(onNext: { print("id\($0.id)") })
-            .flatMap({ self._apiServicce.updateWord(model: UpdateWordApiModel(word: $0.originalWorld, translations: $0.translations.map( { $0.value } ), id: $0.id, statistics: ($0.statistics?.deserialize())!)) })
+            .flatMap({ self._apiServicce.updateWord(model: UpdateWordApiModel(word: $0.originalWorld, translations: $0.translations.map( { $0.value } ), id: $0.id, originalStatistics: $0.originalStatistics!.deserialize(), translateStatistics: $0.translateStatistics?.deserialize())) })
             .map({ ($0, SyncStep.UpdateWord) })
     }
 }

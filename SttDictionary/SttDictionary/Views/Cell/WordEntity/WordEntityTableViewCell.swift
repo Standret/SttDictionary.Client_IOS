@@ -22,7 +22,11 @@ class WordEntityTableViewCell: SttTableViewCell<WordEntityCellPresenter>, WordEn
         lblTranslations.text = dataContext.mainTranslations
         lblTags.text = dataContext.tags
         syncStatus.backgroundColor = dataContext.status ? UIColor.green : UIColor.red
-        lblNextDay.text = dataContext.nextDate != nil ? ShortDateConverter().convert(value: dataContext.nextDate!) : "unk"
+        
+        let nextOrrDate = dataContext.nextOriginalDate != nil ? ShortDateConverter().convert(value: dataContext.nextOriginalDate!) : "none"
+        let nextTransDate = dataContext.nextTranslationDate != nil ? ShortDateConverter().convert(value: dataContext.nextTranslationDate!) : "none"
+        
+        lblNextDay.text = "\(nextOrrDate) / \(nextTransDate)"
         lblDevInfo.text = dataContext.devInfo
     }
     

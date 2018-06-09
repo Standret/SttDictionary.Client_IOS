@@ -19,7 +19,8 @@ struct WordApiModel: Decodable, RealmCodable {
     let additionalTranslations: [String]?
     let tags: [ShortTagApiModel]?
     let imageUrls: [String]?
-    let statistics: Statistics?
+    let originalStatistics: Statistics?
+    let translateStatistics: Statistics?
     
     func serialize() -> TTarget {
         let model = RealmWord(value: [
@@ -27,7 +28,8 @@ struct WordApiModel: Decodable, RealmCodable {
             "id": id ?? "\(Constants.temporyPrefix)\(UUID().uuidString)",
             "dateCreated": dateCreated,
             "originalWorld": originalWorld,
-            "statistics": statistics?.serialize()
+            "originalStatistics": originalStatistics?.serialize(),
+            "translateStatistics": translateStatistics?.serialize()
             ])
         model.translations.append(objectsIn: translations.map( { RealmString(value: [$0]) }))
         

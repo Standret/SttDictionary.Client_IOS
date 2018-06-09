@@ -16,8 +16,10 @@ protocol IWordService {
     
     func getNewWord() -> Observable<[RealmWord]>
     func getRepeatWord() -> Observable<[RealmWord]>
+    func getNewTranslationWord() -> Observable<[RealmWord]>
+    func getRepeatTranslationWord() -> Observable<[RealmWord]>
     
-    func updateStatistics(answer: Answer) -> Observable<Bool>
+    func updateStatistics(answer: Answer, type: AnswersType) -> Observable<Bool>
     
     var observe: Observable<WordEntityCellPresenter> { get }
 }
@@ -40,11 +42,17 @@ class WordServie: IWordService {
             if QueryFactories.isRegisterSchem(scheme: _searchStr) {
                 let predicatesModel = QueryFactories.getWordQuery(text: _searchStr)
                 var observables = [Observable<[RealmWord]>]()
-                if let _ = predicatesModel?.newCard {
+                if predicatesModel?.newOriginalCard != nil {
                     observables.append(getNewWord())
                 }
-                if let _ = predicatesModel?.repeatCard {
+                if predicatesModel?.newTranslationCard != nil {
                     observables.append(getRepeatWord())
+                }
+                if predicatesModel?.newTranslationCard != nil {
+                    observables.append(getNewTranslationWord())
+                }
+                if predicatesModel?.repeatTranslationCard != nil {
+                    observables.append(getRepeatTranslationWord())
                 }
                 observable = Observable.concat(observables)
             }
@@ -70,21 +78,36 @@ class WordServie: IWordService {
     func getNewWord() -> Observable<[RealmWord]> {
         let predicate = QueryFactories.getWordQuery(text: ":@today")
         return _notificationError.useError(observable:
-            _unitOfWork.word.count(filter: NSPredicate(format: "any statistics.answers.date == %@", argumentArray: [Date().onlyDay()]).predicateFormat)
-                .flatMap({ self._unitOfWork.word.getMany(filter: predicate?.newCard, take: Constants.countOfNewCard - $0) }))
+            _unitOfWork.word.count(filter: NSPredicate(format: "any originalStatistics.answers.date == %@", argumentArray: [Date().onlyDay()]).predicateFormat)
+                .flatMap({ self._unitOfWork.word.getMany(filter: predicate?.newOriginalCard, take: Constants.countOfNewCard - $0) }))
     }
-    
     func getRepeatWord() -> Observable<[RealmWord]> {
         let predicate = QueryFactories.getWordQuery(text: ":@today")
-        return _notificationError.useError(observable: _unitOfWork.word.getMany(filter: predicate?.repeatCard))
+        return _notificationError.useError(observable: _unitOfWork.word.getMany(filter: predicate?.repeatOriginalCard))
     }
-    func updateStatistics(answer: Answer) -> Observable<Bool> {
+    func getNewTranslationWord() -> Observable<[RealmWord]> {
+        let predicate = QueryFactories.getWordQuery(text: ":@today")
+        return _notificationError.useError(observable:
+            _unitOfWork.word.count(filter: NSPredicate(format: "any translateStatistics.answers.date == %@", argumentArray: [Date().onlyDay()]).predicateFormat)
+                .flatMap({ self._unitOfWork.word.getMany(filter: predicate?.newTranslationCard, take: Constants.countOfNewCard - $0) }))
+    }
+    func getRepeatTranslationWord() -> Observable<[RealmWord]> {
+        let predicate = QueryFactories.getWordQuery(text: ":@today")
+        return _notificationError.useError(observable: _unitOfWork.word.getMany(filter: predicate?.repeatTranslationCard))
+    }
+    
+    func updateStatistics(answer: Answer, type: AnswersType) -> Observable<Bool> {
         return _notificationError.useError(observable: _unitOfWork.word.getOne(filter: "id = '\(answer.id)'")
             .flatMap { (word) -> Observable<Bool> in
                                 
                 return self._unitOfWork.word.update(update: { (rword) in
                     rword.isSynced = false
-                    rword.statistics = self._smEngine.gradeFlashcard(statistics: word.statistics ?? RealmStatistics(), answer: answer)
+                    if type == .originalCard {
+                        rword.originalStatistics = self._smEngine.gradeFlashcard(statistics: word.originalStatistics ?? RealmStatistics(), answer: answer)
+                    }
+                    else {
+                        rword.translateStatistics = self._smEngine.gradeFlashcard(statistics: word.translateStatistics ?? RealmStatistics(), answer: answer)
+                    }
                 }, filter: "id = '\(answer.id)'")
                 .toObservable()
         })

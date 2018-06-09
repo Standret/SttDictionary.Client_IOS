@@ -17,7 +17,8 @@ class WordFactories {
                             additionalTranslations: nil,
                             tags: nil,
                             imageUrls: nil,
-                            statistics: WordFactories.defaultStatistics())
+                            originalStatistics: WordFactories.defaultStatistics(),
+                            translateStatistics: WordFactories.defaultStatistics())
     }
     
     class func defaultStatistics() -> Statistics {

@@ -124,13 +124,23 @@ class SttViewController<T: ViewInjector>: SttbViewController, Viewable {
         self.createAlerDialog(title: title, message: message!)
     }
     
+    func close(animate: Bool = true) {
+        if self.isModal {
+            dismiss(animated: animate, completion: nil)
+        }
+        else {
+            navigationController?.popViewController(animated: animate)
+        }
+    }
+    func close(parametr: Any, animate: Bool = true) {
+        callback?(parametr)
+        close(animate: animate)
+    }
     func close() {
-        dismiss(animated: true, completion: nil)
-        navigationController?.popViewController(animated: true)
+        close(animate: true)
     }
     func close(parametr: Any) {
-        callback?(parametr)
-        close()
+        close(parametr: parametr, animate: true)
     }
     
     private var navigateData: (String, Any, ((Any) -> Void)?)?

@@ -54,7 +54,6 @@ public class SM2Engine: SMEngine {
         let data = RealmAnswerData()
         data.date = Date().onlyDay()
         data.answer = grade
-        data.type = answer.answerType
         data.miliSecondsForReview = answer.totalMiliseconds
         statistics.answers.append(data)
         

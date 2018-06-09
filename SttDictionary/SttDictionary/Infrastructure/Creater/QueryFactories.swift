@@ -9,25 +9,29 @@
 import Foundation
 
 struct CardsPredicate {
-    let newCard: String?
-    let repeatCard: String?
+    let newOriginalCard: String?
+    let repeatOriginalCard: String?
+    let newTranslationCard: String?
+    let repeatTranslationCard: String?
 }
 
 class QueryFactories {
     
     class func getWordQuery(text: String) -> CardsPredicate? {
         print (Date().onlyDay())
-        let predicateNewCard = NSPredicate(format: "statistics.answers.@count == 0", argumentArray: [])
-        let predicateRepeat = NSPredicate(format: "statistics.nextRepetition <= %@ and statistics.answers.@count > 0", argumentArray: [Date().onlyDay()])
+        let predicateNewCard = NSPredicate(format: "originalStatistics.answers.@count == 0", argumentArray: [])
+        let predicateRepeat = NSPredicate(format: "originalStatistics.nextRepetition <= %@ and originalStatistics.answers.@count > 0", argumentArray: [Date().onlyDay()])
+        let predicateTranslateCard = NSPredicate(format: "translateStatistics.answers.@count == 0", argumentArray: [])
+        let predicateTranslateRepeat = NSPredicate(format: "translateStatistics.nextRepetition <= %@ and translateStatistics.answers.@count > 0", argumentArray: [Date().onlyDay()])
         
         if text.trimmingCharacters(in: .whitespaces) == ":@today" {
-            return CardsPredicate(newCard: predicateNewCard.predicateFormat, repeatCard: predicateRepeat.predicateFormat)
+            return CardsPredicate(newOriginalCard: predicateNewCard.predicateFormat, repeatOriginalCard: predicateRepeat.predicateFormat, newTranslationCard: predicateTranslateCard.predicateFormat, repeatTranslationCard: predicateTranslateRepeat.predicateFormat)
         }
         else if text.trimmingCharacters(in: .whitespaces) == ":@today:r" {
-            return CardsPredicate(newCard: nil, repeatCard: predicateRepeat.predicateFormat)
+            return CardsPredicate(newOriginalCard: nil, repeatOriginalCard: predicateRepeat.predicateFormat, newTranslationCard: nil, repeatTranslationCard: predicateTranslateRepeat.predicateFormat)
         }
         else if text.trimmingCharacters(in: .whitespaces) == ":@today:n" {
-            return CardsPredicate(newCard: predicateNewCard.predicateFormat, repeatCard: nil)
+            return CardsPredicate(newOriginalCard: predicateNewCard.predicateFormat, repeatOriginalCard: nil, newTranslationCard: predicateTranslateCard.predicateFormat, repeatTranslationCard: nil)
         }
         return nil
     }

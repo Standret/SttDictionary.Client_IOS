@@ -399,6 +399,7 @@
 		84D4388220A877DA00B171ED /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
+				84F39E6C20B032ED00548681 /* UIViewControllerDExt.swift */,
 				84D4388320A877EF00B171ED /* AppDelegateExt.swift */,
 				84D4388520A8782600B171ED /* DateDecodeStrategy.swift */,
 				84D4388720A8784400B171ED /* ObservableExt.swift */,
@@ -536,7 +537,6 @@
 		84F39E6B20B032ED00548681 /* Decorators */ = {
 			isa = PBXGroup;
 			children = (
-				84F39E6C20B032ED00548681 /* UIViewControllerDExt.swift */,
 				84F39E6D20B032ED00548681 /* UIViewDExt.swift */,
 			);
 			path = Decorators;
@@ -935,13 +935,13 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = D9L33B2S23;
+				DEVELOPMENT_TEAM = MD88G6A24R;
 				INFOPLIST_FILE = SttDictionary/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.standret.SttDictionary;
+				PRODUCT_BUNDLE_IDENTIFIER = com.perfict.fitness;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 4.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -954,13 +954,13 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = D9L33B2S23;
+				DEVELOPMENT_TEAM = MD88G6A24R;
 				INFOPLIST_FILE = SttDictionary/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.standret.SttDictionary;
+				PRODUCT_BUNDLE_IDENTIFIER = com.perfict.fitness;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 4.0;
 				TARGETED_DEVICE_FAMILY = "1,2";

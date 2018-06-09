@@ -16,7 +16,6 @@ enum TypeAnswer {
 struct Answer {
     var id: String
     var type: TypeAnswer
-    var answerType: AnswersType
     var totalMiliseconds: Int
 }
 
@@ -64,8 +63,8 @@ class CardsPresenter: SttPresenter<CardsDelegate> {
         delegate.reloadWords(word: text, isNew: false)
     }
     func selectAnswer(type: TypeAnswer) {
-        answers.append(Answer(id: words[_current].id, type: type, answerType: .originalCard, totalMiliseconds: wordMiliseconds))
-        _ = _wordService.updateStatistics(answer: answers.last!)
+        answers.append(Answer(id: words[_current].id, type: type, totalMiliseconds: wordMiliseconds))
+        _ = _wordService.updateStatistics(answer: answers.last!, type: answerType)
             .subscribe(onNext: { print("stat has been updated successfuly \($0)") }, onError: { print("stat er \($0)") })
         _current += 1
         if current < words.count{

@@ -38,6 +38,6 @@ class StudyViewController: SttViewController<StudyPresenter>, StudyDelegate {
     // MARK: -- implementation delegate
     
     func reloadStatus() {
-        lblStatistics.text = "Today cards: \(presenter.newWords.count) | \(presenter.repeatWords.count)"
+        lblStatistics.text = "Today original cards: \(presenter.newWords.count) | \(presenter.repeatWords.count)\ntranslation cards: \(presenter.newTranslationWords.count) | \(presenter.repeatTranslationWords.count)"
     }
 }
