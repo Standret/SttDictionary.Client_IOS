@@ -8,6 +8,7 @@
 
 import Foundation
 import RxSwift
+import SINQ
 
 protocol IWordService {
     func getWord(searchString: String?) -> Observable<[WordEntityCellPresenter]>
@@ -78,7 +79,8 @@ class WordServie: IWordService {
     func getNewWord() -> Observable<[RealmWord]> {
         let predicate = QueryFactories.getWordQuery(text: ":@today")
         return _notificationError.useError(observable:
-            _unitOfWork.word.count(filter: NSPredicate(format: "any originalStatistics.answers.date == %@", argumentArray: [Date().onlyDay()]).predicateFormat)
+            _unitOfWork.word.getMany(filter: NSPredicate(format: "any originalStatistics.answers.date == %@", argumentArray: [Date().onlyDay()]).predicateFormat)
+                .map({ sinq($0).whereTrue({ $0.originalStatistics!.answers.first!.date == Date().onlyDay() }).count() })
                 .flatMap({ self._unitOfWork.word.getMany(filter: predicate?.newOriginalCard, take: Constants.countOfNewCard - $0) }))
     }
     func getRepeatWord() -> Observable<[RealmWord]> {
@@ -88,7 +90,8 @@ class WordServie: IWordService {
     func getNewTranslationWord() -> Observable<[RealmWord]> {
         let predicate = QueryFactories.getWordQuery(text: ":@today")
         return _notificationError.useError(observable:
-            _unitOfWork.word.count(filter: NSPredicate(format: "any translateStatistics.answers.date == %@", argumentArray: [Date().onlyDay()]).predicateFormat)
+            _unitOfWork.word.getMany(filter: NSPredicate(format: "any translateStatistics.answers.date == %@", argumentArray: [Date().onlyDay()]).predicateFormat)
+                .map({ sinq($0).whereTrue({ $0.translateStatistics!.answers.first!.date == Date().onlyDay() }).count() })
                 .flatMap({ self._unitOfWork.word.getMany(filter: predicate?.newTranslationCard, take: Constants.countOfNewCard - $0) }))
     }
     func getRepeatTranslationWord() -> Observable<[RealmWord]> {

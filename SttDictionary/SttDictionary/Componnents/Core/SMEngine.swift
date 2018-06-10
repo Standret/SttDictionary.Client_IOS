@@ -25,31 +25,30 @@ public class SM2Engine: SMEngine {
     func gradeFlashcard(statistics: RealmStatistics, answer: Answer) -> RealmStatistics {
         let grade = converGrade(statistics: statistics, answer: answer)
         let cardGrade = grade.rawValue
-        if cardGrade < 3 {
+        
+        let qualityFactor = Float(maxQuality - cardGrade)
+        let temp = max(easinessFactor, statistics.easiness + Float((0.1 - qualityFactor * (0.08 + qualityFactor * 0.02))))
+        statistics.easiness = temp
+        
+        var interval = statistics.interval
+        if cardGrade <= 3 {
+            interval = 0
             statistics.repetition = 0
-            statistics.interval = 0
         } else {
-            let qualityFactor = Float(maxQuality - cardGrade) // CardGrade.bright.rawValue - grade
-            let newEasinessFactor = statistics.easiness + Float((0.1 - qualityFactor * (0.08 + qualityFactor * 0.02)))
-            if newEasinessFactor < easinessFactor {
-                statistics.easiness = easinessFactor
-            } else {
-                statistics.easiness = newEasinessFactor
-            }
+            
             statistics.repetition += 1
             switch statistics.repetition {
             case 1:
-                statistics.interval = 1
+                interval = 1
             case 2:
-                statistics.interval = 6
+                interval = 6
             default:
                 let newInterval = ceil(Float(statistics.repetition - 1) * statistics.easiness)
-                statistics.interval = Int(newInterval)
+                interval = Int(newInterval)
             }
         }
-        if cardGrade == 3 {
-            statistics.interval = 0
-        }
+
+        statistics.interval = interval
         
         let data = RealmAnswerData()
         data.date = Date().onlyDay()
@@ -57,7 +56,7 @@ public class SM2Engine: SMEngine {
         data.miliSecondsForReview = answer.totalMiliseconds
         statistics.answers.append(data)
         
-        statistics.nextRepetition = Calendar.current.date(byAdding: .day, value: statistics.interval, to: Date())?.onlyDay()
+        statistics.nextRepetition = Calendar.current.date(byAdding: .day, value: interval, to: Date())?.onlyDay()
         print ("next rept in \(statistics.nextRepetition)")
         return statistics
     }
