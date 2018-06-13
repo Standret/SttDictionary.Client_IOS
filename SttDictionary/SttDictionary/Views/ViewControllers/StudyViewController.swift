@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import AVFoundation
 
 class StudyViewController: SttViewController<StudyPresenter>, StudyDelegate {
 
@@ -23,6 +24,8 @@ class StudyViewController: SttViewController<StudyPresenter>, StudyDelegate {
         presenter.onClickTranslateCard()
     }
     
+    var player: AVPlayer!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -33,6 +36,18 @@ class StudyViewController: SttViewController<StudyPresenter>, StudyDelegate {
         super.viewWillAppear(animated)
         
         presenter.reloadData()
+//        let url = URL(string: "http://192.168.0.66:10000/devstoreaccount1/sttdictionary/pronuniation/schedule.mp3")!
+//        let playerItem = CachingPlayerItem(url: url)
+//        player = AVPlayer(playerItem: playerItem)
+//        player.automaticallyWaitsToMinimizeStalling = false
+//        player.play()
+//        try! AVAudioSession.sharedInstance().setCategory(AVAudioSessionCategoryPlayback)
+//        try! AVAudioSession.sharedInstance().setActive(true)
+//        if player.rate != 0 && player.error == nil{
+//            print("Playing")
+//        }else{
+//            print("Error Playing")
+//        }
     }
     
     // MARK: -- implementation delegate
