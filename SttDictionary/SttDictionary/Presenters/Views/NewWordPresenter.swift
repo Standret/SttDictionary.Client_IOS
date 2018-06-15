@@ -24,6 +24,7 @@ class NewWordPresenter: SttPresenter<NewWordDelegate>, WordItemDelegate {
         }
     }
     var mainTranslation = [WorldCollectionCellPresenter]()
+    var linkedWordsTranslation = [WorldCollectionCellPresenter]()
     var save: SttComand!
     
     var _wordService: IWordService!

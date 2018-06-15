@@ -9,24 +9,32 @@
 import Foundation
 import UIKit
 import AlignedCollectionViewFlowLayout
+import RxSwift
 
-class NewWordViewController: SttViewController<NewWordPresenter>, NewWordDelegate, UICollectionViewDelegateFlowLayout {
+class NewWordViewController: SttViewController<NewWordPresenter>, NewWordDelegate, UICollectionViewDelegateFlowLayout, UIPopoverPresentationControllerDelegate {
   
     // property
     
     var mainTranslateSource: SttCollectionViewSource<WorldCollectionCellPresenter>!
     let handlerMain = SttHandlerTextField()
     let handlerOriginalWord = SttHandlerTextField()
+    let handlerLinkedWord = SttHandlerTextField()
     
     // outlet
     
     @IBOutlet weak var btnAddTranslation: UIButton!
     @IBOutlet weak var tfWord: SttTextField!
     @IBOutlet weak var tfMainTranslation: SttTextField!
+    @IBOutlet weak var tfLinkedWords: SttTextField!
     @IBOutlet weak var collectionView: UICollectionView!
+    @IBOutlet weak var linkedWordsCollection: UICollectionView!
     @IBOutlet weak var cnstrMainTranslationHeight: NSLayoutConstraint!
+    @IBOutlet weak var cnstrLinkedWordsHeight: NSLayoutConstraint!
     @IBOutlet weak var wordExistsLabel: UILabel!
     @IBOutlet weak var cnstrHeightExists: NSLayoutConstraint!
+    
+    var wordController: SearchLinkedWordsViewController?
+    let linkedWordSearchPublisher = PublishSubject<String>()
     
 
     @IBAction func saveClick(_ sender: Any) {
@@ -48,15 +56,38 @@ class NewWordViewController: SttViewController<NewWordPresenter>, NewWordDelegat
         
         tfWord.setBorder(color: UIColor(named: "border")!, size: 1)
         tfMainTranslation.setBorder(color: UIColor(named: "border")!, size: 1)
-                
+        
+        tfLinkedWords.delegate = handlerLinkedWord
+        tfWord.delegate = handlerOriginalWord
+        tfMainTranslation.delegate = handlerMain
+        
         tfWord.insets = UIConstants.insetsForTextField
         tfMainTranslation.insets = UIConstants.insetsForTextField
+        tfLinkedWords.insets = UIConstants.insetsForTextField
         
         tfWord.layer.cornerRadius = UIConstants.cornerRadius
         tfMainTranslation.layer.cornerRadius = UIConstants.cornerRadius
+        tfLinkedWords.layer.cornerRadius = UIConstants.cornerRadius
         
         handlerOriginalWord.addTarget(type: .shouldReturn, delegate: self, handler: { (view, _) in view.tfMainTranslation.becomeFirstResponder() }, textField: tfWord)
         handlerMain.addTarget(type: .shouldReturn, delegate: self, handler: { $0.self.addMainTranslateClick($1)}, textField: tfMainTranslation)
+        handlerLinkedWord.addTarget(type: .didStartEditing, delegate: self, handler: { (self, tf) in
+            if self.wordController == nil {
+                self.wordController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "listWords") as! SearchLinkedWordsViewController
+                self.wordController?.changeTextObservable = self.linkedWordSearchPublisher
+                self.wordController?.modalPresentationStyle = .popover
+                
+                self.wordController?.popoverPresentationController?.permittedArrowDirections = .down
+                self.wordController?.popoverPresentationController?.delegate = self
+                self.wordController?.popoverPresentationController?.sourceView = self.tfLinkedWords
+                self.wordController?.popoverPresentationController?.sourceRect = self.tfLinkedWords.bounds
+            }
+            self.present(self.wordController!, animated: true, completion: nil)
+            
+        }, textField: tfLinkedWords)
+        handlerLinkedWord.addTarget(type: TypeActionTextField.editing, delegate: self, handler: { (self, tf) in
+            self.linkedWordSearchPublisher.onNext(tf.text ?? "")
+        }, textField: tfLinkedWords)
 
         tfWord.addTarget(self, action: #selector(textFieldDidChange(_:)), for: .editingChanged)
         
@@ -88,6 +119,15 @@ class NewWordViewController: SttViewController<NewWordPresenter>, NewWordDelegat
         }, end: {
             self.close()
         })
+    }
+    
+    func adaptivePresentationStyle(for controller: UIPresentationController) -> UIModalPresentationStyle {
+        return .none
+    }
+    
+    func adaptivePresentationStyleForPresentationController(controller: UIPresentationController) -> UIModalPresentationStyle {
+        // Force popover style
+        return UIModalPresentationStyle.none
     }
     
     override func viewDidAppear(_ animated: Bool) {

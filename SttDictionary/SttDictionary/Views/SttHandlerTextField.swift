@@ -11,7 +11,7 @@ import UIKit
 
 enum TypeActionTextField {
     case shouldReturn
-    case didEndEditing
+    case didEndEditing, didStartEditing
     case editing
 }
 
@@ -46,6 +46,12 @@ class SttHandlerTextField: NSObject, UITextFieldDelegate {
     
     func textFieldDidEndEditing(_ textField: UITextField) {
         if let handler = handlers[.didEndEditing]  {
+            handler(textField)
+        }
+    }
+    
+    func textFieldDidBeginEditing(_ textField: UITextField) {
+        if let handler = handlers[.didStartEditing]  {
             handler(textField)
         }
     }

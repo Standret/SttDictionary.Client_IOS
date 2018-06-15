@@ -54,6 +54,8 @@
 		84716E5E20B1923600A1F5F6 /* DateConverter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84716E5D20B1923600A1F5F6 /* DateConverter.swift */; };
 		84716E6020B1A58400A1F5F6 /* NotificationError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84716E5F20B1A58400A1F5F6 /* NotificationError.swift */; };
 		84716E6220B1B0A900A1F5F6 /* CustomDialog.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84716E6120B1B0A900A1F5F6 /* CustomDialog.swift */; };
+		847E19A520D3D8DE00652423 /* SearchLinkedWordsPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 847E19A420D3D8DE00652423 /* SearchLinkedWordsPresenter.swift */; };
+		847E19A720D3D91C00652423 /* SearchLinkeWordsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 847E19A620D3D91C00652423 /* SearchLinkeWordsViewController.swift */; };
 		8487700B20B09D7300C164C1 /* SttHandlerTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8487700A20B09D7300C164C1 /* SttHandlerTextField.swift */; };
 		84AD6A5020B04DDA000D560E /* SttTableViewSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84AD6A4F20B04DDA000D560E /* SttTableViewSource.swift */; };
 		84AD6A5220B04E0E000D560E /* SttTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84AD6A5120B04E0E000D560E /* SttTableViewCell.swift */; };
@@ -142,6 +144,8 @@
 		84716E5D20B1923600A1F5F6 /* DateConverter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateConverter.swift; sourceTree = "<group>"; };
 		84716E5F20B1A58400A1F5F6 /* NotificationError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationError.swift; sourceTree = "<group>"; };
 		84716E6120B1B0A900A1F5F6 /* CustomDialog.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomDialog.swift; sourceTree = "<group>"; };
+		847E19A420D3D8DE00652423 /* SearchLinkedWordsPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchLinkedWordsPresenter.swift; sourceTree = "<group>"; };
+		847E19A620D3D91C00652423 /* SearchLinkeWordsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchLinkeWordsViewController.swift; sourceTree = "<group>"; };
 		8487700A20B09D7300C164C1 /* SttHandlerTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SttHandlerTextField.swift; sourceTree = "<group>"; };
 		84AD6A4F20B04DDA000D560E /* SttTableViewSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SttTableViewSource.swift; sourceTree = "<group>"; };
 		84AD6A5120B04E0E000D560E /* SttTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SttTableViewCell.swift; sourceTree = "<group>"; };
@@ -225,6 +229,7 @@
 				84F39E7C20B0335100548681 /* WordPresenter.swift */,
 				8433D0C320A898FA0031D690 /* ViewPresenter.swift */,
 				7DC0C6C520C3FB8900FC7998 /* CardsPresenter.swift */,
+				847E19A420D3D8DE00652423 /* SearchLinkedWordsPresenter.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -269,6 +274,7 @@
 				84D2422220A85177007D8F1A /* ViewController.swift */,
 				7D82B5B420C30491004D896A /* StudyViewController.swift */,
 				7DC0C6C320C3F7A000FC7998 /* CardsViewController.swift */,
+				847E19A620D3D91C00652423 /* SearchLinkeWordsViewController.swift */,
 			);
 			path = ViewControllers;
 			sourceTree = "<group>";
@@ -750,6 +756,7 @@
 				84AD6A5920B05010000D560E /* WordCollectionCellPresenter.swift in Sources */,
 				84D4389020A878BC00B171ED /* SpecialResult.swift in Sources */,
 				84D2422320A85177007D8F1A /* ViewController.swift in Sources */,
+				847E19A720D3D91C00652423 /* SearchLinkeWordsViewController.swift in Sources */,
 				8433D0C820A899690031D690 /* SttPresenter.swift in Sources */,
 				8433D0BC20A895EA0031D690 /* TagApiModel.swift in Sources */,
 				8437504620A9DD91007BFF5F /* UnitOfWork.swift in Sources */,
@@ -761,6 +768,7 @@
 				8433D0CA20A8AD9D0031D690 /* BaseRealm.swift in Sources */,
 				84D2422120A85177007D8F1A /* AppDelegate.swift in Sources */,
 				84F39E8520B03F0A00548681 /* WordCollectionCell.swift in Sources */,
+				847E19A520D3D8DE00652423 /* SearchLinkedWordsPresenter.swift in Sources */,
 				84F39E6220B0306D00548681 /* SttViewController.swift in Sources */,
 				84716E5920B18CFA00A1F5F6 /* Defaultable.swift in Sources */,
 				84F39E8020B0335100548681 /* NewWordPresenter.swift in Sources */,
