@@ -9,21 +9,31 @@
 import Foundation
 
 protocol WordEntityCellDelegate: Viewable {
-    
+    func reloadState()
+}
+
+protocol WordItemDelegate: class {
+    func onClick(id: String, name: String)
 }
 
 class WordEntityCellPresenter: SttPresenter<WordEntityCellDelegate> {
     
     typealias TTarget = RealmWord
     
+    weak var itemDelegate: WordItemDelegate?
     
+    var id: String!
     var word: String!
     var mainTranslations: String!
     var tags: String = ""
     var status: Bool = false
     var nextOriginalDate: Date?
     var nextTranslationDate: Date?
-    var devInfo: String?
+    var isSelect = false {
+        didSet {
+            delegate.reloadState()
+        }
+    }
     
     convenience init (element: WordApiModel) {
         self.init()
@@ -33,6 +43,7 @@ class WordEntityCellPresenter: SttPresenter<WordEntityCellDelegate> {
         if tags.isEmpty {
             tags = "#none"
         }
+        id = element.id ?? UUID().uuidString
     }
     convenience required init(fromObject: RealmWord) {
         self.init()
@@ -45,17 +56,11 @@ class WordEntityCellPresenter: SttPresenter<WordEntityCellDelegate> {
         status = fromObject.isSynced
         nextOriginalDate = fromObject.originalStatistics?.nextRepetition
         nextTranslationDate = fromObject.translateStatistics?.nextRepetition
-        
-        var last = fromObject.originalStatistics?.answers.last
-        if let _last = last {
-            devInfo = "\(DateConverter().convert(value: _last.date)) \(_last.answer) \(fromObject.originalStatistics!.easiness) i:\(fromObject.originalStatistics!.interval) r: \(fromObject.originalStatistics!.repetition)"
-        }
-        last = fromObject.translateStatistics?.answers.last
-        if let _last = last {
-            devInfo = "\(devInfo ?? "--") --||-- \(DateConverter().convert(value: _last.date)) \(_last.answer) \(fromObject.translateStatistics!.easiness) i:\(fromObject.translateStatistics!.interval) r: \(fromObject.translateStatistics!.repetition)"
-        }
-        else {
-            devInfo = "none"
-        }
+        id = fromObject.id
+    }
+    
+    func onClick() {
+        isSelect = !isSelect
+        itemDelegate?.onClick(id: id, name: word)
     }
 }

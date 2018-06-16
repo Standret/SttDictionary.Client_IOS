@@ -8,13 +8,24 @@
 
 import Foundation
 import RxSwift
+import SINQ
 
 protocol NewWordDelegate: Viewable {
-    func reloadMainCollectionCell()
     func error(isHidden: Bool)
 }
 
-class NewWordPresenter: SttPresenter<NewWordDelegate>, WordItemDelegate {
+class ShortWordsData: ShortWordItemDelegate {
+    
+    var data = SttObservableCollection<WorldCollectionCellPresenter>()
+
+    func deleteItem(word: String?) {
+        if let index = data.index(where: { $0.word == word }) {
+            data.remove(at: index)
+        }
+    }
+}
+
+class NewWordPresenter: SttPresenter<NewWordDelegate> {
     
     var word: String? {
         didSet {
@@ -23,8 +34,8 @@ class NewWordPresenter: SttPresenter<NewWordDelegate>, WordItemDelegate {
             }
         }
     }
-    var mainTranslation = [WorldCollectionCellPresenter]()
-    var linkedWordsTranslation = [WorldCollectionCellPresenter]()
+    var mainTranslation = ShortWordsData()
+    var linkedWords = ShortWordsData()
     var save: SttComand!
     
     var _wordService: IWordService!
@@ -36,30 +47,20 @@ class NewWordPresenter: SttPresenter<NewWordDelegate>, WordItemDelegate {
     }
     
     func addNewMainTranslation(value: String) {
-        mainTranslation.append(WorldCollectionCellPresenter(value: value, delegate: self))
-        delegate.reloadMainCollectionCell()
+        mainTranslation.data.append(WorldCollectionCellPresenter(value: value, delegate: mainTranslation))
+    }
+    func addNewLinkedWords(words:[(String, String)]) {
+        linkedWords.data.append(contentsOf: sinq(words)
+            .takeWhile({ data in !self.linkedWords.data.contains(where: { $0.id == data.0 })})
+            .map({ WorldCollectionCellPresenter(value: $0.1, id: $0.0, delegate: linkedWords) }))
     }
     
     func onSave() {
-        if !(word ?? "").trimmingCharacters(in: .whitespaces).isEmpty && mainTranslation.count > 0 {
-        _ = save.useWork(observable: _wordService.createWord(word: word ?? "", translations: mainTranslation.map( { $0.word! } )))
+        if !(word ?? "").trimmingCharacters(in: .whitespaces).isEmpty && mainTranslation.data.count > 0 {
+            _ = save.useWork(observable: _wordService.createWord(word: word!, translations: mainTranslation.data.map( { $0.word! } ), linkedWords: linkedWords.data.map({ $0.id! })))
             .subscribe(onNext: { (result) in
                 print("successfule saved")
             })
-        }
-    }
-    
-    func deleteItem(word: String?) {
-        let _index = mainTranslation.index { (element) -> Bool in
-            if element.word == word {
-                return true
-            }
-            return false
-        }
-        
-        if let index = _index {
-            mainTranslation.remove(at: index)
-            delegate.reloadMainCollectionCell()
         }
     }
 }

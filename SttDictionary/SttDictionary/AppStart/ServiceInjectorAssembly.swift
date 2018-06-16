@@ -49,6 +49,13 @@ class ServiceInjectorAssembly: Assembly {
         }
     }
     
+    func inject(into service: SearchLinkedWordsPresenter) {
+        let _:SearchLinkedWordsPresenter = define(init: service) {
+            $0._wordService = self.serviceAssembly.wordService
+            return $0
+        }
+    }
+    
     func inject<T>(into service: SttPresenter<T>) {
         let _:SttPresenter<T> = define(init: service) {
             $0._notificationError = self.serviceAssembly.notificationError

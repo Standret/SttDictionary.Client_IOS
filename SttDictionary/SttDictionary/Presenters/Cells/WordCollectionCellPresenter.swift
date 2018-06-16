@@ -8,7 +8,7 @@
 
 import Foundation
 
-protocol WordItemDelegate {
+protocol ShortWordItemDelegate: class {
     func deleteItem(word: String?)
 }
 
@@ -19,12 +19,17 @@ protocol WordCollectionCellDelegate: Viewable {
 class WorldCollectionCellPresenter: SttPresenter<WordCollectionCellDelegate> {
     
     var word: String?
+    var id: String?
     
-    var collectionDelegate: WordItemDelegate!
-    convenience init(value: String, delegate: WordItemDelegate) {
+    weak var collectionDelegate: ShortWordItemDelegate!
+    convenience init(value: String, delegate: ShortWordItemDelegate) {
         self.init()
-        word = value
+        word = value.trimmingCharacters(in: .whitespaces)
         collectionDelegate = delegate
+    }
+    convenience init(value: String, id: String, delegate: ShortWordItemDelegate) {
+        self.init(value: value, delegate: delegate)
+        self.id = id
     }
     
     func deleteClick() {

@@ -8,6 +8,20 @@
 
 import Foundation
 
+struct ExampleUsage: Decodable, RealmCodable, DictionaryCodable {
+   
+    typealias TTarget = RealmExample
+    
+    let original: String
+    let translate: String
+    
+    func serialize() -> RealmExample {
+        return RealmExample(value: [
+            "original": original,
+            "translate": translate
+            ])
+    }
+}
 
 struct WordApiModel: Decodable, RealmCodable {
     typealias TTarget = RealmWord
@@ -22,14 +36,22 @@ struct WordApiModel: Decodable, RealmCodable {
     let originalStatistics: Statistics?
     let translateStatistics: Statistics?
     
+    let pronunciationUrl: String?
+    let linkedWords: [String]?
+    let reverseCards: Bool
+    let exampleUsage: ExampleUsage?
+    
     func serialize() -> TTarget {
         let model = RealmWord(value: [
             "isSynced": id == nil ? false : true,
             "id": id ?? "\(Constants.temporyPrefix)\(UUID().uuidString)",
             "dateCreated": dateCreated,
             "originalWorld": originalWorld,
-            "originalStatistics": originalStatistics?.serialize(),
-            "translateStatistics": translateStatistics?.serialize()
+            "originalStatistics": originalStatistics!.serialize(),
+            "translateStatistics": translateStatistics!.serialize(),
+            "pronunciationUrl": pronunciationUrl,
+            "reverseCards": reverseCards,
+            "exampleUsage": exampleUsage?.serialize()
             ])
         model.translations.append(objectsIn: translations.map( { RealmString(value: [$0]) }))
         
@@ -41,6 +63,9 @@ struct WordApiModel: Decodable, RealmCodable {
         }
         if let imgs = imageUrls {
             model.imageUrls.append(objectsIn: imgs.map( { RealmString(value: [$0]) }))
+        }
+        if let linkedWords = linkedWords {
+            model.linkedWords.append(objectsIn: linkedWords.map( { RealmString(value: [$0]) }))
         }
         
         return model

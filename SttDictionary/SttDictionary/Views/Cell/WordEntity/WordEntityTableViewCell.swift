@@ -14,10 +14,12 @@ class WordEntityTableViewCell: SttTableViewCell<WordEntityCellPresenter>, WordEn
     @IBOutlet weak var lblTranslations: UILabel!
     @IBOutlet weak var lblTags: UILabel!
     @IBOutlet weak var syncStatus: UIView!
-    @IBOutlet weak var lblDevInfo: UILabel!
+    //@IBOutlet weak var lblDevInfo: UILabel!
     @IBOutlet weak var lblNextDay: UILabel!
     
     override func prepareBind() {
+        super.prepareBind()
+        
         lblWord.text = dataContext.word
         lblTranslations.text = dataContext.mainTranslations
         lblTags.text = dataContext.tags
@@ -27,7 +29,14 @@ class WordEntityTableViewCell: SttTableViewCell<WordEntityCellPresenter>, WordEn
         let nextTransDate = dataContext.nextTranslationDate != nil ? ShortDateConverter().convert(value: dataContext.nextTranslationDate!) : "none"
         
         lblNextDay.text = "\(nextOrrDate) / \(nextTransDate)"
-        lblDevInfo.text = dataContext.devInfo
+        //lblDevInfo.text = dataContext.devInfo
+        
+        isUserInteractionEnabled = true
+        addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(onClick(_:))))
+    }
+    
+    func reloadState() {
+        backgroundColor = dataContext.isSelect ? UIColor(named: "selectedItemColor") : UIColor.clear
     }
     
     override func draw(_ rect: CGRect) {
@@ -35,12 +44,8 @@ class WordEntityTableViewCell: SttTableViewCell<WordEntityCellPresenter>, WordEn
         syncStatus.createCircle()
         syncStatus.backgroundColor = dataContext.status ? UIColor.green : UIColor.red
     }
-
-
-    override func setSelected(_ selected: Bool, animated: Bool) {
-        super.setSelected(selected, animated: animated)
-
-        // Configure the view for the selected state
-    }
     
+    @objc func onClick(_ sender: Any) {
+        dataContext.onClick()
+    }
 }

@@ -55,7 +55,10 @@ class SyncService: ISyncService {
         return self._unitOfWork.word.getMany(filter: "isSynced == false and id beginswith '\(Constants.temporyPrefix)'")
             .flatMap({ Observable.from($0) })
             .do(onNext: { print($0.originalWorld) })
-            .flatMap({ self._apiServicce.sendWord(model: AddWordApiModel(word: $0.originalWorld, translations: $0.translations.map( { $0.value } ))) })
+            .flatMap({ self._apiServicce.sendWord(model: AddWordApiModel(word: $0.originalWorld,
+                                                                         translations: $0.translations.map( { $0.value } ),
+                                                                         linkedWords: $0.linkedWords.map( { $0.value } )
+                                                                         )) })
             .flatMap({ (word) -> Observable<(Bool, SyncStep)> in
                 return self._unitOfWork.word.delete(filter: "originalWorld = '\(word.originalWorld)'")
                     .toObservable()
@@ -68,7 +71,12 @@ class SyncService: ISyncService {
         return self._unitOfWork.word.getMany(filter: "isSynced == false and not id beginswith '\(Constants.temporyPrefix)'")
             .flatMap({ Observable.from($0) })
             .do(onNext: { print("id\($0.id)") })
-            .flatMap({ self._apiServicce.updateWord(model: UpdateWordApiModel(word: $0.originalWorld, translations: $0.translations.map( { $0.value } ), id: $0.id, originalStatistics: $0.originalStatistics!.deserialize(), translateStatistics: $0.translateStatistics?.deserialize())) })
+            .flatMap({ self._apiServicce.updateWord(model: UpdateWordApiModel(word: $0.originalWorld,
+                                                                              translations: $0.translations.map( { $0.value } ),
+                                                                              id: $0.id,
+                                                                              originalStatistics: $0.originalStatistics!.deserialize(),
+                                                                              translateStatistics: $0.translateStatistics?.deserialize(),
+                                                                              linkedWords: $0.linkedWords.map({ $0.value }) )) })
             .map({ ($0, SyncStep.UpdateWord) })
     }
 }

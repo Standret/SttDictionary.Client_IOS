@@ -20,6 +20,7 @@ class QueryFactories {
     class func getWordQuery(text: String) -> CardsPredicate? {
         print (Date().onlyDay())
         let predicateNewCard = NSPredicate(format: "originalStatistics.answers.@count == 0", argumentArray: [])
+
         let predicateRepeat = NSPredicate(format: "originalStatistics.nextRepetition <= %@ and originalStatistics.answers.@count > 0", argumentArray: [Date().onlyDay()])
         let predicateTranslateCard = NSPredicate(format: "translateStatistics.answers.@count == 0", argumentArray: [])
         let predicateTranslateRepeat = NSPredicate(format: "translateStatistics.nextRepetition <= %@ and translateStatistics.answers.@count > 0", argumentArray: [Date().onlyDay()])

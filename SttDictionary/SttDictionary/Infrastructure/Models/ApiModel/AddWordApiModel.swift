@@ -13,16 +13,19 @@ protocol DictionaryCodable: Codable { }
 class AddWordApiModel: DictionaryCodable {
     var originalWorld: String!
     var translations: [String]!
-    var reverseCards: Bool = true
     
-    init (word: String, translations: [String]) {
+    var linkedWords: [String]?
+    var reverseCards: Bool = true
+    var pronunciationUrl: String?
+    var exampleUsage: ExampleUsage?
+    
+    init (word: String, translations: [String], linkedWords: [String]?, reverseCards: Bool = true, pronunciationUrl: String? = nil, exampleUsage: ExampleUsage? = nil) {
         self.originalWorld = word
         self.translations = translations
-    }
-    
-    convenience init (word: String, translations: [String], reverseCards: Bool) {
-        self.init(word: word, translations: translations)
+        self.linkedWords = linkedWords
         self.reverseCards = reverseCards
+        self.pronunciationUrl = pronunciationUrl
+        self.exampleUsage = exampleUsage
     }
 }
 
@@ -33,11 +36,21 @@ class UpdateWordApiModel: DictionaryCodable {
     var originalStatistics: Statistics!
     var translateStatistics: Statistics?
     
-    init(word: String, translations: [String], id: String, originalStatistics: Statistics, translateStatistics: Statistics?) {
+    var linkedWords: [String]?
+    var reverseCards: Bool = true
+    var pronunciationUrl: String?
+    var exampleUsage: ExampleUsage?
+    
+    init(word: String, translations: [String], id: String, originalStatistics: Statistics, translateStatistics: Statistics?,
+         linkedWords: [String]?, reverseCards: Bool = true, pronunciationUrl: String? = nil, exampleUsage: ExampleUsage? = nil) {
         self.originalWorld = word
         self.translations = translations
         self.id = id
         self.originalStatistics = originalStatistics
         self.translateStatistics = translateStatistics
+        self.linkedWords = linkedWords
+        self.reverseCards = reverseCards
+        self.pronunciationUrl = pronunciationUrl
+        self.exampleUsage = exampleUsage
     }
 }

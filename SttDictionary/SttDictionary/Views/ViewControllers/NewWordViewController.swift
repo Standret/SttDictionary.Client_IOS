@@ -13,9 +13,15 @@ import RxSwift
 
 class NewWordViewController: SttViewController<NewWordPresenter>, NewWordDelegate, UICollectionViewDelegateFlowLayout, UIPopoverPresentationControllerDelegate {
   
+    enum CollectionType {
+        case translation
+        case linkedWords
+    }
+    
     // property
     
-    var mainTranslateSource: SttCollectionViewSource<WorldCollectionCellPresenter>!
+    var mainTranslateSource: WordCollectionCellSource!
+    var linkedWordsSource: WordCollectionCellSource!
     let handlerMain = SttHandlerTextField()
     let handlerOriginalWord = SttHandlerTextField()
     let handlerLinkedWord = SttHandlerTextField()
@@ -33,10 +39,10 @@ class NewWordViewController: SttViewController<NewWordPresenter>, NewWordDelegat
     @IBOutlet weak var wordExistsLabel: UILabel!
     @IBOutlet weak var cnstrHeightExists: NSLayoutConstraint!
     
-    var wordController: SearchLinkedWordsViewController?
     let linkedWordSearchPublisher = PublishSubject<String>()
     
-
+    // outlet action
+    
     @IBAction func saveClick(_ sender: Any) {
         if !(tfWord.text ?? "").isEmpty {
             presenter.word = tfWord.text
@@ -54,56 +60,34 @@ class NewWordViewController: SttViewController<NewWordPresenter>, NewWordDelegat
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        tfWord.setBorder(color: UIColor(named: "border")!, size: 1)
-        tfMainTranslation.setBorder(color: UIColor(named: "border")!, size: 1)
-        
-        tfLinkedWords.delegate = handlerLinkedWord
-        tfWord.delegate = handlerOriginalWord
-        tfMainTranslation.delegate = handlerMain
-        
-        tfWord.insets = UIConstants.insetsForTextField
-        tfMainTranslation.insets = UIConstants.insetsForTextField
-        tfLinkedWords.insets = UIConstants.insetsForTextField
-        
-        tfWord.layer.cornerRadius = UIConstants.cornerRadius
-        tfMainTranslation.layer.cornerRadius = UIConstants.cornerRadius
-        tfLinkedWords.layer.cornerRadius = UIConstants.cornerRadius
-        
-        handlerOriginalWord.addTarget(type: .shouldReturn, delegate: self, handler: { (view, _) in view.tfMainTranslation.becomeFirstResponder() }, textField: tfWord)
-        handlerMain.addTarget(type: .shouldReturn, delegate: self, handler: { $0.self.addMainTranslateClick($1)}, textField: tfMainTranslation)
-        handlerLinkedWord.addTarget(type: .didStartEditing, delegate: self, handler: { (self, tf) in
-            if self.wordController == nil {
-                self.wordController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "listWords") as! SearchLinkedWordsViewController
-                self.wordController?.changeTextObservable = self.linkedWordSearchPublisher
-                self.wordController?.modalPresentationStyle = .popover
-                
-                self.wordController?.popoverPresentationController?.permittedArrowDirections = .down
-                self.wordController?.popoverPresentationController?.delegate = self
-                self.wordController?.popoverPresentationController?.sourceView = self.tfLinkedWords
-                self.wordController?.popoverPresentationController?.sourceRect = self.tfLinkedWords.bounds
-            }
-            self.present(self.wordController!, animated: true, completion: nil)
-            
-        }, textField: tfLinkedWords)
-        handlerLinkedWord.addTarget(type: TypeActionTextField.editing, delegate: self, handler: { (self, tf) in
-            self.linkedWordSearchPublisher.onNext(tf.text ?? "")
-        }, textField: tfLinkedWords)
-
-        tfWord.addTarget(self, action: #selector(textFieldDidChange(_:)), for: .editingChanged)
-        
-        tfMainTranslation.delegate = handlerMain
-        tfWord.delegate = handlerOriginalWord
+        configurateTextField()
+        configurationHandlerTextField()
+        configurateCollectionView()
         
         btnAddTranslation.layer.cornerRadius = UIConstants.cornerRadius
         btnAddTranslation.clipsToBounds = true
         btnAddTranslation.tintColor = UIColor.white
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        tfWord.becomeFirstResponder()
+    }
+    
+    private func configurateCollectionView() {
+        cnstrLinkedWordsHeight.constant = 0
+        cnstrMainTranslationHeight.constant = 0
         
-        mainTranslateSource = SttCollectionViewSource<WorldCollectionCellPresenter>(collectionView: collectionView, cellIdentifier: "WordCollectionCell", collection: presenter.mainTranslation)
+        mainTranslateSource = WordCollectionCellSource(collectionView: collectionView, _collection: presenter.mainTranslation.data)
+        linkedWordsSource = WordCollectionCellSource(collectionView: linkedWordsCollection, _collection: presenter.linkedWords.data)
         
-        collectionView.sizeToFit()
-        cnstrMainTranslationHeight.constant = collectionView.contentSize.height
         collectionView.dataSource = mainTranslateSource
-        collectionView.delegate = self
+        collectionView.delegate = mainTranslateSource
+        linkedWordsCollection.dataSource = linkedWordsSource
+        linkedWordsCollection.delegate = linkedWordsSource
+        
+        _ = presenter.mainTranslation.data.observableObject.subscribe(onNext: { _ in self.reloadCollectionCell(type: .translation) })
+        _ = presenter.linkedWords.data.observableObject.subscribe(onNext: { [weak self] _ in self?.reloadCollectionCell(type: .linkedWords) })
         
         let alignedFlowLayout = collectionView?.collectionViewLayout as? AlignedCollectionViewFlowLayout
         alignedFlowLayout?.horizontalAlignment = .left
@@ -121,40 +105,83 @@ class NewWordViewController: SttViewController<NewWordPresenter>, NewWordDelegat
         })
     }
     
+    private func configurateTextField() {
+        tfWord.setBorder(color: UIColor(named: "border")!, size: 1)
+        tfMainTranslation.setBorder(color: UIColor(named: "border")!, size: 1)
+        tfLinkedWords.setBorder(color: UIColor(named: "border")!, size: 1)
+        
+        tfLinkedWords.delegate = handlerLinkedWord
+        tfWord.delegate = handlerOriginalWord
+        tfMainTranslation.delegate = handlerMain
+        
+        tfWord.insets = UIConstants.insetsForTextField
+        tfMainTranslation.insets = UIConstants.insetsForTextField
+        tfLinkedWords.insets = UIConstants.insetsForTextField
+        
+        tfWord.layer.cornerRadius = UIConstants.cornerRadius
+        tfMainTranslation.layer.cornerRadius = UIConstants.cornerRadius
+        tfLinkedWords.layer.cornerRadius = UIConstants.cornerRadius
+    }
+    private func configurationHandlerTextField() {
+        handlerOriginalWord.addTarget(type: TypeActionTextField.editing, delegate: self, handler: { $0.presenter.word = $1.text }, textField: tfWord)
+        handlerOriginalWord.addTarget(type: .shouldReturn, delegate: self, handler: { (view, _) in view.tfMainTranslation.becomeFirstResponder() }, textField: tfWord)
+        handlerMain.addTarget(type: .shouldReturn, delegate: self, handler: { $0.addMainTranslateClick($1)}, textField: tfMainTranslation)
+        handlerLinkedWord.addTarget(type: .didStartEditing, delegate: self, handler: { (self, _) in
+            
+            let wordController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "listWords") as! SearchLinkedWordsViewController
+            wordController.changeTextObservable = self.linkedWordSearchPublisher
+            wordController.modalPresentationStyle = .popover
+            wordController.closeDelegate = { [weak self] words in
+                self?.presenter.addNewLinkedWords(words: words)
+            }
+            
+            wordController.popoverPresentationController?.permittedArrowDirections = .down
+            wordController.popoverPresentationController?.delegate = self
+            wordController.popoverPresentationController?.sourceView = self.tfLinkedWords
+            wordController.popoverPresentationController?.sourceRect = self.tfLinkedWords.bounds
+            
+            self.present(wordController, animated: true, completion: nil)
+            
+        }, textField: tfLinkedWords)
+        handlerLinkedWord.addTarget(type: TypeActionTextField.editing, delegate: self, handler: { $0.linkedWordSearchPublisher.onNext($1.text ?? "") }, textField: tfLinkedWords)
+    
+        tfWord.delegate = handlerOriginalWord
+        tfMainTranslation.delegate = handlerMain
+        tfLinkedWords.delegate = handlerLinkedWord
+    }
+    
+    private func reloadCollectionCell(type: CollectionType) {
+        var targetCollection: UICollectionView!
+        var targetCnstraint: NSLayoutConstraint!
+        switch type {
+        case .translation:
+            targetCollection = collectionView
+            targetCnstraint = cnstrMainTranslationHeight
+        case .linkedWords:
+            targetCollection = linkedWordsCollection
+            targetCnstraint = cnstrLinkedWordsHeight
+        }
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+            targetCnstraint.constant = targetCollection.contentSize.height
+            UIView.animate(withDuration: 0.3, animations: { [weak self] in
+                self?.view.layoutIfNeeded()
+            })
+        }
+    }
+    
+    // MARK: -- Popover protocol
+    
     func adaptivePresentationStyle(for controller: UIPresentationController) -> UIModalPresentationStyle {
         return .none
     }
     
-    func adaptivePresentationStyleForPresentationController(controller: UIPresentationController) -> UIModalPresentationStyle {
-        // Force popover style
-        return UIModalPresentationStyle.none
-    }
-    
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
-        tfWord.becomeFirstResponder()
-    }
+    // MARK: -- Flow layout protocol
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CGSize(width: ((presenter.mainTranslation[indexPath.row].word ?? "") as NSString).size(withAttributes: [NSAttributedStringKey.font: UIFont(name: "Helvetica", size: 18)!]).width + 13, height: 35)
+        return CGSize(width: ((presenter.mainTranslation.data[indexPath.row].word ?? "") as NSString).size(withAttributes: [NSAttributedStringKey.font: UIFont(name: "Helvetica", size: 18)!]).width + 13, height: 35)
     }
-    
-    @objc func textFieldDidChange(_ textField: UITextField) {
-        presenter.word = textField.text
-    }
-    
-    // protocols presenter implement
-    
-    func reloadMainCollectionCell() {
-        mainTranslateSource._collection = presenter.mainTranslation
-        collectionView.sizeToFit()
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
-            self.cnstrMainTranslationHeight.constant = self.collectionView.contentSize.height
-            UIView.animate(withDuration: 0.3, animations: {
-                self.view.layoutIfNeeded()
-            })
-        }
-    }
+
+    // MARK: -- protocols presenter implement
     
     func error(isHidden: Bool) {
         wordExistsLabel.isHidden = isHidden
