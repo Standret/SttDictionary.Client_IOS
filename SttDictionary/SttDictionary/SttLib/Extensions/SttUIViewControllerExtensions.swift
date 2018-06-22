@@ -9,11 +9,6 @@
 import UIKit
 
 extension UIViewController {
-    func configurationNavigationBar () {
-        navigationController?.navigationBar.tintColor = UIColor(named: "TitleNavBarForegoundColor")
-        navigationController?.navigationBar.barTintColor = UIColor(named: "TitleNavBarBackgroundColor")
-        navigationController?.navigationBar.isTranslucent = true
-    }
     
     var isModal: Bool {
         if let index = navigationController?.viewControllers.index(of: self), index > 0 {
@@ -27,5 +22,20 @@ extension UIViewController {
         } else {
             return false
         }
+    }
+    
+    func createAlerDialog(title: String?, message: String, buttonTitle: String? = nil, handlerOk: (() -> Void)? = nil) {
+        let alertController = UIAlertController(title: title, message: message, preferredStyle: .alert)
+        alertController.addAction(UIAlertAction(title: buttonTitle ?? "Ok", style: .cancel, handler: { (action) in
+            self.resignFirstResponder()
+            handlerOk?()
+        }))
+        
+        if let popover = alertController.popoverPresentationController {
+            popover.sourceView = self.view
+            popover.permittedArrowDirections = .up
+        }
+        
+        self.present(alertController, animated: true, completion: nil)
     }
 }

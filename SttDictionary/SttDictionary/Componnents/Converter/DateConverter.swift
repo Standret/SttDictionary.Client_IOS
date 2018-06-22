@@ -8,7 +8,7 @@
 
 import Foundation
 
-class DateConverter: IConverter {
+class DateConverter: SttConverterType {
     
     typealias TIn = Date
     typealias TOut = String
@@ -23,7 +23,7 @@ class DateConverter: IConverter {
     }
 }
 
-class ShortDateConverter: IConverter {
+class ShortDateConverter: SttConverterType {
     
     typealias TIn = Date
     typealias TOut = String

@@ -35,11 +35,7 @@ class SttComand {
         }
         isCall = false
     }
-    
-    deinit {
-        print ("Stt Command deinit")
-    }
-    
+
     func addHandler(start: (() -> Void)?, end: (() -> Void)?) {
         handlerStart = start
         handlerEnd = end

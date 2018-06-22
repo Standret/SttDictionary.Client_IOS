@@ -9,15 +9,14 @@
 import Foundation
 import RxSwift
 
-extension RepositoryType
-where TEntity: Defaultable {
+extension RepositoryType {
     func getOrCreateSingletoon() -> Observable<TRealm> {
         return self.exists(filter: nil)
             .flatMap({ (result) -> Observable<TRealm> in
                 if (result) {
                     return self.getOne(filter: nil)
                 }
-                return self.saveOne(model: FactoryDefaultsObject.create(ofType: TEntity.self))
+                return self.saveOne(model: TEntity())
                     .toObservable()
                     .flatMap({ _ in self.getOne(filter: nil) })
             })

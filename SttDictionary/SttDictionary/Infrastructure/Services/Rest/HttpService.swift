@@ -43,7 +43,7 @@ class HttpService: IHttpService {
     var url: String!
     var token: String = ""
     var tokenType: String = ""
-    var connectivity = Conectivity()
+    var connectivity = SttConectivity()
     
     init() { tokenType = "bearer" }
     

@@ -29,12 +29,12 @@ protocol ViewInjector {
     init()
 }
 
-class SttbViewController: UIViewController, KeyboardNotificationDelegate {
+class SttbViewController: UIViewController, SttKeyboardNotificationDelegate {
     
     fileprivate var parametr: Any?
     fileprivate var callback: ((Any) -> Void)?
     
-    var keyboardNotification: KeyboardNotification!
+    var keyboardNotification: SttKeyboardNotification!
     var scrollAmount: CGFloat = 0
     var scrollAmountGeneral: CGFloat = 0
     var moveViewUp: Bool = false
@@ -42,7 +42,7 @@ class SttbViewController: UIViewController, KeyboardNotificationDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        keyboardNotification = KeyboardNotification()
+        keyboardNotification = SttKeyboardNotification()
         keyboardNotification.callIfKeyboardIsShow = true
         keyboardNotification.delegate = self
     }
@@ -97,8 +97,8 @@ class SttViewController<T: ViewInjector>: SttbViewController, Viewable {
         presenter.prepare(parametr: parametr)
         view.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(handleClick(_:))))
         
-        _ = GlobalObserver.observableStatusApplication.subscribe(onNext: { (status) in
-            if status == ApplicationStatus.EnterBackgound {
+        _ = SttGlobalObserver.observableStatusApplication.subscribe(onNext: { (status) in
+            if status == SttApplicationStatus.EnterBackgound {
                 self.view.endEditing(true)
                 self.navigationController?.navigationBar.endEditing(true)
             }
