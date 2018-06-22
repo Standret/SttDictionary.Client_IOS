@@ -8,7 +8,7 @@
 
 import Foundation
 
-extension DictionaryCodable {
+extension SttDictionaryCodable {
     func getDictionary() -> [String:Any] {
         do {
             let encoder = JSONEncoder()

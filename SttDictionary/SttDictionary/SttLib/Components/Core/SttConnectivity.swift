@@ -9,12 +9,12 @@
 import Foundation
 import Alamofire
 
-protocol ConnectivityDelegate {
+protocol SttConnectivityDelegate {
     func connectivityChanged(status: NetworkReachabilityManager.NetworkReachabilityStatus)
 }
 
-class Conectivity {
-    var delegate: ConnectivityDelegate!
+class SttConectivity {
+    var delegate: SttConnectivityDelegate!
     private var networkManager = NetworkReachabilityManager()
     
     var isConnected: Bool {

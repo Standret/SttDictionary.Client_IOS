@@ -1,33 +1,33 @@
 //
-//  KeyboardNotification.swift
+//  SttKeyboardNotification.swift
 //  SttDictionary
 //
-//  Created by Standret on 5/13/18.
+//  Created by Standret on 22.06.18.
 //  Copyright © 2018 Standret. All rights reserved.
 //
 
 import Foundation
 import UIKit
 
-protocol KeyboardNotificationDelegate {
+public protocol SttKeyboardNotificationDelegate: class {
     func keyboardWillShow(height: CGFloat)
     func keyboardWillHide(height: CGFloat)
 }
 
-class KeyboardNotification {
+public class SttKeyboardNotification {
     
-    var isAnimation: Bool = false
-    var callIfKeyboardIsShow: Bool = false
+    public var isAnimation: Bool = false
+    public var callIfKeyboardIsShow: Bool = false
     
-    var delegate: KeyboardNotificationDelegate!
+    public weak var delegate: SttKeyboardNotificationDelegate!
     
-    var bounds: CGRect {
+    public var bounds: CGRect {
         if let frame: NSValue = notificationObject?.userInfo?[UIKeyboardFrameEndUserInfoKey] as? NSValue {
             return frame.cgRectValue
         }
         return CGRect()
     }
-    var heightKeyboard: CGFloat {
+    public var heightKeyboard: CGFloat {
         return bounds.height
     }
     

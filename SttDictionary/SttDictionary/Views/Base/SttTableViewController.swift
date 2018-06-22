@@ -9,7 +9,7 @@
 import Foundation
 import UIKit
 
-class SttTableViewController<T: ViewInjector>: UITableViewController, Viewable, KeyboardNotificationDelegate {
+class SttTableViewController<T: ViewInjector>: UITableViewController, Viewable, SttKeyboardNotificationDelegate {
     func close(parametr: Any) {
         
     }
@@ -49,7 +49,7 @@ class SttTableViewController<T: ViewInjector>: UITableViewController, Viewable, 
     }
     
     var presenter: T!
-    var keyboardNotification: KeyboardNotification!
+    var keyboardNotification: SttKeyboardNotification!
     var scrollAmount: CGFloat = 0
     var scrollAmountGeneral: CGFloat = 0
     var moveViewUp: Bool = false
@@ -57,7 +57,7 @@ class SttTableViewController<T: ViewInjector>: UITableViewController, Viewable, 
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        keyboardNotification = KeyboardNotification()
+        keyboardNotification = SttKeyboardNotification()
         keyboardNotification.callIfKeyboardIsShow = true
         keyboardNotification.delegate = self
         

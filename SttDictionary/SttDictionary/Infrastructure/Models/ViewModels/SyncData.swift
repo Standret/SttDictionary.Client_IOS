@@ -8,7 +8,7 @@
 
 import Foundation
 
-class SyncDataViewModel: RealmCodable, Defaultable {
+class SyncDataViewModel: RealmCodable {
     
     typealias TTarget = RealmSyncData
     
