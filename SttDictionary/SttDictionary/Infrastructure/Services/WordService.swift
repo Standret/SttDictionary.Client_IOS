@@ -13,21 +13,40 @@ import SINQ
 extension ObservableType
 where E == [RealmWord] {
     
+    func trimSameIdWords(todayTrainedWords: Observable<[RealmWord]>, key: String) -> Observable<E> {
+        return Observable.zip(self, todayTrainedWords, resultSelector: { (targetWords, todayTrained) -> [RealmWord] in
+            
+           // print ("\ntrimSameIdWords \(key)")
+           // print(targetWords.map({ $0.originalWorld }))
+           // print(todayTrained.map({ $0.originalWorld }))
+            // delete all linked words which trained today
+            var targetResult = targetWords
+            
+            for item in todayTrained {
+                if let index = targetResult.index(where: { $0.id == item.id }) {
+                    targetResult.remove(at: index)
+                }
+            }
+            
+           // print(targetResult.map({ $0.originalWorld }))
+            return targetResult
+        })
+    }
+    
     func trimLinkedWords(key: String) -> Observable<E> {
         return self.map({ (targetWords) -> [RealmWord] in
             
             var targetResult = [RealmWord]()
-            print ("\ntrim \(key)")
-            print(targetWords.map({ $0.originalWorld }))
+           // print ("\ntrim \(key)")
+           // print(targetWords.map({ $0.originalWorld }))
 
             // delete from target list (get first word and other linked delete)
             for item in targetWords {
-                print (item.originalWorld)
                 if !sinq(item.linkedWords).any({ lid in sinq(targetResult).any({ $0.id == lid.value }) }) {
                     targetResult.append(item)
                 }
             }
-            print(targetResult.map({ $0.originalWorld }))
+          //  print(targetResult.map({ $0.originalWorld }))
 
             return targetResult
         })
@@ -37,8 +56,8 @@ where E == [RealmWord] {
         return Observable.zip(self, todayTrainedWords, resultSelector: { (targetWords, todayTrained) -> [RealmWord] in
             
             print ("\ntrim from \(key)")
-            print(targetWords.map({ $0.originalWorld }))
-            print(todayTrained.map({ $0.originalWorld }))
+          //  print(targetWords.map({ $0.originalWorld }))
+          //  print(todayTrained.map({ $0.originalWorld }))
             // delete all linked words which trained today
             var targetResult = targetWords
             
@@ -50,7 +69,7 @@ where E == [RealmWord] {
                 }
             }
   
-            print(targetResult.map({ $0.originalWorld }))
+           // print(targetResult.map({ $0.originalWorld }))
             return targetResult
         })
     }
@@ -141,13 +160,18 @@ class WordServie: IWordService {
         let predicate = QueryFactories.getWordQuery(text: ":@today")
         return _notificationError.useError(observable:
             _unitOfWork.word.getMany(filter: NSPredicate(format: "any originalStatistics.answers.date == %@", argumentArray: [Date().onlyDay()]).predicateFormat)
-                .map({ sinq($0).whereTrue({ $0.originalStatistics!.answers.first!.date == Date().onlyDay() }).count() })
+                .map({ let ii = sinq($0).whereTrue({ $0.originalStatistics!.answers.first!.date == Date().onlyDay() }).count()
+                    print("new: \(ii)")
+                    print(sinq($0).whereTrue({ $0.originalStatistics!.answers.first!.date == Date().onlyDay() }).map({ $0.originalWorld }).toArray())
+                    return ii
+                })
                 .flatMap({ count in
                     self._unitOfWork.word.getMany(filter: predicate?.newOriginalCard)
                         .trimLinkedWordsFrom(todayTrainedWords: self.todayAlreadyTrained(), key: "getNewWord from already Trained")
                         .trimLinkedWordsFrom(todayTrainedWords: self.unTrimmedRepeatWord(), key: "getNewWord from already Repeat")
                         .trimLinkedWordsFrom(todayTrainedWords: self.unTrimmedRepeatTranslation(), key: "getNewWord from already RepeatTrans")
                         .trimLinkedWords(key: "getNewWord")
+                        .trimSameIdWords(todayTrainedWords: self.todayTranslateTrained(), key: "getNewWord")
                         .map({ Array($0.prefix(Constants.countOfNewCard - count)) })
                 })
         )
@@ -155,14 +179,19 @@ class WordServie: IWordService {
     func getRepeatWord() -> Observable<[RealmWord]> {
         let predicate = QueryFactories.getWordQuery(text: ":@today")
         return _notificationError.useError(observable: _unitOfWork.word.getMany(filter: predicate?.repeatOriginalCard)
-                                                        .trimLinkedWordsFrom(todayTrainedWords: todayAlreadyTrained(), key: "getRepeatWord from todayAlreadyTrained")
+            .trimLinkedWordsFrom(todayTrainedWords: todayAlreadyTrained(), key: "getRepeatWord from todayAlreadyTrained")
             .trimLinkedWords(key: "getRepeatWord"))
+            .trimSameIdWords(todayTrainedWords: todayTranslateTrained(), key: "getRepeatWord")
     }
     func getNewTranslationWord() -> Observable<[RealmWord]> {
         let predicate = QueryFactories.getWordQuery(text: ":@today")
         return _notificationError.useError(observable:
             _unitOfWork.word.getMany(filter: NSPredicate(format: "any translateStatistics.answers.date == %@", argumentArray: [Date().onlyDay()]).predicateFormat)
-            .map({ sinq($0).whereTrue({ $0.translateStatistics!.answers.first!.date == Date().onlyDay() }).count() })
+            .map({ let ii = sinq($0).whereTrue({ $0.translateStatistics!.answers.first!.date == Date().onlyDay() }).count()
+                print("newTrans: \(ii)")
+                print(sinq($0).whereTrue({ $0.translateStatistics!.answers.first!.date == Date().onlyDay() }).map({ $0.originalWorld }).toArray())
+                return ii
+            })
             .flatMap({ count in
                 self._unitOfWork.word.getMany(filter: predicate?.newTranslationCard)
                     .trimLinkedWordsFrom(todayTrainedWords: self.todayAlreadyTrained(), key: "getNewTranslationWord from todayAlreadyTrained")
@@ -170,6 +199,7 @@ class WordServie: IWordService {
                     .trimLinkedWordsFrom(todayTrainedWords: self.unTrimmedRepeatTranslation(), key: "getNewTranslationWord from unTrimmedRepeatTranslation")
                     .trimLinkedWordsFrom(todayTrainedWords: self.unTrimmedNewWord(), key: "getNewTranslationWord from unTrimmedNewWord")
                     .trimLinkedWords(key: "getNewTranslationWord")
+                    .trimSameIdWords(todayTrainedWords: self.todayOriginalTrained(), key: "getNewTranslationWord")
                     .map({ Array($0.prefix(Constants.countOfNewCard - count)) })
             })
         )
@@ -177,9 +207,10 @@ class WordServie: IWordService {
     func getRepeatTranslationWord() -> Observable<[RealmWord]> {
         let predicate = QueryFactories.getWordQuery(text: ":@today")
         return _notificationError.useError(observable: _unitOfWork.word.getMany(filter: predicate?.repeatTranslationCard)
-                                                        .trimLinkedWordsFrom(todayTrainedWords: todayAlreadyTrained(), key: "getRepeatTranslationWord from todayAlreadyTrained")
-                                                        .trimLinkedWordsFrom(todayTrainedWords: unTrimmedRepeatWord(), key: "getRepeatTranslationWord from unTrimmedRepeatWord")
-                                                        .trimLinkedWords(key: "getRepeatTranslationWord"))
+            .trimLinkedWordsFrom(todayTrainedWords: todayAlreadyTrained(), key: "getRepeatTranslationWord from todayAlreadyTrained")
+            .trimLinkedWordsFrom(todayTrainedWords: unTrimmedRepeatWord(), key: "getRepeatTranslationWord from unTrimmedRepeatWord")
+            .trimLinkedWords(key: "getRepeatTranslationWord"))
+            .trimSameIdWords(todayTrainedWords: self.todayOriginalTrained(), key: "getRepeatTranslationWord")
     }
     
     func updateStatistics(answer: Answer, type: AnswersType) -> Observable<Bool> {
@@ -211,8 +242,17 @@ class WordServie: IWordService {
         let predicate = QueryFactories.getWordQuery(text: ":@today")
         return _unitOfWork.word.getMany(filter: predicate?.newOriginalCard)
     }
+    
     private func todayAlreadyTrained() -> Observable<[RealmWord]> {
         let predicate = NSPredicate(format: "(any translateStatistics.answers.date == %@ or any originalStatistics.answers.date == %@) and linkedWords.@count > 0", argumentArray: [Date().onlyDay(), Date().onlyDay()])
         return _unitOfWork.word.getMany(filter: predicate.predicateFormat)
+    }
+    private func todayOriginalTrained() -> Observable<[RealmWord]> {
+        let predicate = NSPredicate(format: "any originalStatistics.answers.date == %@", argumentArray: [Date().onlyDay()]).predicateFormat
+        return _unitOfWork.word.getMany(filter: predicate)
+    }
+    private func todayTranslateTrained() -> Observable<[RealmWord]> {
+        let predicate = NSPredicate(format: "any translateStatistics.answers.date == %@", argumentArray: [Date().onlyDay()]).predicateFormat
+        return _unitOfWork.word.getMany(filter: predicate)
     }
 }

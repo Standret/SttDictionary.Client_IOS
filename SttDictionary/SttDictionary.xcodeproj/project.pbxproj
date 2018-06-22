@@ -13,6 +13,8 @@
 		7D82B5B320C2CCE7004D896A /* WordFactories.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D82B5B220C2CCE7004D896A /* WordFactories.swift */; };
 		7D82B5B520C30491004D896A /* StudyViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D82B5B420C30491004D896A /* StudyViewController.swift */; };
 		7D82B5B720C332F9004D896A /* QueryFactories.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D82B5B620C332F9004D896A /* QueryFactories.swift */; };
+		7D98179C20D62F2D00896FF5 /* SttDictionaryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D98179B20D62F2D00896FF5 /* SttDictionaryTests.swift */; };
+		7D9817A420D630C700896FF5 /* LinkedWordsTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D9817A320D630C700896FF5 /* LinkedWordsTest.swift */; };
 		7DA34BD020CF9C8100324B08 /* CachingPlayerItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7DA34BCF20CF9C8100324B08 /* CachingPlayerItem.swift */; };
 		7DB2BFB820D507DA007B3676 /* SttObservableCollection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7DB2BFB720D507DA007B3676 /* SttObservableCollection.swift */; };
 		7DB2BFBA20D52819007B3676 /* WordCollectionCellSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7DB2BFB920D52819007B3676 /* WordCollectionCellSource.swift */; };
@@ -98,6 +100,16 @@
 		84F39E8520B03F0A00548681 /* WordCollectionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84F39E8420B03F0A00548681 /* WordCollectionCell.swift */; };
 /* End PBXBuildFile section */
 
+/* Begin PBXContainerItemProxy section */
+		7D98179E20D62F2D00896FF5 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 84D2421520A85177007D8F1A /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 84D2421C20A85177007D8F1A;
+			remoteInfo = SttDictionary;
+		};
+/* End PBXContainerItemProxy section */
+
 /* Begin PBXFileReference section */
 		5E7EB997EC23AAFE1E703F5B /* Pods-SttDictionary.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SttDictionary.debug.xcconfig"; path = "Pods/Target Support Files/Pods-SttDictionary/Pods-SttDictionary.debug.xcconfig"; sourceTree = "<group>"; };
 		7D82B5AD20C2C459004D896A /* StatisticsApiModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatisticsApiModel.swift; sourceTree = "<group>"; };
@@ -105,6 +117,10 @@
 		7D82B5B220C2CCE7004D896A /* WordFactories.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WordFactories.swift; sourceTree = "<group>"; };
 		7D82B5B420C30491004D896A /* StudyViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StudyViewController.swift; sourceTree = "<group>"; };
 		7D82B5B620C332F9004D896A /* QueryFactories.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QueryFactories.swift; sourceTree = "<group>"; };
+		7D98179920D62F2C00896FF5 /* SttDictionaryTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SttDictionaryTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		7D98179B20D62F2D00896FF5 /* SttDictionaryTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SttDictionaryTests.swift; sourceTree = "<group>"; };
+		7D98179D20D62F2D00896FF5 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		7D9817A320D630C700896FF5 /* LinkedWordsTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LinkedWordsTest.swift; sourceTree = "<group>"; };
 		7DA34BCF20CF9C8100324B08 /* CachingPlayerItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CachingPlayerItem.swift; sourceTree = "<group>"; };
 		7DB2BFB720D507DA007B3676 /* SttObservableCollection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SttObservableCollection.swift; sourceTree = "<group>"; };
 		7DB2BFB920D52819007B3676 /* WordCollectionCellSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WordCollectionCellSource.swift; sourceTree = "<group>"; };
@@ -195,6 +211,13 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		7D98179620D62F2C00896FF5 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		84D2421A20A85177007D8F1A /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -222,6 +245,16 @@
 				7D82B5B620C332F9004D896A /* QueryFactories.swift */,
 			);
 			path = Creater;
+			sourceTree = "<group>";
+		};
+		7D98179A20D62F2C00896FF5 /* SttDictionaryTests */ = {
+			isa = PBXGroup;
+			children = (
+				7D9817A320D630C700896FF5 /* LinkedWordsTest.swift */,
+				7D98179B20D62F2D00896FF5 /* SttDictionaryTests.swift */,
+				7D98179D20D62F2D00896FF5 /* Info.plist */,
+			);
+			path = SttDictionaryTests;
 			sourceTree = "<group>";
 		};
 		840427F820B2E9A000C94765 /* Views */ = {
@@ -359,6 +392,7 @@
 			isa = PBXGroup;
 			children = (
 				84D2421F20A85177007D8F1A /* SttDictionary */,
+				7D98179A20D62F2C00896FF5 /* SttDictionaryTests */,
 				84D2421E20A85177007D8F1A /* Products */,
 				3B54D5357FA33ECE386AA537 /* Pods */,
 				E52B32FBF8EA6F200AC0DE38 /* Frameworks */,
@@ -369,6 +403,7 @@
 			isa = PBXGroup;
 			children = (
 				84D2421D20A85177007D8F1A /* SttDictionary.app */,
+				7D98179920D62F2C00896FF5 /* SttDictionaryTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -596,6 +631,24 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
+		7D98179820D62F2C00896FF5 /* SttDictionaryTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 7D9817A220D62F2D00896FF5 /* Build configuration list for PBXNativeTarget "SttDictionaryTests" */;
+			buildPhases = (
+				7D98179520D62F2C00896FF5 /* Sources */,
+				7D98179620D62F2C00896FF5 /* Frameworks */,
+				7D98179720D62F2C00896FF5 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				7D98179F20D62F2D00896FF5 /* PBXTargetDependency */,
+			);
+			name = SttDictionaryTests;
+			productName = SttDictionaryTests;
+			productReference = 7D98179920D62F2C00896FF5 /* SttDictionaryTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
 		84D2421C20A85177007D8F1A /* SttDictionary */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 84D2422F20A85179007D8F1A /* Build configuration list for PBXNativeTarget "SttDictionary" */;
@@ -621,10 +674,14 @@
 		84D2421520A85177007D8F1A /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastSwiftUpdateCheck = 0930;
+				LastSwiftUpdateCheck = 0940;
 				LastUpgradeCheck = 0930;
 				ORGANIZATIONNAME = Standret;
 				TargetAttributes = {
+					7D98179820D62F2C00896FF5 = {
+						CreatedOnToolsVersion = 9.4;
+						TestTargetID = 84D2421C20A85177007D8F1A;
+					};
 					84D2421C20A85177007D8F1A = {
 						CreatedOnToolsVersion = 9.3;
 					};
@@ -644,11 +701,19 @@
 			projectRoot = "";
 			targets = (
 				84D2421C20A85177007D8F1A /* SttDictionary */,
+				7D98179820D62F2C00896FF5 /* SttDictionaryTests */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
+		7D98179720D62F2C00896FF5 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		84D2421B20A85177007D8F1A /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -725,6 +790,15 @@
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+		7D98179520D62F2C00896FF5 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				7D9817A420D630C700896FF5 /* LinkedWordsTest.swift in Sources */,
+				7D98179C20D62F2D00896FF5 /* SttDictionaryTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		84D2421920A85177007D8F1A /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -815,6 +889,14 @@
 		};
 /* End PBXSourcesBuildPhase section */
 
+/* Begin PBXTargetDependency section */
+		7D98179F20D62F2D00896FF5 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 84D2421C20A85177007D8F1A /* SttDictionary */;
+			targetProxy = 7D98179E20D62F2D00896FF5 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
 /* Begin PBXVariantGroup section */
 		84D2422420A85177007D8F1A /* Main.storyboard */ = {
 			isa = PBXVariantGroup;
@@ -835,6 +917,54 @@
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
+		7D9817A020D62F2D00896FF5 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 5E7EB997EC23AAFE1E703F5B /* Pods-SttDictionary.debug.xcconfig */;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				DEFINES_MODULE = NO;
+				DEVELOPMENT_TEAM = MD88G6A24R;
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				INFOPLIST_FILE = SttDictionaryTests/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.4;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = standret.SttDictionaryTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 4.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/SttDictionary.app/SttDictionary";
+			};
+			name = Debug;
+		};
+		7D9817A120D62F2D00896FF5 /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = B9832CC13E5CA7360A7F1832 /* Pods-SttDictionary.release.xcconfig */;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				DEFINES_MODULE = NO;
+				DEVELOPMENT_TEAM = MD88G6A24R;
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				INFOPLIST_FILE = SttDictionaryTests/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.4;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = standret.SttDictionaryTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 4.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/SttDictionary.app/SttDictionary";
+			};
+			name = Release;
+		};
 		84D2422D20A85179007D8F1A /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -870,6 +1000,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEFINES_MODULE = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
@@ -930,6 +1061,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DEFINES_MODULE = NO;
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
@@ -955,7 +1087,9 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
+				DEFINES_MODULE = YES;
 				DEVELOPMENT_TEAM = MD88G6A24R;
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
 				INFOPLIST_FILE = SttDictionary/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -974,7 +1108,9 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
+				DEFINES_MODULE = YES;
 				DEVELOPMENT_TEAM = MD88G6A24R;
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
 				INFOPLIST_FILE = SttDictionary/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -990,6 +1126,15 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		7D9817A220D62F2D00896FF5 /* Build configuration list for PBXNativeTarget "SttDictionaryTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				7D9817A020D62F2D00896FF5 /* Debug */,
+				7D9817A120D62F2D00896FF5 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		84D2421820A85177007D8F1A /* Build configuration list for PBXProject "SttDictionary" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (

@@ -150,5 +150,9 @@ class CardsPresenter: SttPresenter<CardsDelegate> {
                 words.insert(param.1.getAndDelete(index: 0), at: left)
             }
         }
+        
+        for item in words {
+            print(item.originalWorld)
+        }
     }
 }
