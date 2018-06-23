@@ -8,7 +8,7 @@
 
 import Foundation
 
-class ResultModel<TResult> {
+class SttResultModel<TResult> {
     let isLocal: Bool
     let result: TResult
     

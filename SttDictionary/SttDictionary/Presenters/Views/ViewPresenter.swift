@@ -8,13 +8,13 @@
 
 import Foundation
 
-protocol ViewDelegate: Viewable {
+protocol ViewDelegate: SttViewable {
     
 }
 
 class ViewPresenter: SttPresenter<ViewDelegate> {
     var _apiService: IApiService!
-    var _unitOfWorkd: IUnitOfWork!
+    var _unitOfWorkd: UnitOfWorkType!
     
     override func presenterCreating() {
         //ServiceInjectorAssembly.instance().inject(into: self)

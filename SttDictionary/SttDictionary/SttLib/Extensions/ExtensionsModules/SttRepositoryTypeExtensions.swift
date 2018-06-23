@@ -1,5 +1,5 @@
 //
-//  RepositoryTypeExt.swift
+//  RepositoryTypeExtensions.swift
 //  SttDictionary
 //
 //  Created by Piter Standret on 6/3/18.
@@ -9,7 +9,11 @@
 import Foundation
 import RxSwift
 
-extension RepositoryType {
+protocol DefaultableType {
+    init()
+}
+
+extension SttRepositoryType where TEntity: DefaultableType {
     func getOrCreateSingletoon() -> Observable<TRealm> {
         return self.exists(filter: nil)
             .flatMap({ (result) -> Observable<TRealm> in
@@ -23,7 +27,7 @@ extension RepositoryType {
     }
 }
 
-extension RepositoryType {
+extension SttRepositoryType {
     func getMany(filter: String? = nil, sortBy: String? = nil, isAsc: Bool = true, skip: Int = 0, take: Int = Int.max) -> Observable<[TRealm]> {
         return self.getMany(filter: filter, sortBy: sortBy, isAsc: isAsc, skip: skip, take: take)
     }

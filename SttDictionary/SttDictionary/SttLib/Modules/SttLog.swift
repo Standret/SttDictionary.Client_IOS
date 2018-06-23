@@ -8,7 +8,7 @@
 
 import Foundation
 
-class Log {
+class SttLog {
     class func trace(message: String, key: String) {
         print("TRACE in \(key): \(message)")
     }

@@ -24,14 +24,12 @@ protocol ISyncService {
 
 class SyncService: ISyncService {
     
-    var _unitOfWork: IUnitOfWork!
+    var _unitOfWork: UnitOfWorkType!
     var _apiServicce: IApiService!
-    var _notificationError: INotificationError!
+    var _notificationError: NotificationErrorType!
     
     var observe: Observable<SyncDataViewModel> {
-        return _notificationError.useError(observable: (_unitOfWork.syncData.observe(on: [RealmStatus.Updated])).map({ (transform) -> SyncDataViewModel in
-            return transform.0
-        }))
+        return _notificationError.useError(observable: (_unitOfWork.syncData.observe(on: [RealmStatus.Updated])).map({ $0.0.deserialize() }))
     }
     
     init () {

@@ -8,9 +8,7 @@
 
 import Foundation
 
-protocol DictionaryCodable: Codable { }
-
-class AddWordApiModel: DictionaryCodable {
+class AddWordApiModel: Codable {
     var originalWorld: String!
     var translations: [String]!
     
@@ -29,7 +27,7 @@ class AddWordApiModel: DictionaryCodable {
     }
 }
 
-class UpdateWordApiModel: DictionaryCodable {
+class UpdateWordApiModel: Codable {
     var id: String!
     var originalWorld: String!
     var translations: [String]!

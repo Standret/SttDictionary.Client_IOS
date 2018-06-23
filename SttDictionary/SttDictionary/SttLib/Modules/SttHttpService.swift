@@ -16,7 +16,7 @@ import Alamofire
 import RxAlamofire
 import RxSwift
 
-protocol IHttpService {
+protocol SttHttpServiceType {
     var url: String! { get set }
     var token: String { get set }
     var tokenType: String { get set }
@@ -26,19 +26,7 @@ protocol IHttpService {
     func post(controller: ApiConroller, dataAny: [String:Any], insertToken: Bool) -> Observable<(HTTPURLResponse, Data)>
 }
 
-extension IHttpService {
-    func get(controller: ApiConroller, data: [String:String] = [:], insertToken: Bool = false) -> Observable<(HTTPURLResponse, Data)> {
-        return self.get(controller: controller, data: data, insertToken: insertToken)
-    }
-    func post(controller: ApiConroller, data: [String:String] = [:], insertToken: Bool = false) -> Observable<(HTTPURLResponse, Data)> {
-        return self.post(controller: controller, data: data, insertToken: insertToken)
-    }
-    func post(controller: ApiConroller, dataAny: [String:Any] = [:], insertToken: Bool = false) -> Observable<(HTTPURLResponse, Data)> {
-        return self.post(controller: controller, dataAny: dataAny, insertToken: insertToken)
-    }
-}
-
-class HttpService: IHttpService {
+class SttHttpService: SttHttpServiceType {
     
     var url: String!
     var token: String = ""
@@ -52,11 +40,11 @@ class HttpService: IHttpService {
         var _insertToken = insertToken
         
         return Observable<(HTTPURLResponse, Data)>.create { (observer) -> Disposable in
-            Log.trace(message: url, key: Constants.httpKeyLog)
+            SttLog.trace(message: url, key: Constants.httpKeyLog)
             
             if !self.connectivity.isConnected {
                 sleep(Constants.timeWaitNextRequest)
-                observer.onError(BaseError.connectionError(ConnectionError.noInternetConnection))
+                observer.onError(SttBaseError.connectionError(SttConnectionError.noInternetConnection))
                 return Disposables.create()
             }
             
@@ -79,11 +67,11 @@ class HttpService: IHttpService {
         var _insertToken = insertToken
         
         return Observable<(HTTPURLResponse, Data)>.create { (observer) -> Disposable in
-            Log.trace(message: url, key: Constants.httpKeyLog)
+            SttLog.trace(message: url, key: Constants.httpKeyLog)
             
             if !self.connectivity.isConnected {
                 sleep(Constants.timeWaitNextRequest)
-                observer.onError(BaseError.connectionError(ConnectionError.noInternetConnection))
+                observer.onError(SttBaseError.connectionError(SttConnectionError.noInternetConnection))
                 return Disposables.create()
             }
             
@@ -105,11 +93,11 @@ class HttpService: IHttpService {
         var _insertToken = insertToken
         
         return Observable<(HTTPURLResponse, Data)>.create { (observer) -> Disposable in
-            Log.trace(message: url, key: Constants.httpKeyLog)
+            SttLog.trace(message: url, key: Constants.httpKeyLog)
             
             if !self.connectivity.isConnected {
                 sleep(Constants.timeWaitNextRequest)
-                observer.onError(BaseError.connectionError(ConnectionError.noInternetConnection))
+                observer.onError(SttBaseError.connectionError(SttConnectionError.noInternetConnection))
                 return Disposables.create()
             }
             

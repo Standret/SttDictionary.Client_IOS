@@ -8,19 +8,19 @@
 
 import Foundation
 
-protocol IUnitOfWork {
-    var word: Repository<WordApiModel, RealmWord> { get }
-    var tag: Repository<TagApiModel, RealmTag> { get }
-    var syncData: Repository<SyncDataViewModel, RealmSyncData> { get }
+protocol UnitOfWorkType {
+    var word: SttRepository<WordApiModel, RealmWord> { get }
+    var tag: SttRepository<TagApiModel, RealmTag> { get }
+    var syncData: SttRepository<SyncDataViewModel, RealmSyncData> { get }
 }
 
-class UnitOfWork: IUnitOfWork {
+class UnitOfWork: UnitOfWorkType {
     
-    private lazy var _word = Repository<WordApiModel, RealmWord> (singleton: false)
-    private lazy var _tag = Repository<TagApiModel, RealmTag> (singleton: false)
-    private lazy var _syncData = Repository<SyncDataViewModel, RealmSyncData> (singleton: true)
+    private lazy var _word = SttRepository<WordApiModel, RealmWord> (singleton: false)
+    private lazy var _tag = SttRepository<TagApiModel, RealmTag> (singleton: false)
+    private lazy var _syncData = SttRepository<SyncDataViewModel, RealmSyncData> (singleton: true)
     
-    var word: Repository<WordApiModel, RealmWord> { return _word }
-    var tag: Repository<TagApiModel, RealmTag> { return _tag }
-    var syncData: Repository<SyncDataViewModel, RealmSyncData> { return _syncData }
+    var word: SttRepository<WordApiModel, RealmWord> { return _word }
+    var tag: SttRepository<TagApiModel, RealmTag> { return _tag }
+    var syncData: SttRepository<SyncDataViewModel, RealmSyncData> { return _syncData }
 }

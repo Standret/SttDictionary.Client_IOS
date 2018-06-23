@@ -8,7 +8,7 @@
 
 import Foundation
 
-protocol SyncDelegate: Viewable {
+protocol SyncDelegate: SttViewContolable {
     func updateData(date: String, countLocal: Int, countServer: Int)
 }
 

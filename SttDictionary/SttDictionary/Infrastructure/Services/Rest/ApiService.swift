@@ -12,8 +12,8 @@ import RxSwift
 import KeychainSwift
 
 protocol IApiService {
-    func updateTags() -> Observable<ResultModel<[TagApiModel]>>
-    func updateWords() -> Observable<ResultModel<[WordApiModel]>>
+    func updateTags() -> Observable<SttResultModel<[TagApiModel]>>
+    func updateWords() -> Observable<SttResultModel<[WordApiModel]>>
     
     func sendWord(model: AddWordApiModel) -> Observable<WordApiModel>
     func updateWord(model: UpdateWordApiModel) -> Observable<Bool>
@@ -21,8 +21,8 @@ protocol IApiService {
 
 class ApiService: IApiService {
     
-    var _httpService: IHttpService!
-    var _unitOfWork: IUnitOfWork!
+    var _httpService: SttHttpServiceType!
+    var _unitOfWork: UnitOfWorkType!
     
     init() {
          ServiceInjectorAssembly.instance().inject(into: self)
@@ -30,20 +30,20 @@ class ApiService: IApiService {
         _httpService.token = KeychainSwift().get(Constants.tokenKey) ?? ""
     }
     
-    func updateTags() -> Observable<ResultModel<[TagApiModel]>> {
+    func updateTags() -> Observable<SttResultModel<[TagApiModel]>> {
         let apiData = _httpService.get(controller: .tag("get"))
             .getResult(ofType: [TagApiModel].self)
             .saveInDB(saveCallback: _unitOfWork.tag.saveMany(models:))
-            .map({ ResultModel(result: $0, isLocal: false )})
+            .map({ SttResultModel(result: $0, isLocal: false )})
         
         return apiData
     }
     
-    func updateWords() -> Observable<ResultModel<[WordApiModel]>> {
+    func updateWords() -> Observable<SttResultModel<[WordApiModel]>> {
         let apiData = _httpService.get(controller: .word("get"))
             .getResult(ofType: [WordApiModel].self)
             .saveInDB(saveCallback: _unitOfWork.word.saveMany(models:))
-            .map({ ResultModel(result: $0, isLocal: false) })
+            .map({ SttResultModel(result: $0, isLocal: false) })
         
         return apiData
     }

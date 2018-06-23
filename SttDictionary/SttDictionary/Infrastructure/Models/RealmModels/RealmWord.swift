@@ -28,13 +28,13 @@ class RealmWord: BaseRealm, RealmDecodable {
     @objc dynamic var originalWorld: String = ""
     @objc dynamic var originalStatistics: RealmStatistics? = RealmStatistics()
     @objc dynamic var translateStatistics: RealmStatistics? = RealmStatistics()
-    let translations = List<RealmString>()
-    let additionalTranslate = List<RealmString>()
-    let imageUrls = List<RealmString>()
+    let translations = List<SttRealmString>()
+    let additionalTranslate = List<SttRealmString>()
+    let imageUrls = List<SttRealmString>()
     let tags = List<RealmShortTag>()
     
     @objc dynamic var pronunciationUrl: String?
-    let linkedWords = List<RealmString>()
+    let linkedWords = List<SttRealmString>()
     @objc dynamic var reverseCards: Bool = true
     @objc dynamic var exampleUsage: RealmExample? = RealmExample()
     

@@ -43,12 +43,16 @@ class SttObservableCollection<T>: Collection {
         datas.remove(at: index)
         notifyPublisher.onNext(([index], .delete))
     }
-    func insert(newElement: T, at index: Int) {
+    func insert(_ newElement: T, at index: Int) {
         datas.insert(newElement, at: index)
-        notifyPublisher.onNext(([index], .delete))
+        notifyPublisher.onNext(([index], .insert))
     }
     func index(where predicate: (T) throws -> Bool) rethrows -> Int? {
         return try datas.index(where: predicate)
+    }
+    func removeAll() {
+        datas.removeAll()
+        notifyPublisher.onNext(([], .reload))
     }
     
     subscript(index: Int) -> T {

@@ -13,10 +13,10 @@ class ServiceAssembly: Assembly {
     var apiService: IApiService {
         return define(scope: .lazySingleton, init: ApiService())
     }
-    var httpService: IHttpService {
-        return define(scope: .lazySingleton, init: HttpService())
+    var httpService: SttHttpServiceType {
+        return define(scope: .lazySingleton, init: SttHttpService())
     }
-    var unitOfWork: IUnitOfWork {
+    var unitOfWork: UnitOfWorkType {
         return define(scope: .lazySingleton, init: UnitOfWork())
     }
     var syncService: ISyncService {
@@ -25,7 +25,7 @@ class ServiceAssembly: Assembly {
     var wordService: IWordService {
         return define(scope: .lazySingleton, init: WordServie())
     }
-    var notificationError: INotificationError {
+    var notificationError: NotificationErrorType {
         return define(scope: .lazySingleton, init: NotificationError())
     }
     var smEngine: SMEngine {

@@ -1,5 +1,5 @@
 //
-//  Repository.swift
+//  SttRepository.swift
 //  SttDictionary
 //
 //  Created by Standret on 5/13/18.
@@ -12,24 +12,8 @@ import RealmSwift
 import RxRealm
 import RxSwift
 
-enum RealmStatus {
-    case Updated, Deleted, Inserted
-}
 
-protocol RealmCodable {
-    associatedtype TTarget: Object, RealmDecodable
-    
-    func serialize() -> TTarget
-}
-
-protocol RealmDecodable {
-    associatedtype TTarget
-    
-    init()
-    func deserialize() -> TTarget
-}
-
-protocol RepositoryType {
+protocol SttRepositoryType {
     associatedtype TEntity: RealmCodable
     associatedtype TRealm: RealmDecodable
     
@@ -51,13 +35,13 @@ protocol RepositoryType {
     func exists(filter: String?) -> Observable<Bool>
     func count(filter: String?) -> Observable<Int>
     
-    func observe(on: [RealmStatus]) -> Observable<(TEntity, RealmStatus)>
+    func observe(on: [RealmStatus]) -> Observable<(TRealm, RealmStatus)>
 }
 
-class Repository<T, R>: RepositoryType
+class SttRepository<T, R>: SttRepositoryType
     where T: RealmCodable,
     R: RealmDecodable,
-    R: BaseRealm {
+    R: SttRealmObject {
     
     typealias TEntity = T
     typealias TRealm = R
@@ -67,7 +51,7 @@ class Repository<T, R>: RepositoryType
         var objects: Results<R>!
         if let query = filter {
             if (self.singleton) {
-                observer.onError(BaseError.realmError(RealmError.objectIsSignleton("type: \(type(of: R.self))")))
+                observer.onError(SttBaseError.realmError(SttRealmError.objectIsSignleton("type: \(type(of: R.self))")))
             }
             else {
                 objects = realm.objects(R.self).filter(query).sorted(byKeyPath: sortBy ?? "dateCreated", ascending: isAsc)
@@ -75,7 +59,7 @@ class Repository<T, R>: RepositoryType
         }
         else {
             if (!self.singleton && !tryGetAll) {
-                observer.onError(BaseError.realmError(RealmError.queryIsNull("type: \(type(of: R.self))")))
+                observer.onError(SttBaseError.realmError(SttRealmError.queryIsNull("type: \(type(of: R.self))")))
             }
             else {
                 objects = realm.objects(R.self).sorted(byKeyPath: sortBy ?? "dateCreated", ascending: isAsc)
@@ -88,7 +72,7 @@ class Repository<T, R>: RepositoryType
         var objects: Results<R>!
         if let query = filter {
             if (self.singleton) {
-                observer(CompletableEvent.error(BaseError.realmError(RealmError.objectIsSignleton("type: \(type(of: R.self))"))))
+                observer(CompletableEvent.error(SttBaseError.realmError(SttRealmError.objectIsSignleton("type: \(type(of: R.self))"))))
             }
             else {
                 objects = realm.objects(R.self).filter(query)
@@ -96,7 +80,7 @@ class Repository<T, R>: RepositoryType
         }
         else {
             if (!self.singleton && !tryGetAll) {
-                observer(CompletableEvent.error(BaseError.realmError(RealmError.queryIsNull("type: \(type(of: R.self))"))))
+                observer(CompletableEvent.error(SttBaseError.realmError(SttRealmError.queryIsNull("type: \(type(of: R.self))"))))
             }
             else {
                 objects = realm.objects(R.self)
@@ -117,7 +101,7 @@ class Repository<T, R>: RepositoryType
             do {
                 let realm = try Realm()
                 if (self.singleton && realm.objects(R.self).count > 0) {
-                    observer(CompletableEvent.error(BaseError.realmError(RealmError.objectIsSignleton("method: saveOne type: \(type(of: R.self))"))))
+                    observer(CompletableEvent.error(SttBaseError.realmError(SttRealmError.objectIsSignleton("method: saveOne type: \(type(of: R.self))"))))
                 }
                 realm.beginWrite()
                 realm.add(model.serialize(), update: true)
@@ -135,7 +119,7 @@ class Repository<T, R>: RepositoryType
     func saveMany(models: [T]) -> Completable {
         return Completable.create { (observer) -> Disposable in
             if (self.singleton) {
-                observer(CompletableEvent.error(BaseError.realmError(RealmError.objectIsSignleton("method: saveMany type: \(type(of: R.self))"))))
+                observer(CompletableEvent.error(SttBaseError.realmError(SttRealmError.objectIsSignleton("method: saveMany type: \(type(of: R.self))"))))
             }
             do {
                 let realm = try Realm()
@@ -159,7 +143,7 @@ class Repository<T, R>: RepositoryType
             do {
                 let objects = try self.getObjects(filter: filter, observer: observer, tryGetAll: false)
                 if (objects.count != 1) {
-                    observer.onError(BaseError.realmError(RealmError.doesNotExactlyQuery("method: getOne type: \(type(of: R.self)) with filter \(filter ?? "nil")")))
+                    observer.onError(SttBaseError.realmError(SttRealmError.doesNotExactlyQuery("method: getOne type: \(type(of: R.self)) with filter \(filter ?? "nil")")))
                 }
                 else {
                     observer.onNext(objects[0])
@@ -195,7 +179,7 @@ class Repository<T, R>: RepositoryType
                 let realm = try Realm()
                 let objects = try self.getObjects(filter: filter, observer: observer, tryGetAll: false)
                 if (objects.count != 1) {
-                    observer(CompletableEvent.error(BaseError.realmError(RealmError.doesNotExactlyQuery("method: update type: \(type(of: R.self)) with filter \(filter ?? "nil"))"))))
+                    observer(CompletableEvent.error(SttBaseError.realmError(SttRealmError.doesNotExactlyQuery("method: update type: \(type(of: R.self)) with filter \(filter ?? "nil"))"))))
                 }
                 else {
                     try realm.write {
@@ -238,7 +222,7 @@ class Repository<T, R>: RepositoryType
                 var objects: Results<R>!
                 if let query = filter {
                     if (self.singleton) {
-                        observer(CompletableEvent.error(BaseError.realmError(RealmError.objectIsSignleton("type: \(type(of: R.self))"))))
+                        observer(CompletableEvent.error(SttBaseError.realmError(SttRealmError.objectIsSignleton("type: \(type(of: R.self))"))))
                     }
                     else {
                         objects = realm.objects(R.self).filter(query)
@@ -249,7 +233,7 @@ class Repository<T, R>: RepositoryType
                 }
                 
                 if objects.count == 0 {
-                    observer(CompletableEvent.error(BaseError.realmError(RealmError.notFoundObjects("method: delete type: \(type(of: R.self)) with filter \(filter ?? "nil"))"))))
+                    observer(CompletableEvent.error(SttBaseError.realmError(SttRealmError.notFoundObjects("method: delete type: \(type(of: R.self)) with filter \(filter ?? "nil"))"))))
                 }
                 else {
                     try realm.write {
@@ -286,7 +270,7 @@ class Repository<T, R>: RepositoryType
     func count(filter: String?) -> Observable<Int> {
         return Observable<Int>.create { (observer) -> Disposable in
             if (self.singleton) {
-                observer.onError(BaseError.realmError(RealmError.objectIsSignleton("method: count type: \(type(of: R.self))")))
+                observer.onError(SttBaseError.realmError(SttRealmError.objectIsSignleton("method: count type: \(type(of: R.self))")))
                 return Disposables.create()
             }
             do {
@@ -307,25 +291,25 @@ class Repository<T, R>: RepositoryType
             }
     }
     
-    func observe(on: [RealmStatus]) -> Observable<(T, RealmStatus)> {
-        return Observable<(T, RealmStatus)>.create { (observer) -> Disposable in
+    func observe(on: [RealmStatus]) -> Observable<(R, RealmStatus)> {
+        return Observable<(R, RealmStatus)>.create { (observer) -> Disposable in
             do {
                 let objects = try self.getObjects(filter: nil, observer: observer, tryGetAll: true)
                 return Observable.arrayWithChangeset(from: objects).subscribe(onNext: { (array, changes) in
                     if let changes = changes {
                         if on.contains(RealmStatus.Inserted) {
                             for itemInserted in changes.inserted {
-                                observer.onNext((array[itemInserted].deserialize() as! T, RealmStatus.Inserted))
+                                observer.onNext((array[itemInserted], RealmStatus.Inserted))
                             }
                         }
                         if on.contains(RealmStatus.Deleted) {
                             for itemDeleted in changes.deleted {
-                                observer.onNext((array[itemDeleted].deserialize() as! T, RealmStatus.Deleted))
+                                observer.onNext((array[itemDeleted], RealmStatus.Deleted))
                             }
                         }
                         if on.contains(RealmStatus.Updated) {
                             for itemUpdated in changes.updated {
-                                observer.onNext((array[itemUpdated].deserialize() as! T, RealmStatus.Updated))
+                                observer.onNext((array[itemUpdated], RealmStatus.Updated))
                             }
                         }
                     }

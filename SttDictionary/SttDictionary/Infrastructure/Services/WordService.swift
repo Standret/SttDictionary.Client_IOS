@@ -102,16 +102,16 @@ protocol IWordService {
     
     func updateStatistics(answer: Answer, type: AnswersType) -> Observable<Bool>
     
-    var observe: Observable<WordEntityCellPresenter> { get }
+    var observe: Observable<(WordEntityCellPresenter, RealmStatus)> { get }
 }
 
 class WordServie: IWordService {
     
-    var _unitOfWork: IUnitOfWork!
-    var _notificationError: INotificationError!
+    var _unitOfWork: UnitOfWorkType!
+    var _notificationError: NotificationErrorType!
     var _smEngine: SMEngine!
     
-    var observe: Observable<WordEntityCellPresenter> { return _notificationError.useError(observable: _unitOfWork.word.observe(on: [RealmStatus.Inserted]).map( { WordEntityCellPresenter(element: $0.0) } )) }
+    var observe: Observable<(WordEntityCellPresenter, RealmStatus)> { return _notificationError.useError(observable: _unitOfWork.word.observe(on: [RealmStatus.Inserted, RealmStatus.Updated]).map( { (WordEntityCellPresenter(fromObject: $0.0), $0.1) } )) }
     
     init () {
         ServiceInjectorAssembly.instance().inject(into: self)

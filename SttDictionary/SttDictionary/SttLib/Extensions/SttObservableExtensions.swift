@@ -34,9 +34,9 @@ extension Observable {
     {
         return self.map({ (element) -> Element in
             _ = saveCallback(element).subscribe(onCompleted: {
-                Log.trace(message: "\(type(of: Element.self)) has been saved succefully in realm", key: Constants.repositoryExtensionsLog)
+                SttLog.trace(message: "\(type(of: Element.self)) has been saved succefully in realm", key: Constants.repositoryExtensionsLog)
             }, onError: { (error) in
-                Log.error(message: "\(type(of: Element.self)) could not save in db", key: Constants.repositoryExtensionsLog)
+                SttLog.error(message: "\(type(of: Element.self)) could not save in db", key: Constants.repositoryExtensionsLog)
             })
             return element
         })

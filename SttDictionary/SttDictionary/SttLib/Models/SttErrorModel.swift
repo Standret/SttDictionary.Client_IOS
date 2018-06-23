@@ -8,10 +8,10 @@
 
 import Foundation
 
-enum BaseError: Error {
-    case realmError(RealmError)
-    case apiError(ApiError)
-    case connectionError(ConnectionError)
+enum SttBaseError: Error {
+    case realmError(SttRealmError)
+    case apiError(SttApiError)
+    case connectionError(SttConnectionError)
     case jsonConvert(String)
     case unkown(String)
     
@@ -37,7 +37,7 @@ enum BaseError: Error {
     }
 }
 
-enum RealmError {
+enum SttRealmError {
     
     case objectIsSignleton(String)
     case notFoundObjects(String)
@@ -60,7 +60,7 @@ enum RealmError {
     }
 }
 
-enum ApiError {
+enum SttApiError {
     
     case badRequest(ServerError)
     case internalServerError(String)
@@ -80,7 +80,7 @@ enum ApiError {
     }
 }
 
-enum ConnectionError {
+enum SttConnectionError {
     case timeout
     case noInternetConnection
     case other(String)

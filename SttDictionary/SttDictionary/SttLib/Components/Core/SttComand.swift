@@ -49,7 +49,7 @@ class SttComand {
             executeHandler()
         }
         else {
-            Log.trace(message: "Command could not be execute", key: "SttComand")
+            SttLog.trace(message: "Command could not be execute", key: "SttComand")
         }
     }
     func canExecute() -> Bool {

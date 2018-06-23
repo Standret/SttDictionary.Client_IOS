@@ -9,28 +9,28 @@
 import Foundation
 import RxSwift
 
-protocol INotificationError: class {
-    var errorObservable: Observable<BaseError> { get }
+protocol NotificationErrorType: class {
+    var errorObservable: Observable<SttBaseError> { get }
     
     func useError<T>(observable: Observable<T>, ignoreBadRequest: Bool) -> Observable<T>
 }
 
-extension INotificationError {
+extension NotificationErrorType {
     func useError<T>(observable: Observable<T>) -> Observable<T> {
         return self.useError(observable: observable, ignoreBadRequest: false)
     }
     
 }
 
-class NotificationError: INotificationError {
+class NotificationError: NotificationErrorType {
     
-    let subject = PublishSubject<BaseError>()
+    let subject = PublishSubject<SttBaseError>()
     
-    var errorObservable: Observable<BaseError> { return subject }
+    var errorObservable: Observable<SttBaseError> { return subject }
     
     func useError<T>(observable: Observable<T>, ignoreBadRequest: Bool) -> Observable<T> {
         return observable.do(onError: { (error) in
-            if let er = error as? BaseError {
+            if let er = error as? SttBaseError {
                 var flag = true
                 if ignoreBadRequest {
                     switch er {
@@ -48,7 +48,7 @@ class NotificationError: INotificationError {
                 }
             }
             else {
-                self.subject.onNext(BaseError.unkown("\(error)"))
+                self.subject.onNext(SttBaseError.unkown("\(error)"))
             }
         })
     }

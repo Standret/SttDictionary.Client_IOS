@@ -8,7 +8,7 @@
 
 import Foundation
 
-struct ExampleUsage: Decodable, RealmCodable, DictionaryCodable {
+struct ExampleUsage: RealmCodable, Codable {
    
     typealias TTarget = RealmExample
     
@@ -53,19 +53,19 @@ struct WordApiModel: Decodable, RealmCodable {
             "reverseCards": reverseCards,
             "exampleUsage": exampleUsage?.serialize()
             ])
-        model.translations.append(objectsIn: translations.map( { RealmString(value: [$0]) }))
+        model.translations.append(objectsIn: translations.map( { SttRealmString(value: [$0]) }))
         
         if let additionalTrans = additionalTranslations {
-            model.additionalTranslate.append(objectsIn: additionalTrans.map( { RealmString(value: [$0]) }))
+            model.additionalTranslate.append(objectsIn: additionalTrans.map( { SttRealmString(value: [$0]) }))
         }
         if let _tags = tags {
             model.tags.append(objectsIn: _tags.map( { RealmShortTag(value: ["id": $0.id, "name": $0.name ]) }))
         }
         if let imgs = imageUrls {
-            model.imageUrls.append(objectsIn: imgs.map( { RealmString(value: [$0]) }))
+            model.imageUrls.append(objectsIn: imgs.map( { SttRealmString(value: [$0]) }))
         }
         if let linkedWords = linkedWords {
-            model.linkedWords.append(objectsIn: linkedWords.map( { RealmString(value: [$0]) }))
+            model.linkedWords.append(objectsIn: linkedWords.map( { SttRealmString(value: [$0]) }))
         }
         
         return model

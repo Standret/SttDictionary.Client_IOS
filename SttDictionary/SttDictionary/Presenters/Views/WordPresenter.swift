@@ -9,8 +9,7 @@
 import Foundation
 import RxSwift
 
-protocol WordDelegate: Viewable {
-    func reloadWords()
+protocol WordDelegate: SttViewContolable {
 }
 
 final class CompletableResult {
@@ -32,23 +31,21 @@ final class CompletableResult {
 }
 
 class WordPresenter: SttPresenter<WordDelegate> {
-    var words = [WordEntityCellPresenter]()
+    var words = SttObservableCollection<WordEntityCellPresenter>()
     
     var _wordService: IWordService!
     
     override func presenterCreating() {
         ServiceInjectorAssembly.instance().inject(into: self)
         
-        _ = _wordService.observe.subscribe(onNext: { [weak self] element in
+        _ = _wordService.observe.subscribe(onNext: { [weak self] (element,status) in
             if let _self = self {
                 if let index = _self.words.index(where: { $0.word == element.word }) {
-                    _self.words.remove(at: index)
-                    _self.words.insert(element, at: index)
+                    _self.words[index] = element
                 }
                 else {
                     _self.words.insert(element, at: 0)
                 }
-                _self.delegate.reloadWords()
             }
         })
         
@@ -58,11 +55,10 @@ class WordPresenter: SttPresenter<WordDelegate> {
     var previusDispose: Disposable?
     func search(seachString: String?) {
         previusDispose?.dispose()
-        self.words = []
+        self.words.removeAll()
         previusDispose = _wordService.getWord(searchString: seachString)
             .subscribe(onNext: { (elements) in
                 self.words.append(contentsOf: elements)
-                self.delegate.reloadWords()
             })
     }
 }

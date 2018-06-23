@@ -18,7 +18,6 @@ class WordViewController: SttViewController<WordPresenter>, WordDelegate, UISear
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        //print(Realm.Configuration.defaultConfiguration.fileURL!)
         
         searchBar.delegate = self
         
@@ -46,9 +45,4 @@ class WordViewController: SttViewController<WordPresenter>, WordDelegate, UISear
     
     // MARK: implement delegate
     
-    func reloadWords() {
-        if let _words = presenter?.words {
-            wordsSource?._collection = _words
-        }
-    }
 }

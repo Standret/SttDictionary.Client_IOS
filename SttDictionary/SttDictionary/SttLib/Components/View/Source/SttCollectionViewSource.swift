@@ -10,11 +10,12 @@ import Foundation
 import RxSwift
 import UIKit
 
-class SttCollectionViewSource<T: ViewInjector>: NSObject, UICollectionViewDataSource {
+class SttCollectionViewSource<T: SttViewInjector>: NSObject, UICollectionViewDataSource {
     
-    var _collectionView: UICollectionView
-    var _cellIdentifier: String
-    var _collection: SttObservableCollection<T>!
+    private var _collectionView: UICollectionView
+    private var _cellIdentifier: String
+    private var _collection: SttObservableCollection<T>!
+    var collection: SttObservableCollection<T> { return _collection }
     
     private var disposables: Disposable?
     

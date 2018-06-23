@@ -23,21 +23,21 @@ extension ObservableType where E == (HTTPURLResponse, Data) {
                     }
                     catch {
                         print(error)
-                        observer.onError(BaseError.jsonConvert("\(error)"))
+                        observer.onError(SttBaseError.jsonConvert("\(error)"))
                     }
                 case 400:
-                    observer.onError(BaseError.apiError(ApiError.badRequest((try? JSONDecoder().decode(ServiceResult.self, from: data))?.error ?? ServerError(code: 400, description: String(data: data, encoding: String.Encoding.utf8) ?? ""))))
+                    observer.onError(SttBaseError.apiError(SttApiError.badRequest((try? JSONDecoder().decode(ServiceResult.self, from: data))?.error ?? ServerError(code: 400, description: String(data: data, encoding: String.Encoding.utf8) ?? ""))))
                 case 500:
-                    observer.onError(BaseError.apiError(ApiError.internalServerError(String(data: data, encoding: String.Encoding.utf8) ?? "nil")))
+                    observer.onError(SttBaseError.apiError(SttApiError.internalServerError(String(data: data, encoding: String.Encoding.utf8) ?? "nil")))
                 default:
-                    observer.onError(BaseError.apiError(ApiError.otherApiError(urlResponse.statusCode)))
+                    observer.onError(SttBaseError.apiError(SttApiError.otherApiError(urlResponse.statusCode)))
                 }
             }, onError: { (error) in
-                if let er = error as? BaseError {
+                if let er = error as? SttBaseError {
                     observer.onError(er)
                 }
                 else {
-                    observer.onError(BaseError.unkown("\(error)"))
+                    observer.onError(SttBaseError.unkown("\(error)"))
                 }
             }, onCompleted: observer.onCompleted)
         })
@@ -51,18 +51,18 @@ extension ObservableType where E == (HTTPURLResponse, Data) {
                     observer.onNext(true)
                     observer.onCompleted()
                 case 400:
-                    observer.onError(BaseError.apiError(ApiError.badRequest((try? JSONDecoder().decode(ServiceResult.self, from: data))?.error ?? ServerError(code: 400, description: String(data: data, encoding: String.Encoding.utf8) ?? ""))))
+                    observer.onError(SttBaseError.apiError(SttApiError.badRequest((try? JSONDecoder().decode(ServiceResult.self, from: data))?.error ?? ServerError(code: 400, description: String(data: data, encoding: String.Encoding.utf8) ?? ""))))
                 case 500:
-                    observer.onError(BaseError.apiError(ApiError.internalServerError(String(data: data, encoding: String.Encoding.utf8) ?? "nil")))
+                    observer.onError(SttBaseError.apiError(SttApiError.internalServerError(String(data: data, encoding: String.Encoding.utf8) ?? "nil")))
                 default:
-                    observer.onError(BaseError.apiError(ApiError.otherApiError(urlResponse.statusCode)))
+                    observer.onError(SttBaseError.apiError(SttApiError.otherApiError(urlResponse.statusCode)))
                 }
             }, onError: { (error) in
-                if let er = error as? BaseError {
+                if let er = error as? SttBaseError {
                     observer.onError(er)
                 }
                 else {
-                    observer.onError(BaseError.unkown("\(error)"))
+                    observer.onError(SttBaseError.unkown("\(error)"))
                 }
             }, onCompleted: nil, onDisposed: nil)
         })

@@ -10,7 +10,7 @@ import Foundation
 import RxSwift
 import SINQ
 
-protocol NewWordDelegate: Viewable {
+protocol NewWordDelegate: SttViewContolable {
     func error(isHidden: Bool)
 }
 

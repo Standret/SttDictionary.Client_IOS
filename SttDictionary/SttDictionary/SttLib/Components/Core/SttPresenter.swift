@@ -7,23 +7,26 @@
 //
 
 import Foundation
+import RxSwift
 
 protocol SttPresenterType: class { }
 
-class SttPresenter<TDelegate> : ViewInjector, SttPresenterType {
+class SttPresenter<TDelegate> : SttViewInjector, SttPresenterType {
     
-    private weak var _delegate: Viewable!
+    private weak var _delegate: SttViewable!
     var delegate: TDelegate { return _delegate as! TDelegate }
     
-    weak var _notificationError: INotificationError!
+    weak var _notificationError: NotificationErrorType!
     
     required init() { }
-    func injectView(delegate: Viewable) {
+    func injectView(delegate: SttViewable) {
         ServiceInjectorAssembly.instance().inject(into: self)
         self._delegate = delegate
         
-        _ = _notificationError.errorObservable.subscribe(onNext: { (err) in
-            self._delegate.sendError(error: err)
+        _ = _notificationError.errorObservable.subscribe(onNext: { [weak self] (err) in
+            if (self?._delegate is SttViewableListener) {
+                (self!._delegate as! SttViewableListener).sendError(error: err)
+            }
         })
         presenterCreating()
     }

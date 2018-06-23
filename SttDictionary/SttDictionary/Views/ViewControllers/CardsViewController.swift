@@ -67,6 +67,7 @@ class CardsViewController: SttViewController<CardsPresenter>, CardsDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        style = .default
         btnShow.layer.cornerRadius = 10
         btnEasy.layer.cornerRadius = UIConstants.cornerRadius
         btnHard.layer.cornerRadius = UIConstants.cornerRadius

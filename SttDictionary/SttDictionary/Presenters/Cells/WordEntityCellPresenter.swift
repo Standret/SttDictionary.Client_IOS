@@ -8,7 +8,7 @@
 
 import Foundation
 
-protocol WordEntityCellDelegate: Viewable {
+protocol WordEntityCellDelegate: SttViewable {
     func reloadState()
 }
 

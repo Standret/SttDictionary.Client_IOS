@@ -30,7 +30,7 @@ class SearchLinkedWordsViewController: SttViewController<SearchLinkedWordsPresen
     }
     
     func reloadWords() {
-        wordsSource?._collection = presenter.words
+        //wordsSource?._collection = presenter.words
     }
     
     override func viewWillDisappear(_ animated: Bool) {
