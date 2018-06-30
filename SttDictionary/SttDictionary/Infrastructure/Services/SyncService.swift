@@ -55,7 +55,8 @@ class SyncService: ISyncService {
             .do(onNext: { print($0.originalWorld) })
             .flatMap({ self._apiServicce.sendWord(model: AddWordApiModel(word: $0.originalWorld,
                                                                          translations: $0.translations.map( { $0.value } ),
-                                                                         linkedWords: $0.linkedWords.map( { $0.value } )
+                                                                         linkedWords: $0.linkedWords.map( { $0.value } ),
+                                                                         reverseCards: $0.reverseCards
                                                                          )) })
             .flatMap({ (word) -> Observable<(Bool, SyncStep)> in
                 return self._unitOfWork.word.delete(filter: "originalWorld = '\(word.originalWorld)'")

@@ -92,7 +92,7 @@ where E == [RealmWord] {
 
 protocol IWordService {
     func getWord(searchString: String?) -> Observable<[WordEntityCellPresenter]>
-    func createWord(word: String, translations: [String], linkedWords: [String]) -> Observable<Bool>
+    func createWord(word: String, translations: [String], linkedWords: [String], useReverse: Bool) -> Observable<Bool>
     func exists(word: String) -> Observable<Bool>
     
     func getNewWord() -> Observable<[RealmWord]>
@@ -148,8 +148,8 @@ class WordServie: IWordService {
         return _notificationError.useError(observable: observable.map( { $0.map( { WordEntityCellPresenter(fromObject: $0) } )}))
     }
     
-    func createWord(word: String, translations: [String], linkedWords: [String]) -> Observable<Bool> {
-        return _notificationError.useError(observable: _unitOfWork.word.saveOne(model: WordFactories.createWordModel(word: word, translations: translations, linkedWords: linkedWords)).toEmptyObservable(ofType: Bool.self))
+    func createWord(word: String, translations: [String], linkedWords: [String], useReverse: Bool) -> Observable<Bool> {
+        return _notificationError.useError(observable: _unitOfWork.word.saveOne(model: WordFactories.createWordModel(word: word, translations: translations, linkedWords: linkedWords, useReverse: useReverse)).toEmptyObservable(ofType: Bool.self))
     }
     
     func exists(word: String) -> Observable<Bool> {

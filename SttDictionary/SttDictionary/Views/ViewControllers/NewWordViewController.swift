@@ -38,6 +38,7 @@ class NewWordViewController: SttViewController<NewWordPresenter>, NewWordDelegat
     @IBOutlet weak var cnstrLinkedWordsHeight: NSLayoutConstraint!
     @IBOutlet weak var wordExistsLabel: UILabel!
     @IBOutlet weak var cnstrHeightExists: NSLayoutConstraint!
+    @IBOutlet weak var swtchReverse: UISwitch!
     
     let linkedWordSearchPublisher = PublishSubject<String>()
     
@@ -67,11 +68,17 @@ class NewWordViewController: SttViewController<NewWordPresenter>, NewWordDelegat
         btnAddTranslation.layer.cornerRadius = UIConstants.cornerRadius
         btnAddTranslation.clipsToBounds = true
         btnAddTranslation.tintColor = UIColor.white
+        
+        swtchReverse.addTarget(self, action: #selector(onSwitcherChange(_:)), for: .valueChanged)
     }
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         tfWord.becomeFirstResponder()
+    }
+    
+    @objc private func onSwitcherChange(_ sender: UISwitch) {
+        presenter.useReverse = sender.isOn
     }
     
     private func configurateCollectionView() {

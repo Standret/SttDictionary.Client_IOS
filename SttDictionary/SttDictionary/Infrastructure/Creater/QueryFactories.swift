@@ -22,8 +22,8 @@ class QueryFactories {
         let predicateNewCard = NSPredicate(format: "originalStatistics.answers.@count == 0", argumentArray: [])
 
         let predicateRepeat = NSPredicate(format: "originalStatistics.nextRepetition <= %@ and originalStatistics.answers.@count > 0", argumentArray: [Date().onlyDay()])
-        let predicateTranslateCard = NSPredicate(format: "translateStatistics.answers.@count == 0", argumentArray: [])
-        let predicateTranslateRepeat = NSPredicate(format: "translateStatistics.nextRepetition <= %@ and translateStatistics.answers.@count > 0", argumentArray: [Date().onlyDay()])
+        let predicateTranslateCard = NSPredicate(format: "translateStatistics.answers.@count == 0 and reverseCards = true", argumentArray: [])
+        let predicateTranslateRepeat = NSPredicate(format: "translateStatistics.nextRepetition <= %@ and translateStatistics.answers.@count > 0 and reverseCards = true", argumentArray: [Date().onlyDay()])
         
         if text.trimmingCharacters(in: .whitespaces) == ":@today" {
             return CardsPredicate(newOriginalCard: predicateNewCard.predicateFormat, repeatOriginalCard: predicateRepeat.predicateFormat, newTranslationCard: predicateTranslateCard.predicateFormat, repeatTranslationCard: predicateTranslateRepeat.predicateFormat)

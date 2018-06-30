@@ -9,7 +9,7 @@
 import Foundation
 
 class WordFactories {
-    class func createWordModel(word: String, translations: [String], linkedWords: [String]) -> WordApiModel {
+    class func createWordModel(word: String, translations: [String], linkedWords: [String],  useReverse: Bool) -> WordApiModel {
         return WordApiModel(id: nil,
                             dateCreated: Date(),
                             originalWorld: word,
@@ -21,7 +21,7 @@ class WordFactories {
                             translateStatistics: WordFactories.defaultStatistics(),
                             pronunciationUrl: nil,
                             linkedWords: linkedWords,
-                            reverseCards: true,
+                            reverseCards: useReverse,
                             exampleUsage: nil)
     }
     

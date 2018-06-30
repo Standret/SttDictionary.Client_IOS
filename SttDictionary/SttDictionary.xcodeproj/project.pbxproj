@@ -25,6 +25,7 @@
 		7DC0C6C820C4378600FC7998 /* SttArrayExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7DC0C6C720C4378600FC7998 /* SttArrayExtensions.swift */; };
 		7DC0C6CA20C437BB00FC7998 /* SttRandom.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7DC0C6C920C437BB00FC7998 /* SttRandom.swift */; };
 		7DC0C6CC20C455A200FC7998 /* SMEngine.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7DC0C6CB20C455A200FC7998 /* SMEngine.swift */; };
+		7DCB327320DEB02C001FAD0F /* StatisticsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7DCB327220DEB02C001FAD0F /* StatisticsViewController.swift */; };
 		7DD690DD20DD7D4800744AEF /* SttDateExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7DD690DC20DD7D4800744AEF /* SttDateExtensions.swift */; };
 		7DD690DF20DD7D6400744AEF /* SttJsonDecoderExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7DD690DE20DD7D6400744AEF /* SttJsonDecoderExtensions.swift */; };
 		7DD690E420DD7E9500744AEF /* SttHttpServiceTypeExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7DD690E320DD7E9500744AEF /* SttHttpServiceTypeExtensions.swift */; };
@@ -139,6 +140,7 @@
 		7DC0C6C720C4378600FC7998 /* SttArrayExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SttArrayExtensions.swift; sourceTree = "<group>"; };
 		7DC0C6C920C437BB00FC7998 /* SttRandom.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SttRandom.swift; sourceTree = "<group>"; };
 		7DC0C6CB20C455A200FC7998 /* SMEngine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SMEngine.swift; sourceTree = "<group>"; };
+		7DCB327220DEB02C001FAD0F /* StatisticsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatisticsViewController.swift; sourceTree = "<group>"; };
 		7DD690DC20DD7D4800744AEF /* SttDateExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SttDateExtensions.swift; sourceTree = "<group>"; };
 		7DD690DE20DD7D6400744AEF /* SttJsonDecoderExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SttJsonDecoderExtensions.swift; sourceTree = "<group>"; };
 		7DD690E320DD7E9500744AEF /* SttHttpServiceTypeExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SttHttpServiceTypeExtensions.swift; sourceTree = "<group>"; };
@@ -420,6 +422,7 @@
 			children = (
 				84F39E7720B0334500548681 /* SettingViewController.swift */,
 				84716E4D20B1842100A1F5F6 /* SyncViewController.swift */,
+				7DCB327220DEB02C001FAD0F /* StatisticsViewController.swift */,
 			);
 			path = Settings;
 			sourceTree = "<group>";
@@ -943,6 +946,7 @@
 				8433D0CA20A8AD9D0031D690 /* SttRealmObject.swift in Sources */,
 				84D2422120A85177007D8F1A /* AppDelegate.swift in Sources */,
 				84F39E8520B03F0A00548681 /* WordCollectionCell.swift in Sources */,
+				7DCB327320DEB02C001FAD0F /* StatisticsViewController.swift in Sources */,
 				847E19A520D3D8DE00652423 /* SearchLinkedWordsPresenter.swift in Sources */,
 				84F39E8020B0335100548681 /* NewWordPresenter.swift in Sources */,
 				7D82B5B720C332F9004D896A /* QueryFactories.swift in Sources */,

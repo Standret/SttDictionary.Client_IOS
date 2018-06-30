@@ -37,6 +37,7 @@ class NewWordPresenter: SttPresenter<NewWordDelegate> {
     var mainTranslation = ShortWordsData()
     var linkedWords = ShortWordsData()
     var save: SttComand!
+    var useReverse: Bool = true
     
     var _wordService: IWordService!
     
@@ -57,7 +58,7 @@ class NewWordPresenter: SttPresenter<NewWordDelegate> {
     
     func onSave() {
         if !(word ?? "").trimmingCharacters(in: .whitespaces).isEmpty && mainTranslation.data.count > 0 {
-            _ = save.useWork(observable: _wordService.createWord(word: word!, translations: mainTranslation.data.map( { $0.word! } ), linkedWords: linkedWords.data.map({ $0.id! })))
+            _ = save.useWork(observable: _wordService.createWord(word: word!, translations: mainTranslation.data.map( { $0.word! } ), linkedWords: linkedWords.data.map({ $0.id! }), useReverse: useReverse))
             .subscribe(onNext: { (result) in
                 print("successfule saved")
             })
