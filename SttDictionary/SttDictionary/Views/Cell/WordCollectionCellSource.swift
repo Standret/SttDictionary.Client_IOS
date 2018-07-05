@@ -12,7 +12,7 @@ import AlignedCollectionViewFlowLayout
 
 class WordCollectionCellSource: SttCollectionViewSource<WorldCollectionCellPresenter>, UICollectionViewDelegateFlowLayout {
     init (collectionView: UICollectionView, _collection: SttObservableCollection<WorldCollectionCellPresenter>) {
-        super.init(collectionView: collectionView, cellIdentifier: "WordCollectionCell", collection: _collection)
+        super.init(collectionView: collectionView, cellIdentifiers: [SttIdentifiers(identifers: UIConstants.CellName.wordCollectionEntity, isRegistered: true)], collection: _collection)
         
         let alignedFlowLayout = collectionView.collectionViewLayout as? AlignedCollectionViewFlowLayout
         alignedFlowLayout?.horizontalAlignment = .left

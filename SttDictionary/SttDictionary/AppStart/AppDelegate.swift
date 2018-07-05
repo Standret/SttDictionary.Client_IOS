@@ -9,11 +9,22 @@
 import UIKit
 import RxSwift
 
-class AppDelegate: SttApplicationDelegate {
+@UIApplicationMain
+class AppDelegate: UIResponder, UIApplicationDelegate {
+    
+    var window: UIWindow?
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         self.useAppCenter()
         return true
+    }
+    
+    public func applicationDidEnterBackground(_ application: UIApplication) {
+        SttGlobalObserver.applicationStatusChanged(status: .EnterBackgound)
+    }
+    
+    public func applicationWillEnterForeground(_ application: UIApplication) {
+        SttGlobalObserver.applicationStatusChanged(status: .EnterForeground)
     }
 }
 

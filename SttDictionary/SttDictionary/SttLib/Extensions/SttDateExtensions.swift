@@ -45,4 +45,12 @@ extension Date {
     var isLastDayOfMonth: Bool {
         return tomorrow.month != month
     }
+    
+    func differenceInMinutes() -> Int {
+        
+        let dayHourMinuteSecond: Set<Calendar.Component> = [.minute]
+        let difference = NSCalendar.current.dateComponents(dayHourMinuteSecond, from: Date(), to: self);
+        
+        return difference.minute!
+    }
 }

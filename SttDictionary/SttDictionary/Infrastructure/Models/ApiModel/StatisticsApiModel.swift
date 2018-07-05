@@ -8,32 +8,6 @@
 
 import Foundation
 
-enum AnswersGrade: Int, Codable {
-    case forget, bad, fail, pass, good, perfect
-}
-enum AnswersType: Int, Codable {
-    case originalCard, translateCard
-}
-
-
-struct AnswerData: RealmCodable, Codable {
-
-    typealias TTarget = RealmAnswerData
-    
-    let miliSecondsForReview: Int
-    let date: Date
-    let answer: AnswersGrade
-    
-    func serialize() -> RealmAnswerData {
-        let model = RealmAnswerData(value: [
-            "miliSecondsForReview": miliSecondsForReview,
-            "date": date.onlyDay()
-            ])
-        model.answer = answer
-        return model
-    }
-}
-
 struct Statistics: RealmCodable, Codable {
     
     typealias TTarget = RealmStatistics
@@ -42,7 +16,7 @@ struct Statistics: RealmCodable, Codable {
     let easiness: Float
     let repetition: Int
     let interval: Int
-    let answers: [AnswerData]
+    let answers: [AnswerDataApiModel]
     
     func serialize() -> RealmStatistics {
         return RealmStatistics(value: [

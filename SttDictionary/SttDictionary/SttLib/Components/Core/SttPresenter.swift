@@ -13,8 +13,8 @@ protocol SttPresenterType: class { }
 
 class SttPresenter<TDelegate> : SttViewInjector, SttPresenterType {
     
-    private weak var _delegate: SttViewable!
-    var delegate: TDelegate { return _delegate as! TDelegate }
+    private weak var _delegate: SttViewable?
+    var delegate: TDelegate? { return _delegate as? TDelegate }
     
     weak var _notificationError: NotificationErrorType!
     

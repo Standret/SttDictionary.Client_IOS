@@ -16,7 +16,7 @@ extension SttHttpServiceType {
     func post(controller: ApiConroller, data: [String:String] = [:], insertToken: Bool = false) -> Observable<(HTTPURLResponse, Data)> {
         return self.post(controller: controller, data: data, insertToken: insertToken)
     }
-    func post(controller: ApiConroller, dataAny: [String:Any] = [:], insertToken: Bool = false) -> Observable<(HTTPURLResponse, Data)> {
-        return self.post(controller: controller, dataAny: dataAny, insertToken: insertToken)
+    func post(controller: ApiConroller, data: Encodable? = nil, insertToken: Bool = false) -> Observable<(HTTPURLResponse, Data)> {
+        return self.post(controller: controller, data: data, insertToken: insertToken)
     }
 }

@@ -25,7 +25,7 @@ protocol ISyncService {
 class SyncService: ISyncService {
     
     var _unitOfWork: UnitOfWorkType!
-    var _apiServicce: IApiService!
+    var _apiServicce: ApiDataProviderType!
     var _notificationError: NotificationErrorType!
     
     var observe: Observable<SyncDataViewModel> {
@@ -43,17 +43,18 @@ class SyncService: ISyncService {
     }
     
     func sync() -> Observable<(Bool, SyncStep)> {
-        return Observable.concat([sendWord(),
-                                  updateWord(),
-                                  _apiServicce.updateWords().map({ _ in (true, SyncStep.DonwloadWord)}),
-                                  _apiServicce.updateTags().map({ _ in (true, SyncStep.DonwloadTag)} )])
+//        return Observable.concat([sendWord(),
+//                                  updateWord(),
+//                                  _apiServicce.updateWords().map({ _ in (true, SyncStep.DonwloadWord)}),
+//                                  _apiServicce.updateTags().map({ _ in (true, SyncStep.DonwloadTag)} )])
+        Observable<(Bool, SyncStep)>.empty()
     }
     
     private func sendWord() -> Observable<(Bool, SyncStep)> {
         return self._unitOfWork.word.getMany(filter: "isSynced == false and id beginswith '\(Constants.temporyPrefix)'")
             .flatMap({ Observable.from($0) })
             .do(onNext: { print($0.originalWorld) })
-            .flatMap({ self._apiServicce.sendWord(model: AddWordApiModel(word: $0.originalWorld,
+            .flatMap({ self._apiServicce.addWord(model: AddWordApiModel(word: $0.originalWorld,
                                                                          translations: $0.translations.map( { $0.value } ),
                                                                          linkedWords: $0.linkedWords.map( { $0.value } ),
                                                                          reverseCards: $0.reverseCards

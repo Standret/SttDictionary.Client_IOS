@@ -30,7 +30,23 @@ extension UIViewController {
             self.resignFirstResponder()
             handlerOk?()
         }))
+        if let popover = alertController.popoverPresentationController {
+            popover.sourceView = self.view
+            popover.permittedArrowDirections = .up
+        }
         
+        self.present(alertController, animated: true, completion: nil)
+    }
+    
+    func createDecisionAlerDialog(title: String?, message: String, buttonTrueTitle: String? = nil, buttonFalseTitle: String? = nil, handlerOk: (() -> Void)? = nil, handlerFalse: (() -> Void)? = nil) {
+        let alertController = UIAlertController(title: title, message: message, preferredStyle: .alert)
+        alertController.addAction(UIAlertAction(title: buttonTrueTitle ?? "Yes", style: .cancel, handler: { (action) in
+            handlerOk?()
+        }))
+        alertController.addAction(UIAlertAction(title: buttonTrueTitle ?? "Cancel", style: .default, handler: { (action) in
+            self.resignFirstResponder()
+            handlerFalse?()
+        }))
         if let popover = alertController.popoverPresentationController {
             popover.sourceView = self.view
             popover.permittedArrowDirections = .up

@@ -50,7 +50,7 @@ class CardsPresenter: SttPresenter<CardsDelegate> {
         initializeWords(_words: (param.0, param.1))
         
         let text = answerType == .originalCard ? words[current].originalWorld : words[current].translations.map({ $0.value }).joined(separator: ", ")
-        delegate.reloadWords(word: text, url: words[current].pronunciationUrl, example: nil, isNew: true, useVoice: useVoice)
+        delegate?.reloadWords(word: text, url: words[current].pronunciationUrl, example: nil, isNew: true, useVoice: useVoice)
         
         generalTimer = Timer.scheduledTimer(withTimeInterval: 0.1, repeats: true, block: { [weak self] (timer) in
             self?.totalMiliSeconds += 100
@@ -62,7 +62,7 @@ class CardsPresenter: SttPresenter<CardsDelegate> {
     func showAnswer() {
         let text = answerType == .originalCard ? words[current].translations.map({ $0.value }).joined(separator: ", ") : words[current].originalWorld
         let example = words[current].exampleUsage == nil ? nil : (words[current].exampleUsage!.original, words[current].exampleUsage!.translate)
-        delegate.reloadWords(word: text, url: words[current].pronunciationUrl, example: example, isNew: false, useVoice: useVoice)
+        delegate?.reloadWords(word: text, url: words[current].pronunciationUrl, example: example, isNew: false, useVoice: useVoice)
     }
     func selectAnswer(type: TypeAnswer) {
         answers.append(Answer(id: words[_current].id, type: type, totalMiliseconds: wordMiliseconds))
@@ -71,13 +71,13 @@ class CardsPresenter: SttPresenter<CardsDelegate> {
         _current += 1
         if current < words.count{
             let text = answerType == .originalCard ? words[current].originalWorld : words[current].translations.map({ $0.value }).joined(separator: ", ")
-            delegate.reloadWords(word: text, url: words[current].pronunciationUrl, example: nil, isNew: true, useVoice: useVoice)
+            delegate?.reloadWords(word: text, url: words[current].pronunciationUrl, example: nil, isNew: true, useVoice: useVoice)
             reloadWordTimer()
         }
         else {
             generalTimer.invalidate()
             let badCount = sinq(answers).whereTrue( { $0.type == TypeAnswer.forget } ).count()
-            delegate.showFinalPopup(message: "spend time: \(totalMiliSeconds / 1000)s\nneed repeat today: \(badCount)")
+            delegate?.showFinalPopup(message: "spend time: \(totalMiliSeconds / 1000)s\nneed repeat today: \(badCount)")
             print("final: \(totalMiliSeconds)")
             for item in answers {
                 print("id: \(item.id) answer: \(item.type) m: \(item.totalMiliseconds)")

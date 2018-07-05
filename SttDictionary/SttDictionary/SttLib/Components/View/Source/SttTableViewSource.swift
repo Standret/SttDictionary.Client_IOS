@@ -13,7 +13,9 @@ import RxSwift
 class SttTableViewSource<T: SttViewInjector>: NSObject, UITableViewDataSource {
     
     private var _tableView: UITableView
-    private var _cellIdentifier: String
+    
+    private var _cellIdentifiers = [String]()
+    var cellIdentifiers: [String] { return _cellIdentifiers }
     
     var useAnimation: Bool = false
     var maxAnimationCount = 2
@@ -46,24 +48,31 @@ class SttTableViewSource<T: SttViewInjector>: NSObject, UITableViewDataSource {
         })
     }
     
-    init(tableView: UITableView, cellName: String, cellIdentifier: String, collection: SttObservableCollection<T>) {
+    init(tableView: UITableView, cellIdentifiers: [SttIdentifiers], collection: SttObservableCollection<T>) {
         
-        tableView.register(UINib(nibName: cellName, bundle: nil), forCellReuseIdentifier: cellIdentifier)
+        for item in cellIdentifiers {
+            if !item.isRegistered {
+                tableView.register(UINib(nibName: item.nibName ?? item.identifers, bundle: nil), forCellReuseIdentifier: item.identifers)
+            }
+        }
 
         _tableView = tableView
-        _cellIdentifier = cellIdentifier
+        _cellIdentifiers.append(contentsOf: cellIdentifiers.map({ $0.identifers }))
         
         super.init()
         updateSource(collection: collection)
     }
+    
+    // MARK: -- todo: write init for [cellIdentifiers]
+    
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return _collection == nil ? 0 : _collection.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: _cellIdentifier)! as! SttTableViewCell<T>
-        cell.dataContext = _collection[indexPath.row]
+        let cell = tableView.dequeueReusableCell(withIdentifier: _cellIdentifiers.first!)! as! SttTableViewCell<T>
+        cell.presenter = _collection[indexPath.row]
         cell.prepareBind()
         return cell
     }

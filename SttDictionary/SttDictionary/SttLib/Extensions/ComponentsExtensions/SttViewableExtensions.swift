@@ -12,7 +12,7 @@ extension SttViewableNavigation {
     func navigate(to: String, withParametr: Any? = nil, callback: ((Any) -> Void)? = nil) {
         self.navigate(to: to, withParametr: withParametr, callback: callback)
     }
-    func navigate<T>(storyboard: Storyboard, to _: T.Type, typeNavigation: TypeNavigation = .push, withParametr: Any? = nil, callback: ((Any) -> Void)? = nil) {
+    func navigate<T>(storyboard: SttStoryboardType, to _: T.Type, typeNavigation: TypeNavigation = .push, withParametr: Any? = nil, callback: ((Any) -> Void)? = nil) {
         self.navigate(storyboard: storyboard, to: T.self, typeNavigation: typeNavigation, withParametr: withParametr, callback: callback)
     }
 }

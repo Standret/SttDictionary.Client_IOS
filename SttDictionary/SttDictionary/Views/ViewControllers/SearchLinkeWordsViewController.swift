@@ -12,7 +12,7 @@ import RxSwift
 class SearchLinkedWordsViewController: SttViewController<SearchLinkedWordsPresenter>, SearchLinkedWordsDelegate {
 
     var changeTextObservable: Observable<String>!
-    var wordsSource: WordEntityCellSource!
+    var wordsSource: SttTableViewSource<WordEntityCellPresenter>!
     var closeDelegate: (([(String, String)]) -> Void)!
 
     @IBOutlet weak var mainTable: UITableView!
@@ -20,7 +20,9 @@ class SearchLinkedWordsViewController: SttViewController<SearchLinkedWordsPresen
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        wordsSource = WordEntityCellSource(tableView: mainTable, cellName: "WordEntityTableViewCell", cellIdentifier: "WordEntityCell", collection: presenter.words)
+        wordsSource = SttTableViewSource(tableView: mainTable,
+                                         cellIdentifiers: [SttIdentifiers(identifers: UIConstants.CellName.wordEntity)],
+                                         collection: presenter.words)
         mainTable.dataSource = wordsSource
         mainTable.reloadData()
         

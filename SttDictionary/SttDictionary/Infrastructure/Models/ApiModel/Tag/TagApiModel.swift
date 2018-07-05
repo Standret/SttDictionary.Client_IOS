@@ -15,9 +15,10 @@ struct TagApiModel: Decodable, RealmCodable {
     typealias TTarget = RealmTag
     
     let id: String
+    let dateCreated: Date
+
     let name: String
     let wordsId: [String]
-    let dateCreated: Date
     
     func serialize() -> RealmTag {
         let realm = try! Realm()
@@ -27,21 +28,6 @@ struct TagApiModel: Decodable, RealmCodable {
             "dateCreated": dateCreated,
             "name": name,
             "word": words
-            ])
-    }
-}
-
-struct ShortTagApiModel: Decodable, RealmCodable {
-    
-    typealias TTarget = RealmShortTag
-    
-    let id: String
-    let name: String
-    
-    func serialize() -> RealmShortTag {
-        return RealmShortTag(value: [
-            "id": id,
-            "name": name
             ])
     }
 }

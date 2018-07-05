@@ -16,6 +16,9 @@ extension ObservableType where E == (HTTPURLResponse, Data) {
                 switch urlResponse.statusCode {
                 case 200 ... 299:
                     do {
+                        print("---")
+                        print(String(data: data, encoding: String.Encoding.utf8))
+                        print("---")
                         let decoder = JSONDecoder()
                         decoder.dateDecodingStrategy = .customISO8601
                         let jsonObject = try decoder.decode(TResult.self, from: data)

@@ -11,10 +11,10 @@ import UIKit
 
 class SttCollectionViewCell<T: SttViewInjector>: UICollectionViewCell, SttViewable {
     
-    var dataContext: T!
+    var presenter: T!
     
     private var firstStart = true
     func prepareBind() {
-        dataContext.injectView(delegate: self)
+        presenter.injectView(delegate: self)
     }
 }

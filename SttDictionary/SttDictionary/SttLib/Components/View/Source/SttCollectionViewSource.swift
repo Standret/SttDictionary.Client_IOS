@@ -13,7 +13,10 @@ import UIKit
 class SttCollectionViewSource<T: SttViewInjector>: NSObject, UICollectionViewDataSource {
     
     private var _collectionView: UICollectionView
-    private var _cellIdentifier: String
+    
+    private var _cellIdentifier: [String]
+    var cellIdentifier: [String] { return _cellIdentifier }
+    
     private var _collection: SttObservableCollection<T>!
     var collection: SttObservableCollection<T> { return _collection }
     
@@ -37,20 +40,30 @@ class SttCollectionViewSource<T: SttViewInjector>: NSObject, UICollectionViewDat
         })
     }
     
-    init(collectionView: UICollectionView, cellIdentifier: String, collection: SttObservableCollection<T>) {
+    init(collectionView: UICollectionView, cellIdentifiers: [SttIdentifiers], collection: SttObservableCollection<T>) {
         _collectionView = collectionView
-        _cellIdentifier = cellIdentifier
+        _cellIdentifier = cellIdentifiers.map({ $0.identifers })
         super.init()
+        
+        for item in cellIdentifiers {
+            if !item.isRegistered {
+                collectionView.register(UINib(nibName: item.nibName ?? item.identifers, bundle: nil), forCellWithReuseIdentifier: item.identifers)
+            }
+        }
+        
         updateSource(collection: collection)
     }
     
+    func numberOfSections(in collectionView: UICollectionView) -> Int {
+        return 1
+    }
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return _collection == nil ? 0 : _collection.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = _collectionView.dequeueReusableCell(withReuseIdentifier: _cellIdentifier, for: indexPath) as! SttCollectionViewCell<T>
-        cell.dataContext = _collection[indexPath.row]
+        let cell = _collectionView.dequeueReusableCell(withReuseIdentifier: _cellIdentifier.first!, for: indexPath) as! SttCollectionViewCell<T>
+        cell.presenter = _collection[indexPath.row]
         cell.prepareBind()
         return cell
     }

@@ -31,7 +31,7 @@ class SearchLinkedWordsPresenter: SttPresenter<SearchLinkedWordsDelegate>, WordI
                 else {
                     _self.words.insert(element, at: 0)
                 }
-                _self.delegate.reloadWords()
+                _self.delegate?.reloadWords()
             }
         })
         
@@ -48,7 +48,7 @@ class SearchLinkedWordsPresenter: SttPresenter<SearchLinkedWordsDelegate>, WordI
                 for item in elements {
                     item.itemDelegate = self
                 }
-                self.delegate.reloadWords()
+                self.delegate?.reloadWords()
             })
     }
     

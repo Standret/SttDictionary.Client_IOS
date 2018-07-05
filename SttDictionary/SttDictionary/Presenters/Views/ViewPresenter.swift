@@ -13,7 +13,7 @@ protocol ViewDelegate: SttViewable {
 }
 
 class ViewPresenter: SttPresenter<ViewDelegate> {
-    var _apiService: IApiService!
+    var _apiService: ApiDataProviderType!
     var _unitOfWorkd: UnitOfWorkType!
     
     override func presenterCreating() {

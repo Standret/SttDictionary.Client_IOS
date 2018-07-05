@@ -11,10 +11,12 @@ import RxSwift
 
 class SttComand {
     
-    private var handlerStart: (() -> Void)?
-    private var handlerEnd: (() -> Void)?
+    private var handlerStart = [(() -> Void)]()
+    private var handlerEnd = [(() -> Void)]()
     private var executeHandler: (() -> Void)
     private var canExecuteHandler: (() -> Bool)?
+    
+    var executeIfExecuting: Bool = false
     
     var singleCallEndCallback = true
     private var isCall = false
@@ -25,11 +27,14 @@ class SttComand {
                 handler(_delegate)
             }
         }
-        canExecuteHandler = { [weak delegate] in
-            if let _delegate = delegate {
-                if let _handlerCanExecute = handlerCanExecute {
-                    return _handlerCanExecute(_delegate)
+        canExecuteHandler = { [weak delegate, weak self] in
+            if delegate != nil && handlerCanExecute != nil {
+                if let _self = self {
+                    return handlerCanExecute!(delegate!) && (_self.executeIfExecuting || !_self.isCall)
                 }
+            }
+            else if let _self = self {
+                return (_self.executeIfExecuting || !_self.isCall)
             }
             return true
         }
@@ -37,15 +42,20 @@ class SttComand {
     }
 
     func addHandler(start: (() -> Void)?, end: (() -> Void)?) {
-        handlerStart = start
-        handlerEnd = end
+        if let _start = start {
+            handlerStart.append(_start)
+        }
+        if let _end = end {
+            handlerEnd.append(_end)
+        }
     }
     
     func execute() {
         if canExecute() {
-            if let handler = handlerStart {
-                handler()
+            for ihand in handlerStart {
+                ihand()
             }
+            isCall = true
             executeHandler()
         }
         else {
@@ -63,18 +73,24 @@ class SttComand {
 extension SttComand {
     func useWork<T>(observable: Observable<T>) -> Observable<T> {
         return observable.do(onNext: { (element) in
-            if self.handlerEnd != nil && self.singleCallEndCallback && !self.isCall {
-                self.handlerEnd!()
+            if self.singleCallEndCallback && self.isCall {
+                for iend in self.handlerEnd {
+                    iend()
+                }
                 self.isCall = false
             }
         }, onError: { (error) in
-            if self.handlerEnd != nil && !self.isCall {
-                self.handlerEnd!()
+            if self.isCall {
+                for iend in self.handlerEnd {
+                    iend()
+                }
                 self.isCall = false
             }
         }, onCompleted: {
-            if self.handlerEnd != nil && !self.isCall {
-                self.handlerEnd!()
+            if self.isCall {
+                for iend in self.handlerEnd {
+                    iend()
+                }
                 self.isCall = false
             }
         })

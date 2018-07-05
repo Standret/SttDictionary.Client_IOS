@@ -10,8 +10,8 @@ import Foundation
 import EasyDi
 
 class ServiceAssembly: Assembly {    
-    var apiService: IApiService {
-        return define(scope: .lazySingleton, init: ApiService())
+    var apiService: ApiDataProviderType {
+        return define(scope: .lazySingleton, init: ApiDataProvider())
     }
     var httpService: SttHttpServiceType {
         return define(scope: .lazySingleton, init: SttHttpService())

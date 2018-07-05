@@ -13,6 +13,6 @@ enum TypeNavigation {
     case modality
 }
 
-enum Storyboard: String {
-    case none
+protocol SttStoryboardType {
+    func getName() -> String
 }

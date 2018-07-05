@@ -65,8 +65,8 @@ class ServiceInjectorAssembly: Assembly {
     
    //  Inject Service into service
     
-    func inject(into service: ApiService) {
-        let _:ApiService = define(init: service) {
+    func inject(into service: ApiDataProvider) {
+        let _:ApiDataProvider = define(init: service) {
             $0._httpService = self.serviceAssembly.httpService
             $0._unitOfWork = self.serviceAssembly.unitOfWork
             return $0

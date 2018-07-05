@@ -10,6 +10,8 @@ import Foundation
 
 enum ApiConroller {
     case word(String), tag(String)
+    case answer(String)
+    case statistics(String)
     
     func get() -> String {
         var data: (String, String)!
@@ -18,6 +20,10 @@ enum ApiConroller {
             data = ("word", method)
         case .tag(let method):
             data = ("tag", method)
+        case .answer(let method):
+            data = ("answer", method)
+        case .statistics(let method):
+            data = ("stat", method)
         }
         
         return "\(Constants.versionApi)\(data.0)/\(data.1)"

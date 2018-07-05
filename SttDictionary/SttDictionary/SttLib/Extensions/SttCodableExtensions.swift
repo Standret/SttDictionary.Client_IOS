@@ -22,4 +22,17 @@ extension Encodable {
             return [:]
         }
     }
+    
+    func getJsonString() -> String {
+        do {
+            let encoder = JSONEncoder()
+            encoder.dateEncodingStrategy = .iso8601
+            let json = (try encoder.encode(self))
+            print(String(data: json, encoding: .utf8)!)
+            return String(data: json, encoding: .utf8)!
+        }
+        catch {
+            return "\"\(self)\""
+        }
+    }
 }

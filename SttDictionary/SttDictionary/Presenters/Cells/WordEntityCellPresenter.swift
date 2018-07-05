@@ -31,7 +31,7 @@ class WordEntityCellPresenter: SttPresenter<WordEntityCellDelegate> {
     var nextTranslationDate: Date?
     var isSelect = false {
         didSet {
-            delegate.reloadState()
+            delegate?.reloadState()
         }
     }
     

@@ -26,7 +26,7 @@ class RealmStatistics: Object, RealmDecodable {
 
 class RealmAnswerData: Object, RealmDecodable {
     
-    typealias TTarget = AnswerData
+    typealias TTarget = AnswerDataApiModel
     
     @objc dynamic var miliSecondsForReview: Int = 0
     @objc dynamic var date: Date = Date()
@@ -38,7 +38,7 @@ class RealmAnswerData: Object, RealmDecodable {
         set { _answer = newValue.rawValue }
     }
     
-    func deserialize() -> AnswerData {
-        return AnswerData(miliSecondsForReview: miliSecondsForReview, date: date, answer: answer)
+    func deserialize() -> AnswerDataApiModel {
+        return AnswerDataApiModel(miliSecondsForReview: miliSecondsForReview, date: date, answer: answer)
     }
 }

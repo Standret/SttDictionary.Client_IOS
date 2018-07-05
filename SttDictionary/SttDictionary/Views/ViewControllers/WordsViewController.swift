@@ -14,14 +14,16 @@ class WordViewController: SttViewController<WordPresenter>, WordDelegate, UISear
     @IBOutlet weak var searchBar: UISearchBar!
     @IBOutlet weak var mainTable: UITableView!
     
-    var wordsSource: WordEntityCellSource!
+    var wordsSource: SttTableViewSource<WordEntityCellPresenter>!
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         searchBar.delegate = self
         
-        wordsSource = WordEntityCellSource(tableView: mainTable, cellName: "WordEntityTableViewCell", cellIdentifier: "WordEntityCell", collection: presenter.words)
+        wordsSource = SttTableViewSource(tableView: mainTable,
+                                         cellIdentifiers: [SttIdentifiers(identifers: UIConstants.CellName.wordEntity)],
+                                         collection: presenter.words)
         
         let footer = UIView(frame: CGRect(x: 0, y: 0, width: widthScreen, height: 1))
         footer.backgroundColor = UIColor(named: "background")!

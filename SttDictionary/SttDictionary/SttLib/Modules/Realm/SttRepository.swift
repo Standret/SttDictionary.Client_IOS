@@ -1,3 +1,4 @@
+
 //
 //  SttRepository.swift
 //  SttDictionary
@@ -99,10 +100,12 @@ class SttRepository<T, R>: SttRepositoryType
     func saveOne(model: T) -> Completable {
         return Completable.create { (observer) -> Disposable in
             do {
+                print("saveOne \(Thread.current)")
                 let realm = try Realm()
-                if (self.singleton && realm.objects(R.self).count > 0) {
-                    observer(CompletableEvent.error(SttBaseError.realmError(SttRealmError.objectIsSignleton("method: saveOne type: \(type(of: R.self))"))))
-                }
+//                if (realm.objects(R.self).count > 0) {
+//                    observer(CompletableEvent.error(SttBaseError.realmError(SttRealmError.objectIsSignleton("method: saveOne type: \(type(of: R.self))"))))
+//                }
+                print(Thread.current)
                 realm.beginWrite()
                 realm.add(model.serialize(), update: true)
                 try realm.commitWrite()
@@ -141,11 +144,12 @@ class SttRepository<T, R>: SttRepositoryType
     func getOne(filter: String?) -> Observable<R> {
         return Observable<R>.create { (observer) -> Disposable in
             do {
+                print("getOne \(Thread.current)")
                 let objects = try self.getObjects(filter: filter, observer: observer, tryGetAll: false)
-                if (objects.count != 1) {
+                if (objects.count > 1) {
                     observer.onError(SttBaseError.realmError(SttRealmError.doesNotExactlyQuery("method: getOne type: \(type(of: R.self)) with filter \(filter ?? "nil")")))
                 }
-                else {
+                else if objects.count != 0 {
                     observer.onNext(objects[0])
                 }
                 observer.onCompleted()
@@ -178,7 +182,7 @@ class SttRepository<T, R>: SttRepositoryType
             do {
                 let realm = try Realm()
                 let objects = try self.getObjects(filter: filter, observer: observer, tryGetAll: false)
-                if (objects.count != 1) {
+                if (objects.count > 1) {
                     observer(CompletableEvent.error(SttBaseError.realmError(SttRealmError.doesNotExactlyQuery("method: update type: \(type(of: R.self)) with filter \(filter ?? "nil"))"))))
                 }
                 else {
@@ -264,7 +268,7 @@ class SttRepository<T, R>: SttRepositoryType
             }
             
             return Disposables.create()
-            }
+        }
     }
     
     func count(filter: String?) -> Observable<Int> {

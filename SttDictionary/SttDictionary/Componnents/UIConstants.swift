@@ -14,4 +14,9 @@ class UIConstants {
     static var cornerRadius = CGFloat(10)
     
     static var cornerRadiusWordCard = CGFloat(5)
+    
+    class CellName {
+        static let wordEntity = "WordEntityCell"
+        static let wordCollectionEntity = "WordCollectionCell"
+    }
 }

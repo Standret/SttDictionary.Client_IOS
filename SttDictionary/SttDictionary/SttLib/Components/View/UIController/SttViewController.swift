@@ -14,11 +14,11 @@ class SttBaseViewController: UIViewController, SttKeyboardNotificationDelegate {
     fileprivate var parametr: Any?
     fileprivate var callback: ((Any) -> Void)?
     
-    var keyboardNotification: SttKeyboardNotification!
-    var scrollAmount: CGFloat = 0
-    var scrollAmountGeneral: CGFloat = 0
+    fileprivate var keyboardNotification: SttKeyboardNotification!
+    fileprivate var scrollAmount: CGFloat = 0
+    fileprivate var scrollAmountGeneral: CGFloat = 0
     var moveViewUp: Bool = false
-    var style = UIStatusBarStyle.lightContent
+    var style = UIStatusBarStyle.default
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -58,6 +58,10 @@ class SttBaseViewController: UIViewController, SttKeyboardNotificationDelegate {
             self.view.layoutIfNeeded()
         }
     }
+    
+    func insertParametr(parametr: Any?) {
+        self.parametr = parametr
+    }
 }
 
 class SttViewController<T: SttViewInjector>: SttBaseViewController, SttViewContolable {
@@ -77,6 +81,9 @@ class SttViewController<T: SttViewInjector>: SttBaseViewController, SttViewConto
     override func viewDidLoad() {
         super.viewDidLoad()
         viewError = SttErrorLabel()
+        viewError.backgroundColor = UIColor(red:0.98, green:0.26, blue:0.26, alpha:1)
+        view.addSubview(viewError)
+        viewError.delegate = self
         
         presenter = T()
         presenter.injectView(delegate: self)
@@ -89,22 +96,26 @@ class SttViewController<T: SttViewInjector>: SttBaseViewController, SttViewConto
                 self.navigationController?.navigationBar.endEditing(true)
             }
         })
-        
-        view.addSubview(viewError)
-        viewError.delegate = self
     }
     
     @objc
     func handleClick(_ : UITapGestureRecognizer?) {
         view.endEditing(true)
     }
-    
+        
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        keyboardNotification.addObserver()
         UIApplication.shared.statusBarStyle = style
+        UIView.animate(withDuration: 0.3) { [weak self] in
+            self?.setNeedsStatusBarAppearanceUpdate()
+        }
         navigationController?.setNavigationBarHidden(hideNavigationBar, animated: true)
         navigationController?.navigationController?.navigationBar.isHidden = hideNavigationBar
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        keyboardNotification.addObserver()
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -113,7 +124,7 @@ class SttViewController<T: SttViewInjector>: SttBaseViewController, SttViewConto
         navigationController?.navigationController?.navigationBar.isHidden = false
     }
     
-    func sendError(error: SttBaseError) {
+    func sendError(error: SttBaseErrorType) {
         let serror = error.getMessage()
         if useErrorLabel {
             viewError.showError(text: serror.0, detailMessage: serror.1)
@@ -139,22 +150,16 @@ class SttViewController<T: SttViewInjector>: SttBaseViewController, SttViewConto
         close()
     }
     
-    func navigate<T>(storyboard: Storyboard, to _: T.Type, typeNavigation: TypeNavigation, withParametr: Any?, callback: ((Any) -> Void)?)  {
+    func navigate<T>(storyboard: SttStoryboardType, to _: T.Type, typeNavigation: TypeNavigation, withParametr: Any?, callback: ((Any) -> Void)?)  {
         
         let bundle = Bundle(for: type(of: self))
         let _nibName = "\(type(of: T.self))".components(separatedBy: ".").first!
         let nibName = String(_nibName[..<(_nibName.index(_nibName.endIndex, offsetBy: -9))])
         
-        var vc: SttBaseViewController!
-        if storyboard == .none {
-            fatalError("unsupported operation")
-        }
-        else {
-            let stroyboard = UIStoryboard(name: storyboard.rawValue, bundle: bundle)
-            vc = stroyboard.instantiateViewController(withIdentifier: nibName) as! SttBaseViewController
-            vc.parametr = withParametr
-            vc.callback = callback
-        }
+        let stroyboard = UIStoryboard(name: storyboard.getName(), bundle: bundle)
+        let vc = stroyboard.instantiateViewController(withIdentifier: nibName) as! SttBaseViewController
+        vc.parametr = withParametr
+        vc.callback = callback
         switch typeNavigation {
         case .modality:
             present(vc, animated: true, completion: nil)
@@ -162,8 +167,8 @@ class SttViewController<T: SttViewInjector>: SttBaseViewController, SttViewConto
             navigationController?.pushViewController(vc, animated: true)
         }
     }
-    func loadStoryboard(storyboard: Storyboard) {
-        let stroyboard = UIStoryboard(name: storyboard.rawValue, bundle: nil)
+    func loadStoryboard(storyboard: SttStoryboardType) {
+        let stroyboard = UIStoryboard(name: storyboard.getName(), bundle: nil)
         let vc = stroyboard.instantiateViewController(withIdentifier: "start")
         present(vc, animated: true, completion: nil)
     }

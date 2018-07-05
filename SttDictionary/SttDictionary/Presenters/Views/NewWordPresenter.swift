@@ -30,7 +30,7 @@ class NewWordPresenter: SttPresenter<NewWordDelegate> {
     var word: String? {
         didSet {
             if !(word ?? "").trimmingCharacters(in: .whitespaces).isEmpty {
-                _ = _wordService.exists(word: word!).subscribe(onNext: { self.delegate.error(isHidden: !$0) })
+                _ = _wordService.exists(word: word!).subscribe(onNext: { self.delegate?.error(isHidden: !$0) })
             }
         }
     }

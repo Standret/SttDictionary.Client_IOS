@@ -15,11 +15,11 @@ class WordCollectionCell: SttCollectionViewCell<WorldCollectionCellPresenter>, W
         layer.cornerRadius = UIConstants.cornerRadiusWordCard
         
         isUserInteractionEnabled = true
-        lblWord.text = dataContext.word
+        lblWord.text = presenter.word
         addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(onClick)))
     }
     
     @objc func onClick() {
-        dataContext.deleteClick()
+        presenter.deleteClick()
     }
 }

@@ -14,8 +14,8 @@ typealias SttViewContolable = SttViewableNavigation & SttViewableListener
 
 protocol SttViewableNavigation: SttViewable {
     func navigate(to: String, withParametr: Any?, callback: ((Any) -> Void)?)
-    func navigate<T>(storyboard: Storyboard, to _: T.Type, typeNavigation: TypeNavigation, withParametr: Any?, callback: ((Any) -> Void)?)
-    func loadStoryboard(storyboard: Storyboard)
+    func navigate<T>(storyboard: SttStoryboardType, to _: T.Type, typeNavigation: TypeNavigation, withParametr: Any?, callback: ((Any) -> Void)?)
+    func loadStoryboard(storyboard: SttStoryboardType)
     
     func close()
     func close(parametr: Any)
@@ -23,7 +23,7 @@ protocol SttViewableNavigation: SttViewable {
 
 protocol SttViewableListener: SttViewable {
     func sendMessage(title: String, message: String?)
-    func sendError(error: SttBaseError)
+    func sendError(error: SttBaseErrorType)
 }
 
 protocol SttViewInjector {

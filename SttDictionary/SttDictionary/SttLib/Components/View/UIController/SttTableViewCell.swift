@@ -11,10 +11,10 @@ import UIKit
 
 class SttTableViewCell<T: SttViewInjector>: UITableViewCell, SttViewable {
     
-    var dataContext: T!
+    var presenter: T!
     
     private var firstStart = true
     func prepareBind() {
-        dataContext.injectView(delegate: self)
+        presenter.injectView(delegate: self)
     }
 }
