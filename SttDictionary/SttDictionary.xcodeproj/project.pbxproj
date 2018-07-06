@@ -24,6 +24,8 @@
 		7D869F0220EEAD09007F0521 /* WordStatisticsApiModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D869F0120EEAD09007F0521 /* WordStatisticsApiModel.swift */; };
 		7D98179C20D62F2D00896FF5 /* SttDictionaryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D98179B20D62F2D00896FF5 /* SttDictionaryTests.swift */; };
 		7D9817A420D630C700896FF5 /* LinkedWordsTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D9817A320D630C700896FF5 /* LinkedWordsTest.swift */; };
+		7DAAAE6720EFEFC800492F58 /* WordRepositories.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7DAAAE6620EFEFC800492F58 /* WordRepositories.swift */; };
+		7DAAAE6920EFF62200492F58 /* ConverterToApiModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7DAAAE6820EFF62200492F58 /* ConverterToApiModel.swift */; };
 		7DB2BFBA20D52819007B3676 /* WordCollectionCellSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7DB2BFB920D52819007B3676 /* WordCollectionCellSource.swift */; };
 		7DC0C6C220C3F18400FC7998 /* StudyPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7DC0C6C120C3F18400FC7998 /* StudyPresenter.swift */; };
 		7DC0C6C420C3F7A000FC7998 /* CardsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7DC0C6C320C3F7A000FC7998 /* CardsViewController.swift */; };
@@ -90,7 +92,7 @@
 		8433D0CE20A8AE8D0031D690 /* RealmWord.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8433D0CD20A8AE8D0031D690 /* RealmWord.swift */; };
 		8433D0D020A8B2120031D690 /* RealmShortTag.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8433D0CF20A8B2120031D690 /* RealmShortTag.swift */; };
 		8433D0D220A8BCDA0031D690 /* WordApiModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8433D0D120A8BCDA0031D690 /* WordApiModel.swift */; };
-		8437504620A9DD91007BFF5F /* UnitOfWork.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8437504520A9DD91007BFF5F /* UnitOfWork.swift */; };
+		8437504620A9DD91007BFF5F /* RealmStorageProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8437504520A9DD91007BFF5F /* RealmStorageProvider.swift */; };
 		8437504A20AD6D21007BFF5F /* Login.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8437504920AD6D21007BFF5F /* Login.storyboard */; };
 		8462666C20B1DECF004169A1 /* WordEntityCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8462666A20B1DECF004169A1 /* WordEntityCell.swift */; };
 		8462666D20B1DECF004169A1 /* WordEntityCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8462666B20B1DECF004169A1 /* WordEntityCell.xib */; };
@@ -157,6 +159,8 @@
 		7D98179B20D62F2D00896FF5 /* SttDictionaryTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SttDictionaryTests.swift; sourceTree = "<group>"; };
 		7D98179D20D62F2D00896FF5 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		7D9817A320D630C700896FF5 /* LinkedWordsTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LinkedWordsTest.swift; sourceTree = "<group>"; };
+		7DAAAE6620EFEFC800492F58 /* WordRepositories.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WordRepositories.swift; sourceTree = "<group>"; };
+		7DAAAE6820EFF62200492F58 /* ConverterToApiModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConverterToApiModel.swift; sourceTree = "<group>"; };
 		7DB2BFB920D52819007B3676 /* WordCollectionCellSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WordCollectionCellSource.swift; sourceTree = "<group>"; };
 		7DC0C6C120C3F18400FC7998 /* StudyPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StudyPresenter.swift; sourceTree = "<group>"; };
 		7DC0C6C320C3F7A000FC7998 /* CardsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardsViewController.swift; sourceTree = "<group>"; };
@@ -223,7 +227,7 @@
 		8433D0CD20A8AE8D0031D690 /* RealmWord.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RealmWord.swift; sourceTree = "<group>"; };
 		8433D0CF20A8B2120031D690 /* RealmShortTag.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RealmShortTag.swift; sourceTree = "<group>"; };
 		8433D0D120A8BCDA0031D690 /* WordApiModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WordApiModel.swift; sourceTree = "<group>"; };
-		8437504520A9DD91007BFF5F /* UnitOfWork.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UnitOfWork.swift; sourceTree = "<group>"; };
+		8437504520A9DD91007BFF5F /* RealmStorageProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RealmStorageProvider.swift; sourceTree = "<group>"; };
 		8437504920AD6D21007BFF5F /* Login.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Login.storyboard; sourceTree = "<group>"; };
 		8462666A20B1DECF004169A1 /* WordEntityCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WordEntityCell.swift; sourceTree = "<group>"; };
 		8462666B20B1DECF004169A1 /* WordEntityCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = WordEntityCell.xib; sourceTree = "<group>"; };
@@ -292,13 +296,14 @@
 			name = Pods;
 			sourceTree = "<group>";
 		};
-		7D82B5B120C2CCD5004D896A /* Creater */ = {
+		7D82B5B120C2CCD5004D896A /* Creator */ = {
 			isa = PBXGroup;
 			children = (
 				7D82B5B220C2CCE7004D896A /* WordFactories.swift */,
 				7D82B5B620C332F9004D896A /* QueryFactories.swift */,
+				7DAAAE6820EFF62200492F58 /* ConverterToApiModel.swift */,
 			);
-			path = Creater;
+			path = Creator;
 			sourceTree = "<group>";
 		};
 		7D869EE920EE9DDD007F0521 /* SentModel */ = {
@@ -381,6 +386,14 @@
 				7D98179D20D62F2D00896FF5 /* Info.plist */,
 			);
 			path = SttDictionaryTests;
+			sourceTree = "<group>";
+		};
+		7DAAAE6520EFEFB500492F58 /* Repositories */ = {
+			isa = PBXGroup;
+			children = (
+				7DAAAE6620EFEFC800492F58 /* WordRepositories.swift */,
+			);
+			path = Repositories;
 			sourceTree = "<group>";
 		};
 		7DCCF5AE20EE827700B35978 /* SttLib */ = {
@@ -734,7 +747,7 @@
 		84D4388920A8785500B171ED /* Infrastructure */ = {
 			isa = PBXGroup;
 			children = (
-				7D82B5B120C2CCD5004D896A /* Creater */,
+				7D82B5B120C2CCD5004D896A /* Creator */,
 				84D4389320A8790000B171ED /* Services */,
 				84D4388D20A8789400B171ED /* Models */,
 				84D4388A20A8786800B171ED /* DAL */,
@@ -746,7 +759,6 @@
 		84D4388A20A8786800B171ED /* DAL */ = {
 			isa = PBXGroup;
 			children = (
-				8437504520A9DD91007BFF5F /* UnitOfWork.swift */,
 			);
 			path = DAL;
 			sourceTree = "<group>";
@@ -773,6 +785,7 @@
 		84D4389320A8790000B171ED /* Services */ = {
 			isa = PBXGroup;
 			children = (
+				7DAAAE6520EFEFB500492F58 /* Repositories */,
 				84D4389420A8790400B171ED /* Providers */,
 				84716E5A20B18E5C00A1F5F6 /* SyncService.swift */,
 				84716E5F20B1A58400A1F5F6 /* NotificationError.swift */,
@@ -784,6 +797,7 @@
 		84D4389420A8790400B171ED /* Providers */ = {
 			isa = PBXGroup;
 			children = (
+				8437504520A9DD91007BFF5F /* RealmStorageProvider.swift */,
 				84D4389720A8792F00B171ED /* ApiDataProvider.swift */,
 			);
 			path = Providers;
@@ -1042,6 +1056,7 @@
 				7DCCF60720EE827700B35978 /* SttHandlerTextField.swift in Sources */,
 				84D4389A20A8795500B171ED /* Constants.swift in Sources */,
 				84F39E7F20B0335100548681 /* WordPresenter.swift in Sources */,
+				7DAAAE6920EFF62200492F58 /* ConverterToApiModel.swift in Sources */,
 				7DCCF60020EE827700B35978 /* SttCollectionViewCell.swift in Sources */,
 				8433D0D020A8B2120031D690 /* RealmShortTag.swift in Sources */,
 				84AD6A5920B05010000D560E /* WordCollectionCellPresenter.swift in Sources */,
@@ -1054,7 +1069,7 @@
 				8433D0BC20A895EA0031D690 /* TagApiModel.swift in Sources */,
 				7DCCF5F620EE827700B35978 /* SttRandom.swift in Sources */,
 				7DCCF61520EE827700B35978 /* SttUIImageExtensions.swift in Sources */,
-				8437504620A9DD91007BFF5F /* UnitOfWork.swift in Sources */,
+				8437504620A9DD91007BFF5F /* RealmStorageProvider.swift in Sources */,
 				7D869EEB20EE9E07007F0521 /* UpdateWordApiModel.swift in Sources */,
 				7DCCF60E20EE827700B35978 /* SttCommandExtensions.swift in Sources */,
 				7D869EF420EEA0B2007F0521 /* ShortTagApiModel.swift in Sources */,
@@ -1072,6 +1087,7 @@
 				7DCCF60B20EE827700B35978 /* SttRepositoryTypeExtensions.swift in Sources */,
 				7DCCF61C20EE827700B35978 /* SttRealmObject.swift in Sources */,
 				847E19A520D3D8DE00652423 /* SearchLinkedWordsPresenter.swift in Sources */,
+				7DAAAE6720EFEFC800492F58 /* WordRepositories.swift in Sources */,
 				84F39E8020B0335100548681 /* NewWordPresenter.swift in Sources */,
 				7DCCF60C20EE827700B35978 /* SttArrayExtensions.swift in Sources */,
 				7D82B5B720C332F9004D896A /* QueryFactories.swift in Sources */,

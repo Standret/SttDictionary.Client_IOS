@@ -58,9 +58,10 @@ class SttHttpService: SttHttpServiceType {
                 .subscribe(onNext: { (res, data) in
                     observer.onNext((res, data))
                     observer.onCompleted()
-                }, onError:{
-                    er in
-                    observer.onError(er); print(er); })
+                }, onError:{ er in
+                    observer.onError(er);
+                    print(er);
+                })
             }
             .configurateParamet()
     }

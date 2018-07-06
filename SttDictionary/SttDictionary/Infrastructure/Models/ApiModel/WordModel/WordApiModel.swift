@@ -11,7 +11,7 @@ import Foundation
 struct WordApiModel: Decodable, RealmCodable {
     typealias TTarget = RealmWord
 
-    let id: String
+    let id: String!
     let dateCreated: Date
     
     let pronunciationUrl: String?
@@ -27,8 +27,8 @@ struct WordApiModel: Decodable, RealmCodable {
     
     func serialize() -> TTarget {
         let model = RealmWord(value: [
-            "isSynced": true,
-            "id": id,
+            "isSynced": id == nil ? false : true,
+            "id": id ?? "\(Constants.temporyPrefix)\(UUID().uuidString)",
             "dateCreated": dateCreated, 
             "pronunciationUrl": pronunciationUrl,
             "exampleUsage": exampleUsage?.serialize(),

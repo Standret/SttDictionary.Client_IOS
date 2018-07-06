@@ -19,12 +19,12 @@ struct Statistics: RealmCodable, Codable {
     let answers: [AnswerDataApiModel]
     
     func serialize() -> RealmStatistics {
-        return RealmStatistics(value: [
-            "nextRepetition": nextRepetition?.onlyDay(),
-            "easiness": easiness,
-            "repetition": repetition,
-            "interval": interval,
-            "answers": answers.map( { $0.serialize() } )
-            ])
+        return RealmStatistics(
+//            "nextRepetition": nextRepetition?.onlyDay(),
+//            "easiness": easiness,
+//            "repetition": repetition,
+//            "interval": interval,
+//            "answers": answers.map( { $0.serialize() } )
+            )
     }
 }

@@ -8,13 +8,13 @@
 
 import Foundation
 
-protocol UnitOfWorkType {
+protocol RealmStorageProviderType {
     var word: SttRepository<WordApiModel, RealmWord> { get }
     var tag: SttRepository<TagApiModel, RealmTag> { get }
     var syncData: SttRepository<SyncDataViewModel, RealmSyncData> { get }
 }
 
-class UnitOfWork: UnitOfWorkType {
+class RealmStorageProvider: RealmStorageProviderType {
     
     private lazy var _word = SttRepository<WordApiModel, RealmWord> (singleton: false)
     private lazy var _tag = SttRepository<TagApiModel, RealmTag> (singleton: false)

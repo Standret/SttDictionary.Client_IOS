@@ -9,16 +9,27 @@
 import Foundation
 import EasyDi
 
-class ServiceAssembly: Assembly {    
-    var apiService: ApiDataProviderType {
-        return define(scope: .lazySingleton, init: ApiDataProvider())
-    }
+class ServiceAssembly: Assembly {
+    
+    // modules
     var httpService: SttHttpServiceType {
         return define(scope: .lazySingleton, init: SttHttpService())
     }
-    var unitOfWork: UnitOfWorkType {
-        return define(scope: .lazySingleton, init: UnitOfWork())
+    
+    // providers
+    var apiDataProvider: ApiDataProviderType {
+        return define(scope: .lazySingleton, init: ApiDataProvider())
     }
+    var realmStorageProvider: RealmStorageProviderType {
+        return define(scope: .lazySingleton, init: RealmStorageProvider())
+    }
+    
+    // repositories
+    var wordRepositories: WordRepositoriesType {
+        return define(scope: .lazySingleton, init: WordRepositories())
+    }
+    
+    // services, interactors
     var syncService: ISyncService {
         return define(scope: .lazySingleton, init: SyncService())
     }

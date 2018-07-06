@@ -39,6 +39,7 @@ class RealmAnswerData: Object, RealmDecodable {
     }
     
     func deserialize() -> AnswerDataApiModel {
-        return AnswerDataApiModel(miliSecondsForReview: miliSecondsForReview, date: date, answer: answer)
+        fatalError()
+        //return AnswerDataApiModel(miliSecondsForReview: miliSecondsForReview, date: date, answer: answer)
     }
 }

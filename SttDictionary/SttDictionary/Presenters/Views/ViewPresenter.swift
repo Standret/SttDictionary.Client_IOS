@@ -14,7 +14,7 @@ protocol ViewDelegate: SttViewable {
 
 class ViewPresenter: SttPresenter<ViewDelegate> {
     var _apiService: ApiDataProviderType!
-    var _unitOfWorkd: UnitOfWorkType!
+    var _unitOfWorkd: RealmStorageProviderType!
     
     override func presenterCreating() {
         //ServiceInjectorAssembly.instance().inject(into: self)
@@ -22,12 +22,12 @@ class ViewPresenter: SttPresenter<ViewDelegate> {
     
     func getTags() {
 
-        _ = _apiService.updateTags().subscribe(onNext: { (tags) in
+        //_ = _apiService.updateTags().subscribe(onNext: { (tags) in
             //print("Recieve isLocal: \(tags.isLocal) isSuccess: \(tags.isSuccess)")
            // print("\n\n\n")
                // return self._apiService.getTags().subscribe(onNext: { (_tags) in
          //   })
-        })
+        //})
     }
 
 }

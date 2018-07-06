@@ -84,7 +84,7 @@ class ApiDataProvider: ApiDataProviderType {
     
     // statistics
     func getWordsStatistics(skip: Int) -> Observable<[WordStatisticsApiModel]> {
-        return _httpService.get(controller: .statistics("get"[]), data: ["skip": "\(skip)"])
+        return _httpService.get(controller: .statistics("get"), data: ["skip": "\(skip)"])
             .getResult(ofType: [WordStatisticsApiModel].self)
     }
 }

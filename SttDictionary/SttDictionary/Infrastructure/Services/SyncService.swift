@@ -10,21 +10,21 @@ import Foundation
 import RxSwift
 import SINQ
 
-enum SyncStep {
+enum SyncStep1 {
     case UploadWord, UpdateWord
     case DonwloadWord, DonwloadTag
 }
 
 protocol ISyncService {
     func getSyncData() -> Observable<SyncDataViewModel>
-    func sync() -> Observable<(Bool, SyncStep)>
+    func sync() -> Observable<(Bool, SyncStep1)>
     
     var observe: Observable<SyncDataViewModel> { get }
 }
 
 class SyncService: ISyncService {
     
-    var _unitOfWork: UnitOfWorkType!
+    var _unitOfWork: RealmStorageProviderType!
     var _apiServicce: ApiDataProviderType!
     var _notificationError: NotificationErrorType!
     
@@ -42,15 +42,15 @@ class SyncService: ISyncService {
                                                                            .map( { $0.deserialize() } ))
     }
     
-    func sync() -> Observable<(Bool, SyncStep)> {
+    func sync() -> Observable<(Bool, SyncStep1)> {
 //        return Observable.concat([sendWord(),
 //                                  updateWord(),
 //                                  _apiServicce.updateWords().map({ _ in (true, SyncStep.DonwloadWord)}),
 //                                  _apiServicce.updateTags().map({ _ in (true, SyncStep.DonwloadTag)} )])
-        Observable<(Bool, SyncStep)>.empty()
+        return Observable<(Bool, SyncStep1)>.empty()
     }
     
-    private func sendWord() -> Observable<(Bool, SyncStep)> {
+    private func sendWord() -> Observable<(Bool, SyncStep1)> {
         return self._unitOfWork.word.getMany(filter: "isSynced == false and id beginswith '\(Constants.temporyPrefix)'")
             .flatMap({ Observable.from($0) })
             .do(onNext: { print($0.originalWorld) })
@@ -59,24 +59,25 @@ class SyncService: ISyncService {
                                                                          linkedWords: $0.linkedWords.map( { $0.value } ),
                                                                          reverseCards: $0.reverseCards
                                                                          )) })
-            .flatMap({ (word) -> Observable<(Bool, SyncStep)> in
+            .flatMap({ (word) -> Observable<(Bool, SyncStep1)> in
                 return self._unitOfWork.word.delete(filter: "originalWorld = '\(word.originalWorld)'")
                     .toObservable()
                     .flatMap({ _ in self._unitOfWork.word.saveOne(model: word).toObservable() })
-                    .map( { _ in (true, SyncStep.UploadWord) } )
+                    .map( { _ in (true, SyncStep1.UploadWord) } )
             })
     }
     
-    private func updateWord() -> Observable<(Bool, SyncStep)> {
-        return self._unitOfWork.word.getMany(filter: "isSynced == false and not id beginswith '\(Constants.temporyPrefix)'")
-            .flatMap({ Observable.from($0) })
-            .do(onNext: { print("id\($0.id)") })
-            .flatMap({ self._apiServicce.updateWord(model: UpdateWordApiModel(word: $0.originalWorld,
-                                                                              translations: $0.translations.map( { $0.value } ),
-                                                                              id: $0.id,
-                                                                              originalStatistics: $0.originalStatistics!.deserialize(),
-                                                                              translateStatistics: $0.translateStatistics?.deserialize(),
-                                                                              linkedWords: $0.linkedWords.map({ $0.value }) )) })
-            .map({ ($0, SyncStep.UpdateWord) })
+    private func updateWord() -> Observable<(Bool, SyncStep1)> {
+        return Observable<(Bool, SyncStep1)>.empty()
+//        return self._unitOfWork.word.getMany(filter: "isSynced == false and not id beginswith '\(Constants.temporyPrefix)'")
+//            .flatMap({ Observable.from($0) })
+//            .do(onNext: { print("id\($0.id)") })
+//            .flatMap({ self._apiServicce.updateWord(model: UpdateWordApiModel(word: $0.originalWorld,
+//                                                                              translations: $0.translations.map( { $0.value } ),
+//                                                                              id: $0.id,
+//                                                                              originalStatistics: $0.originalStatistics!.deserialize(),
+//                                                                              translateStatistics: $0.translateStatistics?.deserialize(),
+//                                                                              linkedWords: $0.linkedWords.map({ $0.value }) )) })
+//            .map({ ($0, SyncStep.UpdateWord) })
     }
 }
