@@ -28,8 +28,25 @@ class ServiceAssembly: Assembly {
     var wordRepositories: WordRepositoriesType {
         return define(scope: .lazySingleton, init: WordRepositories())
     }
+    var statisticsRepositories: StatisticsRepositoriesType {
+        return define(scope: .lazySingleton, init: StatisticsRepositories())
+    }
+    var answerRepositories: AnswerRepositoriesType {
+        return define(scope: .lazySingleton, init: AnswerRepositories())
+    }
+    var tagRepositories: TagRepositoriesType {
+        return define(scope: .lazySingleton, init: TagRepositories())
+    }
     
-    // services, interactors
+    // interactors
+    var wordInteractor: WordInteractorType {
+        return define(scope: .lazySingleton, init: WordInteractor())
+    }
+    var syncInteractor: SyncInteractorType {
+        return define(scope: .lazySingleton, init: SyncInteractor())
+    }
+    
+    // services
     var syncService: ISyncService {
         return define(scope: .lazySingleton, init: SyncService())
     }

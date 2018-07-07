@@ -8,6 +8,12 @@
 
 import Foundation
 
+enum ElementType {
+    case newNotSynced
+    case notSynced
+    case all
+}
+
 struct CardsPredicate {
     let newOriginalCard: String?
     let repeatOriginalCard: String?
@@ -16,6 +22,18 @@ struct CardsPredicate {
 }
 
 class QueryFactories {
+    
+    class func getDefaultQuery(type: ElementType) -> String? {
+        var result: String?
+        switch type {
+        case .newNotSynced:
+            result = "isSynced == false and id beginswith '\(Constants.temporyPrefix)'"
+        case .notSynced:
+            result = "isSynced == false and not id beginswith '\(Constants.temporyPrefix)'"
+        default: break;
+        }
+        return result
+    }
     
     class func getWordQuery(text: String) -> CardsPredicate? {
         print (Date().onlyDay())

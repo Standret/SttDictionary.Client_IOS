@@ -9,6 +9,10 @@
 import Foundation
 import RxSwift
 
+class SttScheduler {
+    static let background = SerialDispatchQueueScheduler(qos: .background)
+}
+
 extension PrimitiveSequence {
     func toEmptyObservable<T>(ofType _: T.Type) -> Observable<T> {
         return self.asObservable().flatMap({ _ in Observable<T>.empty() })
@@ -22,7 +26,7 @@ extension PrimitiveSequence {
         })
     }
     func inBackground() -> PrimitiveSequence<Trait, Element> {
-        return self.subscribeOn(ConcurrentDispatchQueueScheduler(qos: .background))
+        return self.subscribeOn(SttScheduler.background)
     }
     func observeInUI() -> PrimitiveSequence<Trait, Element> {
         return self.observeOn(MainScheduler.instance)
@@ -43,7 +47,7 @@ extension Observable {
     }
     
     func inBackground() -> Observable<Element> {
-        return self.subscribeOn(ConcurrentDispatchQueueScheduler(qos: .background))
+        return self.subscribeOn(SttScheduler.background)
     }
     func observeInUI() -> Observable<Element> {
         return self.observeOn(MainScheduler.instance)

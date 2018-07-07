@@ -15,8 +15,16 @@ enum SyncStep {
 }
 
 protocol WordRepositoriesType {
-    func updateWords(skip: Int) -> Observable<Bool>
+    func updateWords(skip: Int) -> Observable<Int>
     func addWord(model: AddWordApiModel) -> Observable<(Bool, SyncStep)>
+    func addCachedWords() -> Observable<Bool>
+    
+    func getWords(type: ElementType) -> Observable<[WordApiModel]>
+    func getCount(type: ElementType) -> Observable<Int>
+
+    func exists(originalWord: String) -> Observable<Bool>
+    
+    func removeAll() -> Completable
 }
 
 class WordRepositories: WordRepositoriesType {
@@ -28,13 +36,13 @@ class WordRepositories: WordRepositoriesType {
         ServiceInjectorAssembly.instance().inject(into: self)
     }
     
-    func updateWords(skip: Int) -> Observable<Bool> {
+    func updateWords(skip: Int) -> Observable<Int> {
         return _apiDataProvider.getWords(skip: skip)
             .flatMap({ words in
                 self._storageProvider.word.saveMany(models: words)
                     .toObservable()
                     .map({ _ in words })
-            }).map({ $0.count > 0 })
+            }).map({ $0.count })
     }
     
     func addWord(model: AddWordApiModel) -> Observable<(Bool, SyncStep)> {
@@ -45,12 +53,29 @@ class WordRepositories: WordRepositoriesType {
     }
     
     func addCachedWords() -> Observable<Bool> {
-        return _storageProvider.word.getMany(filter: "isSynced == false and id beginswith '\(Constants.temporyPrefix)'")
+        return _storageProvider.word.getMany(filter: QueryFactories.getDefaultQuery(type: .newNotSynced))
             .flatMap({ Observable.from($0) })
             .flatMap({ (word) -> Observable<Bool> in
+                let id = word.id
                 return self._apiDataProvider.addWord(model: word.convertToApiModel())
+                    .inBackground()
                     .flatMap({ self._storageProvider.word.saveOne(model: $0).toObservable() })
-                    .flatMap({ _ in self._storageProvider.word.delete(filter: "id == '\(word.id)'").toObservable() })
+                    .flatMap({ _ in self._storageProvider.word.delete(filter: "id == '\(id)'").toObservable() })
             })
+    }
+    
+    func getWords(type: ElementType) -> Observable<[WordApiModel]> {
+        return _storageProvider.word.getMany(filter: QueryFactories.getDefaultQuery(type: type)).map({ $0.map({ $0.deserialize() }) })
+    }
+    func getCount(type: ElementType) -> Observable<Int> {
+        return _storageProvider.word.count(filter: QueryFactories.getDefaultQuery(type: type))
+    }
+    
+    func exists(originalWord: String) -> Observable<Bool> {
+        return _storageProvider.word.exists(filter: "originalWorld = '\(originalWord)'")
+    }
+    
+    func removeAll() -> Completable {
+        return _storageProvider.answer.deleteAll()
     }
 }

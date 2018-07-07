@@ -27,25 +27,33 @@ class ShortWordsData: ShortWordItemDelegate {
 
 class NewWordPresenter: SttPresenter<NewWordDelegate> {
     
+    var _wordInteractor: WordInteractorType!
+    
+    var save: SttComand!
+    
     var word: String? {
         didSet {
             if !(word ?? "").trimmingCharacters(in: .whitespaces).isEmpty {
-                _ = _wordService.exists(word: word!).subscribe(onNext: { self.delegate?.error(isHidden: !$0) })
+                _ = _wordInteractor.exists(word: word!.trimmingCharacters(in: .whitespaces))
+                        .subscribe(onNext: { self.delegate?.error(isHidden: !$0) })
             }
         }
     }
+    
     var mainTranslation = ShortWordsData()
     var linkedWords = ShortWordsData()
-    var save: SttComand!
+    var tags = ShortWordsData()
+    var exampleUsage: ExampleUsage?
     var useReverse: Bool = true
-    
-    var _wordService: IWordService!
+    var usePronunciation: Bool = true
     
     override func presenterCreating() {
         ServiceInjectorAssembly.instance().inject(into: self)
         
         save = SttComand(delegate: self, handler: { $0.onSave() })
     }
+    
+    // api for view
     
     func addNewMainTranslation(value: String) {
         mainTranslation.data.append(WorldCollectionCellPresenter(value: value, delegate: mainTranslation))
@@ -56,12 +64,28 @@ class NewWordPresenter: SttPresenter<NewWordDelegate> {
             .map({ WorldCollectionCellPresenter(value: $0.1, id: $0.0, delegate: linkedWords) }))
     }
     
+    // comand handler
+    
     func onSave() {
         if !(word ?? "").trimmingCharacters(in: .whitespaces).isEmpty && mainTranslation.data.count > 0 {
-            _ = save.useWork(observable: _wordService.createWord(word: word!, translations: mainTranslation.data.map( { $0.word! } ), linkedWords: linkedWords.data.map({ $0.id! }), useReverse: useReverse))
-            .subscribe(onNext: { (result) in
-                print("successfule saved")
-            })
+            _ = save.useWork(observable: _wordInteractor.addWord(word: word!.trimmingCharacters(in: .whitespaces),
+                                                                 translations: mainTranslation.data.map( { $0.word!.trimmingCharacters(in: .whitespaces) } ),
+                                                                 exampleUsage: exampleUsage,
+                                                                 linkedWords: linkedWords.data.map( { $0.word! } ),
+                                                                 tagsId: tags.data.map( { $0.word! } ),
+                                                                 useReverse: useReverse,
+                                                                 usePronunciation: usePronunciation))
+                .subscribe(onNext: { (result) in
+                    if result.0 && result.1 == .local {
+                        print("save to lacal has been successfully")
+                    }
+                    else {
+                        print("save to server has been successfully")
+                    }
+                })
+        }
+        else {
+            delegate?.sendMessage(title: "Need field is empty", message: "Original word and main translation")
         }
     }
 }

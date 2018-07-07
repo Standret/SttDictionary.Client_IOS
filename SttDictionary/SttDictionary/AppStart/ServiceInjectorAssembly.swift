@@ -30,8 +30,64 @@ class ServiceInjectorAssembly: Assembly {
             return $0
         }
     }
+    func inject(into service: StatisticsRepositories) {
+        let _:StatisticsRepositories = define(init: service) {
+            $0._apiDataProvider = self.serviceAssembly.apiDataProvider
+            $0._storageProvider = self.serviceAssembly.realmStorageProvider
+            return $0
+        }
+    }
+    func inject(into service: TagRepositories) {
+        let _:TagRepositories = define(init: service) {
+            $0._apiDataProvider = self.serviceAssembly.apiDataProvider
+            $0._storageProvider = self.serviceAssembly.realmStorageProvider
+            return $0
+        }
+    }
+    func inject(into service: AnswerRepositories) {
+        let _:AnswerRepositories = define(init: service) {
+            $0._apiDataProvider = self.serviceAssembly.apiDataProvider
+            $0._storageProvider = self.serviceAssembly.realmStorageProvider
+            return $0
+        }
+    }
+    
+    // Inject into interactors
+    
+    func inject(into service: WordInteractor) {
+        let _:WordInteractor = define(init: service) {
+            $0._wordRepositories = self.serviceAssembly.wordRepositories
+            $0._notificationError = self.serviceAssembly.notificationError
+            return $0
+        }
+    }
+    
+    func inject(into service: SyncInteractor) {
+        let _:SyncInteractor = define(init: service) {
+            $0._wordRepositories = self.serviceAssembly.wordRepositories
+            $0._notificationError = self.serviceAssembly.notificationError
+            $0._statisticsRepositories = self.serviceAssembly.statisticsRepositories
+            $0._tagRepositories = self.serviceAssembly.tagRepositories
+            $0._answerRepositories = self.serviceAssembly.answerRepositories
+            return $0
+        }
+    }
     
     // Inject service into presenter
+    
+    func inject(into service: NewWordPresenter) {
+        let _:NewWordPresenter = define(init: service) {
+            $0._wordInteractor = self.serviceAssembly.wordInteractor
+            return $0
+        }
+    }
+    
+    func inject(into service: SyncPresenter) {
+        let _:SyncPresenter = define(init: service) {
+            $0._syncInteractor = self.serviceAssembly.syncInteractor
+            return $0
+        }
+    }
     
     func inject(into service: StudyPresenter) {
         let _:StudyPresenter = define(init: service) {
@@ -40,22 +96,8 @@ class ServiceInjectorAssembly: Assembly {
         }
     }
     
-    func inject(into service: SyncPresenter) {
-        let _:SyncPresenter = define(init: service) {
-            $0._syncService = self.serviceAssembly.syncService
-            return $0
-        }
-    }
-    
     func inject(into service: WordPresenter) {
         let _:WordPresenter = define(init: service) {
-            $0._wordService = self.serviceAssembly.wordService
-            return $0
-        }
-    }
-    
-    func inject(into service: NewWordPresenter) {
-        let _:NewWordPresenter = define(init: service) {
             $0._wordService = self.serviceAssembly.wordService
             return $0
         }

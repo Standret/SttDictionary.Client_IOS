@@ -13,7 +13,7 @@ class WordFactories {
         fatalError()
     }
     
-    class func defaultStatistics() -> Statistics {
-        return Statistics(nextRepetition: nil, easiness: 2.5, repetition: 0, interval: 1, answers: [])
-    }
+//    class func defaultStatistics() -> Statistics {
+//        return Statistics(nextRepetition: nil, easiness: 2.5, repetition: 0, interval: 1, answers: [])
+//    }
 }

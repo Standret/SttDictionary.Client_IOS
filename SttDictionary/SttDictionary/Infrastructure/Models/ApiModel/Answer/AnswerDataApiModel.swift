@@ -8,7 +8,9 @@
 
 import Foundation
 
-struct AnswerDataApiModel: Codable {
+struct AnswerDataApiModel: Codable, RealmCodable {
+    
+    typealias TTarget = RealmAnswerData
     
     let answer: AnswersGrade
     let type: AnswersType
@@ -16,4 +18,15 @@ struct AnswerDataApiModel: Codable {
     
     let date: Date
     let miliSecondsForReview: Int
+    
+    
+    func serialize() -> RealmAnswerData {
+        return RealmAnswerData(value: [
+            "_answer": answer.rawValue,
+            "_type": type.rawValue,
+            "_raw": raw.rawValue,
+            "date": date,
+            "miliSecondsForReview": miliSecondsForReview
+            ])
+    }
 }

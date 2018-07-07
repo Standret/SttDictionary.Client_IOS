@@ -38,3 +38,13 @@ extension RealmWord {
                                usePronunciation: self.usePronunciation)
     }
 }
+
+extension RealmAnswer {
+    func convertToApiModel() -> AnswerDataApiModel {
+        return AnswerDataApiModel(answer: self.grade,
+                                  type: self.type,
+                                  raw: self.raw,
+                                  date: self.dateCreated,
+                                  miliSecondsForReview: self.miliSecondsForReview)
+    }
+}

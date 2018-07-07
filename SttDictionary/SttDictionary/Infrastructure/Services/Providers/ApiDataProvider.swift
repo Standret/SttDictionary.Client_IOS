@@ -30,6 +30,7 @@ protocol ApiDataProviderType {
     
     // statistics
     func getWordsStatistics(skip: Int) -> Observable<[WordStatisticsApiModel]>
+    func getCount() -> Observable<CountApiModel>
 }
 
 class ApiDataProvider: ApiDataProviderType {
@@ -86,5 +87,9 @@ class ApiDataProvider: ApiDataProviderType {
     func getWordsStatistics(skip: Int) -> Observable<[WordStatisticsApiModel]> {
         return _httpService.get(controller: .statistics("get"), data: ["skip": "\(skip)"])
             .getResult(ofType: [WordStatisticsApiModel].self)
+    }
+    func getCount() -> Observable<CountApiModel> {
+        return _httpService.get(controller: .statistics("counts"))
+            .getResult(ofType: CountApiModel.self)
     }
 }

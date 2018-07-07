@@ -8,8 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		50126B39145C42DD5110937E /* Pods_SttDictionary.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8CF89F27CDB3C3218C6CB2EB /* Pods_SttDictionary.framework */; };
-		7D82B5AE20C2C459004D896A /* StatisticsApiModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D82B5AD20C2C459004D896A /* StatisticsApiModel.swift */; };
-		7D82B5B020C2C4B5004D896A /* RealmStatistics.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D82B5AF20C2C4B5004D896A /* RealmStatistics.swift */; };
 		7D82B5B320C2CCE7004D896A /* WordFactories.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D82B5B220C2CCE7004D896A /* WordFactories.swift */; };
 		7D82B5B520C30491004D896A /* StudyViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D82B5B420C30491004D896A /* StudyViewController.swift */; };
 		7D82B5B720C332F9004D896A /* QueryFactories.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D82B5B620C332F9004D896A /* QueryFactories.swift */; };
@@ -82,6 +80,17 @@
 		7DCCF61E20EE827700B35978 /* SttRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7DCCF5EB20EE827700B35978 /* SttRepository.swift */; };
 		7DCCF61F20EE827700B35978 /* SttHttpService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7DCCF5EC20EE827700B35978 /* SttHttpService.swift */; };
 		7DCCF62020EE827700B35978 /* SttLog.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7DCCF5ED20EE827700B35978 /* SttLog.swift */; };
+		7DE2F2CA20F08D9200B5F343 /* WordInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7DE2F2C920F08D9200B5F343 /* WordInteractor.swift */; };
+		7DE2F2CC20F08DED00B5F343 /* SyncInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7DE2F2CB20F08DED00B5F343 /* SyncInteractor.swift */; };
+		7DE2F2CE20F0C5FD00B5F343 /* CountApiModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7DE2F2CD20F0C5FD00B5F343 /* CountApiModel.swift */; };
+		7DE2F2D020F0C7CF00B5F343 /* StatisticsRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7DE2F2CF20F0C7CF00B5F343 /* StatisticsRepository.swift */; };
+		7DE2F2D220F0CC0E00B5F343 /* AnswerRepositories.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7DE2F2D120F0CC0E00B5F343 /* AnswerRepositories.swift */; };
+		7DE2F2D420F0CC2C00B5F343 /* TagRepositories.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7DE2F2D320F0CC2C00B5F343 /* TagRepositories.swift */; };
+		7DE2F2D720F0CCCE00B5F343 /* RealmWordStatistics.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7DE2F2D620F0CCCE00B5F343 /* RealmWordStatistics.swift */; };
+		7DE2F2DA20F0CDAB00B5F343 /* RealmAnswerData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7DE2F2D920F0CDAB00B5F343 /* RealmAnswerData.swift */; };
+		7DE2F2DC20F0D12E00B5F343 /* RealmAnswer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7DE2F2DB20F0D12E00B5F343 /* RealmAnswer.swift */; };
+		7DE2F2DE20F0D95E00B5F343 /* SttDefaultComponents.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7DE2F2DD20F0D95E00B5F343 /* SttDefaultComponents.swift */; };
+		7DE2F2E020F0DC6100B5F343 /* CountViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7DE2F2DF20F0DC6100B5F343 /* CountViewModel.swift */; };
 		7DED9B2120DD808B00FB4C0B /* BaseRealm.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7DED9B2020DD808B00FB4C0B /* BaseRealm.swift */; };
 		840427F520B2E92700C94765 /* ApiModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 840427F420B2E92700C94765 /* ApiModel.swift */; };
 		8433D0B720A895A30031D690 /* ServiceAssembly.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8433D0B620A895A30031D690 /* ServiceAssembly.swift */; };
@@ -141,8 +150,6 @@
 
 /* Begin PBXFileReference section */
 		4B61541E87113249A0C65427 /* Pods-SttDictionary.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SttDictionary.release.xcconfig"; path = "Pods/Target Support Files/Pods-SttDictionary/Pods-SttDictionary.release.xcconfig"; sourceTree = "<group>"; };
-		7D82B5AD20C2C459004D896A /* StatisticsApiModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatisticsApiModel.swift; sourceTree = "<group>"; };
-		7D82B5AF20C2C4B5004D896A /* RealmStatistics.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RealmStatistics.swift; sourceTree = "<group>"; };
 		7D82B5B220C2CCE7004D896A /* WordFactories.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WordFactories.swift; sourceTree = "<group>"; };
 		7D82B5B420C30491004D896A /* StudyViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StudyViewController.swift; sourceTree = "<group>"; };
 		7D82B5B620C332F9004D896A /* QueryFactories.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QueryFactories.swift; sourceTree = "<group>"; };
@@ -217,6 +224,17 @@
 		7DCCF5EB20EE827700B35978 /* SttRepository.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SttRepository.swift; sourceTree = "<group>"; };
 		7DCCF5EC20EE827700B35978 /* SttHttpService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SttHttpService.swift; sourceTree = "<group>"; };
 		7DCCF5ED20EE827700B35978 /* SttLog.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SttLog.swift; sourceTree = "<group>"; };
+		7DE2F2C920F08D9200B5F343 /* WordInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WordInteractor.swift; sourceTree = "<group>"; };
+		7DE2F2CB20F08DED00B5F343 /* SyncInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SyncInteractor.swift; sourceTree = "<group>"; };
+		7DE2F2CD20F0C5FD00B5F343 /* CountApiModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CountApiModel.swift; sourceTree = "<group>"; };
+		7DE2F2CF20F0C7CF00B5F343 /* StatisticsRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatisticsRepository.swift; sourceTree = "<group>"; };
+		7DE2F2D120F0CC0E00B5F343 /* AnswerRepositories.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnswerRepositories.swift; sourceTree = "<group>"; };
+		7DE2F2D320F0CC2C00B5F343 /* TagRepositories.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TagRepositories.swift; sourceTree = "<group>"; };
+		7DE2F2D620F0CCCE00B5F343 /* RealmWordStatistics.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RealmWordStatistics.swift; sourceTree = "<group>"; };
+		7DE2F2D920F0CDAB00B5F343 /* RealmAnswerData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RealmAnswerData.swift; sourceTree = "<group>"; };
+		7DE2F2DB20F0D12E00B5F343 /* RealmAnswer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RealmAnswer.swift; sourceTree = "<group>"; };
+		7DE2F2DD20F0D95E00B5F343 /* SttDefaultComponents.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SttDefaultComponents.swift; sourceTree = "<group>"; };
+		7DE2F2DF20F0DC6100B5F343 /* CountViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CountViewModel.swift; sourceTree = "<group>"; };
 		7DED9B2020DD808B00FB4C0B /* BaseRealm.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseRealm.swift; sourceTree = "<group>"; };
 		840427F420B2E92700C94765 /* ApiModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApiModel.swift; sourceTree = "<group>"; };
 		8433D0B620A895A30031D690 /* ServiceAssembly.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServiceAssembly.swift; sourceTree = "<group>"; };
@@ -374,6 +392,7 @@
 			isa = PBXGroup;
 			children = (
 				7D869F0120EEAD09007F0521 /* WordStatisticsApiModel.swift */,
+				7DE2F2CD20F0C5FD00B5F343 /* CountApiModel.swift */,
 			);
 			path = WordStatistics;
 			sourceTree = "<group>";
@@ -392,6 +411,9 @@
 			isa = PBXGroup;
 			children = (
 				7DAAAE6620EFEFC800492F58 /* WordRepositories.swift */,
+				7DE2F2CF20F0C7CF00B5F343 /* StatisticsRepository.swift */,
+				7DE2F2D120F0CC0E00B5F343 /* AnswerRepositories.swift */,
+				7DE2F2D320F0CC2C00B5F343 /* TagRepositories.swift */,
 			);
 			path = Repositories;
 			sourceTree = "<group>";
@@ -475,6 +497,7 @@
 			children = (
 				7DCCF5CB20EE827700B35978 /* SttErrorLabel.swift */,
 				7DCCF5CC20EE827700B35978 /* SttTextField.swift */,
+				7DE2F2DD20F0D95E00B5F343 /* SttDefaultComponents.swift */,
 			);
 			path = UIElement;
 			sourceTree = "<group>";
@@ -557,6 +580,32 @@
 			path = Realm;
 			sourceTree = "<group>";
 		};
+		7DE2F2C820F08D8000B5F343 /* Interactors */ = {
+			isa = PBXGroup;
+			children = (
+				7DE2F2C920F08D9200B5F343 /* WordInteractor.swift */,
+				7DE2F2CB20F08DED00B5F343 /* SyncInteractor.swift */,
+			);
+			path = Interactors;
+			sourceTree = "<group>";
+		};
+		7DE2F2D520F0CCBB00B5F343 /* WordStatistics */ = {
+			isa = PBXGroup;
+			children = (
+				7DE2F2D620F0CCCE00B5F343 /* RealmWordStatistics.swift */,
+			);
+			path = WordStatistics;
+			sourceTree = "<group>";
+		};
+		7DE2F2D820F0CD9400B5F343 /* Answer */ = {
+			isa = PBXGroup;
+			children = (
+				7DE2F2D920F0CDAB00B5F343 /* RealmAnswerData.swift */,
+				7DE2F2DB20F0D12E00B5F343 /* RealmAnswer.swift */,
+			);
+			path = Answer;
+			sourceTree = "<group>";
+		};
 		840427F820B2E9A000C94765 /* Views */ = {
 			isa = PBXGroup;
 			children = (
@@ -579,7 +628,6 @@
 				7D869EF620EEA290007F0521 /* Answer */,
 				7D869EF220EEA089007F0521 /* Tag */,
 				7D869EEC20EE9EA6007F0521 /* WordModel */,
-				7D82B5AD20C2C459004D896A /* StatisticsApiModel.swift */,
 			);
 			path = ApiModel;
 			sourceTree = "<group>";
@@ -658,6 +706,7 @@
 			isa = PBXGroup;
 			children = (
 				84716E5320B186BB00A1F5F6 /* SyncData.swift */,
+				7DE2F2DF20F0DC6100B5F343 /* CountViewModel.swift */,
 			);
 			path = ViewModels;
 			sourceTree = "<group>";
@@ -785,6 +834,7 @@
 		84D4389320A8790000B171ED /* Services */ = {
 			isa = PBXGroup;
 			children = (
+				7DE2F2C820F08D8000B5F343 /* Interactors */,
 				7DAAAE6520EFEFB500492F58 /* Repositories */,
 				84D4389420A8790400B171ED /* Providers */,
 				84716E5A20B18E5C00A1F5F6 /* SyncService.swift */,
@@ -816,10 +866,11 @@
 		84D4389C20A87D4100B171ED /* RealmModels */ = {
 			isa = PBXGroup;
 			children = (
+				7DE2F2D820F0CD9400B5F343 /* Answer */,
+				7DE2F2D520F0CCBB00B5F343 /* WordStatistics */,
 				7D869EF520EEA0FF007F0521 /* Tag */,
 				7D869EEF20EE9F98007F0521 /* Word */,
 				84716E5620B1876300A1F5F6 /* RealmSyncData.swift */,
-				7D82B5AF20C2C4B5004D896A /* RealmStatistics.swift */,
 				7DED9B2020DD808B00FB4C0B /* BaseRealm.swift */,
 			);
 			path = RealmModels;
@@ -1026,9 +1077,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				7DE2F2D420F0CC2C00B5F343 /* TagRepositories.swift in Sources */,
 				7DCCF61F20EE827700B35978 /* SttHttpService.swift in Sources */,
 				84F39E7E20B0335100548681 /* SettingPresenter.swift in Sources */,
-				7D82B5AE20C2C459004D896A /* StatisticsApiModel.swift in Sources */,
 				84716E5E20B1923600A1F5F6 /* DateConverter.swift in Sources */,
 				8433D0B720A895A30031D690 /* ServiceAssembly.swift in Sources */,
 				84F39E7A20B0334500548681 /* WordsViewController.swift in Sources */,
@@ -1039,7 +1090,6 @@
 				7DCCF61A20EE827700B35978 /* SttIdentifiers.swift in Sources */,
 				7DCCF5FF20EE827700B35978 /* SttCollectionReusableView.swift in Sources */,
 				7D82B5B320C2CCE7004D896A /* WordFactories.swift in Sources */,
-				7D82B5B020C2C4B5004D896A /* RealmStatistics.swift in Sources */,
 				7DB2BFBA20D52819007B3676 /* WordCollectionCellSource.swift in Sources */,
 				7DCCF5FC20EE827700B35978 /* SttKeyboardNotification.swift in Sources */,
 				7DCCF62020EE827700B35978 /* SttLog.swift in Sources */,
@@ -1052,6 +1102,7 @@
 				84F39E8220B0352D00548681 /* UIConstants.swift in Sources */,
 				7D869EF120EEA063007F0521 /* RealmExampleUsage.swift in Sources */,
 				7D869EFD20EEA3E5007F0521 /* UpdateAnswerApiModel.swift in Sources */,
+				7DE2F2DE20F0D95E00B5F343 /* SttDefaultComponents.swift in Sources */,
 				7DCCF61720EE827700B35978 /* SttUIViewControllerExtensions.swift in Sources */,
 				7DCCF60720EE827700B35978 /* SttHandlerTextField.swift in Sources */,
 				84D4389A20A8795500B171ED /* Constants.swift in Sources */,
@@ -1059,6 +1110,7 @@
 				7DAAAE6920EFF62200492F58 /* ConverterToApiModel.swift in Sources */,
 				7DCCF60020EE827700B35978 /* SttCollectionViewCell.swift in Sources */,
 				8433D0D020A8B2120031D690 /* RealmShortTag.swift in Sources */,
+				7DE2F2CA20F08D9200B5F343 /* WordInteractor.swift in Sources */,
 				84AD6A5920B05010000D560E /* WordCollectionCellPresenter.swift in Sources */,
 				7DCCF60420EE827700B35978 /* SttViewPage.swift in Sources */,
 				7DCCF61020EE827700B35978 /* SttFormatterExtensions.swift in Sources */,
@@ -1080,6 +1132,7 @@
 				8433D0CC20A8AE510031D690 /* RealmTag.swift in Sources */,
 				8433D0CE20A8AE8D0031D690 /* RealmWord.swift in Sources */,
 				84D2422120A85177007D8F1A /* AppDelegate.swift in Sources */,
+				7DE2F2CC20F08DED00B5F343 /* SyncInteractor.swift in Sources */,
 				84F39E8520B03F0A00548681 /* WordCollectionCell.swift in Sources */,
 				7DCCF61620EE827700B35978 /* SttUISegmentControlExtensions.swift in Sources */,
 				7DCB327320DEB02C001FAD0F /* StatisticsViewController.swift in Sources */,
@@ -1092,6 +1145,8 @@
 				7DCCF60C20EE827700B35978 /* SttArrayExtensions.swift in Sources */,
 				7D82B5B720C332F9004D896A /* QueryFactories.swift in Sources */,
 				84716E5420B186BB00A1F5F6 /* SyncData.swift in Sources */,
+				7DE2F2D720F0CCCE00B5F343 /* RealmWordStatistics.swift in Sources */,
+				7DE2F2D020F0C7CF00B5F343 /* StatisticsRepository.swift in Sources */,
 				7DCCF61220EE827700B35978 /* SttObservableExtensions.swift in Sources */,
 				84B3CDA220B20915002546C0 /* AddWordApiModel.swift in Sources */,
 				7DCCF5F220EE827700B35978 /* SttConverter.swift in Sources */,
@@ -1099,19 +1154,24 @@
 				7DCCF60A20EE827700B35978 /* SttHttpServiceTypeExtensions.swift in Sources */,
 				7DCCF5F420EE827700B35978 /* SttObservableCollection.swift in Sources */,
 				7DCCF60620EE827700B35978 /* SttTextField.swift in Sources */,
+				7DE2F2DC20F0D12E00B5F343 /* RealmAnswer.swift in Sources */,
 				7DCCF5F720EE827700B35978 /* SttGlobalObserver.swift in Sources */,
+				7DE2F2E020F0DC6100B5F343 /* CountViewModel.swift in Sources */,
 				8462666F20B1DEED004169A1 /* WordEntityCellPresenter.swift in Sources */,
 				84716E5120B1844000A1F5F6 /* SyncPresenter.swift in Sources */,
 				7DCCF5F920EE827700B35978 /* SttCollectionViewSource.swift in Sources */,
 				84716E4E20B1842100A1F5F6 /* SyncViewController.swift in Sources */,
 				7DCCF60D20EE827700B35978 /* SttCodableExtensions.swift in Sources */,
 				7DED9B2120DD808B00FB4C0B /* BaseRealm.swift in Sources */,
+				7DE2F2CE20F0C5FD00B5F343 /* CountApiModel.swift in Sources */,
 				7DCCF61D20EE827700B35978 /* SttRealmProtocols.swift in Sources */,
 				7D869EEE20EE9EBA007F0521 /* ExampleUsage.swift in Sources */,
 				7D869EFF20EEABC7007F0521 /* AnswerApiModel.swift in Sources */,
+				7DE2F2D220F0CC0E00B5F343 /* AnswerRepositories.swift in Sources */,
 				7DCCF61820EE827700B35978 /* SttUIViewExtensions.swift in Sources */,
 				84F39E7920B0334500548681 /* SettingViewController.swift in Sources */,
 				7DC0C6C620C3FB8900FC7998 /* CardsPresenter.swift in Sources */,
+				7DE2F2DA20F0CDAB00B5F343 /* RealmAnswerData.swift in Sources */,
 				7DCCF5EF20EE827700B35978 /* CachingPlayerItem.swift in Sources */,
 				7DC0C6C420C3F7A000FC7998 /* CardsViewController.swift in Sources */,
 				84716E6020B1A58400A1F5F6 /* NotificationError.swift in Sources */,
@@ -1338,14 +1398,14 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
 				DEFINES_MODULE = YES;
-				DEVELOPMENT_TEAM = D9L33B2S23;
+				DEVELOPMENT_TEAM = MD88G6A24R;
 				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
 				INFOPLIST_FILE = SttDictionary/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.perfict.fitnessdev;
+				PRODUCT_BUNDLE_IDENTIFIER = com.perfict.fitnes;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 4.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -1359,14 +1419,14 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
 				DEFINES_MODULE = YES;
-				DEVELOPMENT_TEAM = D9L33B2S23;
+				DEVELOPMENT_TEAM = MD88G6A24R;
 				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
 				INFOPLIST_FILE = SttDictionary/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.perfict.fitnessdev;
+				PRODUCT_BUNDLE_IDENTIFIER = com.perfict.fitnes;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 4.0;
 				TARGETED_DEVICE_FAMILY = "1,2";

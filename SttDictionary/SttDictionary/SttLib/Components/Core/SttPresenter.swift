@@ -23,7 +23,9 @@ class SttPresenter<TDelegate> : SttViewInjector, SttPresenterType {
         ServiceInjectorAssembly.instance().inject(into: self)
         self._delegate = delegate
         
-        _ = _notificationError.errorObservable.subscribe(onNext: { [weak self] (err) in
+        _ = _notificationError.errorObservable
+            .observeInUI()
+            .subscribe(onNext: { [weak self] (err) in
             if (self?._delegate is SttViewableListener) {
                 (self!._delegate as! SttViewableListener).sendError(error: err)
             }

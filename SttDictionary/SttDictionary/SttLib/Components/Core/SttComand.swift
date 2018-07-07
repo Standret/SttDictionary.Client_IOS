@@ -20,6 +20,7 @@ class SttComand {
     
     var singleCallEndCallback = true
     private var isCall = false
+    var isExecute: Bool { return isCall }
     
     init<T: SttPresenterType> (delegate: T, handler: @escaping (T) -> Void, handlerCanExecute: ((T) -> Bool)? = nil) {
         executeHandler = { [weak delegate] in

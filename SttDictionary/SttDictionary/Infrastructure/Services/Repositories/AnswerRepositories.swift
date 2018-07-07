@@ -1,0 +1,69 @@
+//
+//  AnswerRepositories.swift
+//  SttDictionary
+//
+//  Created by Piter Standret on 7/7/18.
+//  Copyright © 2018 Standret. All rights reserved.
+//
+
+import Foundation
+import RxSwift
+import SINQ
+
+protocol AnswerRepositoriesType {
+    func getCount(type: ElementType) -> Observable<Int>
+    func getStatistics(type: ElementType) -> Observable<[AnswerApiModel]>
+    
+    func addCachedAnswers() -> Observable<Int>
+    
+    func updateAnswer(skip: Int) -> Observable<Int>
+    
+    func removeAll() -> Completable
+}
+
+class AnswerRepositories: AnswerRepositoriesType {
+    
+    var _apiDataProvider: ApiDataProviderType!
+    var _storageProvider: RealmStorageProviderType!
+    
+    init () {
+        ServiceInjectorAssembly.instance().inject(into: self)
+    }
+    
+    func getCount(type: ElementType) -> Observable<Int> {
+        return _storageProvider.answer.count(filter: QueryFactories.getDefaultQuery(type: type))
+    }
+    func getStatistics(type: ElementType) -> Observable<[AnswerApiModel]> {
+        return _storageProvider.answer.getMany(filter: QueryFactories.getDefaultQuery(type: type)).map({ $0.map({ $0.deserialize() }) })
+    }
+    
+    func addCachedAnswers() -> Observable<Int> {
+        return _storageProvider.answer.getMany(filter: QueryFactories.getDefaultQuery(type: .newNotSynced))
+            .flatMap({ (answers) -> Observable<Int> in
+                let count = answers.count
+                let wordsId = answers.map({ $0.wordId })
+                var model = [String: [AnswerDataApiModel]]()
+                for item in wordsId {
+                    model[item] = sinq(answers).whereTrue({ $0.wordId == item }).map({ $0.convertToApiModel() })
+                }
+                if model.count > 0 {
+                    return self._apiDataProvider.updateAnswers(answers: UpdateAnswerApiModel(answers: model)).map({ _ in count })
+                }
+                return Observable<Int>.empty()
+            })
+    }
+
+    
+    func updateAnswer(skip: Int) -> Observable<Int> {
+        return _apiDataProvider.getAnswers(skip: skip)
+            .flatMap({ answer in
+                self._storageProvider.answer.saveMany(models: answer)
+                    .toObservable()
+                    .map({ _ in answer })
+            }).map({ $0.count })
+    }
+    
+    func removeAll() -> Completable {
+        return _storageProvider.answer.deleteAll()
+    }
+}

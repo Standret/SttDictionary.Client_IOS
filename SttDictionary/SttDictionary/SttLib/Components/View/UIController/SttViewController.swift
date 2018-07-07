@@ -18,7 +18,7 @@ class SttBaseViewController: UIViewController, SttKeyboardNotificationDelegate {
     fileprivate var scrollAmount: CGFloat = 0
     fileprivate var scrollAmountGeneral: CGFloat = 0
     var moveViewUp: Bool = false
-    var style = UIStatusBarStyle.default
+    var style = UIStatusBarStyle.lightContent
     
     override func viewDidLoad() {
         super.viewDidLoad()

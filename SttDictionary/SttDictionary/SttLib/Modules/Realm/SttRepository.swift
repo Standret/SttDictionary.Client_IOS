@@ -32,6 +32,7 @@ protocol SttRepositoryType {
     
     func delete(model: TEntity) -> Completable
     func delete(filter: String?) -> Completable
+    func deleteAll() -> Completable
     
     func exists(filter: String?) -> Observable<Bool>
     func count(filter: String?) -> Observable<Int>
@@ -43,6 +44,8 @@ class SttRepository<T, R>: SttRepositoryType
     where T: RealmCodable,
     R: RealmDecodable,
     R: SttRealmObject {
+
+    
     
     typealias TEntity = T
     typealias TRealm = R
@@ -102,9 +105,6 @@ class SttRepository<T, R>: SttRepositoryType
             do {
                 print("saveOne \(Thread.current)")
                 let realm = try Realm()
-//                if (realm.objects(R.self).count > 0) {
-//                    observer(CompletableEvent.error(SttBaseError.realmError(SttRealmError.objectIsSignleton("method: saveOne type: \(type(of: R.self))"))))
-//                }
                 print(Thread.current)
                 realm.beginWrite()
                 realm.add(model.serialize(), update: true)
@@ -223,6 +223,7 @@ class SttRepository<T, R>: SttRepositoryType
             do {
                 let realm = try Realm()
                 
+                print ("delete: \(Thread.current)")
                 var objects: Results<R>!
                 if let query = filter {
                     if (self.singleton) {
@@ -254,6 +255,23 @@ class SttRepository<T, R>: SttRepositoryType
             
                 return Disposables.create()
             }
+    }
+    
+    func deleteAll() -> Completable {
+        return Completable.create { (observer) -> Disposable in
+            do {
+                let realm = try Realm()
+                try realm.write {
+                    realm.deleteAll()
+                }
+                observer(CompletableEvent.completed)
+            }
+            catch {
+                observer(CompletableEvent.error(error))
+            }
+            
+            return Disposables.create()
+        }
     }
     
     func exists(filter: String?) -> Observable<Bool> {

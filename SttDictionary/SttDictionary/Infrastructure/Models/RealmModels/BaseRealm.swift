@@ -9,6 +9,5 @@
 import Foundation
 
 class BaseRealm: SttRealmObject {
-    @objc dynamic var dateUpdated: Date = Date()
     @objc dynamic var isSynced: Bool = true
 }

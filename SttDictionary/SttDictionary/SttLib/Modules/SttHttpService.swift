@@ -37,32 +37,19 @@ class SttHttpService: SttHttpServiceType {
     
     func  get(controller: ApiConroller, data: [String:String], insertToken: Bool) -> Observable<(HTTPURLResponse, Data)> {
         let url = "\(self.url!)\(controller.get())"
+        SttLog.trace(message: url, key: Constants.httpKeyLog)
         var _insertToken = insertToken
         
-        print("get")
-        print(Thread.current)
-        return Observable<(HTTPURLResponse, Data)>.create { (observer) -> Disposable in
-            SttLog.trace(message: url, key: Constants.httpKeyLog)
+        if !self.connectivity.isConnected {
+            sleep(Constants.timeWaitNextRequest)
+            return Observable<(HTTPURLResponse, Data)>.error(SttBaseError.connectionError(SttConnectionError.noInternetConnection))
+        }
             
-            if !self.connectivity.isConnected {
-                sleep(Constants.timeWaitNextRequest)
-                observer.onError(SttBaseError.connectionError(SttConnectionError.noInternetConnection))
-                return Disposables.create()
-            }
-            
-            if self.token == "" {
-                _insertToken = false
-            }
-            return requestData(.get, url, parameters: data, encoding: URLEncoding.default,
-                               headers: _insertToken ? ["Authorization" : "\(self.tokenType) \(self.token)"] : nil)
-                .subscribe(onNext: { (res, data) in
-                    observer.onNext((res, data))
-                    observer.onCompleted()
-                }, onError:{ er in
-                    observer.onError(er);
-                    print(er);
-                })
-            }
+        if self.token == "" {
+            _insertToken = false
+        }
+        return requestData(.get, url, parameters: data, encoding: URLEncoding.default,
+                           headers: _insertToken ? ["Authorization" : "\(self.tokenType) \(self.token)"] : nil)
             .configurateParamet()
     }
     
@@ -70,66 +57,48 @@ class SttHttpService: SttHttpServiceType {
     // TODO: -- write handler for check if value empty key is simpleType
     func post(controller: ApiConroller, data: [String:String], insertToken: Bool) -> Observable<(HTTPURLResponse, Data)> {
         let url = "\(self.url!)\(controller.get())"
+        SttLog.trace(message: url, key: Constants.httpKeyLog)
         var _insertToken = insertToken
         
-        return Observable<(HTTPURLResponse, Data)>.create { (observer) -> Disposable in
-            SttLog.trace(message: url, key: Constants.httpKeyLog)
-            
-            if !self.connectivity.isConnected {
-                sleep(Constants.timeWaitNextRequest)
-                observer.onError(SttBaseError.connectionError(SttConnectionError.noInternetConnection))
-                return Disposables.create()
-            }
-            
-            if self.token == "" {
-                _insertToken = false
-            }
+        if !self.connectivity.isConnected {
+            return Observable<(HTTPURLResponse, Data)>.error(SttBaseError.connectionError(SttConnectionError.noInternetConnection))
+        }
+        
+        if self.token == "" {
+            _insertToken = false
+        }
 
-            return requestData(.post, url, parameters: data, encoding: URLEncoding.httpBody,
-                               headers: _insertToken ? ["Authorization" : "\(self.tokenType) \(self.token)"] : nil)
-                .subscribe(onNext: { (res, data) in
-                    observer.onNext((res, data))
-                    observer.onCompleted()
-                }, onError: observer.onError(_:), onCompleted: nil, onDisposed: nil)
-            }
+        return requestData(.post, url, parameters: data, encoding: URLEncoding.httpBody,
+                           headers: _insertToken ? ["Authorization" : "\(self.tokenType) \(self.token)"] : nil)
             .configurateParamet()
     }
     
     func post(controller: ApiConroller, data: Encodable?, insertToken: Bool) -> Observable<(HTTPURLResponse, Data)> {
         let url = "\(self.url!)\(controller.get())"
+        SttLog.trace(message: url, key: Constants.httpKeyLog)
         var _insertToken = insertToken
         
-        return Observable<(HTTPURLResponse, Data)>.create { (observer) -> Disposable in
-            SttLog.trace(message: url, key: Constants.httpKeyLog)
+        if !self.connectivity.isConnected {
+            return Observable<(HTTPURLResponse, Data)>.error(SttBaseError.connectionError(SttConnectionError.noInternetConnection))
+        }
             
-            if !self.connectivity.isConnected {
-                sleep(Constants.timeWaitNextRequest)
-                observer.onError(SttBaseError.connectionError(SttConnectionError.noInternetConnection))
-                return Disposables.create()
-            }
-            
-            if self.token == "" {
-                _insertToken = false
-            }
+        if self.token == "" {
+            _insertToken = false
+        }
             
             
-            var request = URLRequest(url: URL(string: url)!)
-            request.httpMethod = HTTPMethod.post.rawValue
-            
-            request.httpBody = (data?.getJsonString().data(using: .utf8, allowLossyConversion: false))
-            
-            request.setValue("application/json", forHTTPHeaderField: "Content-Type")
-            if insertToken {
-                request.setValue("\(self.tokenType) \(self.token)", forHTTPHeaderField: "Authorization")
-            }
-            
-            return requestData(request)
-                .subscribe(onNext: { (res, data) in
-                    observer.onNext((res, data))
-                    observer.onCompleted()
-                }, onError: observer.onError(_:),
-                   onCompleted: observer.onCompleted)
-            }
+        var request = URLRequest(url: URL(string: url)!)
+        request.httpMethod = HTTPMethod.post.rawValue
+        request.timeoutInterval = TimeInterval(Constants.timeout)
+        
+        request.httpBody = (data?.getJsonString().data(using: .utf8, allowLossyConversion: false))
+        
+        request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+        if _insertToken {
+            request.setValue("\(self.tokenType) \(self.token)", forHTTPHeaderField: "Authorization")
+        }
+        
+        return requestData(request)
             .configurateParamet()
     }
     
@@ -186,6 +155,7 @@ class SttHttpService: SttHttpServiceType {
 extension Observable {
     func configurateParamet() -> Observable<Element> {
         return self
+            .observeOn(SttScheduler.background)
             .timeout(Constants.timeout, scheduler: MainScheduler.instance)
             .retry(Constants.maxCountRepeatRequest)
     }
