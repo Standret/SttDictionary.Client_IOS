@@ -14,12 +14,12 @@ protocol StudyDelegate: SttViewContolable {
 
 class StudyPresenter: SttPresenter<StudyDelegate> {
     
-    var newWords = [RealmWord]()
-    var repeatWords = [RealmWord]()
-    var newTranslationWords = [RealmWord]()
-    var repeatTranslationWords = [RealmWord]()
+    var newWords = [WordApiModel]()
+    var repeatWords = [WordApiModel]()
+    var newTranslationWords = [WordApiModel]()
+    var repeatTranslationWords = [WordApiModel]()
     
-    var _wordService: IWordService!
+    var _studyInteractor: StudyInteractorType!
     
     override func presenterCreating() {
         super.presenterCreating()
@@ -27,26 +27,48 @@ class StudyPresenter: SttPresenter<StudyDelegate> {
     }
     
     func reloadData() {
-        _ = _wordService.getNewWord()
+        _ = _studyInteractor.getNewOriginal()
             .subscribe(onNext: { [weak self] (words) in
                 self?.newWords = words
                 self?.delegate?.reloadStatus()
             })
-        _  = _wordService.getRepeatWord()
+        _ = _studyInteractor.getRepeatOriginal()
             .subscribe(onNext: { [weak self] (words) in
                 self?.repeatWords = words
                 self?.delegate?.reloadStatus()
             })
-        _ = _wordService.getNewTranslationWord()
+        _ = _studyInteractor.getNewTranslate()
             .subscribe(onNext: { [weak self] (words) in
                 self?.newTranslationWords = words
                 self?.delegate?.reloadStatus()
             })
-        _  = _wordService.getRepeatTranslationWord()
+        _ = _studyInteractor.getRepeatTranslation()
             .subscribe(onNext: { [weak self] (words) in
                 self?.repeatTranslationWords = words
                 self?.delegate?.reloadStatus()
             })
+
+        
+//        _ = _wordService.getNewWord()
+//            .subscribe(onNext: { [weak self] (words) in
+//                self?.newWords = words
+//                self?.delegate?.reloadStatus()
+//            })
+//        _  = _wordService.getRepeatWord()
+//            .subscribe(onNext: { [weak self] (words) in
+//                self?.repeatWords = words
+//                self?.delegate?.reloadStatus()
+//            })
+//        _ = _wordService.getNewTranslationWord()
+//            .subscribe(onNext: { [weak self] (words) in
+//                self?.newTranslationWords = words
+//                self?.delegate?.reloadStatus()
+//            })
+//        _  = _wordService.getRepeatTranslationWord()
+//            .subscribe(onNext: { [weak self] (words) in
+//                self?.repeatTranslationWords = words
+//                self?.delegate?.reloadStatus()
+//            })
     }
     
     func onCLickOriginalCard() {

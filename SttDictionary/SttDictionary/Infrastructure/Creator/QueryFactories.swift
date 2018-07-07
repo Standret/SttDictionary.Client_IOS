@@ -14,6 +14,11 @@ enum ElementType {
     case all
 }
 
+enum StatisticsType {
+    case newOriginal, newTranslation
+    case repeatOriginal, repeatTranslation
+}
+
 struct CardsPredicate {
     let newOriginalCard: String?
     let repeatOriginalCard: String?
@@ -33,6 +38,22 @@ class QueryFactories {
         default: break;
         }
         return result
+    }
+    
+    class func getStatisticsQuery(type: StatisticsType) -> String {
+        var predicateString: String!
+        switch type {
+        case .newOriginal:
+            predicateString = "lastAnswer = nil and _type = \(AnswersType.originalCard.rawValue)"
+        case .newTranslation:
+            predicateString = "lastAnswer = nil and _type = \(AnswersType.translateCard.rawValue)"
+        case .repeatOriginal:
+            predicateString = NSPredicate(format: "lastAnswer != nil and _type = \(AnswersType.originalCard.rawValue) and nextRepetition <= %@", argumentArray: [Date().onlyDay()]).predicateFormat
+        case .repeatTranslation:
+            predicateString = NSPredicate(format: "lastAnswer != nil and _type = \(AnswersType.translateCard.rawValue) and nextRepetition <= %@", argumentArray: [Date().onlyDay()]).predicateFormat
+        }
+        
+        return predicateString
     }
     
     class func getWordQuery(text: String) -> CardsPredicate? {

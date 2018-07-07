@@ -45,6 +45,9 @@ class ServiceAssembly: Assembly {
     var syncInteractor: SyncInteractorType {
         return define(scope: .lazySingleton, init: SyncInteractor())
     }
+    var studyInteractor: StudyInteractorType {
+        return define(scope: .lazySingleton, init: StudyInteractor())
+    }
     
     // services
     var syncService: ISyncService {

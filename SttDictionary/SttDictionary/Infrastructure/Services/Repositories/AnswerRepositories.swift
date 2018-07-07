@@ -14,6 +14,9 @@ protocol AnswerRepositoriesType {
     func getCount(type: ElementType) -> Observable<Int>
     func getStatistics(type: ElementType) -> Observable<[AnswerApiModel]>
     
+    func getTodayAnswers() -> Observable<[AnswerApiModel]>
+    func getAnswers(wordIds: [String]) -> Observable<[AnswerApiModel]>
+    
     func addCachedAnswers() -> Observable<Int>
     
     func updateAnswer(skip: Int) -> Observable<Int>
@@ -35,6 +38,14 @@ class AnswerRepositories: AnswerRepositoriesType {
     }
     func getStatistics(type: ElementType) -> Observable<[AnswerApiModel]> {
         return _storageProvider.answer.getMany(filter: QueryFactories.getDefaultQuery(type: type)).map({ $0.map({ $0.deserialize() }) })
+    }
+    func getTodayAnswers() -> Observable<[AnswerApiModel]> {
+        let predicateFormat = NSPredicate(format: "dateCreated = %@", argumentArray: [Date().onlyDay()]).predicateFormat
+        return _storageProvider.answer.getMany(filter: predicateFormat).map({ $0.map({ $0.deserialize() }) })
+    }
+    func getAnswers(wordIds: [String]) -> Observable<[AnswerApiModel]> {
+        let predicateFormat = NSPredicate(format: "wordId IN %@", argumentArray: [Array(Set(wordIds))]).predicateFormat
+        return _storageProvider.answer.getMany(filter: predicateFormat).map({ $0.map({ $0.deserialize() }) })
     }
     
     func addCachedAnswers() -> Observable<Int> {

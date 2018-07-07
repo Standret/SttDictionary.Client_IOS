@@ -21,6 +21,9 @@ protocol WordRepositoriesType {
     
     func getWords(type: ElementType) -> Observable<[WordApiModel]>
     func getCount(type: ElementType) -> Observable<Int>
+    
+    func getWords(statistics: [WordStatisticsApiModel]) -> Observable<[WordApiModel]>
+    func getWords(answers: [AnswerApiModel]) -> Observable<[WordApiModel]>
 
     func exists(originalWord: String) -> Observable<Bool>
     
@@ -69,6 +72,17 @@ class WordRepositories: WordRepositoriesType {
     }
     func getCount(type: ElementType) -> Observable<Int> {
         return _storageProvider.word.count(filter: QueryFactories.getDefaultQuery(type: type))
+    }
+    
+    func getWords(statistics: [WordStatisticsApiModel]) -> Observable<[WordApiModel]> {
+        let predicateFormat = NSPredicate(format: "id IN %@", argumentArray: [Array(Set(statistics.map({ $0.wordId })))]).predicateFormat
+        return _storageProvider.word.getMany(filter: predicateFormat)
+            .map({ $0.map({ $0.deserialize() }) })
+    }
+    func getWords(answers: [AnswerApiModel]) -> Observable<[WordApiModel]> {
+        let predicateFormat = NSPredicate(format: "id IN %@", argumentArray: [Array(Set(answers.map({ $0.wordId })))]).predicateFormat
+        return _storageProvider.word.getMany(filter: predicateFormat)
+            .map({ $0.map({ $0.deserialize() }) })
     }
     
     func exists(originalWord: String) -> Observable<Bool> {

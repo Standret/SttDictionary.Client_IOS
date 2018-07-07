@@ -17,6 +17,12 @@ protocol StatisticsRepositoriesType {
     func getLocalCount(type: ElementType) -> Observable<Int>
     func getStatistics(type: ElementType) -> Observable<[WordStatisticsApiModel]>
     
+    func getNewOriginal() -> Observable<[WordStatisticsApiModel]>
+    func getNewTranslate() -> Observable<[WordStatisticsApiModel]>
+    func getRepeatOriginal() -> Observable<[WordStatisticsApiModel]>
+    func getRepeatTranslate() -> Observable<[WordStatisticsApiModel]>
+
+    
     func removeAll() -> Completable
 }
 
@@ -51,5 +57,22 @@ class StatisticsRepositories: StatisticsRepositoriesType {
     
     func removeAll() -> Completable {
         return _storageProvider.answer.deleteAll()
+    }
+    
+    func getNewOriginal() -> Observable<[WordStatisticsApiModel]> {
+        return _storageProvider.statistics.getMany(filter: QueryFactories.getStatisticsQuery(type: .newOriginal))
+                .map({ $0.map({ $0.deserialize() }) })
+    }
+    func getNewTranslate() -> Observable<[WordStatisticsApiModel]> {
+        return _storageProvider.statistics.getMany(filter: QueryFactories.getStatisticsQuery(type: .newTranslation))
+                .map({ $0.map({ $0.deserialize() }) })
+    }
+    func getRepeatOriginal() -> Observable<[WordStatisticsApiModel]> {
+        return _storageProvider.statistics.getMany(filter: QueryFactories.getStatisticsQuery(type: .repeatOriginal))
+                .map({ $0.map({ $0.deserialize() }) })
+    }
+    func getRepeatTranslate() -> Observable<[WordStatisticsApiModel]> {
+        return _storageProvider.statistics.getMany(filter: QueryFactories.getStatisticsQuery(type: .repeatTranslation))
+            .map({ $0.map({ $0.deserialize() }) })
     }
 }

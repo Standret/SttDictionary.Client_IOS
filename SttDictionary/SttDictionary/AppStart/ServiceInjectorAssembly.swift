@@ -73,6 +73,16 @@ class ServiceInjectorAssembly: Assembly {
         }
     }
     
+    func inject(into service: StudyInteractor) {
+        let _:StudyInteractor = define(init: service) {
+            $0._wordRepositories = self.serviceAssembly.wordRepositories
+            $0._notificationError = self.serviceAssembly.notificationError
+            $0._statisticsRepositories = self.serviceAssembly.statisticsRepositories
+            $0._answersRepositories = self.serviceAssembly.answerRepositories
+            return $0
+        }
+    }
+    
     // Inject service into presenter
     
     func inject(into service: NewWordPresenter) {
@@ -91,7 +101,7 @@ class ServiceInjectorAssembly: Assembly {
     
     func inject(into service: StudyPresenter) {
         let _:StudyPresenter = define(init: service) {
-            $0._wordService = self.serviceAssembly.wordService
+            $0._studyInteractor = self.serviceAssembly.studyInteractor
             return $0
         }
     }

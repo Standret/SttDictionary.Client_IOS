@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		50126B39145C42DD5110937E /* Pods_SttDictionary.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8CF89F27CDB3C3218C6CB2EB /* Pods_SttDictionary.framework */; };
+		7D57202E20F1313500955AFD /* StudyInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D57202D20F1313500955AFD /* StudyInteractor.swift */; };
 		7D82B5B320C2CCE7004D896A /* WordFactories.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D82B5B220C2CCE7004D896A /* WordFactories.swift */; };
 		7D82B5B520C30491004D896A /* StudyViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D82B5B420C30491004D896A /* StudyViewController.swift */; };
 		7D82B5B720C332F9004D896A /* QueryFactories.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D82B5B620C332F9004D896A /* QueryFactories.swift */; };
@@ -150,6 +151,7 @@
 
 /* Begin PBXFileReference section */
 		4B61541E87113249A0C65427 /* Pods-SttDictionary.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SttDictionary.release.xcconfig"; path = "Pods/Target Support Files/Pods-SttDictionary/Pods-SttDictionary.release.xcconfig"; sourceTree = "<group>"; };
+		7D57202D20F1313500955AFD /* StudyInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StudyInteractor.swift; sourceTree = "<group>"; };
 		7D82B5B220C2CCE7004D896A /* WordFactories.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WordFactories.swift; sourceTree = "<group>"; };
 		7D82B5B420C30491004D896A /* StudyViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StudyViewController.swift; sourceTree = "<group>"; };
 		7D82B5B620C332F9004D896A /* QueryFactories.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QueryFactories.swift; sourceTree = "<group>"; };
@@ -585,6 +587,7 @@
 			children = (
 				7DE2F2C920F08D9200B5F343 /* WordInteractor.swift */,
 				7DE2F2CB20F08DED00B5F343 /* SyncInteractor.swift */,
+				7D57202D20F1313500955AFD /* StudyInteractor.swift */,
 			);
 			path = Interactors;
 			sourceTree = "<group>";
@@ -1137,6 +1140,7 @@
 				7DCCF61620EE827700B35978 /* SttUISegmentControlExtensions.swift in Sources */,
 				7DCB327320DEB02C001FAD0F /* StatisticsViewController.swift in Sources */,
 				7DCCF60120EE827700B35978 /* SttTableViewCell.swift in Sources */,
+				7D57202E20F1313500955AFD /* StudyInteractor.swift in Sources */,
 				7DCCF60B20EE827700B35978 /* SttRepositoryTypeExtensions.swift in Sources */,
 				7DCCF61C20EE827700B35978 /* SttRealmObject.swift in Sources */,
 				847E19A520D3D8DE00652423 /* SearchLinkedWordsPresenter.swift in Sources */,

@@ -32,7 +32,7 @@ class RealmWordStatistics: BaseRealm, RealmDecodable {
         return WordStatisticsApiModel(id: id,
                                       dateCreated: dateCreated,
                                       wordId: wordId,
-                                      lastAnswer: lastAnswer!.deserialize(),
+                                      lastAnswer: lastAnswer?.deserialize(),
                                       type: type,
                                       interval: interval,
                                       repetition: repetition,
