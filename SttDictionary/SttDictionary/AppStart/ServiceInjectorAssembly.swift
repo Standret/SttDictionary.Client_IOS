@@ -58,6 +58,9 @@ class ServiceInjectorAssembly: Assembly {
         let _:WordInteractor = define(init: service) {
             $0._wordRepositories = self.serviceAssembly.wordRepositories
             $0._notificationError = self.serviceAssembly.notificationError
+            $0._answerRepositories = self.serviceAssembly.answerRepositories
+            $0._statisticsRepositories = self.serviceAssembly.statisticsRepositories
+            $0._smEngine = self.serviceAssembly.smEngine
             return $0
         }
     }
@@ -108,14 +111,14 @@ class ServiceInjectorAssembly: Assembly {
     
     func inject(into service: WordPresenter) {
         let _:WordPresenter = define(init: service) {
-            $0._wordService = self.serviceAssembly.wordService
+            $0._wordInteractor = self.serviceAssembly.wordInteractor
             return $0
         }
     }
     
     func inject(into service: CardsPresenter) {
         let _:CardsPresenter = define(init: service) {
-            $0._wordService = self.serviceAssembly.wordService
+            $0._wordInteractor = self.serviceAssembly.wordInteractor
             return $0
         }
     }

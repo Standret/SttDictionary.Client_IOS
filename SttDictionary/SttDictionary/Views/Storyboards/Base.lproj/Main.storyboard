@@ -1081,26 +1081,75 @@
                                                 </constraints>
                                                 <color key="onTintColor" name="main"/>
                                             </switch>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Use pronunciation" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0T4-qv-5Gf">
+                                                <rect key="frame" x="16" y="347" width="132" height="20"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="height" constant="20" id="tRy-9R-DJO"/>
+                                                </constraints>
+                                                <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                                                <nil key="textColor"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                            <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="8VX-GV-7F2">
+                                                <rect key="frame" x="312" y="342" width="49" height="31"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="width" constant="47" id="fUQ-fB-Qhe"/>
+                                                    <constraint firstAttribute="height" constant="31" id="uvc-EE-ELZ"/>
+                                                </constraints>
+                                                <color key="onTintColor" name="main"/>
+                                            </switch>
+                                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Example original" textAlignment="natural" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="Sdf-qU-irG" customClass="SttTextField" customModule="SttDictionary" customModuleProvider="target">
+                                                <rect key="frame" x="16" y="389" width="343" height="40"/>
+                                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                <color key="tintColor" name="main"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="height" constant="40" id="lHq-GP-NAL"/>
+                                                </constraints>
+                                                <nil key="textColor"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                                                <textInputTraits key="textInputTraits" returnKeyType="join" enablesReturnKeyAutomatically="YES"/>
+                                            </textField>
+                                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Example translate" textAlignment="natural" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="aHj-NA-HaY" customClass="SttTextField" customModule="SttDictionary" customModuleProvider="target">
+                                                <rect key="frame" x="16" y="439" width="343" height="40"/>
+                                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                <color key="tintColor" name="main"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="height" constant="40" id="Jh8-kd-sDW"/>
+                                                </constraints>
+                                                <nil key="textColor"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                                                <textInputTraits key="textInputTraits" returnKeyType="join" enablesReturnKeyAutomatically="YES"/>
+                                            </textField>
                                         </subviews>
                                         <color key="backgroundColor" name="background"/>
                                         <constraints>
                                             <constraint firstItem="iQx-yo-G25" firstAttribute="leading" secondItem="3Ar-DJ-qqT" secondAttribute="leading" constant="16" id="5eu-I2-zHi"/>
+                                            <constraint firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="aHj-NA-HaY" secondAttribute="bottom" constant="20" id="5zE-75-uoI"/>
+                                            <constraint firstItem="aHj-NA-HaY" firstAttribute="leading" secondItem="3Ar-DJ-qqT" secondAttribute="leading" constant="16" id="6YB-bw-Lh6"/>
                                             <constraint firstItem="BEh-ba-72Q" firstAttribute="leading" secondItem="3Ar-DJ-qqT" secondAttribute="leading" constant="16" id="8v8-nL-ffZ"/>
                                             <constraint firstItem="EEM-zT-Ir7" firstAttribute="leading" secondItem="3Ar-DJ-qqT" secondAttribute="leading" constant="16" id="AiY-ic-GsK"/>
                                             <constraint firstItem="L2K-tV-RF7" firstAttribute="leading" secondItem="BEh-ba-72Q" secondAttribute="trailing" constant="16" id="B4p-pj-Z2y"/>
                                             <constraint firstItem="BEh-ba-72Q" firstAttribute="top" secondItem="IRI-09-h4c" secondAttribute="bottom" constant="10" id="E9v-rp-man"/>
+                                            <constraint firstAttribute="trailing" secondItem="8VX-GV-7F2" secondAttribute="trailing" constant="16" id="GIc-wI-2ZF"/>
                                             <constraint firstItem="IRI-09-h4c" firstAttribute="leading" secondItem="3Ar-DJ-qqT" secondAttribute="leading" constant="16" id="I7h-hh-5bn"/>
+                                            <constraint firstAttribute="trailing" secondItem="aHj-NA-HaY" secondAttribute="trailing" constant="16" id="J69-fb-ZZN"/>
                                             <constraint firstItem="DrW-lS-Fxw" firstAttribute="top" secondItem="koO-dq-PpK" secondAttribute="bottom" constant="10" id="Jhc-ah-3gp"/>
                                             <constraint firstItem="EEM-zT-Ir7" firstAttribute="top" secondItem="DrW-lS-Fxw" secondAttribute="bottom" constant="13" id="L5v-0P-mSE"/>
+                                            <constraint firstItem="0T4-qv-5Gf" firstAttribute="leading" secondItem="3Ar-DJ-qqT" secondAttribute="leading" constant="16" id="MNs-PX-0Y4"/>
                                             <constraint firstAttribute="trailing" secondItem="DrW-lS-Fxw" secondAttribute="trailing" constant="16" id="N7D-sT-fye"/>
                                             <constraint firstItem="L2K-tV-RF7" firstAttribute="top" secondItem="IRI-09-h4c" secondAttribute="bottom" constant="10" id="O4J-B2-khr"/>
                                             <constraint firstItem="ntG-6e-SD9" firstAttribute="top" secondItem="DrW-lS-Fxw" secondAttribute="bottom" constant="8" id="P7q-Ba-7yW"/>
-                                            <constraint firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="EEM-zT-Ir7" secondAttribute="bottom" constant="25" id="QW0-az-X3y"/>
+                                            <constraint firstAttribute="trailing" secondItem="Sdf-qU-irG" secondAttribute="trailing" constant="16" id="Qp6-V2-zb0"/>
                                             <constraint firstItem="kh2-Gf-JXW" firstAttribute="top" secondItem="3Ar-DJ-qqT" secondAttribute="top" constant="30" id="U43-Eg-naH"/>
                                             <constraint firstAttribute="trailing" secondItem="kh2-Gf-JXW" secondAttribute="trailing" constant="16" id="Ucc-z0-gQH"/>
+                                            <constraint firstItem="aHj-NA-HaY" firstAttribute="top" secondItem="Sdf-qU-irG" secondAttribute="bottom" constant="10" id="VfB-Co-BDf"/>
                                             <constraint firstItem="koO-dq-PpK" firstAttribute="leading" secondItem="3Ar-DJ-qqT" secondAttribute="leading" constant="16" id="XKv-1A-Leo"/>
                                             <constraint firstItem="DrW-lS-Fxw" firstAttribute="leading" secondItem="3Ar-DJ-qqT" secondAttribute="leading" constant="16" id="Xde-ij-Oik"/>
+                                            <constraint firstItem="8VX-GV-7F2" firstAttribute="top" secondItem="ntG-6e-SD9" secondAttribute="bottom" constant="8" id="bni-kJ-UeO"/>
                                             <constraint firstAttribute="trailing" secondItem="L2K-tV-RF7" secondAttribute="trailing" constant="8" id="ci6-cU-nc6"/>
+                                            <constraint firstItem="Sdf-qU-irG" firstAttribute="top" secondItem="8VX-GV-7F2" secondAttribute="bottom" constant="16" id="d2X-6I-6et"/>
+                                            <constraint firstItem="Sdf-qU-irG" firstAttribute="leading" secondItem="3Ar-DJ-qqT" secondAttribute="leading" constant="16" id="hMA-SM-9Z8"/>
+                                            <constraint firstItem="0T4-qv-5Gf" firstAttribute="top" secondItem="EEM-zT-Ir7" secondAttribute="bottom" constant="19" id="iRd-qD-d7Q"/>
                                             <constraint firstAttribute="trailing" secondItem="koO-dq-PpK" secondAttribute="trailing" constant="16" id="jeQ-sd-qX6"/>
                                             <constraint firstItem="DrW-lS-Fxw" firstAttribute="leading" secondItem="3Ar-DJ-qqT" secondAttribute="leading" constant="16" id="jhP-V8-Niu"/>
                                             <constraint firstItem="IRI-09-h4c" firstAttribute="top" secondItem="kh2-Gf-JXW" secondAttribute="bottom" constant="5" id="kra-uU-0fh"/>
@@ -1148,7 +1197,10 @@
                         <outlet property="cnstrMainTranslationHeight" destination="YTY-PX-EUu" id="vyG-2o-bkA"/>
                         <outlet property="collectionView" destination="iQx-yo-G25" id="JWw-cA-dX6"/>
                         <outlet property="linkedWordsCollection" destination="DrW-lS-Fxw" id="JaT-He-cXK"/>
-                        <outlet property="swtchReverse" destination="ntG-6e-SD9" id="hcY-59-1s7"/>
+                        <outlet property="swtchPronounciation" destination="8VX-GV-7F2" id="idl-zZ-D77"/>
+                        <outlet property="swtchReverse" destination="ntG-6e-SD9" id="hvg-K0-Dcq"/>
+                        <outlet property="tfExampleOriginal" destination="Sdf-qU-irG" id="t0B-sU-ywx"/>
+                        <outlet property="tfExampleTranslate" destination="aHj-NA-HaY" id="XM3-v8-5d9"/>
                         <outlet property="tfLinkedWords" destination="koO-dq-PpK" id="5iB-rr-UyM"/>
                         <outlet property="tfMainTranslation" destination="BEh-ba-72Q" id="9za-DT-jRP"/>
                         <outlet property="tfWord" destination="kh2-Gf-JXW" id="tVm-or-lvO"/>
@@ -1259,6 +1311,15 @@
         </namedColor>
         <namedColor name="hard">
             <color red="0.95686274509803926" green="0.79607843137254897" blue="0.36862745098039218" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+        <namedColor name="main">
+            <color red="0.062745098040000002" green="0.56862745100000001" blue="0.45098039220000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+        <namedColor name="main">
+            <color red="0.062745098040000002" green="0.56862745100000001" blue="0.45098039220000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+        <namedColor name="main">
+            <color red="0.062745098040000002" green="0.56862745100000001" blue="0.45098039220000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
         <namedColor name="main">
             <color red="0.062745098040000002" green="0.56862745100000001" blue="0.45098039220000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>

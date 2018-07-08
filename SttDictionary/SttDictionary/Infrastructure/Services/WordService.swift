@@ -119,32 +119,32 @@ class WordServie: IWordService {
     
     func getWord(searchString: String?) -> Observable<[WordEntityCellPresenter]> {
         var observable = _unitOfWork.word.getMany()
-        if let _searchStr = searchString {
-            if QueryFactories.isRegisterSchem(scheme: _searchStr) {
-                let predicatesModel = QueryFactories.getWordQuery(text: _searchStr)
-                var observables = [Observable<[RealmWord]>]()
-                if predicatesModel?.newOriginalCard != nil {
-                    observables.append(getNewWord())
-                }
-                if predicatesModel?.newTranslationCard != nil {
-                    observables.append(getRepeatWord())
-                }
-                if predicatesModel?.newTranslationCard != nil {
-                    observables.append(getNewTranslationWord())
-                }
-                if predicatesModel?.repeatTranslationCard != nil {
-                    observables.append(getRepeatTranslationWord())
-                }
-                observable = Observable.concat(observables)
-            }
-            else if !_searchStr.isEmpty {
-                let query = "originalWorld contains[cd] '\(_searchStr)' or any translations.value contains[cd] '\(_searchStr)'"
-                observable = _unitOfWork.word.getMany(filter: query)
-            }
-            else {
-                observable = _unitOfWork.word.getMany()
-            }
-        }
+//        if let _searchStr = searchString {
+//            if QueryFactories.isRegisterSchem(scheme: _searchStr) {
+//                let predicatesModel = QueryFactories.getWordQuery(text: _searchStr)
+//                var observables = [Observable<[RealmWord]>]()
+//                if predicatesModel?.newOriginalCard != nil {
+//                    observables.append(getNewWord())
+//                }
+//                if predicatesModel?.newTranslationCard != nil {
+//                    observables.append(getRepeatWord())
+//                }
+//                if predicatesModel?.newTranslationCard != nil {
+//                    observables.append(getNewTranslationWord())
+//                }
+//                if predicatesModel?.repeatTranslationCard != nil {
+//                    observables.append(getRepeatTranslationWord())
+//                }
+//                observable = Observable.concat(observables)
+//            }
+//            else if !_searchStr.isEmpty {
+//                let query = "originalWorld contains[cd] '\(_searchStr)' or any translations.value contains[cd] '\(_searchStr)'"
+//                observable = _unitOfWork.word.getMany(filter: query)
+//            }
+//            else {
+//                observable = _unitOfWork.word.getMany()
+//            }
+//        }
         return _notificationError.useError(observable: observable.map( { $0.map( { WordEntityCellPresenter(fromObject: $0) } )}))
     }
     
@@ -235,29 +235,29 @@ class WordServie: IWordService {
 //        })
     }
     
-    private func unTrimmedRepeatWord() -> Observable<[RealmWord]> {
-        let predicate = QueryFactories.getWordQuery(text: ":@today")
-        return _unitOfWork.word.getMany(filter: predicate?.repeatOriginalCard)
-    }
-    private func unTrimmedRepeatTranslation() -> Observable<[RealmWord]> {
-        let predicate = QueryFactories.getWordQuery(text: ":@today")
-        return _unitOfWork.word.getMany(filter: predicate?.repeatTranslationCard)
-    }
-    private func unTrimmedNewWord() -> Observable<[RealmWord]> {
-        let predicate = QueryFactories.getWordQuery(text: ":@today")
-        return _unitOfWork.word.getMany(filter: predicate?.newOriginalCard)
-    }
-    
-    private func todayAlreadyTrained() -> Observable<[RealmWord]> {
-        let predicate = NSPredicate(format: "(any translateStatistics.answers.date == %@ or any originalStatistics.answers.date == %@) and linkedWords.@count > 0", argumentArray: [Date().onlyDay(), Date().onlyDay()])
-        return _unitOfWork.word.getMany(filter: predicate.predicateFormat)
-    }
-    private func todayOriginalTrained() -> Observable<[RealmWord]> {
-        let predicate = NSPredicate(format: "any originalStatistics.answers.date == %@", argumentArray: [Date().onlyDay()]).predicateFormat
-        return _unitOfWork.word.getMany(filter: predicate)
-    }
-    private func todayTranslateTrained() -> Observable<[RealmWord]> {
-        let predicate = NSPredicate(format: "any translateStatistics.answers.date == %@", argumentArray: [Date().onlyDay()]).predicateFormat
-        return _unitOfWork.word.getMany(filter: predicate)
-    }
+//    private func unTrimmedRepeatWord() -> Observable<[RealmWord]> {
+//        let predicate = QueryFactories.getWordQuery(text: ":@today")
+//        return _unitOfWork.word.getMany(filter: predicate?.repeatOriginalCard)
+//    }
+//    private func unTrimmedRepeatTranslation() -> Observable<[RealmWord]> {
+//        let predicate = QueryFactories.getWordQuery(text: ":@today")
+//        return _unitOfWork.word.getMany(filter: predicate?.repeatTranslationCard)
+//    }
+//    private func unTrimmedNewWord() -> Observable<[RealmWord]> {
+//        let predicate = QueryFactories.getWordQuery(text: ":@today")
+//        return _unitOfWork.word.getMany(filter: predicate?.newOriginalCard)
+//    }
+//    
+//    private func todayAlreadyTrained() -> Observable<[RealmWord]> {
+//        let predicate = NSPredicate(format: "(any translateStatistics.answers.date == %@ or any originalStatistics.answers.date == %@) and linkedWords.@count > 0", argumentArray: [Date().onlyDay(), Date().onlyDay()])
+//        return _unitOfWork.word.getMany(filter: predicate.predicateFormat)
+//    }
+//    private func todayOriginalTrained() -> Observable<[RealmWord]> {
+//        let predicate = NSPredicate(format: "any originalStatistics.answers.date == %@", argumentArray: [Date().onlyDay()]).predicateFormat
+//        return _unitOfWork.word.getMany(filter: predicate)
+//    }
+//    private func todayTranslateTrained() -> Observable<[RealmWord]> {
+//        let predicate = NSPredicate(format: "any translateStatistics.answers.date == %@", argumentArray: [Date().onlyDay()]).predicateFormat
+//        return _unitOfWork.word.getMany(filter: predicate)
+//    }
 }

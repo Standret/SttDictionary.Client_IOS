@@ -25,6 +25,8 @@ class NewWordViewController: SttViewController<NewWordPresenter>, NewWordDelegat
     let handlerMain = SttHandlerTextField()
     let handlerOriginalWord = SttHandlerTextField()
     let handlerLinkedWord = SttHandlerTextField()
+    let handlerExampleOriginal = SttHandlerTextField()
+    let handlerExampleTranslate = SttHandlerTextField()
     
     // outlet
     
@@ -39,6 +41,9 @@ class NewWordViewController: SttViewController<NewWordPresenter>, NewWordDelegat
     @IBOutlet weak var wordExistsLabel: UILabel!
     @IBOutlet weak var cnstrHeightExists: NSLayoutConstraint!
     @IBOutlet weak var swtchReverse: UISwitch!
+    @IBOutlet weak var swtchPronounciation: UISwitch!
+    @IBOutlet weak var tfExampleOriginal: SttTextField!
+    @IBOutlet weak var tfExampleTranslate: SttTextField!
     
     let linkedWordSearchPublisher = PublishSubject<String>()
     
@@ -56,6 +61,9 @@ class NewWordViewController: SttViewController<NewWordPresenter>, NewWordDelegat
             presenter.addNewMainTranslation(value: tfMainTranslation.text!)
             tfMainTranslation.text = ""
         }
+        else {
+            tfExampleOriginal.becomeFirstResponder()
+        }
     }
     
     override func viewDidLoad() {
@@ -70,6 +78,7 @@ class NewWordViewController: SttViewController<NewWordPresenter>, NewWordDelegat
         btnAddTranslation.tintColor = UIColor.white
         
         swtchReverse.addTarget(self, action: #selector(onSwitcherChange(_:)), for: .valueChanged)
+        swtchPronounciation.addTarget(self, action: #selector(onSwitcherPronunciationChange(_:)), for: .valueChanged)
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -79,6 +88,9 @@ class NewWordViewController: SttViewController<NewWordPresenter>, NewWordDelegat
     
     @objc private func onSwitcherChange(_ sender: UISwitch) {
         presenter.useReverse = sender.isOn
+    }
+    @objc private func onSwitcherPronunciationChange(_ sender: UISwitch) {
+        presenter.usePronunciation = sender.isOn
     }
     
     private func configurateCollectionView() {
@@ -116,23 +128,38 @@ class NewWordViewController: SttViewController<NewWordPresenter>, NewWordDelegat
         tfWord.setBorder(color: UIColor(named: "border")!, size: 1)
         tfMainTranslation.setBorder(color: UIColor(named: "border")!, size: 1)
         tfLinkedWords.setBorder(color: UIColor(named: "border")!, size: 1)
+        tfExampleOriginal.setBorder(color: UIColor(named: "border")!, size: 1)
+        tfExampleTranslate.setBorder(color: UIColor(named: "border")!, size: 1)
         
-        tfLinkedWords.delegate = handlerLinkedWord
         tfWord.delegate = handlerOriginalWord
         tfMainTranslation.delegate = handlerMain
+        tfLinkedWords.delegate = handlerLinkedWord
+        tfExampleOriginal.delegate = handlerExampleOriginal
+        tfExampleTranslate.delegate = handlerExampleTranslate
         
         tfWord.insets = UIConstants.insetsForTextField
         tfMainTranslation.insets = UIConstants.insetsForTextField
         tfLinkedWords.insets = UIConstants.insetsForTextField
+        tfExampleOriginal.insets = UIConstants.insetsForTextField
+        tfExampleTranslate.insets = UIConstants.insetsForTextField
         
         tfWord.layer.cornerRadius = UIConstants.cornerRadius
         tfMainTranslation.layer.cornerRadius = UIConstants.cornerRadius
         tfLinkedWords.layer.cornerRadius = UIConstants.cornerRadius
+        tfExampleOriginal.layer.cornerRadius = UIConstants.cornerRadius
+        tfExampleTranslate.layer.cornerRadius = UIConstants.cornerRadius
     }
     private func configurationHandlerTextField() {
-        handlerOriginalWord.addTarget(type: TypeActionTextField.editing, delegate: self, handler: { $0.presenter.word = $1.text }, textField: tfWord)
+        
+        handlerMain.addTarget(type: .shouldReturn, delegate: self, handler: { $0.addMainTranslateClick($1) }, textField: tfMainTranslation)
         handlerOriginalWord.addTarget(type: .shouldReturn, delegate: self, handler: { (view, _) in view.tfMainTranslation.becomeFirstResponder() }, textField: tfWord)
-        handlerMain.addTarget(type: .shouldReturn, delegate: self, handler: { $0.addMainTranslateClick($1)}, textField: tfMainTranslation)
+        handlerExampleOriginal.addTarget(type: .shouldReturn, delegate: self, handler: {  (view, _) in view.tfExampleTranslate.becomeFirstResponder() }, textField: tfLinkedWords)
+        
+        handlerOriginalWord.addTarget(type: .editing, delegate: self, handler: { $0.presenter.word = $1.text }, textField: tfWord)
+        handlerLinkedWord.addTarget(type: .editing, delegate: self, handler: { $0.linkedWordSearchPublisher.onNext($1.text ?? "") }, textField: tfLinkedWords)
+        handlerExampleOriginal.addTarget(type: .editing, delegate: self, handler: { $0.presenter.exampleOriginal = $1.text }, textField: tfExampleOriginal)
+        handlerExampleTranslate.addTarget(type: .editing, delegate: self, handler: { $0.presenter.exampleTranslate = $1.text }, textField: tfExampleTranslate)
+        
         handlerLinkedWord.addTarget(type: .didStartEditing, delegate: self, handler: { (self, _) in
             
             let wordController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "listWords") as! SearchLinkedWordsViewController
@@ -150,11 +177,6 @@ class NewWordViewController: SttViewController<NewWordPresenter>, NewWordDelegat
             self.present(wordController, animated: true, completion: nil)
             
         }, textField: tfLinkedWords)
-        handlerLinkedWord.addTarget(type: TypeActionTextField.editing, delegate: self, handler: { $0.linkedWordSearchPublisher.onNext($1.text ?? "") }, textField: tfLinkedWords)
-    
-        tfWord.delegate = handlerOriginalWord
-        tfMainTranslation.delegate = handlerMain
-        tfLinkedWords.delegate = handlerLinkedWord
     }
     
     private func reloadCollectionCell(type: CollectionType) {

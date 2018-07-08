@@ -130,6 +130,7 @@ class CardsViewController: SttViewController<CardsPresenter>, CardsDelegate {
             
             lblExample.attributedText = attribute
         }
+        voiceData = (word, url, useVoice)
         if isNew {
             cnstrProgress.constant = vbackgroundTimer.bounds.width - (vbackgroundTimer.bounds.width / CGFloat(presenter.words.count) * CGFloat(presenter.current))
             UIView.animate(withDuration: 0.4) {
@@ -137,7 +138,6 @@ class CardsViewController: SttViewController<CardsPresenter>, CardsDelegate {
             }
             changeVisibility()
             
-            voiceData = (word, url, useVoice)
             if CardsViewController.isVolumeEnabled && useVoice  {
                 if let _url = url {
                     playTrack(url: _url)

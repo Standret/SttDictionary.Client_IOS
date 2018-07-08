@@ -33,21 +33,21 @@ final class CompletableResult {
 class WordPresenter: SttPresenter<WordDelegate> {
     var words = SttObservableCollection<WordEntityCellPresenter>()
     
-    var _wordService: IWordService!
+    var _wordInteractor: WordInteractorType!
     
     override func presenterCreating() {
         ServiceInjectorAssembly.instance().inject(into: self)
         
-        _ = _wordService.observe.subscribe(onNext: { [weak self] (element,status) in
-            if let _self = self {
-                if let index = _self.words.index(where: { $0.word == element.word }) {
-                    _self.words[index] = element
-                }
-                else {
-                    _self.words.insert(element, at: 0)
-                }
-            }
-        })
+//        _ = _wordService.observe.subscribe(onNext: { [weak self] (element,status) in
+//            if let _self = self {
+//                if let index = _self.words.index(where: { $0.word == element.word }) {
+//                    _self.words[index] = element
+//                }
+//                else {
+//                    _self.words.insert(element, at: 0)
+//                }
+//            }
+//        })
         
         search(seachString: nil)
     }
@@ -56,7 +56,7 @@ class WordPresenter: SttPresenter<WordDelegate> {
     func search(seachString: String?) {
         previusDispose?.dispose()
         self.words.removeAll()
-        previusDispose = _wordService.getWord(searchString: seachString)
+        previusDispose = _wordInteractor.getWord(searchString: seachString)
             .subscribe(onNext: { (elements) in
                 self.words.append(contentsOf: elements)
             })

@@ -56,22 +56,12 @@ class QueryFactories {
         return predicateString
     }
     
-    class func getWordQuery(text: String) -> CardsPredicate? {
-        print (Date().onlyDay())
-        let predicateNewCard = NSPredicate(format: "originalStatistics.answers.@count == 0", argumentArray: [])
-
-        let predicateRepeat = NSPredicate(format: "originalStatistics.nextRepetition <= %@ and originalStatistics.answers.@count > 0", argumentArray: [Date().onlyDay()])
-        let predicateTranslateCard = NSPredicate(format: "translateStatistics.answers.@count == 0 and reverseCards = true", argumentArray: [])
-        let predicateTranslateRepeat = NSPredicate(format: "translateStatistics.nextRepetition <= %@ and translateStatistics.answers.@count > 0 and reverseCards = true", argumentArray: [Date().onlyDay()])
-        
-        if text.trimmingCharacters(in: .whitespaces) == ":@today" {
-            return CardsPredicate(newOriginalCard: predicateNewCard.predicateFormat, repeatOriginalCard: predicateRepeat.predicateFormat, newTranslationCard: predicateTranslateCard.predicateFormat, repeatTranslationCard: predicateTranslateRepeat.predicateFormat)
+    class func getWordQuery(text: String?) -> String? {
+        if (text ?? "").starts(with: ":@") {
+            return nil
         }
-        else if text.trimmingCharacters(in: .whitespaces) == ":@today:r" {
-            return CardsPredicate(newOriginalCard: nil, repeatOriginalCard: predicateRepeat.predicateFormat, newTranslationCard: nil, repeatTranslationCard: predicateTranslateRepeat.predicateFormat)
-        }
-        else if text.trimmingCharacters(in: .whitespaces) == ":@today:n" {
-            return CardsPredicate(newOriginalCard: predicateNewCard.predicateFormat, repeatOriginalCard: nil, newTranslationCard: predicateTranslateCard.predicateFormat, repeatTranslationCard: nil)
+        if !(text ?? "").isEmpty {
+            return "originalWorld contains[cd] '\(text!)' or any translations.value contains[cd] '\(text!)'"
         }
         return nil
     }

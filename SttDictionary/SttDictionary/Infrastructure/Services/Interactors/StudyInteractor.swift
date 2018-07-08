@@ -47,6 +47,7 @@ class StudyInteractor: StudyInteractorType {
     func getNewTranslate() -> Observable<[WordApiModel]> {
         let elements = _statisticsRepositories.getNewTranslate()
             .flatMap({ self._wordRepositories.getWords(statistics: $0) })
+            .map({ sinq($0).whereTrue({ $0.reverseCards }).toArray() })
             .trimLinkedWordsFrom(todayTrainedWords: todayAlreadyTrained())
             .trimLinkedWordsFrom(todayTrainedWords: unTrimmedRepeatOriginalWord())
             .trimLinkedWordsFrom(todayTrainedWords: unTrimmedRepeatTranslationWord())
@@ -61,16 +62,17 @@ class StudyInteractor: StudyInteractorType {
     }
     
     func getRepeatOriginal() -> Observable<[WordApiModel]> {
-        return _statisticsRepositories.getRepeatTranslate()
+        return _statisticsRepositories.getRepeatOriginal()
             .flatMap({ self._wordRepositories.getWords(statistics: $0) })
             .trimLinkedWordsFrom(todayTrainedWords: todayAlreadyTrained())
             .trimLinkedWords()
-            .trimSameIdWords(todayTrainedWords: todayAlreadyTrained(filter: [.originalCard]))
+            .trimSameIdWords(todayTrainedWords: todayAlreadyTrained(filter: [.translateCard]))
     }
     
     func getRepeatTranslation() -> Observable<[WordApiModel]> {
         return _statisticsRepositories.getRepeatTranslate()
             .flatMap({ self._wordRepositories.getWords(statistics: $0) })
+            .map({ sinq($0).whereTrue({ $0.reverseCards }).toArray() })
             .trimLinkedWordsFrom(todayTrainedWords: todayAlreadyTrained())
             .trimLinkedWordsFrom(todayTrainedWords: unTrimmedRepeatOriginalWord())
             .trimLinkedWords()

@@ -8,6 +8,7 @@
 
 import Foundation
 import RxSwift
+import SINQ
 
 protocol StatisticsRepositoriesType {
     func getCount() -> Observable<CountApiModel>
@@ -16,12 +17,14 @@ protocol StatisticsRepositoriesType {
     
     func getLocalCount(type: ElementType) -> Observable<Int>
     func getStatistics(type: ElementType) -> Observable<[WordStatisticsApiModel]>
+    func getElementFor(wordsId: [String]) -> Observable<[WordStatisticsApiModel]>
     
     func getNewOriginal() -> Observable<[WordStatisticsApiModel]>
     func getNewTranslate() -> Observable<[WordStatisticsApiModel]>
     func getRepeatOriginal() -> Observable<[WordStatisticsApiModel]>
     func getRepeatTranslate() -> Observable<[WordStatisticsApiModel]>
 
+    func updateStatistics(statistics: WordStatisticsApiModel) -> Observable<Bool>
     
     func removeAll() -> Completable
 }
@@ -54,6 +57,11 @@ class StatisticsRepositories: StatisticsRepositoriesType {
     func getStatistics(type: ElementType) -> Observable<[WordStatisticsApiModel]> {
         return _storageProvider.statistics.getMany(filter: QueryFactories.getDefaultQuery(type: type)).map({ $0.map({ $0.deserialize() }) })
     }
+    func getElementFor(wordsId: [String]) -> Observable<[WordStatisticsApiModel]> {
+        let predicateFormat = NSPredicate(format: "wordId IN %@", argumentArray: [Array(Set(wordsId))]).predicateFormat
+        return _storageProvider.statistics.getMany(filter: predicateFormat)
+                .map({ $0.map({ $0.deserialize() }) })
+    }
     
     func removeAll() -> Completable {
         return _storageProvider.answer.deleteAll()
@@ -74,5 +82,9 @@ class StatisticsRepositories: StatisticsRepositoriesType {
     func getRepeatTranslate() -> Observable<[WordStatisticsApiModel]> {
         return _storageProvider.statistics.getMany(filter: QueryFactories.getStatisticsQuery(type: .repeatTranslation))
             .map({ $0.map({ $0.deserialize() }) })
+    }
+    
+    func updateStatistics(statistics: WordStatisticsApiModel) -> Observable<Bool> {
+        return _storageProvider.statistics.saveOne(model: statistics).toObservable()
     }
 }

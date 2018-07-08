@@ -12,7 +12,7 @@ struct AnswerApiModel: Decodable, RealmCodable {
     
     typealias TTarget = RealmAnswer
     
-    let id: String
+    let id: String!
     let dateCreated: Date
     
     let wordId: String
@@ -22,7 +22,8 @@ struct AnswerApiModel: Decodable, RealmCodable {
     
     func serialize() -> RealmAnswer {
         return RealmAnswer(value: [
-            "id": id,
+            "isSynced": id == nil ? false : true,
+            "id": id ?? "\(Constants.temporyPrefix)\(UUID().uuidString)",
             "dateCreated": dateCreated,
             "wordId": wordId,
             "_type": type.rawValue,

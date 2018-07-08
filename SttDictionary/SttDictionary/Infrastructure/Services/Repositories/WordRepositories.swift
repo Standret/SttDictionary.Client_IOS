@@ -19,6 +19,7 @@ protocol WordRepositoriesType {
     func addWord(model: AddWordApiModel) -> Observable<(Bool, SyncStep)>
     func addCachedWords() -> Observable<Bool>
     
+    func getAll(searchStr: String?) -> Observable<[WordApiModel]>
     func getWords(type: ElementType) -> Observable<[WordApiModel]>
     func getCount(type: ElementType) -> Observable<Int>
     
@@ -67,6 +68,9 @@ class WordRepositories: WordRepositoriesType {
             })
     }
     
+    func getAll(searchStr: String?) -> Observable<[WordApiModel]> {
+        return _storageProvider.word.getMany(filter: QueryFactories.getWordQuery(text: searchStr)).map({ $0.map({ $0.deserialize() }) })
+    }
     func getWords(type: ElementType) -> Observable<[WordApiModel]> {
         return _storageProvider.word.getMany(filter: QueryFactories.getDefaultQuery(type: type)).map({ $0.map({ $0.deserialize() }) })
     }

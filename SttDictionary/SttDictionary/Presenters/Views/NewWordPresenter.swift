@@ -43,7 +43,10 @@ class NewWordPresenter: SttPresenter<NewWordDelegate> {
     var mainTranslation = ShortWordsData()
     var linkedWords = ShortWordsData()
     var tags = ShortWordsData()
-    var exampleUsage: ExampleUsage?
+    
+    var exampleOriginal: String?
+    var exampleTranslate: String?
+    
     var useReverse: Bool = true
     var usePronunciation: Bool = true
     
@@ -67,11 +70,15 @@ class NewWordPresenter: SttPresenter<NewWordDelegate> {
     // comand handler
     
     func onSave() {
+        var exampleUsage: ExampleUsage?
+        if !(exampleOriginal ?? "").trimmingCharacters(in: .whitespaces).isEmpty && !(exampleTranslate ?? "").trimmingCharacters(in: .whitespaces).isEmpty {
+            exampleUsage = ExampleUsage(original: exampleOriginal!, translate: exampleTranslate!)
+        }
         if !(word ?? "").trimmingCharacters(in: .whitespaces).isEmpty && mainTranslation.data.count > 0 {
             _ = save.useWork(observable: _wordInteractor.addWord(word: word!.trimmingCharacters(in: .whitespaces),
                                                                  translations: mainTranslation.data.map( { $0.word!.trimmingCharacters(in: .whitespaces) } ),
                                                                  exampleUsage: exampleUsage,
-                                                                 linkedWords: linkedWords.data.map( { $0.word! } ),
+                                                                 linkedWords: linkedWords.data.map( { $0.id! } ),
                                                                  tagsId: tags.data.map( { $0.word! } ),
                                                                  useReverse: useReverse,
                                                                  usePronunciation: usePronunciation))

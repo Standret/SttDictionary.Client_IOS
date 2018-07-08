@@ -20,6 +20,7 @@ protocol AnswerRepositoriesType {
     func addCachedAnswers() -> Observable<Int>
     
     func updateAnswer(skip: Int) -> Observable<Int>
+    func updateAnswer(model: AnswerApiModel) -> Observable<Bool>
     
     func removeAll() -> Completable
 }
@@ -72,6 +73,9 @@ class AnswerRepositories: AnswerRepositoriesType {
                     .toObservable()
                     .map({ _ in answer })
             }).map({ $0.count })
+    }
+    func updateAnswer(model: AnswerApiModel) -> Observable<Bool> {
+        return _storageProvider.answer.saveOne(model: model).toObservable()
     }
     
     func removeAll() -> Completable {

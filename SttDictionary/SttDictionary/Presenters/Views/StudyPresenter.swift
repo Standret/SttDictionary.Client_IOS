@@ -47,28 +47,6 @@ class StudyPresenter: SttPresenter<StudyDelegate> {
                 self?.repeatTranslationWords = words
                 self?.delegate?.reloadStatus()
             })
-
-        
-//        _ = _wordService.getNewWord()
-//            .subscribe(onNext: { [weak self] (words) in
-//                self?.newWords = words
-//                self?.delegate?.reloadStatus()
-//            })
-//        _  = _wordService.getRepeatWord()
-//            .subscribe(onNext: { [weak self] (words) in
-//                self?.repeatWords = words
-//                self?.delegate?.reloadStatus()
-//            })
-//        _ = _wordService.getNewTranslationWord()
-//            .subscribe(onNext: { [weak self] (words) in
-//                self?.newTranslationWords = words
-//                self?.delegate?.reloadStatus()
-//            })
-//        _  = _wordService.getRepeatTranslationWord()
-//            .subscribe(onNext: { [weak self] (words) in
-//                self?.repeatTranslationWords = words
-//                self?.delegate?.reloadStatus()
-//            })
     }
     
     func onCLickOriginalCard() {
