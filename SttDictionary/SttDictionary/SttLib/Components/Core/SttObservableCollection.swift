@@ -54,6 +54,12 @@ class SttObservableCollection<T>: Collection {
         datas.removeAll()
         notifyPublisher.onNext(([], .reload))
     }
+    func lastOrNil() -> T? {
+        return datas.last
+    }
+    func firstOrNil() -> T? {
+        return datas.first
+    }
     
     subscript(index: Int) -> T {
         get { return datas[index] }

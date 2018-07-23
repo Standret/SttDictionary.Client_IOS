@@ -34,11 +34,6 @@ public class SttKeyboardNotification {
     private var isKeyboardShow: Bool = true
     private var notificationObject: Notification!
     
-    init() {
-        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow(_:)), name: Notification.Name.UIKeyboardWillShow, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide(_:)), name: Notification.Name.UIKeyboardWillHide, object: nil)
-    }
-    
     public func removeObserver() {
         NotificationCenter.default.removeObserver(self, name: Notification.Name.UIKeyboardWillHide, object: nil)
         NotificationCenter.default.removeObserver(self, name: Notification.Name.UIKeyboardWillShow, object: nil)
@@ -51,6 +46,7 @@ public class SttKeyboardNotification {
 
     
     @objc private func keyboardWillShow(_ notification: Notification?) {
+        print("WillShow")
         notificationObject = notification
         if callIfKeyboardIsShow || !isKeyboardShow {
             delegate?.keyboardWillShow(height: heightKeyboard)
@@ -58,6 +54,7 @@ public class SttKeyboardNotification {
         isKeyboardShow = true
     }
     @objc private func keyboardWillHide(_ notification: Notification?) {
+        print("WillHide")
         notificationObject = notification
         delegate?.keyboardWillHide(height: heightKeyboard)
         isKeyboardShow = false

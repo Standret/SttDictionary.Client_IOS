@@ -8,7 +8,7 @@
 
 import Foundation
 
-protocol StudyDelegate: SttViewContolable {
+protocol StudyDelegate: SttViewControlable {
     func reloadStatus()
 }
 

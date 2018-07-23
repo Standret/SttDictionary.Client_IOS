@@ -27,14 +27,14 @@ enum SttBaseError: Error, SttBaseErrorType {
             result = ("Realm: \(tempRes.0)", tempRes.1)
         case .apiError(let concreate):
             let tempRes = concreate.getMessage()
-            result = ("Api: \(tempRes.0)", tempRes.1)
+            result = (tempRes.1, "Api: \(tempRes.0) \(tempRes.1)")
         case .connectionError(let concreate):
             let tempRes = concreate.getMessage()
             result = ("Connection: \(tempRes.0)", tempRes.1)
         case .jsonConvert(let message):
             result = ("Json convert", message)
         case .unkown(let message):
-            result = ("Unkown", message)
+            result = (message, "Description is out")
         }
         
         return result
@@ -74,7 +74,7 @@ enum SttApiError: SttBaseErrorType {
         var result: (String, String)!
         switch self {
         case .badRequest(let error):
-            result = ("Bad request", "\(error.code): \(error.description)")
+            result = ("Bad request", "\(error.description)")
         case .internalServerError(let message):
             result = ("Internal Server Error", message)
         case .otherApiError(let code):
@@ -96,7 +96,7 @@ enum SttConnectionError: SttBaseErrorType {
         case .noInternetConnection:
             result = ("No internet connection", "Check your settings or repeat later")
         case .timeout:
-            result = ("Timeout", "Connectiom timeout")
+            result = ("Timeout", "Connection timeout")
         case .other(let message):
             result = ("Other", "with message: \(message)")
         case .responseIsNil:

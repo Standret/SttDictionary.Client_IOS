@@ -2,7 +2,7 @@
 //  SttDefaultComponents.swift
 //  SttDictionary
 //
-//  Created by Piter Standret on 7/7/18.
+//  Created by Piter Standret on 7/23/18.
 //  Copyright © 2018 Standret. All rights reserved.
 //
 

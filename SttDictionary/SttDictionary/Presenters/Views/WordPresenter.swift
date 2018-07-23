@@ -9,7 +9,7 @@
 import Foundation
 import RxSwift
 
-protocol WordDelegate: SttViewContolable {
+protocol WordDelegate: SttViewControlable {
 }
 
 final class CompletableResult {

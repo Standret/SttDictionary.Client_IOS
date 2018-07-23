@@ -9,7 +9,7 @@
 import Foundation
 import RxSwift
 
-protocol SyncDelegate: SttViewContolable {
+protocol SyncDelegate: SttViewControlable {
     func updateData(date: String, count: CountViewModel)
     func loadCompleted()
 }

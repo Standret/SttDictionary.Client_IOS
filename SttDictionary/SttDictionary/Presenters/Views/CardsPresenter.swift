@@ -15,7 +15,7 @@ struct Answer {
     var totalMiliseconds: Int
 }
 
-protocol CardsDelegate: SttViewContolable {
+protocol CardsDelegate: SttViewControlable {
     func reloadWords(word: String, url: String?, example: (String, String)?, isNew: Bool, useVoice: Bool)
     func showFinalPopup(message: String)
 }

@@ -44,8 +44,6 @@ class SttRepository<T, R>: SttRepositoryType
     where T: RealmCodable,
     R: RealmDecodable,
     R: SttRealmObject {
-
-    
     
     typealias TEntity = T
     typealias TRealm = R
@@ -105,6 +103,9 @@ class SttRepository<T, R>: SttRepositoryType
             do {
                 print("saveOne \(Thread.current)")
                 let realm = try Realm()
+//                if (realm.objects(R.self).count > 0) {
+//                    observer(CompletableEvent.error(SttBaseError.realmError(SttRealmError.objectIsSignleton("method: saveOne type: \(type(of: R.self))"))))
+//                }
                 print(Thread.current)
                 realm.beginWrite()
                 realm.add(model.serialize(), update: true)
@@ -223,7 +224,6 @@ class SttRepository<T, R>: SttRepositoryType
             do {
                 let realm = try Realm()
                 
-                print ("delete: \(Thread.current)")
                 var objects: Results<R>!
                 if let query = filter {
                     if (self.singleton) {
@@ -261,8 +261,10 @@ class SttRepository<T, R>: SttRepositoryType
         return Completable.create { (observer) -> Disposable in
             do {
                 let realm = try Realm()
+                
+                let objects = realm.objects(R.self)
                 try realm.write {
-                    realm.deleteAll()
+                    realm.delete(objects)
                 }
                 observer(CompletableEvent.completed)
             }

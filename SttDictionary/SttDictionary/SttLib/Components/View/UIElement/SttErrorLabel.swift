@@ -13,6 +13,8 @@ class SttErrorLabel: UIView {
     private var errorLabel: UILabel!
     private var topContraint: NSLayoutConstraint!
     private var detailMessage: String?
+    var errorColor: UIColor! = UIColor.red
+    var messageColor: UIColor! = UIColor.green
     
     weak var delegate: UIViewController! {
         didSet {
@@ -31,15 +33,19 @@ class SttErrorLabel: UIView {
         }
     }
     
-    func showError(text: String, detailMessage: String?) {
+    func showMessage(text: String, detailMessage: String?, isError: Bool = true) {
         self.detailMessage = detailMessage
         errorLabel.text = text
-        topContraint.constant = 0
-        UIView.animate(withDuration: 0.5, animations: { [weak self] in self?.delegate.view?.layoutIfNeeded() })
+        self.isHidden = false
+        self.backgroundColor = isError ? errorColor : messageColor
+        UIView.animate(withDuration: 0.5, animations: { [weak self] in self?.alpha = 1 })
         Timer.scheduledTimer(withTimeInterval: 3, repeats: false) { [weak self] (timer) in
             timer.invalidate()
-            self?.topContraint.constant = self!.heightErrorLabel
-            UIView.animate(withDuration: 0.5, animations: { [weak self] in self?.delegate.view?.layoutIfNeeded() })
+            UIView.animate(withDuration: 0.5, animations: { [weak self] in self?.alpha = 0 })
+            Timer.scheduledTimer(withTimeInterval: 1, repeats: false) { [weak self] (timer) in
+                timer.invalidate()
+                self?.isHidden = true
+            }
         }
     }
     
@@ -52,13 +58,14 @@ class SttErrorLabel: UIView {
     private func injectConponnent() {
         translatesAutoresizingMaskIntoConstraints = false
         delegate.view.addSubview(self)
-        topContraint = NSLayoutConstraint(item: delegate.view, attribute: NSLayoutAttribute.top, relatedBy: NSLayoutRelation.equal, toItem: self, attribute: NSLayoutAttribute.top, multiplier: 1, constant: 40)
-        delegate.view.addConstraints([
-            topContraint,
-            NSLayoutConstraint(item: delegate.view, attribute: NSLayoutAttribute.left, relatedBy: NSLayoutRelation.equal, toItem: self, attribute: NSLayoutAttribute.left, multiplier: 1, constant: 0),
-            NSLayoutConstraint(item: delegate.view, attribute: NSLayoutAttribute.right, relatedBy: NSLayoutRelation.equal, toItem: self, attribute: NSLayoutAttribute.right, multiplier: 1, constant: 0)
-            ])
+        topContraint = self.topAnchor.constraint(equalTo: delegate.view.safeTopAnchor)
+        self.safeLeftAnchor.constraint(equalTo: delegate.view.safeLeftAnchor).isActive = true
+        self.safeRightAnchor.constraint(equalTo: delegate.view.safeRightAnchor).isActive = true
         self.addConstraint(NSLayoutConstraint(item: self, attribute: NSLayoutAttribute.height, relatedBy: NSLayoutRelation.equal, toItem: nil, attribute: NSLayoutAttribute.notAnAttribute, multiplier: 1, constant: heightErrorLabel))
+        
+        topContraint.isActive = true
+        self.alpha = 0
+        self.isHidden = true
         
         errorLabel = UILabel()
         errorLabel.textColor = UIColor.white

@@ -58,6 +58,13 @@ class SyncViewController: SttViewController<SyncPresenter>, SyncDelegate {
         lblStat.text = "\(count.serverAll.countOfStatistics) | \(count.localAll.countOfStatistics) -- \(count.localNotSynced.countOfStatistics) | \(count.localNewNotSynced.countOfStatistics)"
     }
     
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        
+        let mainView = MainUIView.appearance()
+        mainView.backgroundColor = ThemeManager.mainBackgroundColor
+    }
+    
     func loadCompleted() {
         indicatorInNavBar.stopAnimating()
     }

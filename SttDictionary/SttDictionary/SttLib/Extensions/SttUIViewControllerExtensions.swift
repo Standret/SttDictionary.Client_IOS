@@ -43,7 +43,7 @@ extension UIViewController {
         alertController.addAction(UIAlertAction(title: buttonTrueTitle ?? "Yes", style: .cancel, handler: { (action) in
             handlerOk?()
         }))
-        alertController.addAction(UIAlertAction(title: buttonTrueTitle ?? "Cancel", style: .default, handler: { (action) in
+        alertController.addAction(UIAlertAction(title: buttonFalseTitle ?? "Cancel", style: .default, handler: { (action) in
             self.resignFirstResponder()
             handlerFalse?()
         }))

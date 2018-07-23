@@ -125,29 +125,19 @@ class NewWordViewController: SttViewController<NewWordPresenter>, NewWordDelegat
     }
     
     private func configurateTextField() {
-        tfWord.setBorder(color: UIColor(named: "border")!, size: 1)
-        tfMainTranslation.setBorder(color: UIColor(named: "border")!, size: 1)
-        tfLinkedWords.setBorder(color: UIColor(named: "border")!, size: 1)
-        tfExampleOriginal.setBorder(color: UIColor(named: "border")!, size: 1)
-        tfExampleTranslate.setBorder(color: UIColor(named: "border")!, size: 1)
+        let tfArray = [tfWord, tfMainTranslation, tfLinkedWords, tfExampleOriginal, tfExampleTranslate]
+        for item in tfArray {
+            item!.setBorder(color: UIColor(named: "border")!, size: 1)
+            item!.setPlaceholderColor(color: UIColor.gray)
+            item!.insets = UIConstants.insetsForTextField
+            item!.layer.cornerRadius = UIConstants.cornerRadius
+        }
         
         tfWord.delegate = handlerOriginalWord
         tfMainTranslation.delegate = handlerMain
         tfLinkedWords.delegate = handlerLinkedWord
         tfExampleOriginal.delegate = handlerExampleOriginal
         tfExampleTranslate.delegate = handlerExampleTranslate
-        
-        tfWord.insets = UIConstants.insetsForTextField
-        tfMainTranslation.insets = UIConstants.insetsForTextField
-        tfLinkedWords.insets = UIConstants.insetsForTextField
-        tfExampleOriginal.insets = UIConstants.insetsForTextField
-        tfExampleTranslate.insets = UIConstants.insetsForTextField
-        
-        tfWord.layer.cornerRadius = UIConstants.cornerRadius
-        tfMainTranslation.layer.cornerRadius = UIConstants.cornerRadius
-        tfLinkedWords.layer.cornerRadius = UIConstants.cornerRadius
-        tfExampleOriginal.layer.cornerRadius = UIConstants.cornerRadius
-        tfExampleTranslate.layer.cornerRadius = UIConstants.cornerRadius
     }
     private func configurationHandlerTextField() {
         
@@ -178,6 +168,8 @@ class NewWordViewController: SttViewController<NewWordPresenter>, NewWordDelegat
             
         }, textField: tfLinkedWords)
     }
+    
+    
     
     private func reloadCollectionCell(type: CollectionType) {
         var targetCollection: UICollectionView!

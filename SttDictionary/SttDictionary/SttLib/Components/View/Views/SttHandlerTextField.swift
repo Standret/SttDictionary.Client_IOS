@@ -22,7 +22,7 @@ class SttHandlerTextField: NSObject, UITextFieldDelegate {
     
     // method for add target
     
-    func addTarget<T: UIViewController>(type: TypeActionTextField, delegate: T, handler: @escaping (T, UITextField) -> Void, textField: UITextField) {
+    func addTarget<T: SttViewable>(type: TypeActionTextField, delegate: T, handler: @escaping (T, UITextField) -> Void, textField: UITextField) {
         switch type {
         case .editing:
             textField.addTarget(self, action: #selector(changing), for: .editingChanged)

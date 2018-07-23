@@ -17,3 +17,13 @@ extension String: ParameterEncoding {
         return request
     }
 }
+
+class SttString {
+    class func isEmpty(string: String?) -> Bool {
+        return (string ?? "").isEmpty
+    }
+    
+    class func isWhiteSpace(string: String?) -> Bool {
+        return (string ?? "").trimmingCharacters(in: .whitespaces).isEmpty
+    }
+}

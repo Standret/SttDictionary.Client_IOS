@@ -10,8 +10,8 @@ import UIKit
 
 class WordEntityCell: SttTableViewCell<WordEntityCellPresenter>, WordEntityCellDelegate {
 
-    @IBOutlet weak var lblWord: UILabel!
-    @IBOutlet weak var lblTranslations: UILabel!
+    @IBOutlet weak var lblWord: MainUILabel!
+    @IBOutlet weak var lblTranslations: MainUILabel!
     @IBOutlet weak var lblTags: UILabel!
     @IBOutlet weak var syncStatus: UIView!
     //@IBOutlet weak var lblDevInfo: UILabel!
@@ -33,16 +33,22 @@ class WordEntityCell: SttTableViewCell<WordEntityCellPresenter>, WordEntityCellD
         
         isUserInteractionEnabled = true
         addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(onClick(_:))))
+        reloadState()
     }
     
     func reloadState() {
-        backgroundColor = presenter.isSelect ? UIColor(named: "selectedItemColor") : UIColor.clear
+        backgroundColor = presenter.isSelect ? UIColor(named: "selectedItemColor") : ThemeManager.secondaryBackgroundColor
     }
     
-    override func draw(_ rect: CGRect) {
-        super.draw(rect)
+    override func awakeFromNib() {
+        super.awakeFromNib()
         syncStatus.createCircle()
-        syncStatus.backgroundColor = presenter.status ? UIColor.green : UIColor.red
+        prepateTheme()
+        ThemeManager.observer.subscribe(onNext: { _ in self.prepateTheme() })
+    }
+    
+    func prepateTheme() {
+        backgroundColor = (presenter?.isSelect ?? false) ? UIColor(named: "selectedItemColor") : ThemeManager.secondaryBackgroundColor
     }
     
     @objc func onClick(_ sender: Any) {

@@ -6,6 +6,7 @@
 //  Copyright © 2018 Standret. All rights reserved.
 //
 
+
 import Foundation
 import UIKit
 import RxSwift
@@ -55,7 +56,7 @@ class SttTableViewSource<T: SttViewInjector>: NSObject, UITableViewDataSource {
                 tableView.register(UINib(nibName: item.nibName ?? item.identifers, bundle: nil), forCellReuseIdentifier: item.identifers)
             }
         }
-
+        
         _tableView = tableView
         _cellIdentifiers.append(contentsOf: cellIdentifiers.map({ $0.identifers }))
         

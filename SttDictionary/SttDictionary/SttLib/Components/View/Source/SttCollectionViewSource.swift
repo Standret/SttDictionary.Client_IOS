@@ -27,16 +27,16 @@ class SttCollectionViewSource<T: SttViewInjector>: NSObject, UICollectionViewDat
         _collectionView.reloadData()
         disposables?.dispose()
         disposables = _collection.observableObject.subscribe(onNext: { [weak self] (indexes, type) in
-                switch type {
-                case .reload:
-                    self?._collectionView.reloadData()
-                case .delete:
-                    self?._collectionView.deleteItems(at: indexes.map({ IndexPath(row: $0, section: 0) }))
-                case .insert:
-                    self?._collectionView.insertItems(at: indexes.map({ IndexPath(row: $0, section: 0) }))
-                case .update:
-                    self?._collectionView.reloadItems(at: indexes.map({ IndexPath(row: $0, section: 0) }))
-                }
+            switch type {
+            case .reload:
+                self?._collectionView.reloadData()
+            case .delete:
+                self?._collectionView.deleteItems(at: indexes.map({ IndexPath(row: $0, section: 0) }))
+            case .insert:
+                self?._collectionView.insertItems(at: indexes.map({ IndexPath(row: $0, section: 0) }))
+            case .update:
+                self?._collectionView.reloadItems(at: indexes.map({ IndexPath(row: $0, section: 0) }))
+            }
         })
     }
     
@@ -67,5 +67,5 @@ class SttCollectionViewSource<T: SttViewInjector>: NSObject, UICollectionViewDat
         cell.prepareBind()
         return cell
     }
-
+    
 }

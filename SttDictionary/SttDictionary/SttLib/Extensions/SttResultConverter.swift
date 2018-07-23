@@ -11,38 +11,39 @@ import RxSwift
 
 extension ObservableType where E == (HTTPURLResponse, Data) {
     func getResult<TResult: Decodable>(ofType _: TResult.Type) -> Observable<TResult> {
-        return self.flatMap({ (arg) -> Observable<TResult> in
-            let (urlResponse, data) = arg
-            
-            switch urlResponse.statusCode {
-            case 200 ... 299:
-                do {
-                    print("--- in \(Thread.current)")
-                    print(String(data: data, encoding: String.Encoding.utf8)!)
-                    print("---")
-                    let decoder = JSONDecoder()
-                    decoder.dateDecodingStrategy = .customISO8601
-                    let jsonObject = try decoder.decode(TResult.self, from: data)
-                    return Observable.from([jsonObject])
+        return Observable<TResult>.create({ (observer) -> Disposable in
+            self.subscribe(onNext: { (urlResponse, data) in
+                switch urlResponse.statusCode {
+                case 200 ... 299:
+                    do {
+                        print("---")
+                        print(String(data: data, encoding: String.Encoding.utf8))
+                        print("---")
+                        let decoder = JSONDecoder()
+                        decoder.dateDecodingStrategy = .customISO8601
+                        let jsonObject = try decoder.decode(TResult.self, from: data)
+                        observer.onNext(jsonObject)
+                    }
+                    catch {
+                        print(error)
+                        observer.onError(SttBaseError.jsonConvert("\(error)"))
+                    }
+                case 400:
+                    observer.onError(SttBaseError.apiError(SttApiError.badRequest((try? JSONDecoder().decode(ServiceResult.self, from: data))?.error ?? ServerError(code: 400, description: String(data: data, encoding: String.Encoding.utf8) ?? ""))))
+                case 500:
+                    observer.onError(SttBaseError.apiError(SttApiError.internalServerError(String(data: data, encoding: String.Encoding.utf8) ?? "nil")))
+                default:
+                    observer.onError(SttBaseError.apiError(SttApiError.otherApiError(urlResponse.statusCode)))
                 }
-                catch {
-                    print(error)
-                    return Observable<TResult>.error(SttBaseError.jsonConvert("\(error)"))
+            }, onError: { (error) in
+                if let er = error as? SttBaseError {
+                    observer.onError(er)
                 }
-            case 400:
-                return Observable<TResult>.error(SttBaseError.apiError(SttApiError.badRequest((try? JSONDecoder().decode(ServiceResult.self, from: data))?.error ?? ServerError(code: 400, description: String(data: data, encoding: String.Encoding.utf8) ?? ""))))
-            case 500:
-                return Observable<TResult>.error(SttBaseError.apiError(SttApiError.internalServerError(String(data: data, encoding: String.Encoding.utf8) ?? "nil")))
-            default:
-                return Observable<TResult>.error(SttBaseError.apiError(SttApiError.otherApiError(urlResponse.statusCode)))
-            }
-        }).catchError({ (oldError) -> Observable<TResult> in
-            if let er = oldError as? SttBaseError {
-                throw er
-            }
-            else {
-                throw SttBaseError.unkown("\(oldError)")
-            }
+                else {
+                    observer.onError(SttBaseError.connectionError(SttConnectionError.timeout))
+                    //observer.onError(SttBaseError.unkown("\((error as NSError).localizedDescription)"))
+                }
+            }, onCompleted: observer.onCompleted)
         })
     }
     

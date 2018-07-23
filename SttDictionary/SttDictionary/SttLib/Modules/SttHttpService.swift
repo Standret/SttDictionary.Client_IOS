@@ -12,6 +12,16 @@ import RxAlamofire
 import RxSwift
 import KeychainSwift
 
+class Networking {
+    static let sharedInstance = Networking()
+    public var sessionManager: Alamofire.SessionManager // most of your web service clients will call through sessionManager
+    public var backgroundSessionManager: Alamofire.SessionManager // your web services you intend to keep running when the system backgrounds your app will use this
+    private init() {
+        self.sessionManager = Alamofire.SessionManager(configuration: URLSessionConfiguration.default)
+        self.backgroundSessionManager = Alamofire.SessionManager(configuration: URLSessionConfiguration.background(withIdentifier: "com.lava.app.backgroundtransfer"))
+    }
+}
+
 protocol SttHttpServiceType {
     var url: String! { get set }
     var token: String { get set }
@@ -37,19 +47,31 @@ class SttHttpService: SttHttpServiceType {
     
     func  get(controller: ApiConroller, data: [String:String], insertToken: Bool) -> Observable<(HTTPURLResponse, Data)> {
         let url = "\(self.url!)\(controller.get())"
-        SttLog.trace(message: url, key: Constants.httpKeyLog)
         var _insertToken = insertToken
         
-        if !self.connectivity.isConnected {
-            sleep(Constants.timeWaitNextRequest)
-            return Observable<(HTTPURLResponse, Data)>.error(SttBaseError.connectionError(SttConnectionError.noInternetConnection))
-        }
+        print("get")
+        print(Thread.current)
+        return Observable<(HTTPURLResponse, Data)>.create { (observer) -> Disposable in
+            SttLog.trace(message: url, key: Constants.httpKeyLog)
             
-        if self.token == "" {
-            _insertToken = false
-        }
-        return requestData(.get, url, parameters: data, encoding: URLEncoding.default,
-                           headers: _insertToken ? ["Authorization" : "\(self.tokenType) \(self.token)"] : nil)
+            if !self.connectivity.isConnected {
+                sleep(Constants.timeWaitNextRequest)
+                observer.onError(SttBaseError.connectionError(SttConnectionError.noInternetConnection))
+                return Disposables.create()
+            }
+            
+            if self.token == "" {
+                _insertToken = false
+            }
+            return requestData(.get, url, parameters: data, encoding: URLEncoding.default,
+                               headers: _insertToken ? ["Authorization" : "\(self.tokenType) \(self.token)"] : nil)
+                .subscribe(onNext: { (res, data) in
+                    observer.onNext((res, data))
+                    observer.onCompleted()
+                }, onError:{
+                    er in
+                    observer.onError(er); print(er); })
+            }
             .configurateParamet()
     }
     
@@ -57,48 +79,66 @@ class SttHttpService: SttHttpServiceType {
     // TODO: -- write handler for check if value empty key is simpleType
     func post(controller: ApiConroller, data: [String:String], insertToken: Bool) -> Observable<(HTTPURLResponse, Data)> {
         let url = "\(self.url!)\(controller.get())"
-        SttLog.trace(message: url, key: Constants.httpKeyLog)
         var _insertToken = insertToken
         
-        if !self.connectivity.isConnected {
-            return Observable<(HTTPURLResponse, Data)>.error(SttBaseError.connectionError(SttConnectionError.noInternetConnection))
-        }
-        
-        if self.token == "" {
-            _insertToken = false
-        }
+        return Observable<(HTTPURLResponse, Data)>.create { (observer) -> Disposable in
+            SttLog.trace(message: url, key: Constants.httpKeyLog)
+            
+            if !self.connectivity.isConnected {
+                sleep(Constants.timeWaitNextRequest)
+                observer.onError(SttBaseError.connectionError(SttConnectionError.noInternetConnection))
+                return Disposables.create()
+            }
+            
+            if self.token == "" {
+                _insertToken = false
+            }
 
-        return requestData(.post, url, parameters: data, encoding: URLEncoding.httpBody,
-                           headers: _insertToken ? ["Authorization" : "\(self.tokenType) \(self.token)"] : nil)
+            return requestData(.post, url, parameters: data, encoding: URLEncoding.httpBody,
+                               headers: _insertToken ? ["Authorization" : "\(self.tokenType) \(self.token)"] : nil)
+                .subscribe(onNext: { (res, data) in
+                    observer.onNext((res, data))
+                    observer.onCompleted()
+                }, onError: observer.onError(_:), onCompleted: nil, onDisposed: nil)
+            }
             .configurateParamet()
     }
     
     func post(controller: ApiConroller, data: Encodable?, insertToken: Bool) -> Observable<(HTTPURLResponse, Data)> {
         let url = "\(self.url!)\(controller.get())"
-        SttLog.trace(message: url, key: Constants.httpKeyLog)
         var _insertToken = insertToken
         
-        if !self.connectivity.isConnected {
-            return Observable<(HTTPURLResponse, Data)>.error(SttBaseError.connectionError(SttConnectionError.noInternetConnection))
-        }
+        return Observable<(HTTPURLResponse, Data)>.create { (observer) -> Disposable in
+            SttLog.trace(message: url, key: Constants.httpKeyLog)
             
-        if self.token == "" {
-            _insertToken = false
-        }
+            if !self.connectivity.isConnected {
+                sleep(Constants.timeWaitNextRequest)
+                observer.onError(SttBaseError.connectionError(SttConnectionError.noInternetConnection))
+                return Disposables.create()
+            }
+            
+            if self.token == "" {
+                _insertToken = false
+            }
             
             
-        var request = URLRequest(url: URL(string: url)!)
-        request.httpMethod = HTTPMethod.post.rawValue
-        request.timeoutInterval = TimeInterval(Constants.timeout)
-        
-        request.httpBody = (data?.getJsonString().data(using: .utf8, allowLossyConversion: false))
-        
-        request.setValue("application/json", forHTTPHeaderField: "Content-Type")
-        if _insertToken {
-            request.setValue("\(self.tokenType) \(self.token)", forHTTPHeaderField: "Authorization")
-        }
-        
-        return requestData(request)
+            var request = URLRequest(url: URL(string: url)!)
+            request.httpMethod = HTTPMethod.post.rawValue
+            
+            request.httpBody = (data?.getJsonString().data(using: .utf8, allowLossyConversion: false))
+            
+            request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+            if insertToken {
+                request.setValue("\(self.tokenType) \(self.token)", forHTTPHeaderField: "Authorization")
+            }
+            
+            return requestData(request)
+                .subscribe(onNext: { (res, data) in
+                    observer.onNext((res, data))
+                    observer.onCompleted()
+                }, onError: observer.onError(_:),
+                   onCompleted: observer.onCompleted)
+            }
             .configurateParamet()
     }
     
@@ -114,7 +154,7 @@ class SttHttpService: SttHttpServiceType {
                 return Disposables.create()
             }
             
-            Alamofire.upload(multipartFormData: { multipartFormData in
+            Networking.sharedInstance.backgroundSessionManager.upload(multipartFormData: { multipartFormData in
                 multipartFormData.append(data, withName: "file", fileName: "file.png", mimeType: "image/png")
             }, to: url, method: .put, headers: parameter,
                encodingCompletion: { encodingResult in
@@ -139,7 +179,7 @@ class SttHttpService: SttHttpServiceType {
                 case .failure(let encodingError):
                     observer.onError(SttBaseError.unkown("\(encodingError)"))
                 }
-            })
+        })
             return Disposables.create();
         })
             .do(onDispose: {
@@ -155,7 +195,6 @@ class SttHttpService: SttHttpServiceType {
 extension Observable {
     func configurateParamet() -> Observable<Element> {
         return self
-            .observeOn(SttScheduler.background)
             .timeout(Constants.timeout, scheduler: MainScheduler.instance)
             .retry(Constants.maxCountRepeatRequest)
     }

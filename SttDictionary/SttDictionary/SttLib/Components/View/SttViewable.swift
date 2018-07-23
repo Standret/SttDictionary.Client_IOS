@@ -10,15 +10,24 @@ import Foundation
 import UIKit
 
 protocol SttViewable: class { }
-typealias SttViewContolable = SttViewableNavigation & SttViewableListener
+typealias SttViewControlable = SttViewableNavigation & SttViewableListener
 
 protocol SttViewableNavigation: SttViewable {
     func navigate(to: String, withParametr: Any?, callback: ((Any) -> Void)?)
     func navigate<T>(storyboard: SttStoryboardType, to _: T.Type, typeNavigation: TypeNavigation, withParametr: Any?, callback: ((Any) -> Void)?)
     func loadStoryboard(storyboard: SttStoryboardType)
     
-    func close()
-    func close(parametr: Any)
+    func close(animated: Bool)
+    func close(parametr: Any, animated: Bool)
+}
+
+extension SttViewableNavigation {
+    func close(animated: Bool = true) {
+        self.close(animated: animated)
+    }
+    func close(parametr: Any, animated: Bool = true) {
+        self.close(parametr: parametr, animated: animated)
+    }
 }
 
 protocol SttViewableListener: SttViewable {

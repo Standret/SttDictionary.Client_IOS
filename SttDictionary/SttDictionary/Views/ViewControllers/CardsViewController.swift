@@ -67,7 +67,7 @@ class CardsViewController: SttViewController<CardsPresenter>, CardsDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        style = .default
+        style = ThemeManager.modeState == .light ? .default : .lightContent
         btnShow.layer.cornerRadius = 10
         btnEasy.layer.cornerRadius = UIConstants.cornerRadius
         btnHard.layer.cornerRadius = UIConstants.cornerRadius
@@ -124,9 +124,11 @@ class CardsViewController: SttViewController<CardsPresenter>, CardsDelegate {
         lblExample.isHidden = example == nil
         if let _example = example {
             let exampleText = "\(_example.0):\n\(_example.1)"
-            let range = (exampleText as NSString).range(of: _example.0)
+            let rangeOriginal = (exampleText as NSString).range(of: _example.0)
+            let rangeTranslate = (exampleText as NSString).range(of: _example.1)
             let attribute = NSMutableAttributedString(string: exampleText)
-            attribute.addAttributes([NSAttributedStringKey.font: UIFont(name: "Helvetica-Bold", size: 16)!], range: range)
+            attribute.addAttributes([NSAttributedStringKey.font: UIFont(name: "Helvetica-Bold", size: 16)!, NSAttributedStringKey.foregroundColor: ThemeManager.mainTextColor], range: rangeOriginal)
+            attribute.addAttributes([NSAttributedStringKey.font: UIFont(name: "Helvetica", size: 16)!, NSAttributedStringKey.foregroundColor: ThemeManager.mainTextColor], range: rangeTranslate)
             
             lblExample.attributedText = attribute
         }

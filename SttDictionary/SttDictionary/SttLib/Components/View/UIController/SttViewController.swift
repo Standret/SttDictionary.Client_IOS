@@ -20,12 +20,22 @@ class SttBaseViewController: UIViewController, SttKeyboardNotificationDelegate {
     var moveViewUp: Bool = false
     var style = UIStatusBarStyle.lightContent
     
+    fileprivate var _isKeyboardShow = false
+    var isKeyboardShow: Bool { return _isKeyboardShow }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         keyboardNotification = SttKeyboardNotification()
         keyboardNotification.callIfKeyboardIsShow = true
         keyboardNotification.delegate = self
     }
+    
+    /// External insert parametr
+    func insertParametr(parametr: Any?) {
+        self.parametr = parametr
+    }
+    
+    // MARK: -- SttKeyboardNotificationDelegate
     
     func keyboardWillShow(height: CGFloat) {
         if view != nil {
@@ -35,15 +45,16 @@ class SttBaseViewController: UIViewController, SttKeyboardNotificationDelegate {
             moveViewUp = true
             scrollTheView(move: moveViewUp)
         }
+        _isKeyboardShow = true
     }
     func keyboardWillHide(height: CGFloat) {
         if moveViewUp {
             scrollTheView(move: false)
         }
-        view.endEditing(true)
+        _isKeyboardShow = false
     }
     
-    func scrollTheView(move: Bool) {
+    private func scrollTheView(move: Bool) {
         var frame = view.frame
         if move {
             frame.size.height -= scrollAmount
@@ -58,13 +69,9 @@ class SttBaseViewController: UIViewController, SttKeyboardNotificationDelegate {
             self.view.layoutIfNeeded()
         }
     }
-    
-    func insertParametr(parametr: Any?) {
-        self.parametr = parametr
-    }
 }
 
-class SttViewController<T: SttViewInjector>: SttBaseViewController, SttViewContolable {
+class SttViewController<T: SttViewInjector>: SttBaseViewController, SttViewControlable {
     
     var presenter: T!
     
@@ -81,7 +88,8 @@ class SttViewController<T: SttViewInjector>: SttBaseViewController, SttViewConto
     override func viewDidLoad() {
         super.viewDidLoad()
         viewError = SttErrorLabel()
-        viewError.backgroundColor = UIColor(red:0.98, green:0.26, blue:0.26, alpha:1)
+        viewError.errorColor = UIColor(red:0.98, green:0.26, blue:0.26, alpha:1)
+        viewError.messageColor = UIColor(red: 0.251, green: 0.482, blue: 0.316, alpha:1)
         view.addSubview(viewError)
         viewError.delegate = self
         
@@ -124,30 +132,39 @@ class SttViewController<T: SttViewInjector>: SttBaseViewController, SttViewConto
         navigationController?.navigationController?.navigationBar.isHidden = false
     }
     
+    // MARK: -- SttViewableListener
+    
     func sendError(error: SttBaseErrorType) {
         let serror = error.getMessage()
         if useErrorLabel {
-            viewError.showError(text: serror.0, detailMessage: serror.1)
+            viewError.showMessage(text: serror.0, detailMessage: serror.1)
         }
         else {
             self.createAlerDialog(title: serror.0, message: serror.1)
         }
     }
     func sendMessage(title: String, message: String?) {
-        self.createAlerDialog(title: title, message: message!)
-    }
-    
-    func close() {
-        if self.isModal {
-            dismiss(animated: true, completion: nil)
+        if useErrorLabel {
+            viewError.showMessage(text: title, detailMessage: message, isError: false)
         }
         else {
-            navigationController?.popViewController(animated: true)
+            self.createAlerDialog(title: title, message: message ?? "")
         }
     }
-    func close(parametr: Any) {
+    
+    // MARK: -- SttViewableNavigation
+    
+    func close(animated: Bool) {
+        if self.isModal {
+            dismiss(animated: animated, completion: nil)
+        }
+        else {
+            navigationController?.popViewController(animated: animated)
+        }
+    }
+    func close(parametr: Any, animated: Bool) {
         callback?(parametr)
-        close()
+        close(animated: animated)
     }
     
     func navigate<T>(storyboard: SttStoryboardType, to _: T.Type, typeNavigation: TypeNavigation, withParametr: Any?, callback: ((Any) -> Void)?)  {
@@ -180,6 +197,7 @@ class SttViewController<T: SttViewInjector>: SttBaseViewController, SttViewConto
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        view.endEditing(true)
         if let  navDatra = navigateData {
             if segue.identifier == navDatra.0 {
                 let previewC = segue.destination as! SttBaseViewController

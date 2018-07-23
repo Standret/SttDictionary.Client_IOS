@@ -40,6 +40,10 @@ class SttCamera: NSObject, UIImagePickerControllerDelegate, UINavigationControll
         }))
         actionController.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
         
+        for item in actionController.view.subviews.first!.subviews.first!.subviews {
+            item.backgroundColor = UIColor.white
+        }
+        
         parent?.present(actionController, animated: true, completion: nil)
     }
     

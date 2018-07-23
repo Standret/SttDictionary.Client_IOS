@@ -39,6 +39,9 @@ class Constants {
     static let tokenKey = "securityAccessToken"
     static let idKey = "securityUserId"
     
+    // userDefaultsKey
+    static let isNightThemeKey = "isNightTheme"
+    
     // api config
     static let maxImageCacheSize = 1024 * 1024 * 200
     static let maxCacheAge = 60 * 60 * 24 * 7 * 4
