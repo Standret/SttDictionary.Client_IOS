@@ -38,17 +38,6 @@ class WordPresenter: SttPresenter<WordDelegate> {
     override func presenterCreating() {
         ServiceInjectorAssembly.instance().inject(into: self)
         
-//        _ = _wordService.observe.subscribe(onNext: { [weak self] (element,status) in
-//            if let _self = self {
-//                if let index = _self.words.index(where: { $0.word == element.word }) {
-//                    _self.words[index] = element
-//                }
-//                else {
-//                    _self.words.insert(element, at: 0)
-//                }
-//            }
-//        })
-        
         search(seachString: nil)
     }
     

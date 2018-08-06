@@ -28,7 +28,8 @@ extension Encodable {
             let encoder = JSONEncoder()
             encoder.dateEncodingStrategy = .iso8601
             let json = (try encoder.encode(self))
-            print(String(data: json, encoding: .utf8)!)
+            let str = String(data: json, encoding: .utf8)!
+            print(str)
             return String(data: json, encoding: .utf8)!
         }
         catch {

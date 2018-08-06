@@ -70,6 +70,7 @@ class StudyInteractor: StudyInteractorType {
             .trimLinkedWordsFrom(todayTrainedWords: todayAlreadyTrained())
             .trimLinkedWords()
             .trimSameIdWords(todayTrainedWords: todayAlreadyTrained(filter: [.translateCard]))
+            .trimSameIdWords(todayTrainedWords: getRepeatTranslation())
     }
     
     func getRepeatTranslation() -> Observable<[WordApiModel]> {
@@ -80,7 +81,6 @@ class StudyInteractor: StudyInteractorType {
             .trimLinkedWordsFrom(todayTrainedWords: unTrimmedRepeatOriginalWord())
             .trimLinkedWords()
             .trimSameIdWords(todayTrainedWords: todayAlreadyTrained(filter: [.originalCard]))
-            .trimSameIdWords(todayTrainedWords: getRepeatOriginal())
     }
     
     private func todayNewAlreadyTrained(filter: [AnswersType] = [.originalCard, .translateCard]) -> Observable<[WordApiModel]> {
@@ -89,12 +89,13 @@ class StudyInteractor: StudyInteractorType {
         return todayAlreadyTrained(filter: filter)
             .map({ twords = $0; return $0.map({ $0.id! }) })
             .flatMap({ self._answersRepositories.getAnswers(wordIds: $0) })
+            .map({ sinq($0).whereTrue({ st in filter.contains(st.type) }).toArray() })
             .map { (answers) -> [WordApiModel] in
-//                print("-------------\n")
-//                for i in twords {
-//                    print("\(i.originalWorld) -- [\(sinq(answers).whereTrue({ $0.wordId == i.id }).map({ $0.dateCreated }).count())]")
-//                }
-//                print("-------------\n")
+                print("-------------\n \(filter)")
+                for i in twords {
+                    print("\(i.originalWorld) -- [\(sinq(answers).whereTrue({ $0.wordId == i.id }).map({ $0.dateCreated }).count())]")
+                }
+                print("-------------\n")
                 var target = [WordApiModel]()
                 for item in twords {
                     if sinq(answers).whereTrue({ $0.wordId == item.id }).all({ $0.dateCreated == Date().onlyDay() }) {

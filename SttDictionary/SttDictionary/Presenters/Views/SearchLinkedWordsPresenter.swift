@@ -18,22 +18,10 @@ class SearchLinkedWordsPresenter: SttPresenter<SearchLinkedWordsDelegate>, WordI
     var words = SttObservableCollection<WordEntityCellPresenter>()
     var selectedWordsData = [(String, String)]()
     
-    var _wordService: IWordService!
-    
+    var _wordInteractor: WordInteractorType!
+
     override func presenterCreating() {
         ServiceInjectorAssembly.instance().inject(into: self)
-        
-        _ = _wordService.observe.subscribe(onNext: { [weak self] (element, status) in
-            if let _self = self {
-                if let index = _self.words.index(where: { $0.word == element.word }) {
-                    _self.words[index] = element
-                }
-                else {
-                    _self.words.insert(element, at: 0)
-                }
-                _self.delegate?.reloadWords()
-            }
-        })
         
         search(seachString: nil)
     }
@@ -42,13 +30,12 @@ class SearchLinkedWordsPresenter: SttPresenter<SearchLinkedWordsDelegate>, WordI
     func search(seachString: String?) {
         previusDispose?.dispose()
         self.words.removeAll()
-        previusDispose = _wordService.getWord(searchString: seachString)
+        previusDispose = _wordInteractor.getWord(searchString: seachString)
             .subscribe(onNext: { (elements) in
-                self.words.append(contentsOf: elements)
                 for item in elements {
                     item.itemDelegate = self
                 }
-                self.delegate?.reloadWords()
+                self.words.append(contentsOf: elements)
             })
     }
     
