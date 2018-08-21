@@ -1,0 +1,77 @@
+PODS:
+  - Alamofire (4.7.2)
+  - AlignedCollectionViewFlowLayout (1.1.2)
+  - AppCenter (1.6.1):
+    - AppCenter/Analytics (= 1.6.1)
+    - AppCenter/Crashes (= 1.6.1)
+  - AppCenter/Analytics (1.6.1):
+    - AppCenter/Core
+  - AppCenter/Core (1.6.1)
+  - AppCenter/Crashes (1.6.1):
+    - AppCenter/Core
+  - EasyDi (1.4.0)
+  - KeychainSwift (10.0.0)
+  - Realm (3.5.0):
+    - Realm/Headers (= 3.5.0)
+  - Realm/Headers (3.5.0)
+  - RealmSwift (3.5.0):
+    - Realm (= 3.5.0)
+  - RxAlamofire (4.2.0):
+    - RxAlamofire/Core (= 4.2.0)
+  - RxAlamofire/Core (4.2.0):
+    - Alamofire (~> 4.5)
+    - RxSwift (~> 4)
+  - RxRealm (0.7.5):
+    - RealmSwift (~> 3.0)
+    - RxSwift (~> 4.0)
+  - RxSwift (4.1.2)
+  - SDWebImage (4.3.3):
+    - SDWebImage/Core (= 4.3.3)
+  - SDWebImage/Core (4.3.3)
+  - SINQ (0.7.0)
+
+DEPENDENCIES:
+  - Alamofire (~> 4.7)
+  - AlignedCollectionViewFlowLayout (~> 1.1)
+  - AppCenter
+  - EasyDi
+  - KeychainSwift (~> 10.0)
+  - RealmSwift
+  - RxAlamofire
+  - RxRealm
+  - RxSwift (~> 4.0)
+  - SDWebImage (~> 4.0)
+  - SINQ
+
+SPEC REPOS:
+  https://github.com/cocoapods/specs.git:
+    - Alamofire
+    - AlignedCollectionViewFlowLayout
+    - AppCenter
+    - EasyDi
+    - KeychainSwift
+    - Realm
+    - RealmSwift
+    - RxAlamofire
+    - RxRealm
+    - RxSwift
+    - SDWebImage
+    - SINQ
+
+SPEC CHECKSUMS:
+  Alamofire: e4fa87002c137ba2d8d634d2c51fabcda0d5c223
+  AlignedCollectionViewFlowLayout: ee2ef451e741ec08f8e0967d828001e2f051c20a
+  AppCenter: f9eb653a45cece34549232f295aec05260dfc24f
+  EasyDi: 84cfe04e906c0f463b1b1d76ed4be3db446f9702
+  KeychainSwift: f9f7910449a0c0fd2cabc889121530dd2c477c33
+  Realm: 0378021c424e4e2bd6a0e63b27881e929d9b9ad1
+  RealmSwift: 3322562622fda2ad596985ead4d8d8be30cf838c
+  RxAlamofire: 87a9c588541210cc3e4a1f843ccc3ecf3eb98b31
+  RxRealm: a6c6c0a07cb61f34209969ca6657734edfdfff30
+  RxSwift: e49536837d9901277638493ea537394d4b55f570
+  SDWebImage: de4d90b5bff3571eae7bd16202b1f43135409fa5
+  SINQ: 64cab7b7c73486da8f4442c25ccdd6ada7e67b95
+
+PODFILE CHECKSUM: 15f359ccdf5d8841df62f2e55f7eae1f3a731eca
+
+COCOAPODS: 1.5.2
