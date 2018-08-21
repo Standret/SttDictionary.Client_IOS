@@ -17,6 +17,7 @@ class UIConstants {
     
     class CellName {
         static let wordEntity = "WordEntityCell"
+        static let tagEntity = "TagEntityCell"
         static let wordCollectionEntity = "WordCollectionCell"
     }
 }

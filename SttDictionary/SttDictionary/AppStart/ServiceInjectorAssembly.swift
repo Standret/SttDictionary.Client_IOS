@@ -86,6 +86,14 @@ class ServiceInjectorAssembly: Assembly {
         }
     }
     
+    func inject(into service: TagInteractor) {
+        let _:TagInteractor = define(init: service) {
+            $0._tagRepositories = self.serviceAssembly.tagRepositories
+            $0._notificationError = self.serviceAssembly.notificationError
+            return $0
+        }
+    }
+    
     // Inject service into presenter
     
     func inject(into service: NewWordPresenter) {
@@ -112,6 +120,7 @@ class ServiceInjectorAssembly: Assembly {
     func inject(into service: WordPresenter) {
         let _:WordPresenter = define(init: service) {
             $0._wordInteractor = self.serviceAssembly.wordInteractor
+            $0._tagInteractor = self.serviceAssembly.tagInteractor
             return $0
         }
     }

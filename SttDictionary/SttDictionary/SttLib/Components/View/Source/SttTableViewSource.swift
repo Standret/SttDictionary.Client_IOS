@@ -11,9 +11,13 @@ import Foundation
 import UIKit
 import RxSwift
 
-class SttTableViewSource<T: SttViewInjector>: NSObject, UITableViewDataSource {
+class SttTableViewSource<T: SttViewInjector>: NSObject, UITableViewDataSource, UITableViewDelegate {
     
     private var _tableView: UITableView
+    
+    private var endScrollCallBack: (() -> Void)?
+    
+    var callBackEndPixel: Int = 150
     
     private var _cellIdentifiers = [String]()
     var cellIdentifiers: [String] { return _cellIdentifiers }
@@ -49,6 +53,14 @@ class SttTableViewSource<T: SttViewInjector>: NSObject, UITableViewDataSource {
         })
     }
     
+    func addEndScrollHandler<T: UIViewController>(delegate: T, callback: @escaping (T) -> Void) {
+        endScrollCallBack = { [weak delegate] in
+            if let _delegate = delegate {
+                callback(_delegate)
+            }
+        }
+    }
+    
     init(tableView: UITableView, cellIdentifiers: [SttIdentifiers], collection: SttObservableCollection<T>) {
         
         for item in cellIdentifiers {
@@ -62,6 +74,7 @@ class SttTableViewSource<T: SttViewInjector>: NSObject, UITableViewDataSource {
         
         super.init()
         updateSource(collection: collection)
+        tableView.delegate = self
     }
     
     // MARK: -- todo: write init for [cellIdentifiers]
@@ -76,5 +89,24 @@ class SttTableViewSource<T: SttViewInjector>: NSObject, UITableViewDataSource {
         cell.presenter = _collection[indexPath.row]
         cell.prepareBind()
         return cell
+    }
+    
+    private var inPosition: Bool = false
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        
+        let x = scrollView.contentOffset.y
+        let width = scrollView.contentSize.height - scrollView.bounds.height - CGFloat(callBackEndPixel)
+        
+        if (scrollView.contentSize.height > scrollView.bounds.height) {
+            if (x > width) {
+                if (!inPosition) {
+                    endScrollCallBack?()
+                }
+                inPosition = true
+            }
+            else {
+                inPosition = false
+            }
+        }
     }
 }

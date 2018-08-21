@@ -48,6 +48,9 @@ class ServiceAssembly: Assembly {
     var studyInteractor: StudyInteractorType {
         return define(scope: .lazySingleton, init: StudyInteractor())
     }
+    var tagInteractor: TagInteractorType {
+        return define(scope: .lazySingleton, init: TagInteractor())
+    }
     
     // services
     var notificationError: NotificationErrorType {

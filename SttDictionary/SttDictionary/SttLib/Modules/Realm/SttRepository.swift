@@ -167,7 +167,7 @@ class SttRepository<T, R>: SttRepositoryType
         return Observable<[R]>.create { (observer) -> Disposable in
             do {
                 let objects = try self.getObjects(filter: filter, sortBy: sortBy, isAsc: isAsc, observer: observer, tryGetAll: true)
-                observer.onNext(Array(objects.prefix(take)))
+                observer.onNext(Array(objects.dropFirst(skip).prefix(take)))
                 observer.onCompleted()
             }
             catch {

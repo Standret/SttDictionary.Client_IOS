@@ -30,7 +30,7 @@ class SearchLinkedWordsPresenter: SttPresenter<SearchLinkedWordsDelegate>, WordI
     func search(seachString: String?) {
         previusDispose?.dispose()
         self.words.removeAll()
-        previusDispose = _wordInteractor.getWord(searchString: seachString)
+        previusDispose = _wordInteractor.getWord(searchString: seachString, skip: 0)
             .subscribe(onNext: { (elements) in
                 for item in elements {
                     item.itemDelegate = self

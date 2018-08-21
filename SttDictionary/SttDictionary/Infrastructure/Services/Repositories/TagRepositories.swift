@@ -10,8 +10,10 @@ import Foundation
 import RxSwift
 
 protocol TagRepositoriesType {
+    func get(searchStr: String?, skip: Int, take: Int) -> Observable<[TagApiModel]>
+    
     func getCount(type: ElementType) -> Observable<Int>
-    func getStatistics(type: ElementType) -> Observable<[TagApiModel]>
+    func get(type: ElementType) -> Observable<[TagApiModel]>
     
     func addCachedTags() -> Observable<Bool>
     
@@ -29,10 +31,14 @@ class TagRepositories: TagRepositoriesType {
         ServiceInjectorAssembly.instance().inject(into: self)
     }
     
+    func get(searchStr: String?, skip: Int, take: Int) -> Observable<[TagApiModel]> {
+        return _storageProvider.tag.getMany(filter: "name == '\(searchStr ?? "")'", skip: skip, take: take).map({ $0.map({ $0.deserialize() }) })
+    }
+    
     func getCount(type: ElementType) -> Observable<Int> {
         return _storageProvider.tag.count(filter: QueryFactories.getDefaultQuery(type: type))
     }
-    func getStatistics(type: ElementType) -> Observable<[TagApiModel]> {
+    func get(type: ElementType) -> Observable<[TagApiModel]> {
         return _storageProvider.tag.getMany(filter: QueryFactories.getDefaultQuery(type: type)).map({ $0.map({ $0.deserialize() }) })
     }
     

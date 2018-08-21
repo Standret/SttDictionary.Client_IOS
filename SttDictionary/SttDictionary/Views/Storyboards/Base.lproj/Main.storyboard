@@ -55,7 +55,7 @@
                                             <rect key="frame" x="0.0" y="0.0" width="341" height="43.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <label opaque="NO" multipleTouchEnabled="YES" tag="1" contentMode="left" insetsLayoutMarginsFromSafeArea="NO" text="Add new word" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="1RC-wT-SvZ" customClass="MainUILabel" customModule="SttDictionary" customModuleProvider="target">
+                                                <label opaque="NO" multipleTouchEnabled="YES" tag="1" contentMode="left" insetsLayoutMarginsFromSafeArea="NO" text="Add Word" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="1RC-wT-SvZ" customClass="MainUILabel" customModule="SttDictionary" customModuleProvider="target">
                                                     <rect key="frame" x="60" y="0.0" width="280" height="43.5"/>
                                                     <autoresizingMask key="autoresizingMask"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
@@ -72,12 +72,33 @@
                                             <segue destination="xvk-72-WV1" kind="show" id="YTs-5F-W21"/>
                                         </connections>
                                     </tableViewCell>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" accessoryType="disclosureIndicator" indentationWidth="10" focusStyle="custom" textLabel="47x-R4-pDU" imageView="NWJ-1s-4yL" style="IBUITableViewCellStyleDefault" id="1Zb-SU-zWT">
+                                        <rect key="frame" x="0.0" y="123" width="375" height="44"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="1Zb-SU-zWT" id="eiJ-0e-vst">
+                                            <rect key="frame" x="0.0" y="0.0" width="341" height="43.5"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" multipleTouchEnabled="YES" tag="1" contentMode="left" insetsLayoutMarginsFromSafeArea="NO" text="Add Tag" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="47x-R4-pDU" customClass="MainUILabel" customModule="SttDictionary" customModuleProvider="target">
+                                                    <rect key="frame" x="60" y="0.0" width="280" height="43.5"/>
+                                                    <autoresizingMask key="autoresizingMask"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <nil key="textColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <imageView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" image="addTag" id="NWJ-1s-4yL">
+                                                    <rect key="frame" x="16" y="7" width="29" height="29"/>
+                                                    <autoresizingMask key="autoresizingMask"/>
+                                                </imageView>
+                                            </subviews>
+                                        </tableViewCellContentView>
+                                    </tableViewCell>
                                 </cells>
                             </tableViewSection>
                             <tableViewSection id="aDj-X3-eTg">
                                 <cells>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" accessoryType="disclosureIndicator" indentationWidth="10" focusStyle="custom" textLabel="YW6-rJ-XQi" imageView="MnH-QP-Hxx" style="IBUITableViewCellStyleDefault" id="5bJ-0j-qEN">
-                                        <rect key="frame" x="0.0" y="159" width="375" height="44"/>
+                                        <rect key="frame" x="0.0" y="203" width="375" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="5bJ-0j-qEN" id="9r9-NM-u76">
                                             <rect key="frame" x="0.0" y="0.0" width="341" height="43.5"/>
@@ -98,7 +119,7 @@
                                         </tableViewCellContentView>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" accessoryType="disclosureIndicator" indentationWidth="10" focusStyle="custom" textLabel="rrA-e8-cRs" imageView="N4e-14-LTS" style="IBUITableViewCellStyleDefault" id="CaC-ee-W1p">
-                                        <rect key="frame" x="0.0" y="203" width="375" height="44"/>
+                                        <rect key="frame" x="0.0" y="247" width="375" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="CaC-ee-W1p" id="F2G-VY-Azh">
                                             <rect key="frame" x="0.0" y="0.0" width="341" height="43.5"/>
@@ -122,7 +143,7 @@
                                         </connections>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" accessoryType="disclosureIndicator" indentationWidth="10" focusStyle="custom" textLabel="KkV-mR-VJC" imageView="dag-Cp-DcB" style="IBUITableViewCellStyleDefault" id="Hle-76-bkU">
-                                        <rect key="frame" x="0.0" y="247" width="375" height="44"/>
+                                        <rect key="frame" x="0.0" y="291" width="375" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="Hle-76-bkU" id="LQz-t3-wit">
                                             <rect key="frame" x="0.0" y="0.0" width="341" height="43.5"/>
@@ -874,7 +895,7 @@
             </objects>
             <point key="canvasLocation" x="335" y="481"/>
         </scene>
-        <!--Words-->
+        <!--Word View Controller-->
         <scene sceneID="9pv-6o-V7u">
             <objects>
                 <viewController id="gbb-s8-JxV" customClass="WordViewController" customModule="SttDictionary" customModuleProvider="target" sceneMemberID="viewController">
@@ -921,13 +942,24 @@
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="hni-3G-WFY"/>
                     </view>
-                    <navigationItem key="navigationItem" title="Words" id="ENI-bZ-ZzU">
+                    <navigationItem key="navigationItem" id="ENI-bZ-ZzU">
+                        <nil key="title"/>
                         <barButtonItem key="leftBarButtonItem" title="Item" image="asetting" id="cZf-Sw-Oiv">
                             <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             <connections>
                                 <segue destination="cnn-zc-vhI" kind="presentation" id="Tco-po-52C"/>
                             </connections>
                         </barButtonItem>
+                        <segmentedControl key="titleView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="bar" selectedSegmentIndex="0" id="x4q-xn-Wae">
+                            <rect key="frame" x="107" y="7" width="161" height="30"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <segments>
+                                <segment title="Words"/>
+                                <segment title="Tags"/>
+                                <segment title="Time"/>
+                            </segments>
+                            <color key="tintColor" name="whiteColor"/>
+                        </segmentedControl>
                         <barButtonItem key="rightBarButtonItem" image="education" id="Q1S-M0-PJJ">
                             <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             <connections>
@@ -936,6 +968,7 @@
                         </barButtonItem>
                     </navigationItem>
                     <connections>
+                        <outlet property="contentControl" destination="x4q-xn-Wae" id="RWA-x5-2wj"/>
                         <outlet property="mainTable" destination="xHV-Ns-gXM" id="FcD-sg-iM8"/>
                         <outlet property="searchBar" destination="uYu-7i-0Tl" id="qMz-td-MeO"/>
                         <outlet property="separator" destination="tV1-lf-KcR" id="2BW-RR-jUQ"/>
@@ -1334,6 +1367,7 @@
     </scenes>
     <resources>
         <image name="add" width="29" height="29"/>
+        <image name="addTag" width="29" height="29"/>
         <image name="alist" width="29" height="29"/>
         <image name="asetting" width="29" height="29"/>
         <image name="brush" width="29" height="29"/>
@@ -1359,28 +1393,25 @@
             <color red="0.97647058823529409" green="0.97647058823529409" blue="0.97647058823529409" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
         <namedColor name="easy">
-            <color red="0.3843137254901961" green="0.90196078431372551" blue="0.5490196078431373" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="0.35686274509803922" green="0.77254901960784317" blue="0.36078431372549019" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
         <namedColor name="error">
             <color red="0.9137254901960784" green="0.31764705882352939" blue="0.19607843137254902" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
         <namedColor name="forget">
-            <color red="0.96470588235294119" green="0.3843137254901961" blue="0.25490196078431371" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="0.8784313725490196" green="0.31372549019607843" blue="0.31372549019607843" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
         <namedColor name="hard">
-            <color red="0.95686274509803926" green="0.79607843137254897" blue="0.36862745098039218" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="1" green="0.76078431372549016" blue="0.26666666666666666" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
         <namedColor name="main">
-            <color red="0.27058823529411763" green="0.34901960784313724" blue="0.54509803921568623" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-        </namedColor>
-        <namedColor name="main">
-            <color red="0.27058823529999998" green="0.34901960780000002" blue="0.5450980392" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-        </namedColor>
-        <namedColor name="main">
-            <color red="0.27058823529411763" green="0.34901960784313724" blue="0.54509803921568623" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="0.062745098039215685" green="0.56862745098039214" blue="0.45098039215686275" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
         <namedColor name="maskColor">
             <color red="0.0" green="0.0" blue="0.0" alpha="0.15000000596046448" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+        <namedColor name="whiteColor">
+            <color red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
     </resources>
 </document>

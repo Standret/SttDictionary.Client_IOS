@@ -14,7 +14,7 @@ protocol WordInteractorType {
     func addWord(word: String, translations: [String], exampleUsage: ExampleUsage?,
                  linkedWords: [String]?, tagsId: [String]?, useReverse: Bool, usePronunciation: Bool) -> Observable<(Bool, SyncStep)>
     func exists(word: String) -> Observable<Bool>
-    func getWord(searchString: String?) -> Observable<[WordEntityCellPresenter]>
+    func getWord(searchString: String?, skip: Int) -> Observable<[WordEntityCellPresenter]>
     func updateStatistics(answer: Answer, type: AnswersType) -> Observable<Bool>
 }
 
@@ -60,9 +60,9 @@ class WordInteractor: WordInteractorType {
             .observeInUI()
     }
     
-    func getWord(searchString: String?) -> Observable<[WordEntityCellPresenter]> {
+    func getWord(searchString: String?, skip: Int) -> Observable<[WordEntityCellPresenter]> {
         var twords: [WordApiModel]!
-        return _notificationError.useError(observable: _wordRepositories.getAll(searchStr: searchString)
+        return _notificationError.useError(observable: _wordRepositories.get(searchStr: searchString, skip: skip, take: 50)
             .map({ twords = $0; return $0.map({ $0.id }) })
             .flatMap({ self._statisticsRepositories.getElementFor(wordsId: $0) })
             .map { (statistics) -> [WordEntityCellPresenter] in

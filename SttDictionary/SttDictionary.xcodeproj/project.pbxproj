@@ -100,6 +100,10 @@
 		7DF979582105AB7900EF0823 /* SttDefaultComponents.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7DF979572105AB7900EF0823 /* SttDefaultComponents.swift */; };
 		840427F520B2E92700C94765 /* ApiModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 840427F420B2E92700C94765 /* ApiModel.swift */; };
 		8424F31D212C2AFC005C557C /* WordTrimmer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8424F31C212C2AFC005C557C /* WordTrimmer.swift */; };
+		8424F321212C41B2005C557C /* TagEntityCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8424F31F212C41B2005C557C /* TagEntityCell.swift */; };
+		8424F322212C41B2005C557C /* TagEntityCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8424F320212C41B2005C557C /* TagEntityCell.xib */; };
+		8424F324212C438C005C557C /* TagEntityCellPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8424F323212C438C005C557C /* TagEntityCellPresenter.swift */; };
+		8424F326212C57CE005C557C /* TagInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8424F325212C57CE005C557C /* TagInteractor.swift */; };
 		8433D0B720A895A30031D690 /* ServiceAssembly.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8433D0B620A895A30031D690 /* ServiceAssembly.swift */; };
 		8433D0B920A895EA0031D690 /* ServiceInjectorAssembly.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8433D0B820A895EA0031D690 /* ServiceInjectorAssembly.swift */; };
 		8433D0BC20A895EA0031D690 /* TagApiModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8433D0BB20A895EA0031D690 /* TagApiModel.swift */; };
@@ -248,6 +252,10 @@
 		7DF979572105AB7900EF0823 /* SttDefaultComponents.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SttDefaultComponents.swift; sourceTree = "<group>"; };
 		840427F420B2E92700C94765 /* ApiModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApiModel.swift; sourceTree = "<group>"; };
 		8424F31C212C2AFC005C557C /* WordTrimmer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WordTrimmer.swift; sourceTree = "<group>"; };
+		8424F31F212C41B2005C557C /* TagEntityCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TagEntityCell.swift; sourceTree = "<group>"; };
+		8424F320212C41B2005C557C /* TagEntityCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = TagEntityCell.xib; sourceTree = "<group>"; };
+		8424F323212C438C005C557C /* TagEntityCellPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TagEntityCellPresenter.swift; sourceTree = "<group>"; };
+		8424F325212C57CE005C557C /* TagInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TagInteractor.swift; sourceTree = "<group>"; };
 		8433D0B620A895A30031D690 /* ServiceAssembly.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServiceAssembly.swift; sourceTree = "<group>"; };
 		8433D0B820A895EA0031D690 /* ServiceInjectorAssembly.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServiceInjectorAssembly.swift; sourceTree = "<group>"; };
 		8433D0BB20A895EA0031D690 /* TagApiModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TagApiModel.swift; sourceTree = "<group>"; };
@@ -431,6 +439,7 @@
 				7DE2F2C920F08D9200B5F343 /* WordInteractor.swift */,
 				7DE2F2CB20F08DED00B5F343 /* SyncInteractor.swift */,
 				7D57202D20F1313500955AFD /* StudyInteractor.swift */,
+				8424F325212C57CE005C557C /* TagInteractor.swift */,
 			);
 			path = Interactors;
 			sourceTree = "<group>";
@@ -632,6 +641,15 @@
 			path = Views;
 			sourceTree = "<group>";
 		};
+		8424F31E212C4130005C557C /* TagEntity */ = {
+			isa = PBXGroup;
+			children = (
+				8424F31F212C41B2005C557C /* TagEntityCell.swift */,
+				8424F320212C41B2005C557C /* TagEntityCell.xib */,
+			);
+			path = TagEntity;
+			sourceTree = "<group>";
+		};
 		8433D0BA20A895EA0031D690 /* ApiModel */ = {
 			isa = PBXGroup;
 			children = (
@@ -736,6 +754,7 @@
 			children = (
 				84AD6A5820B05010000D560E /* WordCollectionCellPresenter.swift */,
 				8462666E20B1DEED004169A1 /* WordEntityCellPresenter.swift */,
+				8424F323212C438C005C557C /* TagEntityCellPresenter.swift */,
 			);
 			path = Cells;
 			sourceTree = "<group>";
@@ -891,6 +910,7 @@
 		84F39E8320B03EDF00548681 /* Cell */ = {
 			isa = PBXGroup;
 			children = (
+				8424F31E212C4130005C557C /* TagEntity */,
 				8462666720B1DE51004169A1 /* WordEntity */,
 				84F39E8420B03F0A00548681 /* WordCollectionCell.swift */,
 				7DB2BFB920D52819007B3676 /* WordCollectionCellSource.swift */,
@@ -999,6 +1019,7 @@
 				84F39E6420B0308C00548681 /* Colors.xcassets in Resources */,
 				8437504A20AD6D21007BFF5F /* Login.storyboard in Resources */,
 				84D2422B20A85179007D8F1A /* LaunchScreen.storyboard in Resources */,
+				8424F322212C41B2005C557C /* TagEntityCell.xib in Resources */,
 				8462666D20B1DECF004169A1 /* WordEntityCell.xib in Resources */,
 				84D2422820A85179007D8F1A /* Assets.xcassets in Resources */,
 				84F39E6620B0309A00548681 /* Icons.xcassets in Resources */,
@@ -1088,6 +1109,7 @@
 				7DF9792F2105A98E00EF0823 /* SttCollectionViewWithSectionSource.swift in Sources */,
 				8433D0B920A895EA0031D690 /* ServiceInjectorAssembly.swift in Sources */,
 				7DF979472105A98E00EF0823 /* SttObservableExtensions.swift in Sources */,
+				8424F326212C57CE005C557C /* TagInteractor.swift in Sources */,
 				7DF979352105A98E00EF0823 /* SttCollectionViewCell.swift in Sources */,
 				7DF979302105A98E00EF0823 /* SttTableViewSource.swift in Sources */,
 				7DF979292105A98E00EF0823 /* SttObservableCollection.swift in Sources */,
@@ -1141,6 +1163,7 @@
 				8433D0CE20A8AE8D0031D690 /* RealmWord.swift in Sources */,
 				7DF979502105A98E00EF0823 /* SttSpecialResult.swift in Sources */,
 				84D2422120A85177007D8F1A /* AppDelegate.swift in Sources */,
+				8424F324212C438C005C557C /* TagEntityCellPresenter.swift in Sources */,
 				7DD1B3652105E9A600D08834 /* SttUITextFieldExtensions.swift in Sources */,
 				7DF9794A2105A98E00EF0823 /* SttUIImageExtensions.swift in Sources */,
 				7DF9794D2105A98E00EF0823 /* SttUIViewExtensions.swift in Sources */,
@@ -1148,6 +1171,7 @@
 				7DF979532105A98E00EF0823 /* SttRepository.swift in Sources */,
 				7DF979522105A98E00EF0823 /* SttRealmProtocols.swift in Sources */,
 				7DF9793B2105A98E00EF0823 /* SttTextField.swift in Sources */,
+				8424F321212C41B2005C557C /* TagEntityCell.swift in Sources */,
 				7DF979272105A98E00EF0823 /* SttDictionaryCodable.swift in Sources */,
 				7DF9793C2105A98E00EF0823 /* SttHandlerTextField.swift in Sources */,
 				7DE2F2CC20F08DED00B5F343 /* SyncInteractor.swift in Sources */,
