@@ -12,11 +12,7 @@ protocol ShortWordItemDelegate: class {
     func deleteItem(word: String?)
 }
 
-protocol WordCollectionCellDelegate: SttViewable {
-    
-}
-
-class WorldCollectionCellPresenter: SttPresenter<WordCollectionCellDelegate> {
+class WorldCollectionCellPresenter: SttPresenter<SttViewable> {
     
     var word: String?
     var id: String?

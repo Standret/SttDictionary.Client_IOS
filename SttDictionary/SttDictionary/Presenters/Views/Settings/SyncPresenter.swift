@@ -16,7 +16,6 @@ protocol SyncDelegate: SttViewControlable {
 
 class SyncPresenter: SttPresenter<SyncDelegate> {
     
-    var _syncService: ISyncService!
     var _syncInteractor: SyncInteractorType!
     
     var sync: SttComand!

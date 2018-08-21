@@ -59,7 +59,10 @@ class AnswerRepositories: AnswerRepositoriesType {
                     model[item] = sinq(answers).whereTrue({ $0.wordId == item }).map({ $0.convertToApiModel() })
                 }
                 if model.count > 0 {
-                    return self._apiDataProvider.updateAnswers(answers: UpdateAnswerApiModel(answers: model)).map({ _ in count })
+                    let predicateFormat = NSPredicate(format: "id IN %@", argumentArray: [Array(Set(answers.map({ $0.id })))]).predicateFormat
+                    return self._apiDataProvider.updateAnswers(answers: UpdateAnswerApiModel(answers: model))
+                        .flatMap({ _ in self._storageProvider.answer.delete(filter: predicateFormat) })
+                        .map({ _ in count })
                 }
                 return Observable<Int>.empty()
             })

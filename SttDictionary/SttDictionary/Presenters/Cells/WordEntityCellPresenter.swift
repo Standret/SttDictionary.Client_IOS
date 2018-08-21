@@ -54,8 +54,6 @@ class WordEntityCellPresenter: SttPresenter<WordEntityCellDelegate> {
             tags = "#none"
         }
         status = fromObject.isSynced
-        //nextOriginalDate = fromObject.originalStatistics?.nextRepetition
-        //nextTranslationDate = fromObject.translateStatistics?.nextRepetition
         id = fromObject.id
     }
     

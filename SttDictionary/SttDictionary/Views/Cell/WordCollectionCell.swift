@@ -8,7 +8,7 @@
 
 import UIKit
 
-class WordCollectionCell: SttCollectionViewCell<WorldCollectionCellPresenter>, WordCollectionCellDelegate {
+class WordCollectionCell: SttCollectionViewCell<WorldCollectionCellPresenter> {
     @IBOutlet weak var lblWord: UILabel!
     
     override func prepareBind() {

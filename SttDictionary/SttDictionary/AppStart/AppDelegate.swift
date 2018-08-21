@@ -22,12 +22,16 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         return true
     }
     
-    public func applicationDidEnterBackground(_ application: UIApplication) {
-        SttGlobalObserver.applicationStatusChanged(status: .EnterBackgound)
+    func applicationDidEnterBackground(_ application: UIApplication) {
+        SttAppLifecycle.didEnterBackground()
     }
     
-    public func applicationWillEnterForeground(_ application: UIApplication) {
-        SttGlobalObserver.applicationStatusChanged(status: .EnterForeground)
+    func applicationWillEnterForeground(_ application: UIApplication) {
+        SttAppLifecycle.willEnterForeground()
+    }
+    
+    func applicationWillTerminate(_ application: UIApplication) {
+        SttAppLifecycle.willTerminate()
     }
 }
 

@@ -89,6 +89,7 @@ class CardsPresenter: SttPresenter<CardsDelegate> {
         })
     }
     
+    /// initialize target collection using (start end method) and radom sort
     private func initializeWords(_words: ([WordApiModel], [WordApiModel])) {
         
         var param = _words

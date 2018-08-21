@@ -28,6 +28,7 @@ struct CardsPredicate {
 
 class QueryFactories {
     
+    /// query for not synced element
     class func getDefaultQuery(type: ElementType) -> String? {
         var result: String?
         switch type {
@@ -40,6 +41,7 @@ class QueryFactories {
         return result
     }
     
+    /// query for get statistics depen on from parametrs "type"
     class func getStatisticsQuery(type: StatisticsType) -> String {
         var predicateString: String!
         switch type {
@@ -56,6 +58,7 @@ class QueryFactories {
         return predicateString
     }
     
+    /// query for search word in DB
     class func getWordQuery(text: String?) -> String? {
         if (text ?? "").starts(with: ":@") {
             return nil

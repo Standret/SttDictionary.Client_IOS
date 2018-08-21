@@ -14,10 +14,10 @@ public class SttApplicationDelegate: UIResponder, UIApplicationDelegate {
     public var window: UIWindow?
 
     public func applicationDidEnterBackground(_ application: UIApplication) {
-        SttGlobalObserver.applicationStatusChanged(status: .EnterBackgound)
+        SttGlobalObserver.applicationStatusChanged(status: .didEnterBackgound)
     }
     
     public func applicationWillEnterForeground(_ application: UIApplication) {
-        SttGlobalObserver.applicationStatusChanged(status: .EnterForeground)
+        SttGlobalObserver.applicationStatusChanged(status: .willEnterForeground)
     }
 }

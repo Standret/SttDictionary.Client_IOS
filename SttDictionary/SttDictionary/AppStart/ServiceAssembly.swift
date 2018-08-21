@@ -50,12 +50,6 @@ class ServiceAssembly: Assembly {
     }
     
     // services
-    var syncService: ISyncService {
-        return define(scope: .lazySingleton, init: SyncService())
-    }
-    var wordService: IWordService {
-        return define(scope: .lazySingleton, init: WordServie())
-    }
     var notificationError: NotificationErrorType {
         return define(scope: .lazySingleton, init: NotificationError())
     }

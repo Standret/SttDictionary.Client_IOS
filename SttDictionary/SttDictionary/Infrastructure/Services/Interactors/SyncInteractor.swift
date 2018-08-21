@@ -62,7 +62,9 @@ class SyncInteractor: SyncInteractorType {
             Observable.concat([
                 _wordRepositories.addCachedWords().map({ _ in (SyncStepComponent.uploadWord, 1) }),
                 _tagRepositories.addCachedTags().map({ _ in (SyncStepComponent.uploadTag, 1) }),
-                _answerRepositories.addCachedAnswers().map({ (SyncStepComponent.uploadAnswer, $0) })
+                _answerRepositories.addCachedAnswers().map({ (SyncStepComponent.uploadAnswer, $0) }),
+                _answerRepositories.getCount(type: .all)
+                    .flatMap({ count in Observable<(SyncStepComponent, Int)>.create({ self.updateAnswers(skip: count, observer: $0) }) })
                 ])
             .inBackground()
             .observeInUI())
@@ -80,7 +82,7 @@ class SyncInteractor: SyncInteractorType {
                 Observable<(SyncStepComponent, Int)>.create({ self.updateWords(skip: 0, observer: $0) }),
                 Observable<(SyncStepComponent, Int)>.create({ self.updateTags(skip: 0, observer: $0) }),
                 Observable<(SyncStepComponent, Int)>.create({ self.updateWordStatistics(skip: 0, observer: $0) }),
-                Observable<(SyncStepComponent, Int)>.create({ self.updateAnswers(skip: 0, observer: $0) }),
+                Observable<(SyncStepComponent, Int)>.create({ self.updateAnswers(skip: 0, observer: $0) })
                 ])
             .inBackground()
             .observeInUI())

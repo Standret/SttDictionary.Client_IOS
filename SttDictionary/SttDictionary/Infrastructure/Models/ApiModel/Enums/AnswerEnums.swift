@@ -11,9 +11,11 @@ import Foundation
 enum AnswersGrade: Int, Codable {
     case forget, bad, fail, pass, good, perfect
 }
+
 enum AnswersType: Int, Codable {
     case originalCard, translateCard, rule
 }
+
 enum AnswersRaw: Int, Codable {
     case forget, hard, easy
 }

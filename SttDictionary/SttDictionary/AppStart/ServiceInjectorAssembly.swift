@@ -136,25 +136,4 @@ class ServiceInjectorAssembly: Assembly {
             return $0
         }
     }
-    
-   //  Inject Service into service
-    
-    
-    func inject(into service: SyncService) {
-        let _:SyncService = define(init: service) {
-            $0._unitOfWork = self.serviceAssembly.realmStorageProvider
-            $0._apiServicce = self.serviceAssembly.apiDataProvider
-            $0._notificationError = self.serviceAssembly.notificationError
-            return $0
-        }
-    }
-    
-    func inject(into service: WordServie) {
-        let _:WordServie = define(init: service) {
-            $0._unitOfWork = self.serviceAssembly.realmStorageProvider
-            $0._notificationError = self.serviceAssembly.notificationError
-            $0._smEngine = self.serviceAssembly.smEngine
-            return $0
-        }
-    }
 }

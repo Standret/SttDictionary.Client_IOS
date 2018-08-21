@@ -10,8 +10,9 @@ import Foundation
 import RxSwift
 
 public enum SttApplicationStatus {
-    case EnterBackgound
-    case EnterForeground
+    case didEnterBackgound
+    case willEnterForeground
+    case wilTerminate
 }
 
 public class SttGlobalObserver {
@@ -21,5 +22,20 @@ public class SttGlobalObserver {
     
     public class func applicationStatusChanged(status: SttApplicationStatus) {
         publisher.onNext(status)
+    }
+}
+
+public class SttAppLifecycle
+{
+    public class func didEnterBackground() {
+        SttGlobalObserver.applicationStatusChanged(status: .didEnterBackgound)
+    }
+    
+    public class func willEnterForeground() {
+        SttGlobalObserver.applicationStatusChanged(status: .willEnterForeground)
+    }
+    
+    public class func willTerminate() {
+        SttGlobalObserver.applicationStatusChanged(status: .wilTerminate)
     }
 }

@@ -99,7 +99,7 @@ class SttViewController<T: SttViewInjector>: SttBaseViewController, SttViewContr
         view.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(handleClick(_:))))
         
         _ = SttGlobalObserver.observableStatusApplication.subscribe(onNext: { (status) in
-            if status == .EnterBackgound {
+            if status == .didEnterBackgound {
                 self.view.endEditing(true)
                 self.navigationController?.navigationBar.endEditing(true)
             }
