@@ -32,7 +32,7 @@ class TagRepositories: TagRepositoriesType {
     }
     
     func get(searchStr: String?, skip: Int, take: Int) -> Observable<[TagApiModel]> {
-        return _storageProvider.tag.getMany(filter: "name == '\(searchStr ?? "")'", skip: skip, take: take).map({ $0.map({ $0.deserialize() }) })
+        return _storageProvider.tag.getMany(filter: QueryFactories.getTagQuery(text: searchStr), skip: skip, take: take).map({ $0.map({ $0.deserialize() }) })
     }
     
     func getCount(type: ElementType) -> Observable<Int> {

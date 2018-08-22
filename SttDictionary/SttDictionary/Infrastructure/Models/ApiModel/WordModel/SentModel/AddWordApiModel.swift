@@ -21,6 +21,7 @@ class AddWordApiModel: Codable {
     
     var reverseCards: Bool = true
     var usePronunciation: Bool = true
+    let explanation: String?
     
     init (word: String,
           translations: [String],
@@ -29,7 +30,8 @@ class AddWordApiModel: Codable {
           tagsId: [String]? = nil,
           linkedWords: [String]? = nil,
           reverseCards: Bool = true,
-          usePronunciation: Bool = true) {
+          usePronunciation: Bool = true,
+          explanation: String? = nil) {
         
         self.originalWorld = word
         self.translations = translations
@@ -42,5 +44,7 @@ class AddWordApiModel: Codable {
         
         self.reverseCards = reverseCards
         self.usePronunciation = usePronunciation
+        
+        self.explanation = explanation
     }
 }

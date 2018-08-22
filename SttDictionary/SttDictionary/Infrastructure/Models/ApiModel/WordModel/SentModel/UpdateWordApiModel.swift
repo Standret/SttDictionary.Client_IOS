@@ -16,6 +16,7 @@ class UpdateWordApiModel: Codable {
     
     var pronunciationUrl: String?
     var exampleUsage: ExampleUsage?
+    let explanation: String?
     
     var tagsId: [String]?
     var linkedWords: [String]?
@@ -31,7 +32,8 @@ class UpdateWordApiModel: Codable {
           tagsId: [String]? = nil,
           linkedWords: [String]? = nil,
           reverseCards: Bool = true,
-          usePronunciation: Bool = true) {
+          usePronunciation: Bool = true,
+          explanation: String? = nil) {
         
         self.id = id
         
@@ -46,5 +48,7 @@ class UpdateWordApiModel: Codable {
         
         self.reverseCards = reverseCards
         self.usePronunciation = usePronunciation
+        
+        self.explanation = explanation
     }
 }

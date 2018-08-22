@@ -11,8 +11,10 @@ import RxSwift
 
 class SearchLinkedWordsViewController: SttViewController<SearchLinkedWordsPresenter>, SearchLinkedWordsDelegate {
 
-    var changeTextObservable: Observable<String>!
     var wordsSource: SttTableViewSource<WordEntityCellPresenter>!
+    var tagSource: SttTableViewSource<TagEntityCellPresenter>!
+    
+    var changeTextObservable: Observable<String>!
     var closeDelegate: (([(String, String)]) -> Void)!
 
     @IBOutlet weak var mainTable: UITableView!
@@ -20,10 +22,17 @@ class SearchLinkedWordsViewController: SttViewController<SearchLinkedWordsPresen
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        wordsSource = SttTableViewSource(tableView: mainTable,
-                                         cellIdentifiers: [SttIdentifiers(identifers: UIConstants.CellName.wordEntity)],
-                                         collection: presenter.words)
-        mainTable.dataSource = wordsSource
+        if presenter.contentType == MainContentType.words {
+            wordsSource = SttTableViewSource(tableView: mainTable,
+                                             cellIdentifiers: [SttIdentifiers(identifers: UIConstants.CellName.wordEntity)],
+                                             collection: presenter.words)
+        }
+        else {
+            tagSource = SttTableViewSource(tableView: mainTable,
+                                           cellIdentifiers: [SttIdentifiers(identifers: UIConstants.CellName.tagEntity)],
+                                           collection: presenter.tags)
+        }
+        mainTable.dataSource = presenter.contentType == MainContentType.words ? wordsSource : tagSource
         mainTable.reloadData()
         
         _ = changeTextObservable.subscribe(onNext: { [weak self] (stringRes) in
@@ -38,6 +47,6 @@ class SearchLinkedWordsViewController: SttViewController<SearchLinkedWordsPresen
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         
-        closeDelegate(presenter.selectedWordsData)
+        closeDelegate(presenter.selectedData)
     }
 }

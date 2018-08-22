@@ -135,6 +135,7 @@ class ServiceInjectorAssembly: Assembly {
     func inject(into service: SearchLinkedWordsPresenter) {
         let _:SearchLinkedWordsPresenter = define(init: service) {
             $0._wordInteractor = self.serviceAssembly.wordInteractor
+            $0._tagInteractor = self.serviceAssembly.tagInteractor
             return $0
         }
     }

@@ -69,6 +69,13 @@ class QueryFactories {
         return nil
     }
     
+    class func getTagQuery(text: String?) -> String? {
+        if !(text ?? "").isEmpty {
+            return "name contains[cd] '\(text!)'"
+        }
+        return nil
+    }
+    
     class func isRegisterSchem(scheme: String) -> Bool {
         if scheme.starts(with: ":@today") {
             return true

@@ -31,8 +31,6 @@ class WordEntityCell: SttTableViewCell<WordEntityCellPresenter>, WordEntityCellD
         lblNextDay.text = "\(nextOrrDate) / \(nextTransDate)"
         //lblDevInfo.text = presenter.devInfo
         
-        isUserInteractionEnabled = true
-        addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(onClick(_:))))
         reloadState()
     }
     
@@ -43,8 +41,10 @@ class WordEntityCell: SttTableViewCell<WordEntityCellPresenter>, WordEntityCellD
     override func awakeFromNib() {
         super.awakeFromNib()
         syncStatus.createCircle()
+        isUserInteractionEnabled = true
+        addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(onClick(_:))))
         prepateTheme()
-        ThemeManager.observer.subscribe(onNext: { _ in self.prepateTheme() })
+        _ = ThemeManager.observer.subscribe(onNext: { _ in self.prepateTheme() })
     }
     
     func prepateTheme() {

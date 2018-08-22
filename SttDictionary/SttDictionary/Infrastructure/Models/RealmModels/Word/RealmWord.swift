@@ -24,11 +24,14 @@ class RealmWord: BaseRealm, RealmDecodable {
     @objc dynamic var reverseCards: Bool = true
     @objc dynamic var usePronunciation: Bool = true
     
+    @objc dynamic var explanation: String = ""
+    
     func deserialize() -> WordApiModel {
         return WordApiModel(id: id,
                             dateCreated: dateCreated,
                             pronunciationUrl: pronunciationUrl,
                             exampleUsage: exampleUsage?.deserialize(),
+                            explanation: explanation,
                             originalWorld: originalWorld,
                             translations: translations.map { $0.value },
                             tags: tags.map { ShortTagApiModel(id: $0.id, name: $0.name) },

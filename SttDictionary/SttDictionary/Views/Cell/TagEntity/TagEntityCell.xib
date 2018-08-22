@@ -50,6 +50,10 @@
                 </constraints>
             </tableViewCellContentView>
             <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>
+            <connections>
+                <outlet property="lblCount" destination="pVC-7X-3oe" id="sFG-4H-0Lx"/>
+                <outlet property="lblName" destination="GdX-cc-wCh" id="jEA-8F-htO"/>
+            </connections>
         </tableViewCell>
     </objects>
 </document>

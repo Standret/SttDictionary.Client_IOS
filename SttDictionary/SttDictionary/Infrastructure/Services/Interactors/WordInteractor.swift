@@ -12,7 +12,7 @@ import SINQ
 
 protocol WordInteractorType {
     func addWord(word: String, translations: [String], exampleUsage: ExampleUsage?,
-                 linkedWords: [String]?, tagsId: [String]?, useReverse: Bool, usePronunciation: Bool) -> Observable<(Bool, SyncStep)>
+                 linkedWords: [String]?, tagsId: [String]?, useReverse: Bool, usePronunciation: Bool, explanation: String?) -> Observable<(Bool, SyncStep)>
     func exists(word: String) -> Observable<Bool>
     func getWord(searchString: String?, skip: Int) -> Observable<[WordEntityCellPresenter]>
     func updateStatistics(answer: Answer, type: AnswersType) -> Observable<Bool>
@@ -40,7 +40,7 @@ class WordInteractor: WordInteractorType {
     }
     
     func addWord(word: String, translations: [String], exampleUsage: ExampleUsage?,
-                 linkedWords: [String]?, tagsId: [String]?, useReverse: Bool, usePronunciation: Bool) -> Observable<(Bool, SyncStep)> {
+                 linkedWords: [String]?, tagsId: [String]?, useReverse: Bool, usePronunciation: Bool, explanation: String?) -> Observable<(Bool, SyncStep)> {
         
         return _notificationError.useError(observable: _wordRepositories.addWord(model: AddWordApiModel(word: word,
                                                                 translations: translations,
@@ -49,7 +49,8 @@ class WordInteractor: WordInteractorType {
                                                                 tagsId: tagsId,
                                                                 linkedWords: linkedWords,
                                                                 reverseCards: useReverse,
-                                                                usePronunciation: usePronunciation))
+                                                                usePronunciation: usePronunciation,
+                                                                explanation: explanation))
             .inBackground()
             .observeInUI())
     }

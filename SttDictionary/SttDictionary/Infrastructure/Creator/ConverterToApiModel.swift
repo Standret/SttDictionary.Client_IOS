@@ -17,6 +17,7 @@ extension AddWordApiModel {
                             dateCreated: Date(),
                             pronunciationUrl: self.pronunciationUrl,
                             exampleUsage: self.exampleUsage,
+                            explanation: explanation,
                             originalWorld: self.originalWorld,
                             translations: self.translations,
                             tags: tags,
@@ -35,7 +36,8 @@ extension RealmWord {
                                tagsId: self.tags.map({ $0.id }),
                                linkedWords: self.linkedWords.map({ $0.value }),
                                reverseCards: self.reverseCards,
-                               usePronunciation: self.usePronunciation)
+                               usePronunciation: self.usePronunciation,
+                               explanation: explanation)
     }
 }
 

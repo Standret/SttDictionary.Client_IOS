@@ -16,6 +16,7 @@ struct WordApiModel: Decodable, RealmCodable {
     
     let pronunciationUrl: String?
     let exampleUsage: ExampleUsage?
+    let explanation: String?
     
     let originalWorld: String
     let translations: [String]
@@ -34,7 +35,8 @@ struct WordApiModel: Decodable, RealmCodable {
             "exampleUsage": exampleUsage?.serialize(),
             "originalWorld": originalWorld,
             "reverseCards": reverseCards,
-            "usePronunciation": usePronunciation
+            "usePronunciation": usePronunciation,
+            "explanation": explanation
             ])
         
         model.translations.append(objectsIn: translations.map( { SttRealmString(value: [$0]) }))

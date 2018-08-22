@@ -46,6 +46,7 @@ class NewWordPresenter: SttPresenter<NewWordDelegate> {
     
     var exampleOriginal: String?
     var exampleTranslate: String?
+    var explanation: String?
     
     var useReverse: Bool = true
     var usePronunciation: Bool = true
@@ -66,6 +67,11 @@ class NewWordPresenter: SttPresenter<NewWordDelegate> {
             .takeWhile({ data in !self.linkedWords.data.contains(where: { $0.id == data.0 })})
             .map({ WorldCollectionCellPresenter(value: $0.1, id: $0.0, delegate: linkedWords) }))
     }
+    func addNewTags(words:[(String, String)]) {
+        tags.data.append(contentsOf: sinq(words)
+            .takeWhile({ data in !self.tags.data.contains(where: { $0.id == data.0 })})
+            .map({ WorldCollectionCellPresenter(value: $0.1, id: $0.0, delegate: tags) }))
+    }
     
     // comand handler
     
@@ -79,9 +85,10 @@ class NewWordPresenter: SttPresenter<NewWordDelegate> {
                                                                  translations: mainTranslation.data.map( { $0.word!.trimmingCharacters(in: .whitespaces) } ),
                                                                  exampleUsage: exampleUsage,
                                                                  linkedWords: linkedWords.data.map( { $0.id! } ),
-                                                                 tagsId: tags.data.map( { $0.word! } ),
+                                                                 tagsId: tags.data.map( { $0.id! } ),
                                                                  useReverse: useReverse,
-                                                                 usePronunciation: usePronunciation))
+                                                                 usePronunciation: usePronunciation,
+                                                                 explanation: explanation))
                 .subscribe(onNext: { (result) in
                     if result.0 && result.1 == .local {
                         print("save to lacal has been successfully")
