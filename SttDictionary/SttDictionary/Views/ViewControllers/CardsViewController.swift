@@ -124,12 +124,10 @@ class CardsViewController: SttViewController<CardsPresenter>, CardsDelegate {
         voiceData = nil
         lblExample.isHidden = example == nil
         if let _example = example {
-            let exampleText = "\(_example.0):\n\(_example.1)"
-            let rangeOriginal = (exampleText as NSString).range(of: _example.0)
-            let rangeTranslate = (exampleText as NSString).range(of: _example.1)
-            let attribute = NSMutableAttributedString(string: exampleText)
-            attribute.addAttributes([NSAttributedStringKey.font: UIFont(name: "Helvetica-Bold", size: 16)!, NSAttributedStringKey.foregroundColor: ThemeManager.mainTextColor], range: rangeOriginal)
-            attribute.addAttributes([NSAttributedStringKey.font: UIFont(name: "Helvetica", size: 16)!, NSAttributedStringKey.foregroundColor: ThemeManager.mainTextColor], range: rangeTranslate)
+            let exampleText = "\(_example.0):\n\n\(_example.1)"
+            let rangeSelect = (exampleText as NSString).range(of: word)
+            let attribute = NSMutableAttributedString(string: exampleText, attributes: [NSAttributedStringKey.font: UIFont(name: "Helvetica", size: 16)!, NSAttributedStringKey.foregroundColor: ThemeManager.mainTextColor])
+            attribute.addAttributes([NSAttributedStringKey.font: UIFont(name: "Helvetica-Bold", size: 20)!, NSAttributedStringKey.foregroundColor: ThemeManager.highlightsComponent], range: rangeSelect)
             
             lblExample.attributedText = attribute
         }

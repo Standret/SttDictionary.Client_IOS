@@ -18,6 +18,7 @@ class RealmTag: BaseRealm, RealmDecodable {
     let word = List<RealmWord>()
     
     func deserialize() -> TagApiModel {
+        print("--> \(name) -- \(word.toArray())")
         return TagApiModel(id: id,
                            dateCreated: dateCreated,
                            name: name,

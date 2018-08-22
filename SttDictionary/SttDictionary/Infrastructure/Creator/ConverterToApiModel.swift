@@ -12,7 +12,7 @@ import RealmSwift
 extension AddWordApiModel {
     func convertToApiModel() throws -> WordApiModel {
         let realm = try Realm()
-        let tags =  self.tagsId?.map({ realm.object(ofType: RealmShortTag.self, forPrimaryKey: $0)! }).map({ $0.deserialize() })
+        let tags =  self.tagsId?.map({ realm.object(ofType: RealmTag.self, forPrimaryKey: $0)! }).map({ ShortTagApiModel(id: $0.id, name: $0.name) })
         return WordApiModel(id: nil,
                             dateCreated: Date(),
                             pronunciationUrl: self.pronunciationUrl,

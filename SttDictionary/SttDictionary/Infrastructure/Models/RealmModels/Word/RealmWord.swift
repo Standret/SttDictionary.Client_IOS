@@ -24,7 +24,7 @@ class RealmWord: BaseRealm, RealmDecodable {
     @objc dynamic var reverseCards: Bool = true
     @objc dynamic var usePronunciation: Bool = true
     
-    @objc dynamic var explanation: String = ""
+    @objc dynamic var explanation: String? = ""
     
     func deserialize() -> WordApiModel {
         return WordApiModel(id: id,

@@ -58,7 +58,7 @@ class CardsPresenter: SttPresenter<CardsDelegate> {
     
     func showAnswer() {
         let text = answerType == .originalCard ? words[current].translations.joined(separator: ", ") : words[current].originalWorld
-        let example = answerType == .originalCard ? (words[current].exampleUsage?.original ?? "", words[current].explanation ?? "") : (words[current].exampleUsage?.translate ?? "", words[current].explanation ?? "")
+        let example = answerType == .originalCard ? (words[current].exampleUsage?.translate ?? "", words[current].explanation ?? "") : (words[current].exampleUsage?.original ?? "", words[current].explanation ?? "")
         delegate?.reloadWords(word: text, url: words[current].pronunciationUrl, example: example, isNew: false, useVoice: words[current].usePronunciation)
     }
     
