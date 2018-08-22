@@ -34,6 +34,7 @@ class CardsViewController: SttViewController<CardsPresenter>, CardsDelegate {
     @IBAction func clickClose(_ sender: Any) {
         dismiss(animated: true, completion: nil)
     }
+    
     @IBAction func showClick(_ sender: Any) {
         presenter.showAnswer()
         changeVisibility()

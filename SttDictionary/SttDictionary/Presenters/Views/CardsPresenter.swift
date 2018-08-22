@@ -46,7 +46,8 @@ class CardsPresenter: SttPresenter<CardsDelegate> {
         initializeWords(_words: (param.0, param.1))
         
         let text = answerType == .originalCard ? words[current].originalWorld : words[current].translations.joined(separator: ", ")
-        delegate?.reloadWords(word: text, url: words[current].pronunciationUrl, example: nil, isNew: true, useVoice: useVoice)
+        let example = answerType == .originalCard ? (words[current].exampleUsage?.original ?? "", words[current].explanation ?? "") : (words[current].exampleUsage?.translate ?? "", words[current].explanation ?? "")
+        delegate?.reloadWords(word: text, url: words[current].pronunciationUrl, example: example, isNew: true, useVoice: useVoice)
         
         generalTimer = Timer.scheduledTimer(withTimeInterval: 0.1, repeats: true, block: { [weak self] (timer) in
             self?.totalMiliSeconds += 100
@@ -57,9 +58,10 @@ class CardsPresenter: SttPresenter<CardsDelegate> {
     
     func showAnswer() {
         let text = answerType == .originalCard ? words[current].translations.joined(separator: ", ") : words[current].originalWorld
-        let example = words[current].exampleUsage == nil ? nil : (words[current].exampleUsage!.original, words[current].exampleUsage!.translate)
+        let example = answerType == .originalCard ? (words[current].exampleUsage?.original ?? "", words[current].explanation ?? "") : (words[current].exampleUsage?.translate ?? "", words[current].explanation ?? "")
         delegate?.reloadWords(word: text, url: words[current].pronunciationUrl, example: example, isNew: false, useVoice: words[current].usePronunciation)
     }
+    
     func selectAnswer(type: AnswersRaw) {
         answers.append(Answer(id: words[_current].id, type: type, totalMiliseconds: wordMiliseconds))
         _ = _wordInteractor.updateStatistics(answer: answers.last!, type: answerType)
@@ -67,7 +69,8 @@ class CardsPresenter: SttPresenter<CardsDelegate> {
         _current += 1
         if current < words.count{
             let text = answerType == .originalCard ? words[current].originalWorld : words[current].translations.joined(separator: ", ")
-            delegate?.reloadWords(word: text, url: words[current].pronunciationUrl, example: nil, isNew: true, useVoice: useVoice)
+            let example = answerType == .originalCard ? (words[current].exampleUsage?.original ?? "", words[current].explanation ?? "") : (words[current].exampleUsage?.translate ?? "", words[current].explanation ?? "")
+            delegate?.reloadWords(word: text, url: words[current].pronunciationUrl, example: example, isNew: true, useVoice: useVoice)
             reloadWordTimer()
         }
         else {
