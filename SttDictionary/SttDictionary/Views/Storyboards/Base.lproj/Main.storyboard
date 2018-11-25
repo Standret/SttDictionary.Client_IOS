@@ -1,12 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14113" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="qa7-LW-J01">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14460.31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="qa7-LW-J01">
     <device id="retina5_5" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14088"/>
-        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14460.20"/>
         <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -32,14 +31,14 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" multipleTouchEnabled="YES" tag="1" contentMode="left" insetsLayoutMarginsFromSafeArea="NO" text="Sync" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="chy-76-iVH" customClass="MainUILabel" customModule="SttDictionary" customModuleProvider="target">
-                                                    <rect key="frame" x="64" y="0.0" width="312" height="43.666666666666664"/>
+                                                    <rect key="frame" x="79" y="0.0" width="297" height="43.666666666666664"/>
                                                     <autoresizingMask key="autoresizingMask"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <imageView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" image="sync" id="zCN-3G-2Qy">
-                                                    <rect key="frame" x="20" y="7" width="29" height="29"/>
+                                                    <rect key="frame" x="20" y="0.0" width="44" height="43.666666666666664"/>
                                                     <autoresizingMask key="autoresizingMask"/>
                                                 </imageView>
                                             </subviews>
@@ -56,14 +55,14 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" multipleTouchEnabled="YES" tag="1" contentMode="left" insetsLayoutMarginsFromSafeArea="NO" text="Add Word" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="1RC-wT-SvZ" customClass="MainUILabel" customModule="SttDictionary" customModuleProvider="target">
-                                                    <rect key="frame" x="64" y="0.0" width="312" height="43.666666666666664"/>
+                                                    <rect key="frame" x="79" y="0.0" width="297" height="43.666666666666664"/>
                                                     <autoresizingMask key="autoresizingMask"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <imageView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" image="madd" id="9O8-7v-ODq">
-                                                    <rect key="frame" x="20" y="7" width="29" height="29"/>
+                                                    <rect key="frame" x="20" y="0.0" width="44" height="43.666666666666664"/>
                                                     <autoresizingMask key="autoresizingMask"/>
                                                 </imageView>
                                             </subviews>
@@ -80,14 +79,14 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" multipleTouchEnabled="YES" tag="1" contentMode="left" insetsLayoutMarginsFromSafeArea="NO" text="Add Tag" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="47x-R4-pDU" customClass="MainUILabel" customModule="SttDictionary" customModuleProvider="target">
-                                                    <rect key="frame" x="64" y="0.0" width="312" height="43.666666666666664"/>
+                                                    <rect key="frame" x="79" y="0.0" width="297" height="43.666666666666664"/>
                                                     <autoresizingMask key="autoresizingMask"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <imageView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" image="addTag" id="NWJ-1s-4yL">
-                                                    <rect key="frame" x="20" y="7" width="29" height="29"/>
+                                                    <rect key="frame" x="20" y="0.0" width="44" height="43.666666666666664"/>
                                                     <autoresizingMask key="autoresizingMask"/>
                                                 </imageView>
                                             </subviews>
@@ -105,14 +104,14 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" multipleTouchEnabled="YES" tag="1" contentMode="left" insetsLayoutMarginsFromSafeArea="NO" text="SM2 settings" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="YW6-rJ-XQi" customClass="MainUILabel" customModule="SttDictionary" customModuleProvider="target">
-                                                    <rect key="frame" x="64" y="0.0" width="312" height="43.666666666666664"/>
+                                                    <rect key="frame" x="79" y="0.0" width="297" height="43.666666666666664"/>
                                                     <autoresizingMask key="autoresizingMask"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <imageView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" image="msetting" id="MnH-QP-Hxx">
-                                                    <rect key="frame" x="20" y="7" width="29" height="29"/>
+                                                    <rect key="frame" x="20" y="0.0" width="44" height="43.666666666666664"/>
                                                     <autoresizingMask key="autoresizingMask"/>
                                                 </imageView>
                                             </subviews>
@@ -126,14 +125,14 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" multipleTouchEnabled="YES" tag="1" contentMode="left" insetsLayoutMarginsFromSafeArea="NO" text="Appereance" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="rrA-e8-cRs" customClass="MainUILabel" customModule="SttDictionary" customModuleProvider="target">
-                                                    <rect key="frame" x="64" y="0.0" width="312" height="43.666666666666664"/>
+                                                    <rect key="frame" x="79" y="0.0" width="297" height="43.666666666666664"/>
                                                     <autoresizingMask key="autoresizingMask"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <imageView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" image="brush" id="N4e-14-LTS">
-                                                    <rect key="frame" x="20" y="7" width="29" height="29"/>
+                                                    <rect key="frame" x="20" y="0.0" width="44" height="43.666666666666664"/>
                                                     <autoresizingMask key="autoresizingMask"/>
                                                 </imageView>
                                             </subviews>
@@ -150,14 +149,14 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" multipleTouchEnabled="YES" tag="1" contentMode="left" insetsLayoutMarginsFromSafeArea="NO" text="Statistics" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="KkV-mR-VJC" customClass="MainUILabel" customModule="SttDictionary" customModuleProvider="target">
-                                                    <rect key="frame" x="64" y="0.0" width="312" height="43.666666666666664"/>
+                                                    <rect key="frame" x="79" y="0.0" width="297" height="43.666666666666664"/>
                                                     <autoresizingMask key="autoresizingMask"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <imageView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" image="statistics" id="dag-Cp-DcB">
-                                                    <rect key="frame" x="20" y="7" width="29" height="29"/>
+                                                    <rect key="frame" x="20" y="0.0" width="44" height="43.666666666666664"/>
                                                     <autoresizingMask key="autoresizingMask"/>
                                                 </imageView>
                                             </subviews>
@@ -185,6 +184,7 @@
                     <connections>
                         <outlet property="SM2settingCell" destination="5bJ-0j-qEN" id="oZH-Tm-oWE"/>
                         <outlet property="appereanceCell" destination="CaC-ee-W1p" id="6YJ-Ve-kpr"/>
+                        <outlet property="newTag" destination="1Zb-SU-zWT" id="s5O-IA-sNW"/>
                         <outlet property="newWordCell" destination="gYb-tS-R0L" id="TlX-9W-EQr"/>
                         <outlet property="statisticsCell" destination="Hle-76-bkU" id="OjB-Bh-nrA"/>
                         <outlet property="syncCell" destination="Xpd-0I-gyp" id="v3g-j5-uXb"/>
@@ -243,7 +243,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <button opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="rmq-gZ-mOL">
-                                <rect key="frame" x="16.000000000000007" y="182" width="115.66666666666669" height="40"/>
+                                <rect key="frame" x="15.999999999999993" y="182" width="115.33333333333331" height="40"/>
                                 <color key="backgroundColor" name="main"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="40" id="CCD-gV-Xkj"/>
@@ -317,7 +317,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <button opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="2Li-Ky-Aok">
-                                <rect key="frame" x="149.66666666666666" y="182" width="114.99999999999997" height="40"/>
+                                <rect key="frame" x="149.33333333333334" y="182" width="115.33333333333334" height="40"/>
                                 <color key="backgroundColor" name="main"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="40" id="FRb-2R-sKD"/>
@@ -1439,23 +1439,23 @@
         </scene>
     </scenes>
     <resources>
-        <image name="add" width="29" height="29"/>
-        <image name="addTag" width="29" height="29"/>
-        <image name="alist" width="29" height="29"/>
-        <image name="asetting" width="29" height="29"/>
-        <image name="brush" width="29" height="29"/>
-        <image name="card" width="29" height="29"/>
-        <image name="cardT" width="29" height="29"/>
-        <image name="close" width="29" height="29"/>
-        <image name="education" width="29" height="29"/>
-        <image name="hornOn" width="100" height="100"/>
-        <image name="list" width="29" height="29"/>
-        <image name="madd" width="29" height="29"/>
-        <image name="msetting" width="29" height="29"/>
-        <image name="setting" width="29" height="29"/>
-        <image name="statistics" width="29" height="29"/>
-        <image name="sync" width="29" height="29"/>
-        <image name="tick" width="29" height="29"/>
+        <image name="add" width="65.25" height="65.25"/>
+        <image name="addTag" width="65.25" height="65.25"/>
+        <image name="alist" width="65.25" height="65.25"/>
+        <image name="asetting" width="65.25" height="65.25"/>
+        <image name="brush" width="65.25" height="65.25"/>
+        <image name="card" width="65.25" height="65.25"/>
+        <image name="cardT" width="65.25" height="65.25"/>
+        <image name="close" width="65.25" height="65.25"/>
+        <image name="education" width="65.25" height="65.25"/>
+        <image name="hornOn" width="75" height="75"/>
+        <image name="list" width="65.25" height="65.25"/>
+        <image name="madd" width="65.25" height="65.25"/>
+        <image name="msetting" width="65.25" height="65.25"/>
+        <image name="setting" width="65.25" height="65.25"/>
+        <image name="statistics" width="65.25" height="65.25"/>
+        <image name="sync" width="65.25" height="65.25"/>
+        <image name="tick" width="65.25" height="65.25"/>
         <namedColor name="_lightBackground">
             <color red="0.97647058823529409" green="0.97647058823529409" blue="0.97647058823529409" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
@@ -1478,13 +1478,7 @@
             <color red="1" green="0.76078431372549016" blue="0.26666666666666666" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
         <namedColor name="main">
-            <color red="0.062745098040000002" green="0.56862745100000001" blue="0.45098039220000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-        </namedColor>
-        <namedColor name="main">
             <color red="0.062745098039215685" green="0.56862745098039214" blue="0.45098039215686275" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-        </namedColor>
-        <namedColor name="main">
-            <color red="0.062745098040000002" green="0.56862745100000001" blue="0.45098039220000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
         <namedColor name="maskColor">
             <color red="0.0" green="0.0" blue="0.0" alpha="0.15000000596046448" colorSpace="custom" customColorSpace="sRGB"/>

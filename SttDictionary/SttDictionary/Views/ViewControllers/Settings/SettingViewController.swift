@@ -13,6 +13,7 @@ class SettingViewController: UITableViewController {
     
     @IBOutlet weak var syncCell: UITableViewCell!
     @IBOutlet weak var newWordCell: UITableViewCell!
+    @IBOutlet weak var newTag: UITableViewCell!
     @IBOutlet weak var SM2settingCell: UITableViewCell!
     @IBOutlet weak var statisticsCell: UITableViewCell!
     @IBOutlet weak var appereanceCell: UITableViewCell!
@@ -39,7 +40,7 @@ class SettingViewController: UITableViewController {
         tableView.backgroundColor = ThemeManager.mainBackgroundColor
         tableView.separatorColor = ThemeManager.borderColor
         
-        let cellArray = [syncCell, newWordCell, SM2settingCell, statisticsCell, appereanceCell]
+        let cellArray = [syncCell, newWordCell, newTag,  SM2settingCell, statisticsCell, appereanceCell]
         
         for item in cellArray {
             item!.backgroundColor = ThemeManager.secondaryBackgroundColor

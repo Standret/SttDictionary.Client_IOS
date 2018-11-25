@@ -16,7 +16,7 @@ class SttComand {
     private var executeHandler: (() -> Void)
     private var canExecuteHandler: (() -> Bool)?
     
-    var executeIfExecuting: Bool = false
+    var concurentExecute: Bool = false
     
     var singleCallEndCallback = true
     private var isCall = false
@@ -30,11 +30,11 @@ class SttComand {
         canExecuteHandler = { [weak delegate, weak self] in
             if delegate != nil && handlerCanExecute != nil {
                 if let _self = self {
-                    return handlerCanExecute!(delegate!) && (_self.executeIfExecuting || !_self.isCall)
+                    return handlerCanExecute!(delegate!) && (_self.concurentExecute || !_self.isCall)
                 }
             }
             else if let _self = self {
-                return (_self.executeIfExecuting || !_self.isCall)
+                return (_self.concurentExecute || !_self.isCall)
             }
             return true
         }

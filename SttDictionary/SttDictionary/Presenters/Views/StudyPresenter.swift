@@ -21,30 +21,23 @@ class StudyPresenter: SttPresenter<StudyDelegate> {
     
     var _studyInteractor: StudyInteractorType!
     
+    var reload: SttComand!
+    
     override func presenterCreating() {
         super.presenterCreating()
         ServiceInjectorAssembly.instance().inject(into: self)
+        
+        reload = SttComand(delegate: self, handler: { $0.reloadData() })
+        reload.concurentExecute = true
     }
     
     func reloadData() {
-        _ = _studyInteractor.getNewOriginal()
-            .subscribe(onNext: { [weak self] (words) in
-                self?.newWords = words
-                self?.delegate?.reloadStatus()
-            })
-        _ = _studyInteractor.getRepeatOriginal()
-            .subscribe(onNext: { [weak self] (words) in
-                self?.repeatWords = words
-                self?.delegate?.reloadStatus()
-            })
-        _ = _studyInteractor.getNewTranslate()
-            .subscribe(onNext: { [weak self] (words) in
-                self?.newTranslationWords = words
-                self?.delegate?.reloadStatus()
-            })
-        _ = _studyInteractor.getRepeatTranslation()
-            .subscribe(onNext: { [weak self] (words) in
-                self?.repeatTranslationWords = words
+        _ = _studyInteractor.getStudyData()
+            .subscribe(onNext: { [weak self] (result) in
+                self?.newWords = result.newOriginal
+                self?.newTranslationWords = result.newTranslate
+                self?.repeatWords = result.repeatOriginal
+                self?.repeatTranslationWords = result.repeatTranslation
                 self?.delegate?.reloadStatus()
             })
     }

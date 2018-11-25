@@ -830,6 +830,9 @@
 		84D4388920A8785500B171ED /* Infrastructure */ = {
 			isa = PBXGroup;
 			children = (
+				84D4389420A8790400B171ED /* Providers */,
+				7DAAAE6520EFEFB500492F58 /* Repositories */,
+				7DE2F2C820F08D8000B5F343 /* Interactors */,
 				7D82B5B120C2CCD5004D896A /* Creator */,
 				84D4389320A8790000B171ED /* Services */,
 				84D4388D20A8789400B171ED /* Models */,
@@ -860,9 +863,6 @@
 		84D4389320A8790000B171ED /* Services */ = {
 			isa = PBXGroup;
 			children = (
-				7DE2F2C820F08D8000B5F343 /* Interactors */,
-				7DAAAE6520EFEFB500492F58 /* Repositories */,
-				84D4389420A8790400B171ED /* Providers */,
 				84716E5F20B1A58400A1F5F6 /* NotificationError.swift */,
 				8424F31C212C2AFC005C557C /* WordTrimmer.swift */,
 			);
@@ -1431,7 +1431,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = C7DF91C60571BAA45A8D8DB4 /* Pods-SttDictionary.debug.xcconfig */;
 			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = MongoProd;
+				ASSETCATALOG_COMPILER_APPICON_NAME = MongoDev;
 				CODE_SIGN_STYLE = Automatic;
 				DEFINES_MODULE = YES;
 				DEVELOPMENT_TEAM = MD88G6A24R;
@@ -1442,7 +1442,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.perfict.fitnesmp;
+				PRODUCT_BUNDLE_IDENTIFIER = com.perfict.fitnesmd;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 4.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -1453,7 +1453,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 4B61541E87113249A0C65427 /* Pods-SttDictionary.release.xcconfig */;
 			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = MongoProd;
+				ASSETCATALOG_COMPILER_APPICON_NAME = MongoDev;
 				CODE_SIGN_STYLE = Automatic;
 				DEFINES_MODULE = YES;
 				DEVELOPMENT_TEAM = MD88G6A24R;
@@ -1464,7 +1464,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.perfict.fitnesmp;
+				PRODUCT_BUNDLE_IDENTIFIER = com.perfict.fitnesmd;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 4.0;
 				TARGETED_DEVICE_FAMILY = "1,2";

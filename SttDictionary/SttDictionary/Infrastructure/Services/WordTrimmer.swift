@@ -16,9 +16,9 @@ where E == [WordApiModel] {
     func trimSameIdWords(todayTrainedWords: Observable<[WordApiModel]>, key: String = "") -> Observable<E> {
         return Observable.zip(self, todayTrainedWords, resultSelector: { (targetWords, todayTrained) -> [WordApiModel] in
             
-            print ("\ntrimSameIdWords \(key)")
-            print(targetWords.map({ $0.originalWorld }))
-            print(todayTrained.map({ $0.originalWorld }))
+            //print ("\ntrimSameIdWords \(key)")
+            //print(targetWords.map({ $0.originalWorld }))
+            //print(todayTrained.map({ $0.originalWorld }))
             //delete all linked words which trained today
             var targetResult = targetWords
             
@@ -28,7 +28,7 @@ where E == [WordApiModel] {
                 }
             }
             
-            print(targetResult.map({ $0.originalWorld }))
+            //print(targetResult.map({ $0.originalWorld }))
             return targetResult
         })
     }

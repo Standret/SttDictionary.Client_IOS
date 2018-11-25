@@ -10,11 +10,42 @@ import Foundation
 import RxSwift
 import SINQ
 
+class StudyWordsModel {
+    
+    let newOriginal: [WordApiModel]
+    let newTranslate: [WordApiModel]
+    let repeatOriginal: [WordApiModel]
+    let repeatTranslation: [WordApiModel]
+    
+    init(newOriginal: [WordApiModel], newTranslate: [WordApiModel],
+         repeatOriginal: [WordApiModel], repeatTranslation: [WordApiModel]) {
+        
+        self.newOriginal = newOriginal
+        self.newTranslate = newTranslate
+        self.repeatOriginal = repeatOriginal
+        self.repeatTranslation = repeatTranslation
+    }
+}
+
+enum ResultType {
+    case newOriginal, newTranslation
+    case repeatOriginal, repeatTranslation
+}
+
+class LocalWordsResult {
+    
+    let type: ResultType
+    let words: [WordApiModel]
+    
+    init(type: ResultType, words: [WordApiModel]) {
+        
+        self.type = type
+        self.words = words
+    }
+}
+
 protocol StudyInteractorType {
-    func getNewOriginal() -> Observable<[WordApiModel]>
-    func getNewTranslate() -> Observable<[WordApiModel]>
-    func getRepeatOriginal() -> Observable<[WordApiModel]>
-    func getRepeatTranslation() -> Observable<[WordApiModel]>
+    func getStudyData() -> Observable<StudyWordsModel>
 }
 
 class StudyInteractor: StudyInteractorType {
@@ -29,7 +60,25 @@ class StudyInteractor: StudyInteractorType {
         ServiceInjectorAssembly.instance().inject(into: self)
     }
     
-    func getNewOriginal() -> Observable<[WordApiModel]> {
+    func getStudyData() -> Observable<StudyWordsModel> {
+        let sequence = [
+            getNewOriginal().map({ LocalWordsResult(type: .newOriginal, words: $0) }),
+            getNewTranslate().map({ LocalWordsResult(type: .newTranslation, words: $0) }),
+            getRepeatOriginal().map({ LocalWordsResult(type: .repeatOriginal, words: $0) }),
+            getRepeatTranslation().map({ LocalWordsResult(type: .repeatTranslation, words: $0) })
+            ]
+        return Observable.zip(sequence, { (results) -> StudyWordsModel in
+            
+            return StudyWordsModel(newOriginal: results.first(where: { $0.type == .newOriginal })!.words,
+                                   newTranslate: results.first(where: { $0.type == .newTranslation })!.words,
+                                   repeatOriginal: results.first(where: { $0.type == .repeatOriginal })!.words,
+                                   repeatTranslation: results.first(where: { $0.type == .repeatTranslation })!.words)
+        })
+        .inBackground()
+        .observeInUI()
+    }
+    
+    private func getNewOriginal() -> Observable<[WordApiModel]> {
         let elements = _statisticsRepositories.getNewOriginal()
             .flatMap({ self._wordRepositories.getWords(statistics: $0) })
             .trimLinkedWordsFrom(todayTrainedWords: todayAlreadyTrained())
@@ -44,7 +93,7 @@ class StudyInteractor: StudyInteractorType {
         })
     }
     
-    func getNewTranslate() -> Observable<[WordApiModel]> {
+    private func getNewTranslate() -> Observable<[WordApiModel]> {
         let elements = _statisticsRepositories.getNewTranslate()
             .flatMap({ self._wordRepositories.getWords(statistics: $0) })
             .map({ sinq($0).whereTrue({ $0.reverseCards }).toArray() })
@@ -62,7 +111,7 @@ class StudyInteractor: StudyInteractorType {
         })
     }
     
-    func getRepeatOriginal() -> Observable<[WordApiModel]> {
+    private func getRepeatOriginal() -> Observable<[WordApiModel]> {
         return _statisticsRepositories.getRepeatOriginal()
             .flatMap({ self._wordRepositories.getWords(statistics: $0) })
             .trimLinkedWordsFrom(todayTrainedWords: todayAlreadyTrained())
@@ -71,7 +120,7 @@ class StudyInteractor: StudyInteractorType {
             .trimSameIdWords(todayTrainedWords: getRepeatTranslation())
     }
     
-    func getRepeatTranslation() -> Observable<[WordApiModel]> {
+    private func getRepeatTranslation() -> Observable<[WordApiModel]> {
         return _statisticsRepositories.getRepeatTranslate()
             .flatMap({ self._wordRepositories.getWords(statistics: $0) })
             .map({ sinq($0).whereTrue({ $0.reverseCards }).toArray() })
@@ -91,13 +140,14 @@ class StudyInteractor: StudyInteractorType {
             .map { (answers) -> [WordApiModel] in
                 var target = [WordApiModel]()
                 for item in twords {
-                    if sinq(answers).whereTrue({ $0.wordId == item.id }).all({ $0.dateCreated == Date().onlyDay() }) {
+                    if sinq(answers).whereTrue({ $0.wordId == item.id }).all({ $0.dateCreated.onlyDay() == Date().onlyDay() }) {
                         target.append(item)
                     }
                 }
                 return target
             }
     }
+    
     private func todayAlreadyTrained(filter: [AnswersType] = [.originalCard, .translateCard]) -> Observable<[WordApiModel]> {
         return _answersRepositories.getTodayAnswers()
             .map({ sinq($0).whereTrue({ st in filter.contains(st.type) }).toArray() })
