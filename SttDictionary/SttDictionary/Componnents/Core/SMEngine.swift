@@ -36,7 +36,11 @@ public class SM2Engine: SMEngine {
         if cardGrade < 3 {
             newInterval = 0
             newRepetition = 0
-        } else {
+        }
+        else if cardGrade == 3 {
+            newInterval = 0
+        }
+        else {
             
             newRepetition += 1
             switch newRepetition {
@@ -52,10 +56,10 @@ public class SM2Engine: SMEngine {
         let data = AnswerDataApiModel(answer: grade,
                                       type: statistics.type,
                                       raw: answer.type,
-                                      date: Date().onlyDay(),
+                                      date: Date(),
                                       miliSecondsForReview: answer.totalMiliseconds)
         
-        let nextRepetition = Calendar.current.date(byAdding: .day, value: newInterval, to: Date())!.onlyDay()
+        let nextRepetition = Calendar.current.date(byAdding: .day, value: newInterval + 1, to: Date())!.onlyDay()
         print ("next rept in \(nextRepetition) with easieness: \(cardGrade < 3 ? statistics.easiness : newEasiness)")
         return WordStatisticsApiModel(id: statistics.id,
                                       dateCreated: statistics.dateCreated,

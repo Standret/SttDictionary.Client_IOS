@@ -25,8 +25,10 @@ protocol CardsDelegate: SttViewControlable {
 class CardsPresenter: SttPresenter<CardsDelegate> {
     
     var words = [WordApiModel]()
+    var extraordinaryWord: [ExtraordinaryModel]!
     var answers = [Answer]()
     var current: Int { return _current }
+    var currentExtraordinary: ExtraordinaryModel?
     
     private var _current = 0
     private var totalMiliSeconds = 0
@@ -43,10 +45,14 @@ class CardsPresenter: SttPresenter<CardsDelegate> {
     override func prepare(parametr: Any?) {
         ServiceInjectorAssembly.instance().inject(into: self)
 
-        let param = parametr as! ([WordApiModel], [WordApiModel], AnswersType)
-        answerType = param.2
+        let param = parametr as! CardNavigate
+        answerType = param.type
+        extraordinaryWord = param.extraordinaryWords
+        for i in extraordinaryWord {
+            print(i.word.originalWorld)
+        }
         
-        initializeWords(_words: (param.0, param.1))
+        initializeWords(_words: (param.newWords, sinq(param.repeatWords).whereTrue({ v in !sinq(self.extraordinaryWord).any({ $0.word.id == v.id }) }).toArray()), extraoridnaryWords: extraordinaryWord.map({ $0.word }))
         
         showNext()
         
@@ -58,12 +64,38 @@ class CardsPresenter: SttPresenter<CardsDelegate> {
     }
     
     func showAnswer() {
-        let text = answerType == .originalCard ? words[current].translations.joined(separator: ", ") : words[current].originalWorld
-        let example = answerType == .originalCard ? (words[current].exampleUsage?.translate ?? "", words[current].explanation ?? "") : (words[current].exampleUsage?.original ?? "", words[current].explanation ?? "")
-        delegate?.reloadWords(word: text, url: words[current].pronunciationUrl, example: example, isNew: false, useVoice: words[current].usePronunciation)
+        var wordsForShow = words[current]
+        if let model = sinq(extraordinaryWord).firstOrNil({ ($0.after ?? -1) == current }) {
+            wordsForShow = model.word
+            currentExtraordinary = model
+        }
+        
+        let text = answerType == .originalCard ? wordsForShow.translations.joined(separator: ", ") : wordsForShow.originalWorld
+        let example = answerType == .originalCard ? (wordsForShow.exampleUsage?.translate ?? "", wordsForShow.explanation ?? "") : (wordsForShow.exampleUsage?.original ?? "", wordsForShow.explanation ?? "")
+        delegate?.reloadWords(word: text, url: wordsForShow.pronunciationUrl, example: example, isNew: false, useVoice: wordsForShow.usePronunciation)
     }
     
     func selectAnswer(type: AnswersRaw) {
+        if let extr = currentExtraordinary {
+            
+            extraordinaryWord.removeAll(where: { $0.word.id == extr.word.id })
+            extr.interval = extr.interval! * 2
+            extr.after = extr.after! + extr.interval!
+            extraordinaryWord.append(extr)
+            currentExtraordinary = nil
+            showNext()
+            return
+        }
+        else if type == .forget {
+            
+            extraordinaryWord.removeAll(where: { $0.word.id == words[current].id })
+            let extr = ExtraordinaryModel(word: words[current], date: Date())
+            extr.interval = 2
+            extr.after = current + extr.interval!
+            extraordinaryWord.append(extr)
+            
+        }
+        
         answers.append(Answer(id: words[_current].id, type: type, totalMiliseconds: wordMiliseconds))
         _ = _wordInteractor.updateStatistics(answer: answers.last!, type: answerType)
             .subscribe(onNext: { print("stat has been updated successfuly \($0)") }, onError: { print("stat er \($0)") })
@@ -98,13 +130,20 @@ class CardsPresenter: SttPresenter<CardsDelegate> {
     private var intervals: IntervalsModel!
     private var disposable: Disposable?
     private func showNext() {
-        let text = answerType == .originalCard ? words[current].originalWorld : words[current].translations.joined(separator: ", ")
-        let example = answerType == .originalCard ? (words[current].exampleUsage?.original ?? "", words[current].explanation ?? "") : (words[current].exampleUsage?.translate ?? "", words[current].explanation ?? "")
-        delegate?.reloadWords(word: text, url: words[current].pronunciationUrl, example: example, isNew: true, useVoice: useVoice)
+        
+        var wordsForShow = words[current]
+        if let model = sinq(extraordinaryWord).firstOrNil({ ($0.after ?? -1) == current }) {
+            wordsForShow = model.word
+            currentExtraordinary = model
+        }
+        
+        let text = answerType == .originalCard ? wordsForShow.originalWorld : wordsForShow.translations.joined(separator: ", ")
+        let example = answerType == .originalCard ? (wordsForShow.exampleUsage?.original ?? "", wordsForShow.explanation ?? "") : (wordsForShow.exampleUsage?.translate ?? "", wordsForShow.explanation ?? "")
+        delegate?.reloadWords(word: text, url: wordsForShow.pronunciationUrl, example: example, isNew: true, useVoice: useVoice)
         reloadWordTimer()
         
         disposable?.dispose()
-        disposable = _wordInteractor.getIntervals(wordId: words[current].id, type: answerType)
+        disposable = _wordInteractor.getIntervals(wordId: wordsForShow.id, type: answerType)
             .subscribe(onNext: { intervals in
                 self.intervals = intervals
                 self.delegate?.updateIntervals(intervals: intervals)
@@ -113,7 +152,7 @@ class CardsPresenter: SttPresenter<CardsDelegate> {
     }
     
     /// initialize target collection using (start end method) and radom sort
-    private func initializeWords(_words: ([WordApiModel], [WordApiModel])) {
+    private func initializeWords(_words: ([WordApiModel], [WordApiModel]), extraoridnaryWords: [WordApiModel]) {
         
         var param = _words
         var cardsCount = param.0.count + param.1.count
@@ -127,6 +166,11 @@ class CardsPresenter: SttPresenter<CardsDelegate> {
             
             param.0 = param.0.getElement(indexes: newWordSelectIndexes)
             param.1 = param.1.getElement(indexes: repeatSelectIndexes)
+            
+            
+        }
+        for item in extraoridnaryWords {
+            param.0.append(item)
         }
         cardsCount = param.0.count + param.1.count
         

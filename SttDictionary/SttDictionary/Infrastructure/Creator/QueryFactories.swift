@@ -50,7 +50,7 @@ class QueryFactories {
         case .newTranslation:
             predicateString = "lastAnswer = nil and _type = \(AnswersType.translateCard.rawValue)"
         case .repeatOriginal:
-            predicateString = NSPredicate(format: "lastAnswer != nil and _type = \(AnswersType.originalCard.rawValue) and nextRepetition <= %@", argumentArray: [Date().onlyDay()]).predicateFormat
+            predicateString = NSPredicate(format: "lastAnswer != nil and _type = \(AnswersType.originalCard.rawValue) and nextRepetition <= %@", argumentArray: [Date().tomorrow.onlyDay()]).predicateFormat
         case .repeatTranslation:
             predicateString = NSPredicate(format: "lastAnswer != nil and _type = \(AnswersType.translateCard.rawValue) and nextRepetition <= %@", argumentArray: [Date().onlyDay()]).predicateFormat
         }

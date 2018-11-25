@@ -32,8 +32,8 @@ enum ApiConroller {
 
 class Constants {
     // url
-    static let apiUrl = "http://192.168.0.66:2319" // mongo dev
-    //static let apiUrl = "http://192.168.0.66:8080" // mongo prod
+    //static let apiUrl = "http://192.168.0.66:2319" // mongo dev
+    static let apiUrl = "http://192.168.0.66:8080" // mongo prod
     //static let apiUrl = "http://192.168.0.66:60" // mysql dev
     static let versionApi = "/api/v1/"
     

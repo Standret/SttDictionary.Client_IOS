@@ -31,14 +31,20 @@ class StudyInteractor: StudyInteractorType {
             getNewOriginal().map({ LocalWordsResult(type: .newOriginal, words: $0) }),
             getNewTranslate().map({ LocalWordsResult(type: .newTranslation, words: $0) }),
             getRepeatOriginal().map({ LocalWordsResult(type: .repeatOriginal, words: $0) }),
-            getRepeatTranslation().map({ LocalWordsResult(type: .repeatTranslation, words: $0) })
+            getRepeatTranslation().map({ LocalWordsResult(type: .repeatTranslation, words: $0) }),
+            todayNeedsToReviewInstantly(filter: .originalCard)
+                .map({ LocalWordsResult(type: .extraordinaryOriginal, extraordinary: $0) }),
+            todayNeedsToReviewInstantly(filter: .translateCard)
+                .map({ LocalWordsResult(type: .extraordinaryTranslate, extraordinary: $0) })
             ]
         return Observable.zip(sequence, { (results) -> StudyWordsModel in
             
-            return StudyWordsModel(newOriginal: results.first(where: { $0.type == .newOriginal })!.words,
-                                   newTranslate: results.first(where: { $0.type == .newTranslation })!.words,
-                                   repeatOriginal: results.first(where: { $0.type == .repeatOriginal })!.words,
-                                   repeatTranslation: results.first(where: { $0.type == .repeatTranslation })!.words)
+            return StudyWordsModel(newOriginal: results.first(where: { $0.type == .newOriginal })!.words!,
+                                   newTranslate: results.first(where: { $0.type == .newTranslation })!.words!,
+                                   repeatOriginal: results.first(where: { $0.type == .repeatOriginal })!.words!,
+                                   repeatTranslation: results.first(where: { $0.type == .repeatTranslation })!.words!,
+                                   extraordinaryOriginal: results.first(where: { $0.type == .extraordinaryOriginal })!.extraordinary!,
+                                   extraordinaryTranslation: results.first(where: { $0.type == .extraordinaryTranslate })!.extraordinary!)
         })
         .inBackground()
         .observeInUI()
@@ -119,6 +125,25 @@ class StudyInteractor: StudyInteractorType {
             .map({ sinq($0).whereTrue({ st in filter.contains(st.type) }).toArray() })
             .flatMap({ self._wordRepositories.getWords(answers: $0) })
     }
+    private func todayNeedsToReviewInstantly(filter: AnswersType) -> Observable<[ExtraordinaryModel]> {
+        let observable = ((filter == .originalCard) ? _statisticsRepositories.getRepeatOriginal() : _statisticsRepositories.getRepeatTranslate())
+        
+        var stat: [WordStatisticsApiModel]!
+        return observable.map({ sinq($0).whereTrue({ $0.lastAnswer!.answer.rawValue < 3 }).toArray() })
+            .flatMap({ statistics -> Observable<[WordApiModel]> in
+                stat = statistics
+                return self._wordRepositories.getWords(statistics: statistics) })
+            .trimSameIdWords(todayTrainedWords: todayAlreadyTrained(filter: [filter]))
+            .map({ words -> [ExtraordinaryModel] in
+                
+                var result = [ExtraordinaryModel]()
+                for item in words {
+                    result.append(ExtraordinaryModel(word: item, date: stat.first(where: { $0.wordId == item.id })!.lastAnswer!.date ))
+                }
+                return result
+            })
+    }
+    
     private func unTrimmedNewOriginalWord() -> Observable<[WordApiModel]> {
         return _statisticsRepositories.getNewOriginal()
             .flatMap({ self._wordRepositories.getWords(statistics: $0) })

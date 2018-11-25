@@ -14,10 +14,7 @@ protocol StudyDelegate: SttViewControlable {
 
 class StudyPresenter: SttPresenter<StudyDelegate> {
     
-    var newWords = [WordApiModel]()
-    var repeatWords = [WordApiModel]()
-    var newTranslationWords = [WordApiModel]()
-    var repeatTranslationWords = [WordApiModel]()
+    var studyData: StudyWordsModel!
     
     var _studyInteractor: StudyInteractorType!
     
@@ -34,25 +31,28 @@ class StudyPresenter: SttPresenter<StudyDelegate> {
     func reloadData() {
         _ = _studyInteractor.getStudyData()
             .subscribe(onNext: { [weak self] (result) in
-                self?.newWords = result.newOriginal
-                self?.newTranslationWords = result.newTranslate
-                self?.repeatWords = result.repeatOriginal
-                self?.repeatTranslationWords = result.repeatTranslation
+                self?.studyData = result
                 self?.delegate?.reloadStatus()
             })
     }
     
     func onCLickOriginalCard() {
-        if newWords.count > 0 || repeatWords.count > 0 {
-            delegate?.navigate(to: "showCard", withParametr: (newWords, repeatWords, AnswersType.originalCard), callback: nil)
+        if self.studyData.newOriginal.count > 0 || self.studyData.repeatOriginal.count > 0 {
+            delegate?.navigate(to: "showCard",
+                               withParametr: CardNavigate(newWords: studyData.newOriginal, repeatWords: studyData.repeatOriginal,
+                                                          extraordinaryWords: studyData.extraordinaryOriginal, type: .originalCard),
+                               callback: nil)
         }
         else {
             delegate?.sendMessage(title: "Warning", message: "You have not any words to trained today")
         }
     }
     func onClickTranslateCard() {
-        if newTranslationWords.count > 0 || repeatTranslationWords.count > 0 {
-            delegate?.navigate(to: "showCard", withParametr: (newTranslationWords, repeatTranslationWords, AnswersType.translateCard), callback: nil)
+        if self.studyData.newTranslate.count > 0 || self.studyData.repeatTranslation.count > 0 {
+            delegate?.navigate(to: "showCard",
+                               withParametr: CardNavigate(newWords: studyData.newTranslate, repeatWords: studyData.repeatTranslation,
+                                                          extraordinaryWords: studyData.extraordinaryTranslation, type: .translateCard),
+                               callback: nil)
         }
         else {
             delegate?.sendMessage(title: "Warning", message: "You have not any words to trained today")

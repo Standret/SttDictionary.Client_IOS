@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		50126B39145C42DD5110937E /* Pods_SttDictionary.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8CF89F27CDB3C3218C6CB2EB /* Pods_SttDictionary.framework */; };
 		7D056E6821AAC8EB00A16FD1 /* StudyModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D056E6721AAC8EB00A16FD1 /* StudyModel.swift */; };
+		7D056E6B21AAF1EA00A16FD1 /* CardNavigate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D056E6A21AAF1EA00A16FD1 /* CardNavigate.swift */; };
 		7D4F762021A99CD700CF3F43 /* AppIcon.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 7D4F761F21A99CD700CF3F43 /* AppIcon.xcassets */; };
 		7D57202E20F1313500955AFD /* StudyInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D57202D20F1313500955AFD /* StudyInteractor.swift */; };
 		7D82B5B520C30491004D896A /* StudyViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D82B5B420C30491004D896A /* StudyViewController.swift */; };
@@ -161,6 +162,7 @@
 /* Begin PBXFileReference section */
 		4B61541E87113249A0C65427 /* Pods-SttDictionary.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SttDictionary.release.xcconfig"; path = "Pods/Target Support Files/Pods-SttDictionary/Pods-SttDictionary.release.xcconfig"; sourceTree = "<group>"; };
 		7D056E6721AAC8EB00A16FD1 /* StudyModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StudyModel.swift; sourceTree = "<group>"; };
+		7D056E6A21AAF1EA00A16FD1 /* CardNavigate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardNavigate.swift; sourceTree = "<group>"; };
 		7D4F761F21A99CD700CF3F43 /* AppIcon.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = AppIcon.xcassets; sourceTree = "<group>"; };
 		7D57202D20F1313500955AFD /* StudyInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StudyInteractor.swift; sourceTree = "<group>"; };
 		7D82B5B420C30491004D896A /* StudyViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StudyViewController.swift; sourceTree = "<group>"; };
@@ -332,6 +334,14 @@
 				4B61541E87113249A0C65427 /* Pods-SttDictionary.release.xcconfig */,
 			);
 			name = Pods;
+			sourceTree = "<group>";
+		};
+		7D056E6921AAF1D600A16FD1 /* NavigateModel */ = {
+			isa = PBXGroup;
+			children = (
+				7D056E6A21AAF1EA00A16FD1 /* CardNavigate.swift */,
+			);
+			path = NavigateModel;
 			sourceTree = "<group>";
 		};
 		7D82B5B120C2CCD5004D896A /* Creator */ = {
@@ -847,6 +857,7 @@
 		84D4388D20A8789400B171ED /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				7D056E6921AAF1D600A16FD1 /* NavigateModel */,
 				84716E5220B186AB00A1F5F6 /* ViewModels */,
 				8433D0BA20A895EA0031D690 /* ApiModel */,
 				84D4389C20A87D4100B171ED /* RealmModels */,
@@ -1131,6 +1142,7 @@
 				7DF9792B2105A98E00EF0823 /* SttRandom.swift in Sources */,
 				7DF979382105A98E00EF0823 /* SttViewController.swift in Sources */,
 				8424F31D212C2AFC005C557C /* WordTrimmer.swift in Sources */,
+				7D056E6B21AAF1EA00A16FD1 /* CardNavigate.swift in Sources */,
 				7DC0C6C220C3F18400FC7998 /* StudyPresenter.swift in Sources */,
 				7DF979392105A98E00EF0823 /* SttViewPage.swift in Sources */,
 				7DF9793A2105A98E00EF0823 /* SttErrorLabel.swift in Sources */,
@@ -1435,7 +1447,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = C7DF91C60571BAA45A8D8DB4 /* Pods-SttDictionary.debug.xcconfig */;
 			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = MongoDev;
+				ASSETCATALOG_COMPILER_APPICON_NAME = MongoProd;
 				CODE_SIGN_STYLE = Automatic;
 				DEFINES_MODULE = YES;
 				DEVELOPMENT_TEAM = MD88G6A24R;
@@ -1446,7 +1458,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.perfict.fitnesmd;
+				PRODUCT_BUNDLE_IDENTIFIER = com.perfict.fitnesmp;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 4.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -1457,7 +1469,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 4B61541E87113249A0C65427 /* Pods-SttDictionary.release.xcconfig */;
 			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = MongoDev;
+				ASSETCATALOG_COMPILER_APPICON_NAME = MongoProd;
 				CODE_SIGN_STYLE = Automatic;
 				DEFINES_MODULE = YES;
 				DEVELOPMENT_TEAM = MD88G6A24R;
@@ -1468,7 +1480,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.perfict.fitnesmd;
+				PRODUCT_BUNDLE_IDENTIFIER = com.perfict.fitnesmp;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 4.0;
 				TARGETED_DEVICE_FAMILY = "1,2";

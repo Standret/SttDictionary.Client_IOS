@@ -57,6 +57,6 @@ class StudyViewController: SttViewController<StudyPresenter>, StudyDelegate {
     
     func reloadStatus() {
         indView.removeFromSuperview()
-        lblStatistics.text = "Today original cards: \(presenter.newWords.count) | \(presenter.repeatWords.count)\ntranslation cards: \(presenter.newTranslationWords.count) | \(presenter.repeatTranslationWords.count)"
+        lblStatistics.text = "Today original cards: \(presenter.studyData.newOriginal.count) | \(presenter.studyData.repeatOriginal.count)\ntranslation cards: \(presenter.studyData.newTranslate.count) | \(presenter.studyData.repeatTranslation.count)"
     }
 }
