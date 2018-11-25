@@ -64,6 +64,7 @@ class Constants {
     
     // SM
     
+    static let timeForPass = 5000
     static let countOfNewCard = 15
     static let countCardsPerSession = 30
     static let minCardsPerSession = 5

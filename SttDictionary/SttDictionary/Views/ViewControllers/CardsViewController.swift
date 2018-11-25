@@ -119,6 +119,11 @@ class CardsViewController: SttViewController<CardsPresenter>, CardsDelegate {
 
     // MARK: - implementationm delegate
     
+    func updateIntervals(intervals: IntervalsModel) {
+        btnEasy.setTitle("Easy (\(intervals.easy) days)", for: .normal)
+        btnHard.setTitle("Easy (\(presenter.goodAnwerExpires ? intervals.badHard : intervals.hard) days)", for: .normal)
+    }
+    
     func reloadWords(word: String, url: String?, example: (String, String)?, isNew: Bool, useVoice: Bool) {
         lblMain.text = word
         voiceData = nil

@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		50126B39145C42DD5110937E /* Pods_SttDictionary.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8CF89F27CDB3C3218C6CB2EB /* Pods_SttDictionary.framework */; };
+		7D056E6821AAC8EB00A16FD1 /* StudyModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D056E6721AAC8EB00A16FD1 /* StudyModel.swift */; };
 		7D4F762021A99CD700CF3F43 /* AppIcon.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 7D4F761F21A99CD700CF3F43 /* AppIcon.xcassets */; };
 		7D57202E20F1313500955AFD /* StudyInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D57202D20F1313500955AFD /* StudyInteractor.swift */; };
 		7D82B5B520C30491004D896A /* StudyViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D82B5B420C30491004D896A /* StudyViewController.swift */; };
@@ -159,6 +160,7 @@
 
 /* Begin PBXFileReference section */
 		4B61541E87113249A0C65427 /* Pods-SttDictionary.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SttDictionary.release.xcconfig"; path = "Pods/Target Support Files/Pods-SttDictionary/Pods-SttDictionary.release.xcconfig"; sourceTree = "<group>"; };
+		7D056E6721AAC8EB00A16FD1 /* StudyModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StudyModel.swift; sourceTree = "<group>"; };
 		7D4F761F21A99CD700CF3F43 /* AppIcon.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = AppIcon.xcassets; sourceTree = "<group>"; };
 		7D57202D20F1313500955AFD /* StudyInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StudyInteractor.swift; sourceTree = "<group>"; };
 		7D82B5B420C30491004D896A /* StudyViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StudyViewController.swift; sourceTree = "<group>"; };
@@ -739,6 +741,7 @@
 			children = (
 				84716E5320B186BB00A1F5F6 /* SyncData.swift */,
 				7DE2F2DF20F0DC6100B5F343 /* CountViewModel.swift */,
+				7D056E6721AAC8EB00A16FD1 /* StudyModel.swift */,
 			);
 			path = ViewModels;
 			sourceTree = "<group>";
@@ -1116,6 +1119,7 @@
 				8424F326212C57CE005C557C /* TagInteractor.swift in Sources */,
 				7DF979352105A98E00EF0823 /* SttCollectionViewCell.swift in Sources */,
 				7DF979302105A98E00EF0823 /* SttTableViewSource.swift in Sources */,
+				7D056E6821AAC8EB00A16FD1 /* StudyModel.swift in Sources */,
 				7DF979292105A98E00EF0823 /* SttObservableCollection.swift in Sources */,
 				7DF979362105A98E00EF0823 /* SttTableViewCell.swift in Sources */,
 				7DB2BFBA20D52819007B3676 /* WordCollectionCellSource.swift in Sources */,

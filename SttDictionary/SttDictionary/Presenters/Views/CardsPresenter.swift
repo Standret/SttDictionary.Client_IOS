@@ -8,6 +8,7 @@
 
 import Foundation
 import SINQ
+import RxSwift
 
 struct Answer {
     var id: String
@@ -18,6 +19,7 @@ struct Answer {
 protocol CardsDelegate: SttViewControlable {
     func reloadWords(word: String, url: String?, example: (String, String)?, isNew: Bool, useVoice: Bool)
     func showFinalPopup(message: String)
+    func updateIntervals(intervals: IntervalsModel)
 }
 
 class CardsPresenter: SttPresenter<CardsDelegate> {
@@ -29,6 +31,7 @@ class CardsPresenter: SttPresenter<CardsDelegate> {
     private var _current = 0
     private var totalMiliSeconds = 0
     private var wordMiliseconds = 0
+    var goodAnwerExpires: Bool { return wordMiliseconds > Constants.timeForPass }
     
     private var generalTimer: Timer!
     private var wordTimer: Timer!
@@ -45,9 +48,7 @@ class CardsPresenter: SttPresenter<CardsDelegate> {
         
         initializeWords(_words: (param.0, param.1))
         
-        let text = answerType == .originalCard ? words[current].originalWorld : words[current].translations.joined(separator: ", ")
-        let example = answerType == .originalCard ? (words[current].exampleUsage?.original ?? "", words[current].explanation ?? "") : (words[current].exampleUsage?.translate ?? "", words[current].explanation ?? "")
-        delegate?.reloadWords(word: text, url: words[current].pronunciationUrl, example: example, isNew: true, useVoice: useVoice)
+        showNext()
         
         generalTimer = Timer.scheduledTimer(withTimeInterval: 0.1, repeats: true, block: { [weak self] (timer) in
             self?.totalMiliSeconds += 100
@@ -68,10 +69,7 @@ class CardsPresenter: SttPresenter<CardsDelegate> {
             .subscribe(onNext: { print("stat has been updated successfuly \($0)") }, onError: { print("stat er \($0)") })
         _current += 1
         if current < words.count{
-            let text = answerType == .originalCard ? words[current].originalWorld : words[current].translations.joined(separator: ", ")
-            let example = answerType == .originalCard ? (words[current].exampleUsage?.original ?? "", words[current].explanation ?? "") : (words[current].exampleUsage?.translate ?? "", words[current].explanation ?? "")
-            delegate?.reloadWords(word: text, url: words[current].pronunciationUrl, example: example, isNew: true, useVoice: useVoice)
-            reloadWordTimer()
+            showNext()
         }
         else {
             generalTimer.invalidate()
@@ -87,9 +85,31 @@ class CardsPresenter: SttPresenter<CardsDelegate> {
     private func reloadWordTimer() {
         wordTimer?.invalidate()
         wordMiliseconds = 0
+        var isShow = false
         wordTimer = Timer.scheduledTimer(withTimeInterval: 0.1, repeats: true, block: { [weak self] (timer) in
-            self?.wordMiliseconds += 100
+            self!.wordMiliseconds += 100
+            if (self!.goodAnwerExpires && !isShow) {
+                isShow = true
+                self!.delegate?.updateIntervals(intervals: self!.intervals)
+            }
         })
+    }
+    
+    private var intervals: IntervalsModel!
+    private var disposable: Disposable?
+    private func showNext() {
+        let text = answerType == .originalCard ? words[current].originalWorld : words[current].translations.joined(separator: ", ")
+        let example = answerType == .originalCard ? (words[current].exampleUsage?.original ?? "", words[current].explanation ?? "") : (words[current].exampleUsage?.translate ?? "", words[current].explanation ?? "")
+        delegate?.reloadWords(word: text, url: words[current].pronunciationUrl, example: example, isNew: true, useVoice: useVoice)
+        reloadWordTimer()
+        
+        disposable?.dispose()
+        disposable = _wordInteractor.getIntervals(wordId: words[current].id, type: answerType)
+            .subscribe(onNext: { intervals in
+                self.intervals = intervals
+                self.delegate?.updateIntervals(intervals: intervals)
+            })
+
     }
     
     /// initialize target collection using (start end method) and radom sort

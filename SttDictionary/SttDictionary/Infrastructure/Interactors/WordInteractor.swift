@@ -10,11 +10,21 @@ import Foundation
 import RxSwift
 import SINQ
 
+struct IntervalsModel {
+    
+    let easy: Int
+    let hard: Int
+    let badHard: Int
+    let forget: Int
+}
+
 protocol WordInteractorType {
     func addWord(word: String, translations: [String], exampleUsage: ExampleUsage?,
                  linkedWords: [String]?, tagsId: [String]?, useReverse: Bool, usePronunciation: Bool, explanation: String?) -> Observable<(Bool, SyncStep)>
     func exists(word: String) -> Observable<Bool>
     func getWord(searchString: String?, skip: Int) -> Observable<[WordEntityCellPresenter]>
+    
+    func getIntervals(wordId: String, type: AnswersType) -> Observable<IntervalsModel>
     func updateStatistics(answer: Answer, type: AnswersType) -> Observable<Bool>
 }
 
@@ -97,6 +107,28 @@ class WordInteractor: WordInteractorType {
             .observeInUI())
     }
     
+    func getIntervals(wordId: String, type: AnswersType) -> Observable<IntervalsModel> {
+        let sequence = [
+            getInterval(wordId: wordId, ansType: type, type: .easy, badValue: false).map({ ($0, false, AnswersRaw.easy) }),
+            getInterval(wordId: wordId, ansType: type, type: .hard, badValue: false).map({ ($0, false, AnswersRaw.hard) }),
+            getInterval(wordId: wordId, ansType: type, type: .hard, badValue: true).map({ ($0, true, AnswersRaw.hard) })
+        ]
+        
+        return Observable.zip(sequence, { (results) -> IntervalsModel in
+            
+            return IntervalsModel(easy: results.first(where: { $0.2 == AnswersRaw.easy })!.0,
+                                  hard: results.first(where: { $0.2 == AnswersRaw.hard && !$0.1 })!.0,
+                                  badHard: results.first(where: { $0.2 == AnswersRaw.hard && $0.1 })!.0,
+                                  forget: 0)
+        })
+    }
+    
+    private func getInterval(wordId: String, ansType: AnswersType, type: AnswersRaw, badValue: Bool) -> Observable<Int> {
+        return _statisticsRepositories.getElementFor(wordsId: [wordId])
+            .map({ sinq($0).whereTrue({ $0.type == ansType }).first() })
+            .map({ self._smEngine.calculateInterval(statistics: $0, type: type, badValue: badValue) })
+    }
+    
     func updateStatistics(answer: Answer, type: AnswersType) -> Observable<Bool> {
         return _statisticsRepositories.getElementFor(wordsId: [answer.id])
             .map({ sinq($0).whereTrue({ $0.type == type }).first() })
@@ -105,7 +137,7 @@ class WordInteractor: WordInteractorType {
                 return Observable.concat([
                     self._statisticsRepositories.updateStatistics(statistics: newStat),
                     self._answerRepositories.updateAnswer(model: AnswerApiModel(id: nil,
-                                                                                dateCreated: Date().onlyDay(),
+                                                                                dateCreated: Date(),
                                                                                 wordId: answer.id,
                                                                                 type: type,
                                                                                 grade: newStat.lastAnswer!.answer,
