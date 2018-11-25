@@ -32,6 +32,7 @@ extension AppDelegate {
     func clearKeychainIfWillUnistall() {
         let freshInstall = !UserDefaults.standard.bool(forKey: "alreadyInstalled")
         if freshInstall {
+            UserDefaults.standard.set(true, forKey: Constants.isNightThemeKey)
             KeychainSwift().clear()
             UserDefaults.standard.set(true, forKey: "alreadyInstalled")
         }

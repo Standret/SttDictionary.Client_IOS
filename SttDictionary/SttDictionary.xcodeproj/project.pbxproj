@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		50126B39145C42DD5110937E /* Pods_SttDictionary.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8CF89F27CDB3C3218C6CB2EB /* Pods_SttDictionary.framework */; };
+		7D4F762021A99CD700CF3F43 /* AppIcon.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 7D4F761F21A99CD700CF3F43 /* AppIcon.xcassets */; };
 		7D57202E20F1313500955AFD /* StudyInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D57202D20F1313500955AFD /* StudyInteractor.swift */; };
 		7D82B5B520C30491004D896A /* StudyViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D82B5B420C30491004D896A /* StudyViewController.swift */; };
 		7D82B5B720C332F9004D896A /* QueryFactories.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D82B5B620C332F9004D896A /* QueryFactories.swift */; };
@@ -158,6 +159,7 @@
 
 /* Begin PBXFileReference section */
 		4B61541E87113249A0C65427 /* Pods-SttDictionary.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SttDictionary.release.xcconfig"; path = "Pods/Target Support Files/Pods-SttDictionary/Pods-SttDictionary.release.xcconfig"; sourceTree = "<group>"; };
+		7D4F761F21A99CD700CF3F43 /* AppIcon.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = AppIcon.xcassets; sourceTree = "<group>"; };
 		7D57202D20F1313500955AFD /* StudyInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StudyInteractor.swift; sourceTree = "<group>"; };
 		7D82B5B420C30491004D896A /* StudyViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StudyViewController.swift; sourceTree = "<group>"; };
 		7D82B5B620C332F9004D896A /* QueryFactories.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QueryFactories.swift; sourceTree = "<group>"; };
@@ -882,6 +884,7 @@
 				84F39E6520B0309A00548681 /* Icons.xcassets */,
 				84F39E6320B0308C00548681 /* Colors.xcassets */,
 				84D2422720A85179007D8F1A /* Assets.xcassets */,
+				7D4F761F21A99CD700CF3F43 /* AppIcon.xcassets */,
 			);
 			path = Resources;
 			sourceTree = "<group>";
@@ -1023,6 +1026,7 @@
 				8462666D20B1DECF004169A1 /* WordEntityCell.xib in Resources */,
 				84D2422820A85179007D8F1A /* Assets.xcassets in Resources */,
 				84F39E6620B0309A00548681 /* Icons.xcassets in Resources */,
+				7D4F762021A99CD700CF3F43 /* AppIcon.xcassets in Resources */,
 				84D2422620A85177007D8F1A /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1427,17 +1431,18 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = C7DF91C60571BAA45A8D8DB4 /* Pods-SttDictionary.debug.xcconfig */;
 			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_APPICON_NAME = MongoProd;
 				CODE_SIGN_STYLE = Automatic;
 				DEFINES_MODULE = YES;
 				DEVELOPMENT_TEAM = MD88G6A24R;
 				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
 				INFOPLIST_FILE = SttDictionary/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.perfict.fitnes;
+				PRODUCT_BUNDLE_IDENTIFIER = com.perfict.fitnesmp;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 4.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -1448,17 +1453,18 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 4B61541E87113249A0C65427 /* Pods-SttDictionary.release.xcconfig */;
 			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_APPICON_NAME = MongoProd;
 				CODE_SIGN_STYLE = Automatic;
 				DEFINES_MODULE = YES;
 				DEVELOPMENT_TEAM = MD88G6A24R;
 				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
 				INFOPLIST_FILE = SttDictionary/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.perfict.fitnes;
+				PRODUCT_BUNDLE_IDENTIFIER = com.perfict.fitnesmp;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 4.0;
 				TARGETED_DEVICE_FAMILY = "1,2";

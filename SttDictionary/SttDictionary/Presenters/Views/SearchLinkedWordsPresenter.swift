@@ -44,9 +44,9 @@ class SearchLinkedWordsPresenter: SttPresenter<SearchLinkedWordsDelegate>, WordI
         self.words.removeAll()
         
         switch contentType {
-        case .words:
+        case .words?:
             previusDispose = getWords(searchString: seachString, skip: words.count)
-        case .tags:
+        case .tags?:
             previusDispose = getTags(searchString: seachString, skip: tags.count)
         default: break;
         }
