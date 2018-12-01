@@ -59,8 +59,8 @@ public class SM2Engine: SMEngine {
                                       date: Date(),
                                       miliSecondsForReview: answer.totalMiliseconds)
         
-        let nextRepetition = Calendar.current.date(byAdding: .day, value: newInterval + 1, to: Date())!.onlyDay()
-        print ("next rept in \(nextRepetition) with easieness: \(cardGrade < 3 ? statistics.easiness : newEasiness)")
+        let nextRepetition = Calendar.current.date(byAdding: .day, value: newInterval, to: Date())!.onlyDay()
+        print ("next rept in \(nextRepetition.toLocalTime()) with easieness: \(cardGrade < 3 ? statistics.easiness : newEasiness)")
         return WordStatisticsApiModel(id: statistics.id,
                                       dateCreated: statistics.dateCreated,
                                       wordId: statistics.wordId,

@@ -52,7 +52,7 @@ class CardsPresenter: SttPresenter<CardsDelegate> {
             print(i.word.originalWorld)
         }
         
-        initializeWords(_words: (param.newWords, sinq(param.repeatWords).whereTrue({ v in !sinq(self.extraordinaryWord).any({ $0.word.id == v.id }) }).toArray()), extraoridnaryWords: extraordinaryWord.map({ $0.word }))
+        initializeWords(_words: (param.newWords, param.repeatWords), extraoridnaryWords: [])
         
         showNext()
         
