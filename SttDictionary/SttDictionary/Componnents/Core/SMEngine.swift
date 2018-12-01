@@ -56,7 +56,7 @@ public class SM2Engine: SMEngine {
         let data = AnswerDataApiModel(answer: grade,
                                       type: statistics.type,
                                       raw: answer.type,
-                                      date: Date(),
+                                      date: Date().onlyDay(),
                                       miliSecondsForReview: answer.totalMiliseconds)
         
         let nextRepetition = Calendar.current.date(byAdding: .day, value: newInterval, to: Date())!.onlyDay()

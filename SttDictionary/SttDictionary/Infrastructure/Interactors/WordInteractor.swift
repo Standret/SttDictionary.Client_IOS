@@ -137,7 +137,7 @@ class WordInteractor: WordInteractorType {
                 return Observable.concat([
                     self._statisticsRepositories.updateStatistics(statistics: newStat),
                     self._answerRepositories.updateAnswer(model: AnswerApiModel(id: nil,
-                                                                                dateCreated: Date(),
+                                                                                dateCreated: Date().onlyDay(),
                                                                                 wordId: answer.id,
                                                                                 type: type,
                                                                                 grade: newStat.lastAnswer!.answer,

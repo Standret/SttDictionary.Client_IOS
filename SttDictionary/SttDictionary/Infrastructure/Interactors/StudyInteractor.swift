@@ -31,11 +31,7 @@ class StudyInteractor: StudyInteractorType {
             getNewOriginal().map({ LocalWordsResult(type: .newOriginal, words: $0) }),
             getNewTranslate().map({ LocalWordsResult(type: .newTranslation, words: $0) }),
             getRepeatOriginal().map({ LocalWordsResult(type: .repeatOriginal, words: $0) }),
-            getRepeatTranslation().map({ LocalWordsResult(type: .repeatTranslation, words: $0) }),
-            todayNeedsToReviewInstantly(filter: .originalCard)
-                .map({ LocalWordsResult(type: .extraordinaryOriginal, extraordinary: $0) }),
-            todayNeedsToReviewInstantly(filter: .translateCard)
-                .map({ LocalWordsResult(type: .extraordinaryTranslate, extraordinary: $0) })
+            getRepeatTranslation().map({ LocalWordsResult(type: .repeatTranslation, words: $0) })
             ]
         return Observable.zip(sequence, { (results) -> StudyWordsModel in
             
@@ -43,8 +39,8 @@ class StudyInteractor: StudyInteractorType {
                                    newTranslate: results.first(where: { $0.type == .newTranslation })!.words!,
                                    repeatOriginal: results.first(where: { $0.type == .repeatOriginal })!.words!,
                                    repeatTranslation: results.first(where: { $0.type == .repeatTranslation })!.words!,
-                                   extraordinaryOriginal: results.first(where: { $0.type == .extraordinaryOriginal })!.extraordinary!,
-                                   extraordinaryTranslation: results.first(where: { $0.type == .extraordinaryTranslate })!.extraordinary!)
+                                   extraordinaryOriginal: [],
+                                   extraordinaryTranslation: [])
         })
         .inBackground()
         .observeInUI()
@@ -112,7 +108,7 @@ class StudyInteractor: StudyInteractorType {
             .map { (answers) -> [WordApiModel] in
                 var target = [WordApiModel]()
                 for item in twords {
-                    if sinq(answers).whereTrue({ $0.wordId == item.id }).all({ $0.dateCreated.onlyDay() == Date().onlyDay() }) {
+                    if sinq(answers).whereTrue({ $0.wordId == item.id }).all({ $0.dateCreated == Date().onlyDay() }) {
                         target.append(item)
                     }
                 }

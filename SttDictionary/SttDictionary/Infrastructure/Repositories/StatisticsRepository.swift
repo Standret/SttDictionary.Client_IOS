@@ -78,7 +78,6 @@ class StatisticsRepositories: StatisticsRepositoriesType {
     func getRepeatOriginal() -> Observable<[WordStatisticsApiModel]> {
         return _storageProvider.statistics.getMany(filter: QueryFactories.getStatisticsQuery(type: .repeatOriginal))
                 .map({ $0.map({ $0.deserialize() }) })
-            .do(onNext: { print("---> \($0)")})
     }
     func getRepeatTranslate() -> Observable<[WordStatisticsApiModel]> {
         return _storageProvider.statistics.getMany(filter: QueryFactories.getStatisticsQuery(type: .repeatTranslation))

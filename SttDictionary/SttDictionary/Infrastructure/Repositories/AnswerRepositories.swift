@@ -41,10 +41,9 @@ class AnswerRepositories: AnswerRepositoriesType {
         return _storageProvider.answer.getMany(filter: QueryFactories.getDefaultQuery(type: type)).map({ $0.map({ $0.deserialize() }) })
     }
     func getTodayAnswers() -> Observable<[AnswerApiModel]> {
-        let predicateFormat = NSPredicate(format: "(dateCreated >= %@) AND (dateCreated < %@)",
-                                          argumentArray: [Date().onlyDay(), Date().tomorrow.onlyDay()]).predicateFormat
+        let predicateFormat = NSPredicate(format: "dateCreated = %@",
+                                          argumentArray: [Date().onlyDay()]).predicateFormat
         return _storageProvider.answer.getMany(filter: predicateFormat).map({ $0.map({ $0.deserialize() }) })
-            .do(onNext: { print($0.count) })
     }
     func getAnswers(wordIds: [String]) -> Observable<[AnswerApiModel]> {
         let predicateFormat = NSPredicate(format: "wordId IN %@", argumentArray: [Array(Set(wordIds))]).predicateFormat
