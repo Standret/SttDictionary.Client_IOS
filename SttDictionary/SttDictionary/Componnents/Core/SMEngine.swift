@@ -29,16 +29,13 @@ public class SM2Engine: SMEngine {
         let cardGrade = grade.rawValue
         
         let qualityFactor = Float(maxQuality - cardGrade)
-        let newEasiness = max(easinessFactor, statistics.easiness + Float((0.1 - qualityFactor * (0.08 + qualityFactor * 0.02))))
+        let newEasiness = cardGrade < 3 ? statistics.easiness : max(easinessFactor, statistics.easiness + Float((0.1 - qualityFactor * (0.08 + qualityFactor * 0.02))))
         
         var newInterval = statistics.interval
         var newRepetition = statistics.repetition
         if cardGrade < 3 {
             newInterval = 0
             newRepetition = 0
-        }
-        else if cardGrade == 3 {
-            newInterval = 0
         }
         else {
             
@@ -49,8 +46,9 @@ public class SM2Engine: SMEngine {
             case 2:
                 newInterval = 6
             default:
-                newInterval = Int(ceil(Float(newRepetition - 1) * newEasiness))
+                newInterval = cardGrade == 3 ? newInterval : Int(ceil(Float(newInterval - 1) * newEasiness))
             }
+            newInterval = newInterval <= 0 ? 1 : newInterval
         }
         
         let data = AnswerDataApiModel(answer: grade,
@@ -59,8 +57,8 @@ public class SM2Engine: SMEngine {
                                       date: Date().onlyDay(),
                                       miliSecondsForReview: answer.totalMiliseconds)
         
-        let nextRepetition = Calendar.current.date(byAdding: .day, value: newInterval, to: Date())!.onlyDay()
-        print ("next rept in \(nextRepetition.toLocalTime()) with easieness: \(cardGrade < 3 ? statistics.easiness : newEasiness)")
+        let nextRepetition = Calendar.current.date(byAdding: .day, value: (cardGrade == 3 ? 0 : newInterval), to: Date())!.onlyDay()
+        print ("next rept in \(nextRepetition.toLocalTime()) with easieness: \(newEasiness)")
         return WordStatisticsApiModel(id: statistics.id,
                                       dateCreated: statistics.dateCreated,
                                       wordId: statistics.wordId,
@@ -68,7 +66,7 @@ public class SM2Engine: SMEngine {
                                       type: statistics.type,
                                       interval: newInterval,
                                       repetition: newRepetition,
-                                      easiness: cardGrade < 3 ? statistics.easiness : newEasiness,
+                                      easiness: newEasiness,
                                       nextRepetition: nextRepetition)
     }
     
@@ -84,7 +82,8 @@ public class SM2Engine: SMEngine {
         if cardGrade < 3 {
             newInterval = 0
             newRepetition = 0
-        } else {
+        }
+        else {
             
             newRepetition += 1
             switch newRepetition {
@@ -93,8 +92,9 @@ public class SM2Engine: SMEngine {
             case 2:
                 newInterval = 6
             default:
-                newInterval = Int(ceil(Float(newRepetition - 1) * newEasiness))
+                newInterval = cardGrade == 3 ? newInterval : Int(ceil(Float(newInterval - 1) * newEasiness))
             }
+            newInterval = newInterval <= 0 ? 1 : newInterval
         }
         
         print ("---------\ngrade \(grade)\ncardGrade \(cardGrade)\nnew easiness: \(cardGrade < 3 ? statistics.easiness : newEasiness)\nold easiness \(statistics.easiness)")
