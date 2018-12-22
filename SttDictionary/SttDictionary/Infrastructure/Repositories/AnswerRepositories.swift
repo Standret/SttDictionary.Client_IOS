@@ -43,7 +43,9 @@ class AnswerRepositories: AnswerRepositoriesType {
     func getTodayAnswers() -> Observable<[AnswerApiModel]> {
         let predicateFormat = NSPredicate(format: "dateCreated = %@",
                                           argumentArray: [Date().onlyDay()]).predicateFormat
-        return _storageProvider.answer.getMany(filter: predicateFormat).map({ $0.map({ $0.deserialize() }) })
+        return _storageProvider.answer.getMany(filter: predicateFormat)
+            .map({ $0.map({ $0.deserialize() }) })
+            .do(onNext: { print($0.count) })
     }
     func getAnswers(wordIds: [String]) -> Observable<[AnswerApiModel]> {
         let predicateFormat = NSPredicate(format: "wordId IN %@", argumentArray: [Array(Set(wordIds))]).predicateFormat

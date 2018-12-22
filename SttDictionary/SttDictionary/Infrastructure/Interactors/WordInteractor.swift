@@ -25,7 +25,7 @@ protocol WordInteractorType {
     func getWord(searchString: String?, skip: Int) -> Observable<[WordEntityCellPresenter]>
     
     func getIntervals(wordId: String, type: AnswersType) -> Observable<IntervalsModel>
-    func updateStatistics(answer: Answer, type: AnswersType) -> Observable<Bool>
+    func updateStatistics(answer: Answer, type: AnswersType, isPass: Bool) -> Observable<Bool>
 }
 
 extension WordInteractorType {
@@ -129,11 +129,11 @@ class WordInteractor: WordInteractorType {
             .map({ self._smEngine.calculateInterval(statistics: $0, type: type, badValue: badValue) })
     }
     
-    func updateStatistics(answer: Answer, type: AnswersType) -> Observable<Bool> {
+    func updateStatistics(answer: Answer, type: AnswersType, isPass: Bool) -> Observable<Bool> {
         return _statisticsRepositories.getElementFor(wordsId: [answer.id])
             .map({ sinq($0).whereTrue({ $0.type == type }).first() })
             .flatMap({ (statistics) -> Observable<Bool> in
-                let newStat = self._smEngine.gradeFlashcard(statistics: statistics, answer: answer)
+                let newStat = self._smEngine.gradeFlashcard(statistics: statistics, answer: answer, isPass: isPass)
                 return Observable.concat([
                     self._statisticsRepositories.updateStatistics(statistics: newStat),
                     self._answerRepositories.updateAnswer(model: AnswerApiModel(id: nil,

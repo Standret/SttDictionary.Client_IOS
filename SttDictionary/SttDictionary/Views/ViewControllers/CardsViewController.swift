@@ -25,6 +25,7 @@ class CardsViewController: SttViewController<CardsPresenter>, CardsDelegate {
     
     @IBOutlet weak var btnShow: UIButton!
     @IBOutlet weak var btnEasy: UIButton!
+    @IBOutlet weak var btnPass: UIButton!
     @IBOutlet weak var btnHard: UIButton!
     @IBOutlet weak var btnForget: UIButton!
     @IBOutlet weak var btnSound: UIButton!
@@ -36,8 +37,19 @@ class CardsViewController: SttViewController<CardsPresenter>, CardsDelegate {
     }
     
     @IBAction func showClick(_ sender: Any) {
-        presenter.showAnswer()
-        changeVisibility()
+        if let xx = self.example {
+            let exampleText = "\((xx.0)):\n\n\(xx.1)"
+            let rangeSelect = (exampleText as NSString).range(of: lblMain.text!)
+            let attribute = NSMutableAttributedString(string: exampleText, attributes: [NSAttributedStringKey.font: UIFont(name: "Helvetica", size: 16)!, NSAttributedStringKey.foregroundColor: ThemeManager.mainTextColor])
+            attribute.addAttributes([NSAttributedStringKey.font: UIFont(name: "Helvetica-Bold", size: 20)!, NSAttributedStringKey.foregroundColor: ThemeManager.highlightsComponent], range: rangeSelect)
+            
+            lblExample.attributedText = attribute
+            example = nil
+        }
+        else {
+            presenter.showAnswer()
+            changeVisibility()
+        }
     }
     
     static var isVolumeEnabled = true
@@ -63,6 +75,9 @@ class CardsViewController: SttViewController<CardsPresenter>, CardsDelegate {
     @IBAction func ForgetClick(_ sender: Any) {
         presenter.selectAnswer(type: .forget)
     }
+    @IBAction func passClick(_ sender: Any) {
+        presenter.selectAnswer(type: .hard, isPass: true)
+    }
     
     
     override func viewDidLoad() {
@@ -72,6 +87,7 @@ class CardsViewController: SttViewController<CardsPresenter>, CardsDelegate {
         btnShow.layer.cornerRadius = 10
         btnEasy.layer.cornerRadius = UIConstants.cornerRadius
         btnHard.layer.cornerRadius = UIConstants.cornerRadius
+        btnPass.layer.cornerRadius = UIConstants.cornerRadius
         btnForget.layer.cornerRadius = UIConstants.cornerRadius
         
         try! AVAudioSession.sharedInstance().setCategory(AVAudioSessionCategoryPlayback)
@@ -85,6 +101,7 @@ class CardsViewController: SttViewController<CardsPresenter>, CardsDelegate {
         btnEasy.isHidden = !btnEasy.isHidden
         btnHard.isHidden = !btnHard.isHidden
         btnForget.isHidden = !btnForget.isHidden
+        btnPass.isHidden = !btnPass.isHidden
         btnShow.isHidden = !btnShow.isHidden
     }
     
@@ -121,15 +138,19 @@ class CardsViewController: SttViewController<CardsPresenter>, CardsDelegate {
     
     func updateIntervals(intervals: IntervalsModel) {
         btnEasy.setTitle("Easy (\(intervals.easy) days)", for: .normal)
-        btnHard.setTitle("Easy (\(presenter.goodAnwerExpires ? intervals.badHard : intervals.hard) days)", for: .normal)
+        btnHard.setTitle("Hard (\(intervals.hard) days)", for: .normal)
+        btnPass.setTitle("Pass (\(intervals.badHard) days)", for: .normal)
     }
     
+    private var example: (String, String)?
     func reloadWords(word: String, url: String?, example: (String, String)?, isNew: Bool, useVoice: Bool) {
         lblMain.text = word
         voiceData = nil
         lblExample.isHidden = example == nil
+        self.example = nil
         if let _example = example {
-            let exampleText = "\(_example.0):\n\n\(_example.1)"
+            self.example = example
+            let exampleText = "\((isNew ? "" : _example.0)):\n\n\(_example.1)"
             let rangeSelect = (exampleText as NSString).range(of: word)
             let attribute = NSMutableAttributedString(string: exampleText, attributes: [NSAttributedStringKey.font: UIFont(name: "Helvetica", size: 16)!, NSAttributedStringKey.foregroundColor: ThemeManager.mainTextColor])
             attribute.addAttributes([NSAttributedStringKey.font: UIFont(name: "Helvetica-Bold", size: 20)!, NSAttributedStringKey.foregroundColor: ThemeManager.highlightsComponent], range: rangeSelect)

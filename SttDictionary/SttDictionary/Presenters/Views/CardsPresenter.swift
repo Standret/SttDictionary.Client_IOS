@@ -75,7 +75,7 @@ class CardsPresenter: SttPresenter<CardsDelegate> {
         delegate?.reloadWords(word: text, url: wordsForShow.pronunciationUrl, example: example, isNew: false, useVoice: wordsForShow.usePronunciation)
     }
     
-    func selectAnswer(type: AnswersRaw) {
+    func selectAnswer(type: AnswersRaw, isPass: Bool = false) {
         if let extr = currentExtraordinary {
             
             extraordinaryWord.removeAll(where: { $0.word.id == extr.word.id })
@@ -97,7 +97,7 @@ class CardsPresenter: SttPresenter<CardsDelegate> {
         }
         
         answers.append(Answer(id: words[_current].id, type: type, totalMiliseconds: wordMiliseconds))
-        _ = _wordInteractor.updateStatistics(answer: answers.last!, type: answerType)
+        _ = _wordInteractor.updateStatistics(answer: answers.last!, type: answerType, isPass: isPass)
             .subscribe(onNext: { print("stat has been updated successfuly \($0)") }, onError: { print("stat er \($0)") })
         _current += 1
         if current < words.count{

@@ -9,7 +9,7 @@
 import Foundation
 
 protocol SMEngine {
-    func gradeFlashcard(statistics: WordStatisticsApiModel, answer: Answer) -> WordStatisticsApiModel
+    func gradeFlashcard(statistics: WordStatisticsApiModel, answer: Answer, isPass: Bool) -> WordStatisticsApiModel
     func calculateInterval(statistics: WordStatisticsApiModel, type: AnswersRaw, badValue: Bool) -> Int
 }
 
@@ -23,9 +23,9 @@ public class SM2Engine: SMEngine {
         self.easinessFactor = easinessFactor
     }
     
-    func gradeFlashcard(statistics: WordStatisticsApiModel, answer: Answer) -> WordStatisticsApiModel {
+    func gradeFlashcard(statistics: WordStatisticsApiModel, answer: Answer, isPass: Bool) -> WordStatisticsApiModel {
         
-        let grade = converGrade(statistics: statistics, answer: answer.type, answerTime: answer.totalMiliseconds)
+        let grade = converGrade(statistics: statistics, answer: answer.type, answerTime: isPass ? Int.max : 0)
         let cardGrade = grade.rawValue
         
         let qualityFactor = Float(maxQuality - cardGrade)
